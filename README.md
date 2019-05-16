@@ -12,23 +12,23 @@ A Python Module to interact with the Mitre ATT&CK Framework
 * For each class you can access additional information about related data points:
 
 * Actor
-    ** Tools used by the Actor or Group
-    ** Malware used by the Actor or Group
-    ** Techniques this Actor or Group uses
+  * Tools used by the Actor or Group
+  * Malware used by the Actor or Group
+  * Techniques this Actor or Group uses
 * Malware
-    ** Actor or Group(s) using this malware
-    ** Techniques this malware is used with
+  * Actor or Group(s) using this malware
+  * Techniques this malware is used with
 * Mitigation
-    ** Techniques related to a specific set of mitigation suggestions
+  * Techniques related to a specific set of mitigation suggestions
 * Tactic
-    ** Techniques found in a specific Tactic (phase)
+  * Techniques found in a specific Tactic (phase)
 * Technique
-    ** Tactics a technique is found in
-    ** Mitigation suggestions for a given technique
-    ** Actor or Group(s) identified as using this technique
+  * Tactics a technique is found in
+  * Mitigation suggestions for a given technique
+  * Actor or Group(s) identified as using this technique
 * Tools
-    ** Techniques that the specified tool is used within
-    ** Actor or Group(s) using a specified tool
+  * Techniques that the specified tool is used within
+  * Actor or Group(s) using a specified tool
 
 
 ## Installation
