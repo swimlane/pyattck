@@ -1,6 +1,8 @@
 import pyattck
-import attcktechnique
-import attckgroup
-import attcksoftware
-import attcktactic
+import technique
+import actor
+import malware
+import tools
+import tactic
 import attckobject
+import mitigation

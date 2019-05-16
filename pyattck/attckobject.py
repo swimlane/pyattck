@@ -1,3 +1,8 @@
+import json 
+from collections import OrderedDict
+
+def jsonDefault(OrderedDict):
+    return OrderedDict.__dict__
 
 class AttckObject(object):
     """
@@ -23,6 +28,19 @@ class AttckObject(object):
         self.wiki = self._set_wiki(kwargs)
         self.contributor = self._set_attribute(kwargs, 'contributor')
 
+    def __str__(self):
+        return json.dumps(self, default=jsonDefault, indent=4)
+
+    def set_relationship(self, obj, id, name):
+        return_list = []
+        for item in obj['objects']:
+            if 'source_ref' in item:
+                if id in item['source_ref']:
+                    for o in obj['objects']:
+                        if o['type'] == name:
+                            if item['target_ref'] in o['id']:
+                                return_list.append(o)
+        return return_list
 
     def _set_attribute(self, obj, name):
         """Parent class method to set attribute based on passed in object
@@ -39,6 +57,15 @@ class AttckObject(object):
             return obj.get(name)
         except:
             return 'null'
+
+
+    def _set_list_items(self, obj, list_name):
+        item_value = []
+        if list_name in obj:
+            for item in obj[list_name]:
+                item_value.append(item)
+                
+            return item_value
 
     def _set_id(self, obj):
         """Returns the Mitre ATT&CK Framework external ID 
@@ -89,6 +116,7 @@ class AttckObject(object):
         source_name = ''
         description = ''
 
+        external_references = {}
         if "external_references" in obj:
             for p in obj['external_references']:
                 if 'external_id' in p:
@@ -102,9 +130,10 @@ class AttckObject(object):
                 else:
                     description = None
 
-                return {
+                external_references.update({
                     'external_id': external_id,
                     'url': url,
                     'source': source_name,
                     'description': description
-                }
+                })
+            return external_references

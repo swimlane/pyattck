@@ -1,3 +1,4 @@
+import pprint
 
 try:
     # For Python 3.0 and later
@@ -7,24 +8,33 @@ except ImportError:
     from urllib2 import urlopen
 
 import json, requests
-from attcktechnique import AttckTechnique
-from attckgroup import AttckGroup
-from attcksoftware import AttckSoftware
-from attcktactic import AttckTactic
+from technique import AttckTechnique
+from actor import AttckActor
+from malware import AttckMalware
+from tools import AttckTools
+from mitigation import AttckMitigation
+from tactic import AttckTactic
 from attckobject import AttckObject
 
 __MITRE_ATTCK_JSON_URL__ = 'https://raw.githubusercontent.com/mitre/cti/master/enterprise-attack/enterprise-attack.json'
 
 
 class Attck(object):
-    def __init__(self):
-        self.attck_json = self.get_attck_json(__MITRE_ATTCK_JSON_URL__)
-        self.attck_tactic = self._set_attck_tactic_object()
-        self.attck_group = self._set_attck_group_object()
-        self.attck_software = self._set_attck_software_object()
-        self.attck_technique = self.set_attck_technique()
+    """This class creates an interface to all other classes and generates objects from the Mitre ATT&CK Framework json file.
+    
+    Returns:
+        [Attck]: Returns a Attck object that contains all data from the Mitre ATT&CK Framework
+    """
 
-    def get_attck_json(self, url):
+    def __init__(self):
+        self.attck = __MITRE_ATTCK_JSON_URL__
+
+    @property
+    def attck(self):
+        return self._attck
+    
+    @attck.setter
+    def attck(self, value):
         """Requests the Mitre ATT&CK json file
         
         Arguments:
@@ -33,53 +43,83 @@ class Attck(object):
         Returns:
             (dict) -- Returns the requested json file
         """
+        self._attck = requests.get(value).json()
 
-        return(requests.get(url).json())
-
-    def _set_attck_tactic_object(self):
+    @property
+    def tactics(self):
         """Creates AttckTactic objects
         
         Returns:
-            (AttckTactic) -- Returns a list of AttckTactic objects
+            (AttckTactic) -- (Returns a list of AttckTactic objects)
         """
-
         tactic_list = []
-        for tactic in self.attck_json['objects']:
-            if tactic['type'] == 'course-of-action':
-                tactic_list.append(AttckTactic(**tactic))
+        for tactic in self.attck['objects']:
+            if tactic['type'] == 'x-mitre-tactic':
+                tactic_list.append(AttckTactic(attck_obj=self.attck, **tactic))
         return tactic_list
-                
-    def _set_attck_group_object(self):
-        """Creates AttckGroup objects
+
+    @property
+    def mitigations(self):
+        """Creates AttckMitigation objects
         
         Returns:
-            (AttckGroup) -- (Returns a list of AttckGroup objects)
+            (AttckMitigation) -- (Returns a list of AttckMitigation objects)
+        """
+        mitigation_list = []
+        for mitigation in self.attck['objects']:
+            if mitigation['type'] == 'course-of-action':
+                mitigation_list.append(AttckMitigation(attck_obj=self.attck, **mitigation))
+        return mitigation_list
+                
+    @property
+    def actors(self):
+        """Creates AttckActor objects
+        
+        Returns:
+            (AttckActor) -- (Returns a list of AttckActor objects)
         """
         group_list = []
-        for group in self.attck_json['objects']:
+        for group in self.attck['objects']:
             if group['type'] == 'intrusion-set':
-                group_list.append(AttckGroup(**group))
+                group_list.append(AttckActor(attck_obj=self.attck, **group))
         return group_list
 
-    def _set_attck_software_object(self):
-        """Creates AttckSoftware objects
+    @property
+    def tools(self):
+        """Creates AttckTools objects
         
         Returns:
-            (AttckSoftware) -- Returns a list of AttckSoftware objects
+            (AttckTools) -- Returns a list of AttckTools objects
         """
-        software_list = []
-        for tactic in self.attck_json['objects']:
-            if (tactic['type'] == 'tool') or (tactic['type'] == 'malware'):
-                software_list.append(AttckSoftware(**tactic))
-        return software_list
+        tools_list = []
+        for tools in self.attck['objects']:
+            if (tools['type'] == 'tool'):
+                tools_list.append(AttckTools(attck_obj=self.attck, **tools))
+        return tools_list
 
-    def set_attck_technique(self):
+    @property
+    def malwares(self):
+        """Creates AttckMalware objects
+        
+        Returns:
+            (AttckMalware) -- Returns a list of AttckMalware objects
+        """
+        malware_list = []
+        for malware in self.attck['objects']:
+            if (malware['type'] == 'malware'):
+
+                malware_list.append(AttckMalware(attck_obj=self.attck, **malware))
+        return malware_list
+
+    @property
+    def techniques(self):
         """Creates AttckTechnique objects
         
         Returns:
             (AttckTechnique) -- Returns a list of AttckTechnique objects
         """
-        return_objects = []
-        for key in self.attck_json["objects"]:
-            return_objects.append(AttckTechnique(self.attck_tactic, **key))
-        return return_objects
+        technique_list = []
+        for technique in self.attck["objects"]:
+            if (technique['type'] == 'attack-pattern'):
+                technique_list.append(AttckTechnique(attck_obj=self.attck, **technique))
+        return technique_list
