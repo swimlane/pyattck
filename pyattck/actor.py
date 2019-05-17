@@ -1,5 +1,5 @@
 
-from attckobject import AttckObject
+from .attckobject import AttckObject
 
 class AttckActor(AttckObject):
     """A child class of AttckObject

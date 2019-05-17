@@ -1,20 +1,10 @@
-import pprint
-
-try:
-    # For Python 3.0 and later
-    from urllib.request import urlopen
-except ImportError:
-    # Fall back to Python 2's urllib2
-    from urllib2 import urlopen
-
 import json, requests
-from technique import AttckTechnique
-from actor import AttckActor
-from malware import AttckMalware
-from tools import AttckTools
-from mitigation import AttckMitigation
-from tactic import AttckTactic
-from attckobject import AttckObject
+from .technique import AttckTechnique
+from .actor import AttckActor
+from .malware import AttckMalware
+from .tools import AttckTools
+from .mitigation import AttckMitigation
+from .tactic import AttckTactic
 
 __MITRE_ATTCK_JSON_URL__ = 'https://raw.githubusercontent.com/mitre/cti/master/enterprise-attack/enterprise-attack.json'
 

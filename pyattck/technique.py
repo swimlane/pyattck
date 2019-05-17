@@ -1,4 +1,4 @@
-from attckobject import AttckObject
+from .attckobject import AttckObject
 
 class AttckTechnique(AttckObject):
     """A child class of AttckObject
@@ -75,7 +75,7 @@ class AttckTechnique(AttckObject):
         
 
     @property
-    def mitigiation(self):
+    def mitigation(self):
         '''Returns all mitigation objects as a list that are documented to help mitigate the current technique object'''
         from mitigation import AttckMitigation
         mitigation_list = []

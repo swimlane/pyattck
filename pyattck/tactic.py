@@ -1,4 +1,4 @@
-from attckobject import AttckObject
+from .attckobject import AttckObject
 
 class AttckTactic(AttckObject):
     

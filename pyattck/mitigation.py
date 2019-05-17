@@ -1,4 +1,4 @@
-from attckobject import AttckObject
+from .attckobject import AttckObject
 
 class AttckMitigation(AttckObject):
     """A child class of AttckObject
