@@ -2,6 +2,15 @@
 
 [![Documentation Status](https://readthedocs.org/projects/pyattck/badge/?version=latest)](https://pyattck.readthedocs.io/en/latest/?badge=latest)
 
+```
+.______   ____    ____  ___   .___________.___________.  ______  __  ___ 
+|   _  \  \   \  /   / /   \  |           |           | /      ||  |/  / 
+|  |_)  |  \   \/   / /  ^  \ `---|  |----`---|  |----`|  ,----'|  '  /  
+|   ___/    \_    _/ /  /_\  \    |  |        |  |     |  |     |    <   
+|  |          |  |  /  _____  \   |  |        |  |     |  `----.|  .  \  
+| _|          |__| /__/     \__\  |__|        |__|      \______||__|\__\ 
+                                                                         
+```
 
 A Python Module to interact with the Mitre ATT&CK Framework
 
