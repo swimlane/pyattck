@@ -29,23 +29,35 @@ FEATURES
 * Every data point has exposed properties that allow the user to retrieve additional data based on relationships:
 
   * :doc:`class/actor`
+
     * Tools used by the Actor or Group
     * Malware used by the Actor or Group
     * Techniques this Actor or Group uses
+
   * :doc:`class/malware`
+
     * Actor or Group(s) using this malware
     * Techniques this malware is used with
+
   * :doc:`class/mitigation`
+
     * Techniques related to a specific set of mitigation suggestions
+
   * :doc:`class/tactic`
+
     * Techniques found in a specific Tactic (phase)
+
   * :doc:`class/technique`
+
     * Tactics a technique is found in
     * Mitigation suggestions for a given technique
     * Actor or Group(s) identified as using this technique
+
   * :doc:`class/tools`
+
     * Techniques that the specified tool is used within
     * Actor or Group(s) using a specified tool
+
 
 ^^^^^^^^^^^^^^
 Installation
