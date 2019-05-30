@@ -32,7 +32,7 @@ class AttckActor(AttckObject):
     def malware(self):
         '''Returns all malware objects as a list that are documented as being used by an Actor or Group
         '''
-        from malware import AttckMalware
+        from .malware import AttckMalware
         malware_list = []
         for item in self.attck_obj['objects']:
             if 'source_ref' in item:
@@ -46,7 +46,7 @@ class AttckActor(AttckObject):
     @property
     def tools(self):
         '''Returns all tool object as a list that are documented as being used by an Actor or Group'''
-        from tools import AttckTools
+        from .tools import AttckTools
         tools_list = []
         for item in self.attck_obj['objects']:
             if 'source_ref' in item:
@@ -60,7 +60,7 @@ class AttckActor(AttckObject):
     @property
     def techniques(self):
         '''Returns all technique objects as a list that are documented as being used by an Actor or Group'''
-        from technique import AttckTechnique
+        from .technique import AttckTechnique
         technique_list = []
         for item in self.attck_obj['objects']:
             if 'source_ref' in item:

@@ -31,7 +31,7 @@ class AttckTools(AttckObject):
     @property
     def techniques(self):
         '''Returns all technique objects as a list that this tool has been identified or used'''
-        from technique import AttckTechnique
+        from .technique import AttckTechnique
         technique_list = []
         for item in self.attck_obj['objects']:
             if 'relationship_type' in item:
@@ -46,7 +46,7 @@ class AttckTools(AttckObject):
     @property
     def actors(self):
         '''Returns all actor objects as a list that are documented to use this tool'''
-        from actor import AttckActor
+        from .actor import AttckActor
         actor_list = []
         for item in self.attck_obj['objects']:
             if 'relationship_type' in item:

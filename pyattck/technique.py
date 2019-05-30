@@ -44,7 +44,7 @@ class AttckTechnique(AttckObject):
     @property
     def tactic(self):
         '''Returns all tactics as a list that this technique is found in'''
-        from tactic import AttckTactic
+        from .tactic import AttckTactic
         tactic_list = []
         for item in self.attck_obj['objects']:
             if 'x-mitre-tactic' in item['type']:
@@ -77,7 +77,7 @@ class AttckTechnique(AttckObject):
     @property
     def mitigation(self):
         '''Returns all mitigation objects as a list that are documented to help mitigate the current technique object'''
-        from mitigation import AttckMitigation
+        from .mitigation import AttckMitigation
         mitigation_list = []
         for item in self.attck_obj['objects']:
             if 'relationship_type' in item:
@@ -92,7 +92,7 @@ class AttckTechnique(AttckObject):
     @property
     def actors(self):
         '''Returns all actor objects that have been identified as using this technique'''
-        from actor import AttckActor
+        from .actor import AttckActor
         actor_list = []
         for item in self.attck_obj['objects']:
             if 'relationship_type' in item:

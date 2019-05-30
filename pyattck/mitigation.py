@@ -29,7 +29,7 @@ class AttckMitigation(AttckObject):
     @property
     def techniques(self):
         '''Returns all technique objects as a list that are related to this mitigation object'''
-        from technique import AttckTechnique
+        from .technique import AttckTechnique
         technique_list = []
         for item in self.attck_obj['objects']:
             if 'source_ref' in item:

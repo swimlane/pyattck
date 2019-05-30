@@ -28,11 +28,11 @@ class AttckTactic(AttckObject):
     @property
     def techniques(self):
         '''Returns all techniques as a list that are related to this tactic'''
-        from technique import AttckTechnique
+        from .technique import AttckTechnique
         technique_list = []
         for item in self.attck_obj['objects']:
             if 'kill_chain_phases' in item:
                 for prop in item['kill_chain_phases']:
-                    if str(prop['phase_name']).lower() == str(self.name).lower():
+                    if str(prop['phase_name']).lower() == str(self.short_name).lower():
                         technique_list.append(AttckTechnique(**item))
         return technique_list
