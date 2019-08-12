@@ -29,7 +29,7 @@ class AttckActor(AttckObject):
         self.contributor = super(AttckActor, self)._set_list_items(kwargs, 'x_mitre_contributors')
 
     @property
-    def malware(self):
+    def malwares(self):
         '''Returns all malware objects as a list that are documented as being used by an Actor or Group
         '''
         from .malware import AttckMalware

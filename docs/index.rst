@@ -148,7 +148,7 @@ Below shows you how you can access each of object types and their properties.  A
        print(actor)
     
        # accessing malware used by an actor or group
-       for malware in actor.malware:
+       for malware in actor.malwares:
            print(malware)
 
        # accessing tools used by an actor or group
@@ -173,7 +173,7 @@ Below shows you how you can access each of object types and their properties.  A
 
    # accessing mitigation
    for mitigation in attack.mitigations:
-       print(mit)
+       print(mitigation)
 
        # accessing techniques related to mitigation recommendations
        for technique in mitigation.techniques:
@@ -196,7 +196,7 @@ Below shows you how you can access each of object types and their properties.  A
            print(tactic)
 
        # accessing mitigation recommendations for this technique
-       for mitigation in technique.mitigation:
+       for mitigation in technique.mitigations:
            print(mitigation)
 
        # accessing actors using this technique
