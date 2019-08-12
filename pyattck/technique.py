@@ -50,7 +50,7 @@ class AttckTechnique(AttckObject):
             if 'x-mitre-tactic' in item['type']:
                 for tact in self._tactic:
                     if str(tact).lower() == str(item['x_mitre_shortname']).lower():
-                    tactic_list.append(AttckTactic(**item))
+                        tactic_list.append(AttckTactic(**item))
         return tactic_list
             
 
@@ -76,7 +76,7 @@ class AttckTechnique(AttckObject):
         
 
     @property
-    def mitigation(self):
+    def mitigations(self):
         '''Returns all mitigation objects as a list that are documented to help mitigate the current technique object'''
         from .mitigation import AttckMitigation
         mitigation_list = []

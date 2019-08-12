@@ -20,18 +20,18 @@ A Python Module to interact with the Mitre ATT&CK Framework
 * All techniques have suggested mitigations as a property
 * For each class you can access additional information about related data points:
 
-* Actor
+* Actors
   * Tools used by the Actor or Group
   * Malware used by the Actor or Group
   * Techniques this Actor or Group uses
-* Malware
+* Malwares
   * Actor or Group(s) using this malware
   * Techniques this malware is used with
-* Mitigation
+* Mitigations
   * Techniques related to a specific set of mitigation suggestions
-* Tactic
+* Tactics
   * Techniques found in a specific Tactic (phase)
-* Technique
+* Techniques
   * Tactics a technique is found in
   * Mitigation suggestions for a given technique
   * Actor or Group(s) identified as using this technique
@@ -85,7 +85,7 @@ for actor in attack.actors:
     print(actor)
     
     # accessing malware used by an actor or group
-    for malware in actor.malware:
+    for malware in actor.malwares:
         print(malware)
 
     # accessing tools used by an actor or group
@@ -110,7 +110,7 @@ for malware in attack.malwares:
 
 # accessing mitigation
 for mitigation in attack.mitigations:
-    print(mit)
+    print(mitigation)
 
     # accessing techniques related to mitigation recommendations
     for technique in mitigation.techniques:
@@ -133,7 +133,7 @@ for technique in attack.techniques:
         print(tactic)
 
     # accessing mitigation recommendations for this technique
-    for mitigation in technique.mitigation:
+    for mitigation in technique.mitigations:
         print(mitigation)
 
     # accessing actors using this technique
@@ -161,6 +161,10 @@ for tool in attack.tools:
    * Initial release of pyattck to PyPi
 * 1.0.1
    * Updating Documentation with new reference links
+* 1.0.2
+   * Updated Documentation
+* 1.0.3
+   * Fixed issue with appending techniques correctly
 
 ## Meta
 
