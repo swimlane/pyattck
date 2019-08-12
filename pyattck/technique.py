@@ -39,22 +39,23 @@ class AttckTechnique(AttckObject):
         self.wiki = super(AttckTechnique, self)._set_wiki(kwargs)
         self.external_references = super(AttckTechnique, self)._set_reference(kwargs)
 
-        self.tactic = kwargs
+        self.tactics = kwargs
 
     @property
-    def tactic(self):
+    def tactics(self):
         '''Returns all tactics as a list that this technique is found in'''
         from .tactic import AttckTactic
         tactic_list = []
         for item in self.attck_obj['objects']:
             if 'x-mitre-tactic' in item['type']:
-                if str(self._tactic).lower() == str(item['x_mitre_shortname']).lower():
+                for tact in self._tactic:
+                    if str(tact).lower() == str(item['x_mitre_shortname']).lower():
                     tactic_list.append(AttckTactic(**item))
         return tactic_list
             
 
-    @tactic.setter
-    def tactic(self, obj):
+    @tactics.setter
+    def tactics(self, obj):
         """Sets the associated tactic/phase this technique is in
         
         Arguments:
@@ -68,10 +69,10 @@ class AttckTechnique(AttckObject):
         temp_list = []
         try:
             for phase in obj['kill_chain_phases']:
-                temp_list = phase['phase_name']
+                temp_list.append(phase['phase_name'])
             self._tactic = temp_list
         except:
-            self._tactic = 'no phase_name'
+            self._tactic = ['no phase_name']
         
 
     @property
