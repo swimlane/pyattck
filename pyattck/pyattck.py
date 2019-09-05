@@ -16,8 +16,15 @@ class Attck(object):
         [Attck]: Returns a Attck object that contains all data from the Mitre ATT&CK Framework
     """
 
-    def __init__(self):
-        self.attck = __MITRE_ATTCK_JSON_URL__
+    def __init__(self, local_file=False):
+        """
+        Arguments:
+            local_file (str) -- Path where json is placed
+        """
+        if local_file and os.path.exists(local_file):
+            self.attck = local_file
+        else:
+            self.attck = __MITRE_ATTCK_JSON_URL__
 
     @property
     def attck(self):
@@ -33,7 +40,11 @@ class Attck(object):
         Returns:
             (dict) -- Returns the requested json file
         """
-        self._attck = requests.get(value).json()
+        if os.path.exists(value):
+            self._attck = json.loads(open(value, "r").read())
+        else:
+            self._attck = requests.get(value).json()
+
 
     @property
     def tactics(self):
