@@ -1,4 +1,4 @@
-import json, requests
+import os, json, requests
 from .technique import AttckTechnique
 from .actor import AttckActor
 from .malware import AttckMalware
