@@ -1,4 +1,4 @@
-import json, requests
+import os, json, requests
 from .technique import AttckTechnique
 from .actor import AttckActor
 from .malware import AttckMalware
@@ -16,7 +16,12 @@ class Attck(object):
         [Attck]: Returns a Attck object that contains all data from the Mitre ATT&CK Framework
     """
 
-    def __init__(self):
+    def __init__(self, local_file_path=None):
+        """
+        Arguments:
+            local_file_path (str) -- Path where json is placed
+        """
+        self.local_file_path = local_file_path
         self.attck = __MITRE_ATTCK_JSON_URL__
 
     @property
@@ -33,7 +38,20 @@ class Attck(object):
         Returns:
             (dict) -- Returns the requested json file
         """
-        self._attck = requests.get(value).json()
+        if self.local_file_path:
+            if self.local_file_path.endswith('.json'):
+                if not os.path.exists(os.path.dirname(self.local_file_path)):
+                    os.makedirs(os.path.dirname(self.local_file_path))
+            else:
+                if not os.path.exists(self.local_file_path):
+                    os.makedirs(self.local_file_path)
+                self.local_file_path = '{}/attck.json'.format(self.local_file_path)
+            self._attck = requests.get(value).json()
+            with open(self.local_file_path, 'w') as outfile:
+                json.dump(self._attck, outfile)
+        else:
+            self._attck = requests.get(value).json()
+
 
     @property
     def tactics(self):
