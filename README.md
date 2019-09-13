@@ -64,6 +64,17 @@ from pyattck import Attck
 attack = Attck()
 ```
 
+By default **pyattck** will pull the latest json from Mitre.  If you would like to reference and save a local copy of this json file you can provide a file path when an **Attck** object is created:
+
+```python
+from pyattck import Attck
+
+attack = Attck(local_file_path='/some/local/path')
+# Alternatively you can provide a full filename
+#attack = Attck(local_file_path='/some/local/path/attck.json')
+```
+
+
 You can access the following properties on your **Attck** object:
 
 * actor
@@ -165,6 +176,8 @@ for tool in attack.tools:
    * Updated Documentation
 * 1.0.3
    * Fixed issue with appending techniques correctly
+* 1.0.4
+    * Added ability to save a local copy of the downloaded Mitre ATT&CK JSON
 
 ## Meta
 
