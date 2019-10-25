@@ -1,8 +1,9 @@
-import json 
-from collections import OrderedDict
+import json
 
-def jsonDefault(OrderedDict):
-    return OrderedDict.__dict__
+
+def json_default(obj):
+    return obj.__dict__
+
 
 class AttckObject(object):
     """
@@ -16,33 +17,38 @@ class AttckObject(object):
     def __init__(self, **kwargs):
         """Creates objects that are categorized as Mitre ATT&CK Groups (e.g. APT1, APT32, etc.)
         """
-        self.id = self._set_id(kwargs)
-        self.name = self._set_attribute(kwargs, 'name')
-        self.alias = self._set_attribute(kwargs, 'aliases')
-        self.description = self._set_attribute(kwargs, 'description')
-        self.reference = self._set_reference(kwargs)
-        self.created = self._set_attribute(kwargs, 'created')
-        self.modified = self._set_attribute(kwargs, 'modified')
-        self.stix = self._set_attribute(kwargs, 'id')
-        self.type = self._set_attribute(kwargs, 'type')
-        self.wiki = self._set_wiki(kwargs)
-        self.contributor = self._set_attribute(kwargs, 'contributor')
+        self._obj = kwargs
+        self._reference = []
+        self.load()
+
+        self.reference = self._get_reference()
+        self.id = self._get_id()
+        self.name = self._get_attribute('name')
+        self.alias = self._get_attribute('aliases')
+        self.description = self._get_attribute('description')
+        self.created = self._get_attribute('created')
+        self.modified = self._get_attribute('modified')
+        self.stix = self._get_attribute('id')
+        self.type = self._get_attribute('type')
+        self.wiki = self._get_wiki()
+        self.contributor = self._get_attribute('contributor')
 
     def __str__(self):
-        return json.dumps(self, default=jsonDefault, indent=4)
+        return json.dumps(self, default=json_default, indent=4)
 
-    def set_relationship(self, obj, id, name):
-        return_list = []
-        for item in obj['objects']:
-            if 'source_ref' in item:
-                if id in item['source_ref']:
-                    for o in obj['objects']:
-                        if o['type'] == name:
-                            if item['target_ref'] in o['id']:
-                                return_list.append(o)
-        return return_list
+    def load(self):
+        self._reference = []
+        if "external_references" in self._obj:
+            for p in self._obj['external_references']:
+                self._reference.append({
+                    'external_id': p.get('external_id', ''),
+                    'url': p.get('url', ''),
+                    'source': p.get('source_name', ''),
+                    'description': p.get('description', ''),
+                    'mitre-attack': p.get('mitre-attack', ''),
+                })
 
-    def _set_attribute(self, obj, name):
+    def _get_attribute(self, name):
         """Parent class method to set attribute based on passed in object
            and the name of the property
         
@@ -53,21 +59,15 @@ class AttckObject(object):
         Returns:
             (str) -- Returns either the value of the attribute requested or returns 'null'
         """
-        try:
-            return obj.get(name)
-        except:
-            return 'null'
+        return self._obj.get(name, 'null')
 
+    def _get_list_items(self, list_name):
+        items = self._obj.get(list_name, None)
+        if not isinstance(items, (list, tuple)):
+            items = [items]
+        return items
 
-    def _set_list_items(self, obj, list_name):
-        item_value = []
-        if list_name in obj:
-            for item in obj[list_name]:
-                item_value.append(item)
-                
-            return item_value
-
-    def _set_id(self, obj):
+    def _get_id(self):
         """Returns the Mitre ATT&CK Framework external ID 
         
         Arguments:
@@ -76,13 +76,12 @@ class AttckObject(object):
         Returns:
             (str) -- Returns the Mitre ATT&CK Framework external ID
         """
-        if "external_references" in obj:
-            for p in obj['external_references']:
-                for s in p:
-                    if p[s] == 'mitre-attack':
-                        return p['external_id']        
+        for p in self._reference:
+            if p['mitre-attack']:
+                return p['external_id']
+        return str(id(self))
 
-    def _set_wiki(self, obj):
+    def _get_wiki(self):
         """Returns the Mitre ATT&CK Framework Wiki URL
         
         Arguments:
@@ -91,49 +90,21 @@ class AttckObject(object):
         Returns:
             (str) -- Returns the Mitre ATT&CK Framework Wiki URL
         """
-        if "external_references" in obj:
-            for p in obj['external_references']:
-                for s in p:
-                    if p[s] == 'mitre-attack':
-                        return p['url']
+        for p in self._reference:
+            if p['mitre-attack']:
+                return p['url']
 
-
-    def _set_reference(self, obj):
+    def _get_reference(self):
         """Returns a list of external references from the provided Mitre ATT&CK Framework json object
         
         Arguments:
             obj (dict) -- A Mitre ATT&CK Framework json object
         
         Returns:
-            (dict) -- Returns a dict containing the following key/value pairs
+            (dict) -- Returns a list of dict containing the following key/value pairs
                 external_id (str) -- The Mitre ATT&CK Framework external ID
                 url (str)         -- The Mitre ATT&CK Framework URL
                 source_name (str) -- The Mitre ATT&CK Framework source name
                 description (str) -- The Mitre ATT&CK Framework description or None if it does not exist
         """
-        external_id = ''
-        url = ''
-        source_name = ''
-        description = ''
-
-        external_references = {}
-        if "external_references" in obj:
-            for p in obj['external_references']:
-                if 'external_id' in p:
-                    external_id = p['external_id']
-                if 'url' in p:
-                    url = p['url']
-                if 'source_name' in p:
-                    source_name = p['source_name']
-                if 'description' in p:
-                    description = p['description']
-                else:
-                    description = None
-
-                external_references.update({
-                    'external_id': external_id,
-                    'url': url,
-                    'source': source_name,
-                    'description': description
-                })
-            return external_references
+        return self._reference

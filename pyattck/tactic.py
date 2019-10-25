@@ -1,8 +1,9 @@
 from .attckobject import AttckObject
 
+
 class AttckTactic(AttckObject):
-    
-    def __init__(self, attck_obj = None, **kwargs):
+
+    def __init__(self, attck_obj, **kwargs):
         '''The AttckTactic class is used to gather information about all Mitre ATT&CK Framework Tactics.
         To access this class directly you must first instantiate it and provide the appropriate inputs, but it is easier to use the Attck class wrapper.
 
@@ -10,29 +11,20 @@ class AttckTactic(AttckObject):
             attck_obj ([json]): This should be the raw Mitre ATT&CK json object. Defaults to None, but should be provided
 
         '''
-
+        super(AttckTactic, self).__init__(**kwargs)
         self.attck_obj = attck_obj
 
-        self.id = super(AttckTactic, self)._set_id(kwargs)
-        self.created_by_ref = super(AttckTactic, self)._set_attribute(kwargs, 'created_by_ref')
-        self.type = super(AttckTactic, self)._set_attribute(kwargs, 'type')
-        self.name = super(AttckTactic, self)._set_attribute(kwargs, 'name')
-        self.description = super(AttckTactic, self)._set_attribute(kwargs, 'description')
-        self.external_reference = super(AttckTactic, self)._set_reference(kwargs)
-        self.created = super(AttckTactic, self)._set_attribute(kwargs, 'created')
-        self.modified = super(AttckTactic, self)._set_attribute(kwargs, 'modified')
-        self.stix = super(AttckTactic, self)._set_attribute(kwargs, 'id')
-        self.short_name = super(AttckTactic, self)._set_attribute(kwargs, 'x_mitre_shortname')
-        self.wiki = super(AttckTactic, self)._set_wiki(kwargs)
+        self.created_by_ref = self._get_attribute('created_by_ref')
+        self.external_reference = self.reference
+        self.short_name = self._get_attribute('x_mitre_shortname').lower()
+
+    def get_techniques(self):
+        '''Returns all techniques as a generator that are related to this tactic'''
+        for technique in self.attck_obj.techniques:
+            if self.short_name in technique.kill_chain_phases:
+                yield technique
 
     @property
     def techniques(self):
         '''Returns all techniques as a list that are related to this tactic'''
-        from .technique import AttckTechnique
-        technique_list = []
-        for item in self.attck_obj['objects']:
-            if 'kill_chain_phases' in item:
-                for prop in item['kill_chain_phases']:
-                    if str(prop['phase_name']).lower() == str(self.short_name).lower():
-                        technique_list.append(AttckTechnique(**item))
-        return technique_list
+        return list(self.get_techniques())

@@ -1,5 +1,6 @@
 from .attckobject import AttckObject
 
+
 class AttckTechnique(AttckObject):
     """A child class of AttckObject
        Creates objects which have been categorized as a technique used by attackers
@@ -8,99 +9,63 @@ class AttckTechnique(AttckObject):
         AttckObject (dict) -- Takes the Mitre ATT&CK Json object as a kwargs values
     """
 
-    def __init__(self, attck_obj = None, **kwargs):
+    def __init__(self, attck_obj, **kwargs):
         """Creates an AttckTechnique object.  
            The AttckTechnique object is a technique used by attackers.
         """
-
+        super(AttckTechnique, self).__init__()
         self.attck_obj = attck_obj
 
-        self.created_by_reference = super(AttckTechnique, self)._set_attribute(kwargs, 'created_by_ref')
-        self.id = super(AttckTechnique, self)._set_id(kwargs)
-        self.name = super(AttckTechnique, self)._set_attribute(kwargs, 'name')
-        self.alias = super(AttckTechnique, self)._set_attribute(kwargs, 'aliases')
-        self.description = super(AttckTechnique, self)._set_attribute(kwargs, 'description')
-        self.type = super(AttckTechnique, self)._set_attribute(kwargs, 'type')
-        self.wiki = super(AttckTechnique, self)._set_wiki(kwargs)
-        self.platforms = super(AttckTechnique, self)._set_list_items(kwargs, 'x_mitre_platforms')
-        self.permissions = super(AttckTechnique, self)._set_list_items(kwargs, 'x_mitre_permissions_required')
-        self.bypass = super(AttckTechnique, self)._set_list_items(kwargs, 'x_mitre_defense_bypassed')
-        self.effective_permissions = super(AttckTechnique, self)._set_list_items(kwargs, 'x_mitre_effective_permissions')
-        self.network = super(AttckTechnique, self)._set_attribute(kwargs, 'x_mitre_network_requirements')
-        self.remote = super(AttckTechnique, self)._set_attribute(kwargs, 'x_mitre_remote_support')
-        self.system_requirements = super(AttckTechnique, self)._set_attribute(kwargs, 'x_mitre_system_requirements')
-        self.detection = super(AttckTechnique, self)._set_attribute(kwargs, 'x_mitre_detection')
-        self.data_source = super(AttckTechnique, self)._set_list_items(kwargs, 'x_mitre_data_sources')
-        self.created = super(AttckTechnique, self)._set_attribute(kwargs, 'created')
-        self.modified = super(AttckTechnique, self)._set_attribute(kwargs, 'modified')
-        self.contributors = super(AttckTechnique, self)._set_list_items(kwargs, 'contributor')
-        self.stix = super(AttckTechnique, self)._set_attribute(kwargs, 'id')
+        self.created_by_reference = self._get_attribute('created_by_ref')
+        self.alias = self._get_attribute('aliases')
+        self.platforms = self._get_list_items('x_mitre_platforms')
+        self.permissions = self._get_list_items('x_mitre_permissions_required')
+        self.bypass = self._get_list_items('x_mitre_defense_bypassed')
+        self.effective_permissions = self._get_list_items('x_mitre_effective_permissions')
+        self.network = self._get_attribute('x_mitre_network_requirements')
+        self.remote = self._get_attribute('x_mitre_remote_support')
+        self.system_requirements = self._get_attribute('x_mitre_system_requirements')
+        self.detection = self._get_attribute('x_mitre_detection')
+        self.data_source = self._get_list_items('x_mitre_data_sources')
+        self.contributors = self._get_list_items('contributor')
+        self.external_references = self.reference
+        self.kill_chain_phases = []
+        for kill_chain in self._get_list_items('kill_chain_phases'):
+            phase_name = kill_chain.get('phase_name', '')
+            if phase_name:
+                self.kill_chain_phases.append(phase_name.lower())
 
-        self.wiki = super(AttckTechnique, self)._set_wiki(kwargs)
-        self.external_references = super(AttckTechnique, self)._set_reference(kwargs)
-
-        self.tactics = kwargs
+    def get_tactics(self):
+        '''Returns all tactics as a generator that this technique is found in'''
+        for tactic in self.attck_obj.tactics:
+            if tactic.short_name in self.kill_chain_phases:
+                yield tactic
 
     @property
     def tactics(self):
         '''Returns all tactics as a list that this technique is found in'''
-        from .tactic import AttckTactic
-        tactic_list = []
-        for item in self.attck_obj['objects']:
-            if 'x-mitre-tactic' in item['type']:
-                for tact in self._tactic:
-                    if str(tact).lower() == str(item['x_mitre_shortname']).lower():
-                        tactic_list.append(AttckTactic(**item))
-        return tactic_list
-            
+        return list(self.get_tactics())
 
-    @tactics.setter
-    def tactics(self, obj):
-        """Sets the associated tactic/phase this technique is in
-        
-        Arguments:
-            obj (dict) -- A Mitre ATT&CK Framework json object
-        
-        Returns:
-            (string) -- Returns a string that sets the tactic/phase this technique is in. 
-                        If there is no phase found, it will return 'no phase_name'
-        """
-
-        temp_list = []
-        try:
-            for phase in obj['kill_chain_phases']:
-                temp_list.append(phase['phase_name'])
-            self._tactic = temp_list
-        except:
-            self._tactic = ['no phase_name']
-        
+    def get_mitigations(self):
+        '''Returns all mitigation objects as a generator that are documented to help mitigate the current technique object'''
+        for rel_stix in self.attck_obj.get_relations(self.stix):
+            mitigation = self.attck_obj.get_mitigation(rel_stix)
+            if mitigation:
+                yield mitigation
 
     @property
     def mitigations(self):
         '''Returns all mitigation objects as a list that are documented to help mitigate the current technique object'''
-        from .mitigation import AttckMitigation
-        mitigation_list = []
-        for item in self.attck_obj['objects']:
-            if 'relationship_type' in item:
-                if 'mitigates' in item['relationship_type']:
-                    if self.stix in item['target_ref']:
-                        for o in self.attck_obj['objects']:
-                            if item['source_ref'] in o['id']:
-                                mitigation_list.append(AttckMitigation(**o))
-        return mitigation_list        
+        return list(self.get_mitigations())
 
+    def get_actors(self):
+        '''Returns all actor objects that have been identified as using this technique as genertor'''
+        for rel_stix in self.attck_obj.get_relations(self.stix):
+            actor = self.attck_obj.get_actor(rel_stix)
+            if actor:
+                yield actor
 
     @property
     def actors(self):
         '''Returns all actor objects that have been identified as using this technique'''
-        from .actor import AttckActor
-        actor_list = []
-        for item in self.attck_obj['objects']:
-            if 'relationship_type' in item:
-                if 'uses' in item['relationship_type']:
-                    if self.stix in item['target_ref']:
-                        if 'intrusion-set' in item['source_ref']:
-                            for o in self.attck_obj['objects']:
-                                if item['source_ref'] in o['id']:
-                                    actor_list.append(AttckActor(**o))
-        return actor_list
+        return list(self.get_actors())
