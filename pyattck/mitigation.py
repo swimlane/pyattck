@@ -36,5 +36,5 @@ class AttckMitigation(AttckObject):
                 if self.stix in item['source_ref']:
                     for o in self.attck_obj['objects']:
                         if item['target_ref'] in o['id']:
-                            technique_list.append(AttckTechnique(**o))
+                            technique_list.append(AttckTechnique(self.attck_obj, **o))
         return technique_list
