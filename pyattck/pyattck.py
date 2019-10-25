@@ -58,6 +58,8 @@ class Attck(object):
                     self.put_mitigation(new_obj)
                 elif cls == AttckTactic:
                     self.put_tactic(new_obj)
+                elif cls == AttckTechnique:
+                    self.put_technique(new_obj)
                 elif cls == AttckTools:
                     self.put_tools(new_obj)
 

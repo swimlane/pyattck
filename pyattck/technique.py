@@ -13,7 +13,7 @@ class AttckTechnique(AttckObject):
         """Creates an AttckTechnique object.  
            The AttckTechnique object is a technique used by attackers.
         """
-        super(AttckTechnique, self).__init__()
+        super(AttckTechnique, self).__init__(**kwargs)
         self.attck_obj = attck_obj
 
         self.created_by_reference = self._get_attribute('created_by_ref')
