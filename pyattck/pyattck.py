@@ -69,9 +69,8 @@ class Attck(object):
                 self._relations[source].append(target)
                 self._relations[target].append(source)
 
-    def get_relations(self, relation_type, stix):
-        if relation_type in self._relations:
-            return self._relations[relation_type][stix]
+    def get_relations(self, stix):
+        return self._relations[stix]
 
     def get_actor(self, actor_stix):
         return self._actors.get(actor_stix, None)
