@@ -40,7 +40,7 @@ class AttckTools(AttckObject):
                         if 'attack-pattern' in item['target_ref']:
                             for o in self.attck_obj['objects']:
                                 if item['target_ref'] in o['id']:
-                                    technique_list.append(AttckTechnique(**o))
+                                    technique_list.append(AttckTechnique(self.attck_obj, **o))
         return technique_list
 
     @property
@@ -55,5 +55,5 @@ class AttckTools(AttckObject):
                         if 'intrusion-set' in item['source_ref']:
                             for o in self.attck_obj['objects']:
                                 if item['source_ref'] in o['id']:
-                                    actor_list.append(AttckActor(**o))
+                                    actor_list.append(AttckActor(self.attck_obj, **o))
         return actor_list
