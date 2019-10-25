@@ -58,76 +58,63 @@ class Attck(object):
         """Creates AttckTactic objects
         
         Returns:
-            (AttckTactic) -- (Returns a list of AttckTactic objects)
+            (AttckTactic) -- (Returns a iterator of AttckTactic objects)
         """
-        tactic_list = []
         for tactic in self.attck['objects']:
             if tactic['type'] == 'x-mitre-tactic':
-                tactic_list.append(AttckTactic(attck_obj=self.attck, **tactic))
-        return tactic_list
+                yield AttckTactic(attck_obj=self.attck, **tactic)
 
     @property
     def mitigations(self):
         """Creates AttckMitigation objects
         
         Returns:
-            (AttckMitigation) -- (Returns a list of AttckMitigation objects)
+            (AttckMitigation) -- (Returns a iterator of AttckMitigation objects)
         """
-        mitigation_list = []
         for mitigation in self.attck['objects']:
             if mitigation['type'] == 'course-of-action':
-                mitigation_list.append(AttckMitigation(attck_obj=self.attck, **mitigation))
-        return mitigation_list
+                yield AttckMitigation(attck_obj=self.attck, **mitigation)
                 
     @property
     def actors(self):
         """Creates AttckActor objects
         
         Returns:
-            (AttckActor) -- (Returns a list of AttckActor objects)
+            (AttckActor) -- (Returns a iterator of AttckActor objects)
         """
-        group_list = []
         for group in self.attck['objects']:
             if group['type'] == 'intrusion-set':
-                group_list.append(AttckActor(attck_obj=self.attck, **group))
-        return group_list
+                yield AttckActor(attck_obj=self.attck, **group)
 
     @property
     def tools(self):
         """Creates AttckTools objects
         
         Returns:
-            (AttckTools) -- Returns a list of AttckTools objects
+            (AttckTools) -- Returns a iterator of AttckTools objects
         """
-        tools_list = []
         for tools in self.attck['objects']:
             if (tools['type'] == 'tool'):
-                tools_list.append(AttckTools(attck_obj=self.attck, **tools))
-        return tools_list
+                yield AttckTools(attck_obj=self.attck, **tools)
 
     @property
     def malwares(self):
         """Creates AttckMalware objects
         
         Returns:
-            (AttckMalware) -- Returns a list of AttckMalware objects
+            (AttckMalware) -- Returns a iterator of AttckMalware objects
         """
-        malware_list = []
         for malware in self.attck['objects']:
             if (malware['type'] == 'malware'):
-
-                malware_list.append(AttckMalware(attck_obj=self.attck, **malware))
-        return malware_list
+                yield AttckMalware(attck_obj=self.attck, **malware)
 
     @property
     def techniques(self):
         """Creates AttckTechnique objects
         
         Returns:
-            (AttckTechnique) -- Returns a list of AttckTechnique objects
+            (AttckTechnique) -- Returns a iterator of AttckTechnique objects
         """
-        technique_list = []
         for technique in self.attck["objects"]:
             if (technique['type'] == 'attack-pattern'):
-                technique_list.append(AttckTechnique(attck_obj=self.attck, **technique))
-        return technique_list
+                yield AttckTechnique(attck_obj=self.attck, **technique)
