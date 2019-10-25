@@ -19,19 +19,10 @@ class Attck(object):
     def __init__(self, local_file_path=None):
         """
         Arguments:
-            local_file_path (str) -- Path where json is placed, if is file it will loaded locally
+            local_file_path (str) -- Path where json is placed
         """
         self.local_file_path = local_file_path
-        load = True
-        if os.path.isfile(self.local_file_path):
-            with open(self.local_file_path) as f:
-                try:
-                    self._attck = json.load(f)
-                    load = False
-                except (json.JSONDecodeError, UnicodeDecodeError):
-                    pass
-        if load:
-            self.attck = __MITRE_ATTCK_JSON_URL__
+        self.attck = __MITRE_ATTCK_JSON_URL__
 
     @property
     def attck(self):
@@ -140,3 +131,22 @@ class Attck(object):
             if (technique['type'] == 'attack-pattern'):
                 technique_list.append(AttckTechnique(attck_obj=self.attck, **technique))
         return technique_list
+
+
+class LocalAttck(Attck):
+    def __init__(self, local_file_path=None):
+        """
+        Arguments:
+            local_file_path (str) -- Path where json is placed, if is file it will loaded locally
+        """
+        load = True
+        if os.path.isfile(self.local_file_path):
+            with open(self.local_file_path) as f:
+                try:
+                    self._attck = json.load(f)
+                    load = False
+                except (json.JSONDecodeError, UnicodeDecodeError):
+                    pass
+        if load:
+            self.attck = __MITRE_ATTCK_JSON_URL__
+            
