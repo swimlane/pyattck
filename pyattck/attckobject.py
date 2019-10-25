@@ -77,7 +77,7 @@ class AttckObject(object):
             (str) -- Returns the Mitre ATT&CK Framework external ID
         """
         for p in self._reference:
-            if p['mitre-attack']:
+            if p['source'] == 'mitre-attack':
                 return p['external_id']
         return str(id(self))
 

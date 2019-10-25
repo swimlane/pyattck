@@ -107,7 +107,7 @@ class Attck(object):
         if technique.stix not in self._techniques:
             self._techniques[technique.stix] = technique
 
-    def get_tool(self, tool_stix):
+    def get_tools(self, tool_stix):
         return self._tools.get(tool_stix, None)
 
     def put_tools(self, tool):
