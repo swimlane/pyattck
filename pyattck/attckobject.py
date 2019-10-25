@@ -62,9 +62,7 @@ class AttckObject(object):
         return self._obj.get(name, 'null')
 
     def _get_list_items(self, list_name):
-        items = self._obj.get(list_name, None)
-        if items is None:
-            return []
+        items = self._obj.get(list_name, [])
         if not isinstance(items, (list, tuple)):
             items = [items]
         return items
