@@ -19,10 +19,19 @@ class Attck(object):
     def __init__(self, local_file_path=None):
         """
         Arguments:
-            local_file_path (str) -- Path where json is placed
+            local_file_path (str) -- Path where json is placed, if is file it will loaded locally
         """
         self.local_file_path = local_file_path
-        self.attck = __MITRE_ATTCK_JSON_URL__
+        load = True
+        if os.path.isfile(self.local_file_path):
+            with open(self.local_file_path) as f:
+                try:
+                    self._attck = json.load(f)
+                    load = False
+                except (json.JSONDecodeError, UnicodeDecodeError):
+                    pass
+        if load:
+            self.attck = __MITRE_ATTCK_JSON_URL__
 
     @property
     def attck(self):
