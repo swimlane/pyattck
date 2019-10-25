@@ -50,7 +50,7 @@ class AttckTechnique(AttckObject):
             if 'x-mitre-tactic' in item['type']:
                 for tact in self._tactic:
                     if str(tact).lower() == str(item['x_mitre_shortname']).lower():
-                        tactic_list.append(AttckTactic(**item))
+                        tactic_list.append(AttckTactic(self.attck_obj, **item))
         return tactic_list
             
 
@@ -86,7 +86,7 @@ class AttckTechnique(AttckObject):
                     if self.stix in item['target_ref']:
                         for o in self.attck_obj['objects']:
                             if item['source_ref'] in o['id']:
-                                mitigation_list.append(AttckMitigation(**o))
+                                mitigation_list.append(AttckMitigation(self.attck_obj, **o))
         return mitigation_list        
 
 
@@ -102,5 +102,5 @@ class AttckTechnique(AttckObject):
                         if 'intrusion-set' in item['source_ref']:
                             for o in self.attck_obj['objects']:
                                 if item['source_ref'] in o['id']:
-                                    actor_list.append(AttckActor(**o))
+                                    actor_list.append(AttckActor(self.attck_obj, **o))
         return actor_list
