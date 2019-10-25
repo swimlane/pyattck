@@ -40,7 +40,7 @@ class AttckActor(AttckObject):
                     for o in self.attck_obj['objects']:
                         if o['type'] == 'malware':
                             if item['target_ref'] in o['id']:
-                                malware_list.append(AttckMalware(**o))
+                                malware_list.append(AttckMalware(self.attck_obj, **o))
         return malware_list
 
     @property
@@ -54,7 +54,7 @@ class AttckActor(AttckObject):
                     for o in self.attck_obj['objects']:
                         if o['type'] == 'tool':
                             if item['target_ref'] in o['id']:
-                                tools_list.append(AttckTools(**o))
+                                tools_list.append(AttckTools(self.attck_obj, **o))
         return tools_list
 
     @property
@@ -68,5 +68,5 @@ class AttckActor(AttckObject):
                     for o in self.attck_obj['objects']:
                         if o['type'] == 'attack-pattern':
                             if item['target_ref'] in o['id']:
-                                technique_list.append(AttckTechnique(**o))
+                                technique_list.append(AttckTechnique(self.attck_obj, **o))
         return technique_list
