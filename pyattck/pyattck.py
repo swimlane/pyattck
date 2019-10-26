@@ -27,6 +27,14 @@ class Attck(object):
         'attack-pattern': AttckTechnique,
         'tool': AttckTools,
     }
+    put_call_mapping = {
+        AttckActor: 'put_actors',
+        AttckMalware: 'put_malwares',
+        AttckMitigation: 'put_mitigations',
+        AttckTactic: 'put_tactics',
+        AttckTechnique: 'put_techniques',
+        AttckTools: 'put_tools',
+    }
 
     def __init__(self, local_file_path=None):
         """
@@ -34,43 +42,87 @@ class Attck(object):
             local_file_path (str) -- Path where json is placed
         """
         self.local_file_path = local_file_path
-        self.attck = __MITRE_ATTCK_JSON_URL__
-        self._tactics = {}
-        self._mitigations = {}
         self._actors = {}
+        self._attck = {}
+        self._mitigations = {}
         self._malwares = {}
+        self._tactics = {}
         self._techniques = {}
         self._tools = {}
-        self._relations = defaultdict(list)
-        self.load()
+        self._relations = defaultdict(set)
+        self.load_file()
+        self.parse()
 
-    def load(self):
-        for obj in self.attck.get('objects', []):
-            obj_type = obj.get('type', '')
-            if obj_type in self.type_mapping:
-                cls = self.type_mapping.get(obj_type)
-                new_obj = cls(self, **obj)
-                if cls == AttckActor:
-                    self.put_actor(new_obj)
-                elif cls == AttckMalware:
-                    self.put_malware(new_obj)
-                elif cls == AttckMitigation:
-                    self.put_mitigation(new_obj)
-                elif cls == AttckTactic:
-                    self.put_tactic(new_obj)
-                elif cls == AttckTechnique:
-                    self.put_technique(new_obj)
-                elif cls == AttckTools:
-                    self.put_tools(new_obj)
+    def parse(self):
+        objs = self._attck.get('objects', [])
 
-            if 'relationship_type' in obj:
-                source = obj['source_ref']
-                target = obj['target_ref']
-                self._relations[source].append(target)
-                self._relations[target].append(source)
+        try:
+            while True:
+                obj = objs.pop()
+                obj_type = obj.get('type', '')
+                if obj_type in self.type_mapping:
+                    cls = self.type_mapping.get(obj_type)
+                    new_obj = cls(**obj)
+                    if cls == AttckActor:
+                        self.put_actor(new_obj)
+                    elif cls == AttckMalware:
+                        self.put_malware(new_obj)
+                    elif cls == AttckMitigation:
+                        self.put_mitigation(new_obj)
+                    elif cls == AttckTactic:
+                        self.put_tactic(new_obj)
+                    elif cls == AttckTechnique:
+                        self.put_technique(new_obj)
+                    elif cls == AttckTools:
+                        self.put_tools(new_obj)
 
-    def get_relations(self, stix):
-        return self._relations[stix]
+                    if new_obj.stix in self._relations:
+                        for rel_stix in self._relations[new_obj.stix]:
+                            self._link_relations(new_obj.stix, rel_stix)
+                        del self._relations[new_obj.stix]
+
+                if 'relationship_type' in obj:
+                    self._put_relations(obj['source_ref'], obj['target_ref'])
+        except (IndexError, KeyError):
+            pass
+
+        # self._relations = defaultdict(set) TODO
+
+    def _get_object_by_stix(self, stix):
+        type_ = stix.split('--')[0]
+        if type_ == 'intrusion-set':
+            return self._actors.get(stix, None)
+        elif type_ == 'malware':
+            return self._malwares.get(stix, None)
+        elif type_ == 'course-of-action':
+            return self._mitigations.get(stix, None)
+        elif type_ == 'x-mitre-tactic':
+            return self._tactics.get(stix, None)
+        elif type_ == 'attack-pattern':
+            return self._techniques.get(stix, None)
+        elif type_ == 'tool':
+            return self._tools.get(stix, None)
+
+    def _link_relations(self, source, target):
+        soc_obj = self._get_object_by_stix(source)
+        tar_obj = self._get_object_by_stix(target)
+        if soc_obj and tar_obj:
+            func_name = self.put_call_mapping.get(soc_obj.__class__, '')
+            func = getattr(tar_obj, func_name, None)
+            if func:
+                func(soc_obj)
+            func_name = self.put_call_mapping.get(tar_obj.__class__, '')
+            func = getattr(soc_obj, func_name, None)
+            if func:
+                func(tar_obj)
+        return soc_obj, tar_obj
+
+    def _put_relations(self, source, target):
+        soc_obj, tar_obj = self._link_relations(source, target)
+        if not soc_obj:
+            self._relations[source].add(target)
+        if not tar_obj:
+            self._relations[target].add(source)
 
     def get_actor(self, actor_stix):
         return self._actors.get(actor_stix, None)
@@ -114,12 +166,10 @@ class Attck(object):
         if tool.stix not in self._tools:
             self._tools[tool.stix] = tool
 
-    @property
-    def attck(self):
-        return self._attck
-    
-    @attck.setter
-    def attck(self, value):
+    def _read_file(self):
+        self._attck = requests.get(__MITRE_ATTCK_JSON_URL__).json()
+
+    def load_file(self):
         """Requests the Mitre ATT&CK json file
         
         Arguments:
@@ -136,11 +186,11 @@ class Attck(object):
                 if not os.path.exists(self.local_file_path):
                     os.makedirs(self.local_file_path)
                 self.local_file_path = '{}/attck.json'.format(self.local_file_path)
-            self._attck = requests.get(value).json()
+            self._read_file()
             with open(self.local_file_path, 'w') as outfile:
                 json.dump(self._attck, outfile)
         else:
-            self._attck = requests.get(value).json()
+            self._read_file()
 
     @property
     def tactics(self):
