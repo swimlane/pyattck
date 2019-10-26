@@ -86,7 +86,8 @@ class Attck(object):
         except (IndexError, KeyError):
             pass
 
-        # self._relations = defaultdict(set) TODO
+    def lost_relations(self):
+        return self._relations
 
     def _get_object_by_stix(self, stix):
         type_ = stix.split('--')[0]
