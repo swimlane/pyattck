@@ -15,5 +15,3 @@ deploy:
   provider: releases
   file: "generated_attck_data.json"
   skip_cleanup: true
-  on:
-    tags: true
