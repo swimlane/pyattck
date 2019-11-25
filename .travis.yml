@@ -14,6 +14,6 @@ script:
 deploy:
   provider: releases
   api_key: $GITHUB_TOKEN
-  file: "generated_attck_data.json"
+  file: "generateattcks/generated_attck_data.json"
   skip_cleanup: true
   overwrite: true
