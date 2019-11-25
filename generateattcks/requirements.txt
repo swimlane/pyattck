@@ -1,3 +1,4 @@
 requests
 pyyaml
 pygithub
+xlrd
