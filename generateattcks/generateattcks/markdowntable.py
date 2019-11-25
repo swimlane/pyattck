@@ -1,5 +1,4 @@
 import markdown, codecs, re
-from bs4 import BeautifulSoup
 import collections
 
 

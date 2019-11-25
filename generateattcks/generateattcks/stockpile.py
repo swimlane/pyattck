@@ -1,5 +1,4 @@
 import requests, yaml, base64
-from github import Github
 
 from githubcontroller import GitHubController
 from attacktemplate import AttackTemplate
