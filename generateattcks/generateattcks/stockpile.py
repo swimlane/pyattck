@@ -90,8 +90,9 @@ class MitreStockpile(GitHubController):
                 template.add_dataset('Mitre Stockpile - {}'.format(item['description']),item)
             return template.get()
         else:
-            if 'phases' in content:
-                self.__temp_attack_paths.append(content)
+            if content:
+                if 'phases' in content:
+                    self.__temp_attack_paths.append(content)
                
            
     def __download_raw_content(self, url):
