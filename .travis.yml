@@ -5,6 +5,9 @@ python:
 - '3.4'
 - '3.5'
 - '3.6'
+env:
+ - github_token:
+    secure: "08xXrFndF3g3Jg4uKlQ/jJ4QpIBkbJVY81ak4J5FOnRm6Iv4FfmqrRWDOYTiEFYno5OnYalSzoIbdmavoPTsQ4Yp/orPBt4cuRergff5Xdj5T99VIb2SjpHK5LO6tXbDUFKdYP3ATbudjWC4tu8TVKfA8CAQpv5OwQTFH8kFSh0YvOPXbXtEwsvS2MsW+MyVJO0pTxoG/ttxGsLMTQZJuiP82q/jAN5Clt826cAF9BDa6Kazs99xtNXV8qXhvYUCU73d1pohOUgPNnze/tyDb6AIKdYOAndBT9PLm/pkp5GCmVOYQ0vKTn3jVBMZXZfBhNm72gzhWGvw+7oUj8VEf1tyd18sTuIAHM5B+wKKy1QFlDITKd1JSCWf+geGB+IoGGlMzDw4+T4yYAqY6e5d5NV259sRahY9Wpsq/khD4InPJ93V71ffsy8BwgIWczyaVVBD705g+/8wTOc846qvOiz66QBHFkDT2RiccwJmC/7p8GKUrqo7nEx0nDnFLVZ2O6iwy5jZL7vU0VsD2+Xs9i7XCssT/JPZm9REAj51qqCgBB9bfZTdKJBHkKuFV0sL/+uktw1MgqBTQr4vTLIcSwVN8EeXqlua9vkakRvnw4Bz8MfE7SbqzF/uA94QEqq2dd8zUNnvcAkWjJ/2FP3+0ka+1hPzQ+fuKWhnom5DoM8="
 before_install:
   - cd generateattcks
 install:
@@ -13,8 +16,6 @@ script:
   - python run.py
 deploy:
   provider: releases
-  github_token:
-    secure: "08xXrFndF3g3Jg4uKlQ/jJ4QpIBkbJVY81ak4J5FOnRm6Iv4FfmqrRWDOYTiEFYno5OnYalSzoIbdmavoPTsQ4Yp/orPBt4cuRergff5Xdj5T99VIb2SjpHK5LO6tXbDUFKdYP3ATbudjWC4tu8TVKfA8CAQpv5OwQTFH8kFSh0YvOPXbXtEwsvS2MsW+MyVJO0pTxoG/ttxGsLMTQZJuiP82q/jAN5Clt826cAF9BDa6Kazs99xtNXV8qXhvYUCU73d1pohOUgPNnze/tyDb6AIKdYOAndBT9PLm/pkp5GCmVOYQ0vKTn3jVBMZXZfBhNm72gzhWGvw+7oUj8VEf1tyd18sTuIAHM5B+wKKy1QFlDITKd1JSCWf+geGB+IoGGlMzDw4+T4yYAqY6e5d5NV259sRahY9Wpsq/khD4InPJ93V71ffsy8BwgIWczyaVVBD705g+/8wTOc846qvOiz66QBHFkDT2RiccwJmC/7p8GKUrqo7nEx0nDnFLVZ2O6iwy5jZL7vU0VsD2+Xs9i7XCssT/JPZm9REAj51qqCgBB9bfZTdKJBHkKuFV0sL/+uktw1MgqBTQr4vTLIcSwVN8EeXqlua9vkakRvnw4Bz8MfE7SbqzF/uA94QEqq2dd8zUNnvcAkWjJ/2FP3+0ka+1hPzQ+fuKWhnom5DoM8="
   file: "generated_attck_data.json"
   skip_cleanup: true
   on:
