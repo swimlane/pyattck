@@ -9,7 +9,7 @@ class GitHubController(object):
         self.github = Github(token)
 
     def __get_token_from_env_variable(self):
-        return os.environ['GITHUB_TOKEN']
+        return os.environ['GH_TOKEN']
 
     def __get_token_from_config(self):
         cfg = ''
