@@ -10,7 +10,7 @@ before_install:
 install:
   - pip install -U -r requirements.txt
 script:
-  - run.py
+  - python run.py
 deploy:
   provider: releases
   github_token:
