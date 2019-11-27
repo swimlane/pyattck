@@ -12,7 +12,7 @@ install:
 script:
 - python run.py
 after_success:
-  - ./push.sh
+  - .travis/push.sh
 env:
   global:
     secure: SMNawNCPLfz+i3jftiv0AR5bxmHPI46hTVib8ndUacH0yAeh5owHloa8sU3ceXnKNBa2V/KDvDRyCwwu6MWEnunZhlgKBiw+qKrlTK/az0G7AsL1cKhWNGBqdRTF+NdqyRWqSe3twmBzB4Yf96qN39Z/NpUb7+p6TzVtKgy0qmHf5eNJ1PM5lDWLhhidM4DrkvAnIsxeay7RxTfTrhgs3kI9sdj+CwXyh/DWeY8C8Ug70AALJk2guFUJ+cPywgv6K+bc5g6d2PF7NnO0rNjCPrc+XzMqVwqsW+exrcOrQxXX+fO7vpGYdNXCL1nSj0vNycs2ctNwv6abRAigQxeoo/ttjDWH6jhWK9cCKL9G6zAWlN8/qJzO94KhB0RR4e/EYgsAIKcLWWtPkSdfhIPOL+VME+UjQPEt+rz3PXVJKa0grOMDbr0QgxyqtpfccSTvUTB5jTmuWv21VWyGUiQREHxtFcumMF0DlJsQzX4+NtZu3TeilJIxWiyE+x3Yj93xTOGGrG+ydQhxOipVStJRUkrcLi80L2/bEhR4og8cUMVm8ahaZrCh+HxkpcIqjmB2vn2fNFJCIREr3mG6p8JDMfgS6W06LVIAMxzX12kFRGcph0OWeFLHe3UMIjXt5+MYIJbtgT50bl2XWfPrtI3k8j6Jm6dKVhkriPDSJrN3HeI=
