@@ -10,6 +10,7 @@ install:
 script:
 - python ./generateattcks/run.py
 after_success:
+  - chmod +x ./push.sh
   - ./push.sh
 env:
   global:
