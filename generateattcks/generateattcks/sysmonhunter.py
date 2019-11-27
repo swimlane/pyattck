@@ -8,7 +8,7 @@ class SysmonHunter(object):
 
     def __get_data(self):
         response = requests.get(self.__URL)
-        return yaml.load(response.content)
+        return yaml.load(response.content, Loader=yaml.FullLoader)
 
     def gen_dict_extract(self, key, var):
         if hasattr(var,'iteritems'):

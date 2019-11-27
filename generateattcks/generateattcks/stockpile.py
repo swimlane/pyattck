@@ -98,4 +98,4 @@ class MitreStockpile(GitHubController):
     def __download_raw_content(self, url):
         response = self.session.get(url)
         if response.status_code == 200:
-            return yaml.load(response.content)
+            return yaml.load(response.content, Loader=yaml.FullLoader)

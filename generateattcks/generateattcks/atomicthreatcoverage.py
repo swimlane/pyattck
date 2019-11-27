@@ -50,7 +50,7 @@ class AtomicThreatCoverage(GitHubController):
                             elif content is None and stripped_match.rstrip('\r\n').strip():
                                 content = stripped_match.strip()
                                 if 'Sigma' in name and content:
-                                    yml = yaml.load(content.replace('---',''))
+                                    yml = yaml.load(content.replace('---',''), Loader=yaml.FullLoader)
                                     if 'tags' in yml:
                                         for t in yml['tags']:
                                             if len(t.split('.')) >= 2:
