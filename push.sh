@@ -1,8 +1,8 @@
 #!/bin/sh
 
 setup_git() {
-  git config --global user.email "joshswimlane@swimlane.com"
-  git config --global user.name "Travis CI"
+  git config --global user.email "45767933+joshswimlane@users.noreply.github.com"
+  git config --global user.name "joshswimlane
 }
 
 commit_website_files() {
