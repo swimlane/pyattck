@@ -1,7 +1,7 @@
 import requests, yaml, base64
 
-from githubcontroller import GitHubController
-from attacktemplate import AttackTemplate
+from .githubcontroller import GitHubController
+from .attacktemplate import AttackTemplate
 
 
 class MitreStockpile(GitHubController):

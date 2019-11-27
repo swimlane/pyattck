@@ -1,6 +1,6 @@
 import requests, yaml
 
-from attacktemplate import AttackTemplate
+from .attacktemplate import AttackTemplate
 
 class SysmonHunter(object):
 

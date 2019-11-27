@@ -2,7 +2,7 @@ import requests, xlrd
 from io import BytesIO
 from zipfile import ZipFile
 
-from attacktemplate import AttackTemplate
+from .attacktemplate import AttackTemplate
 
 
 class AdversaryEmulation(object):

@@ -1,5 +1,3 @@
-
-
 class AttackTemplate(object):
 
     def __init__(self):

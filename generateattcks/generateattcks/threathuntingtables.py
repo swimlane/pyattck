@@ -1,6 +1,6 @@
 import requests, csv
 
-from attacktemplate import AttackTemplate
+from .attacktemplate import AttackTemplate
 
 
 class ThreatHuntingTables(object):

@@ -1,8 +1,8 @@
 import requests, re, StringIO, yaml
 
-from githubcontroller import GitHubController
-from attacktemplate import AttackTemplate
-from markdowntable import MarkdownTable
+from .githubcontroller import GitHubController
+from .attacktemplate import AttackTemplate
+from .markdowntable import MarkdownTable
 
 
 class OsqueryAttack(GitHubController):

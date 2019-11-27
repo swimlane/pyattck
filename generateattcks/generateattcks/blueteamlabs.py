@@ -1,7 +1,7 @@
 import requests, yaml
 
-from githubcontroller import GitHubController
-from attacktemplate import AttackTemplate
+from .githubcontroller import GitHubController
+from .attacktemplate import AttackTemplate
 
 
 class BlueTeamLabs(GitHubController):

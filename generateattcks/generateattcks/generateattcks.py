@@ -1,13 +1,13 @@
 import datetime, json
 
-from adversaryemulation import AdversaryEmulation
-from atomicredteam import AtomicRedTeam
-from stockpile import MitreStockpile
-from threathuntingtables import ThreatHuntingTables
-from sysmonhunter import SysmonHunter
-from blueteamlabs import BlueTeamLabs
-from atomicthreatcoverage import AtomicThreatCoverage
-from osqueryattack import OsqueryAttack
+from .adversaryemulation import AdversaryEmulation
+from .atomicredteam import AtomicRedTeam
+from .stockpile import MitreStockpile
+from .threathuntingtables import ThreatHuntingTables
+from .sysmonhunter import SysmonHunter
+from .blueteamlabs import BlueTeamLabs
+from .atomicthreatcoverage import AtomicThreatCoverage
+from .osqueryattack import OsqueryAttack
 
 class GenerateAttcks(object):
 
