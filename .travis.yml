@@ -9,6 +9,7 @@ script:
 after_script:
   - git config credential.helper "store --file=.git/credentials"
   - echo "https://${GH_TOKEN}:@github.com" > .git/credentials
+  - echo "$(cat generated_attck_data.json)"
   - git add "generated_attck_data.json"
   - git commit -m 'Travis build $TRAVIS_BUILD_NUMBER'
   - git push origin master --quiet --force
