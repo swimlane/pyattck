@@ -65,8 +65,8 @@ class MitreStockpile(GitHubController):
             if content:
                 for path in self.__temp_attack_paths:
                     for item in content['parsed_datasets']:
-                        for k,v in item.iteritems():
-                            for key,val in path['phases'].iteritems():
+                        for k,v in item.items():
+                            for key,val in path['phases'].items():
                                 if isinstance(val, list):
                                     for i in val:
                                         if v['id'] == i:

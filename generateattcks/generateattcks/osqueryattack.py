@@ -38,7 +38,7 @@ class OsqueryAttack(GitHubController):
         response = self.session.get(url)
         if response.status_code == 200:
             content = response.json()
-            for key,val in content['queries'].iteritems():
+            for key,val in content['queries'].items():
                 temp = val['description'].split('ATT&CK ')
                 if len(temp) <= 2:
                     template = AttackTemplate()
@@ -49,7 +49,7 @@ class OsqueryAttack(GitHubController):
                     for technique in technique_list:
                         template = AttackTemplate()
                         template.id = technique
-                        for k,v in val.iteritems():
+                        for k,v in val.items():
                             if 'query' in k:
                                 template.add_possible_queries('Osquery ATT&CK',v,name=description)
                             

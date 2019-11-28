@@ -39,7 +39,7 @@ class AtomicRedTeam(GitHubController):
                 if 'command' in test['executor']:
                     if 'input_arguments' in test:
                         self.temp_command_string = None
-                        for key,val in test['input_arguments'].iteritems():
+                        for key,val in test['input_arguments'].items():
                             replacement_string = '#{{{0}}}'.format(key)
                             if self.temp_command_string is None:
                                 try:

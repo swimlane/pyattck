@@ -11,8 +11,8 @@ class SysmonHunter(object):
         return yaml.load(response.content, Loader=yaml.FullLoader)
 
     def gen_dict_extract(self, key, var):
-        if hasattr(var,'iteritems'):
-            for k, v in var.iteritems():
+        if hasattr(var,'items'):
+            for k, v in var.items():
                 if k == key:
                     yield v
                 if isinstance(v, dict):

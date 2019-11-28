@@ -36,7 +36,7 @@ class AdversaryEmulation(object):
                     for tech in techniques:
                         new_dict = {}
                         new_dict['Category'] = tech
-                        for key, val in item.iteritems():
+                        for key, val in item.items():
                             if 'Category' != key:
                                 new_dict[key] = val
                         
