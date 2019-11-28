@@ -13,7 +13,7 @@ after_script:
   - git config credential.helper "store --file=.git/credentials"
   - echo "https://${GH_TOKEN}:@github.com" > .git/credentials
   - git add "generated_attck_data.json"
-  - git commit --message "Travis build: ${TRAVIS_BUILD_NUMBER}"
+  - git commit --message "Travis build: $TRAVIS_BUILD_NUMBER"
   - git push origin master --quiet --force
 env:
   global:
