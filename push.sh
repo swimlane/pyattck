@@ -6,13 +6,12 @@ setup_git() {
 }
 
 commit_website_files() {
-  git checkout -b master
-  git add . generated_attck_data.json
+  git add generated_attck_data.json
   git commit --message "Travis build: $TRAVIS_BUILD_NUMBER"
 }
 
 upload_files() {
-  git push origin master --quiet 
+  git push origin master --quiet --force
 }
 
 setup_git
