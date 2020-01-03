@@ -1,0 +1,109 @@
+import datetime, json
+
+from .adversaryemulation import AdversaryEmulation
+from .atomicredteam import AtomicRedTeam
+from .stockpile import MitreStockpile
+from .threathuntingtables import ThreatHuntingTables
+from .sysmonhunter import SysmonHunter
+from .blueteamlabs import BlueTeamLabs
+from .atomicthreatcoverage import AtomicThreatCoverage
+from .osqueryattack import OsqueryAttack
+
+class GenerateAttcks(object):
+
+    def __init__(self):
+        self._datasets = {}
+        self._datasets['last_updated'] = datetime.datetime.now().isoformat()
+        self._datasets['techniques'] = []
+
+
+    def get(self):
+        self.add_adversary_emulation()
+        self.add_atomic_red_team()
+        self.add_mitre_stockpile()
+        self.add_threat_hunting_tables()
+        self.add_sysmon_hunter()
+        self.add_blue_team_labs()
+        self.add_atomic_threat_coverage()
+        self.add_osquery_attack()
+        return self._datasets
+        
+    def save(self):
+        with open('generated_attck_data.json', 'w') as f:
+            f.write(json.dumps(self.get()))
+
+    def add_adversary_emulation(self):
+        for item in AdversaryEmulation().get():
+            self.__add_to_output(item)
+
+    def add_atomic_red_team(self):
+        for item in AtomicRedTeam().get():
+            self.__add_to_output(item)
+
+    def add_mitre_stockpile(self):
+        stockpile = MitreStockpile()
+        stockpile.run()
+        for item in stockpile.get_stockpile():
+            self.__add_to_output(item)
+
+    def add_threat_hunting_tables(self):
+        for item in ThreatHuntingTables().get():
+            self.__add_to_output(item)
+    
+    def add_sysmon_hunter(self):
+        for item in SysmonHunter().get():
+            self.__add_to_output(item)
+
+    def add_blue_team_labs(self):
+        for item in BlueTeamLabs().get():
+            self.__add_to_output(item)
+
+    def add_atomic_threat_coverage(self):
+        for item in AtomicThreatCoverage().get():
+            self.__add_to_output(item)
+        
+    def add_osquery_attack(self):
+        for item in OsqueryAttack().get():
+            self.__add_to_output(item)
+
+    def __add_to_output(self, data):
+        status = False
+        for t in self._datasets['techniques']:
+            if data['technique_id'].startswith('T') and len(data['technique_id']) == 5:
+                if data['technique_id'] == t['technique_id']:
+                    status = True
+                    if 'commands' in data:
+                        if 'commands' not in t:
+                            t['commands'] = []
+                        for item in data['commands']:
+                            t['commands'].append(item)
+                    if 'parsed_datasets' in data:
+                        if 'parsed_datasets' not in t:
+                            t['parsed_datasets'] = []
+                        for item in data['parsed_datasets']:
+                            t['parsed_datasets'].append(item)
+                    if 'command_list' in data:
+                        if 'command_list' not in t:
+                            t['command_list'] = []
+                        for item in data['command_list']:
+                            t['command_list'].append(item)
+                    if 'attack_paths' in data:
+                        if 'attack_paths' not in t:
+                            t['attack_paths'] = []
+                        for item in data['attack_paths']:
+                            t['attack_paths'].append(item)
+                    if 'queries' in data:
+                        if 'queries' not in t:
+                            t['queries'] = []
+                        for item in data['queries']:
+                            t['queries'].append(item)
+
+        if not status:
+            self._datasets['techniques'].append({
+                'technique_id': data['technique_id'],
+                'commands': [] if 'commands' not in data else data['commands'],
+                'parsed_datasets': [] if 'parsed_datasets' not in data else data['parsed_datasets'],
+                'command_list': [] if 'command_list' not in data else data['command_list'],
+                'attack_paths': [] if 'attack_paths' not in data else data['attack_paths'],
+                'queries': [] if 'queries' not in data else data['queries']
+            })
