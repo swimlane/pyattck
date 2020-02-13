@@ -5,7 +5,14 @@ from .attacktemplate import AttackTemplate
 
 
 class MitreStockpile(GitHubController):
+    """
+    Data Source: https://github.com/mitre/stockpile
+    Authors:
+        - Mitre
 
+    This class is a wrapper for the above data set
+    """
+    
     __RAW_URL = 'https://raw.githubusercontent.com/mitre/stockpile/master/{}'
     __REPO = 'mitre/stockpile'
 

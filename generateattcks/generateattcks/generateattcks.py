@@ -8,6 +8,13 @@ from .sysmonhunter import SysmonHunter
 from .blueteamlabs import BlueTeamLabs
 from .atomicthreatcoverage import AtomicThreatCoverage
 from .osqueryattack import OsqueryAttack
+from .attckempire import AttckEmpire
+from .threathuntingbook import ThreatHuntingBook
+from .nsmattck import NSMAttck
+from .litmustest import LitmusTest
+from .c2matrix import C2Matrix
+from .aptthreattracking import APTThreatTracking
+
 
 class GenerateAttcks(object):
 
@@ -15,7 +22,6 @@ class GenerateAttcks(object):
         self._datasets = {}
         self._datasets['last_updated'] = datetime.datetime.now().isoformat()
         self._datasets['techniques'] = []
-
 
     def get(self):
         self.add_adversary_emulation()
@@ -26,7 +32,30 @@ class GenerateAttcks(object):
         self.add_blue_team_labs()
         self.add_atomic_threat_coverage()
         self.add_osquery_attack()
+        self.add_attck_empire()
+        self.add_threat_hunting_book()
+        self.add_nsm_attck()
+        self.add_litmust_test()
+        self.add_c2_matrix()
+        self.add_apt_threat_tracking()
         return self._datasets
+        
+    def add_apt_threat_tracking(self):
+        apt_threat_tracking = APTThreatTracking().get()
+        for item in apt_threat_tracking:
+            if item:
+                for key,val in item.items():
+                    if key == 'malware':
+                        self._datasets['tools'] = val
+                        item.pop(key)
+        self._datasets['actors'] = apt_threat_tracking
+           
+    def add_c2_matrix(self):
+        c2_dict = {}
+        c2 = C2Matrix().get()
+        for item in c2['c2_data']:
+            c2_dict[item['name']] = item['data']
+        self._datasets['c2_data'] = c2_dict
         
     def save(self):
         with open('generated_attck_data.json', 'w') as f:
@@ -49,7 +78,7 @@ class GenerateAttcks(object):
     def add_threat_hunting_tables(self):
         for item in ThreatHuntingTables().get():
             self.__add_to_output(item)
-    
+
     def add_sysmon_hunter(self):
         for item in SysmonHunter().get():
             self.__add_to_output(item)
@@ -66,44 +95,68 @@ class GenerateAttcks(object):
         for item in OsqueryAttack().get():
             self.__add_to_output(item)
 
+    def add_attck_empire(self):
+        for item in AttckEmpire().get():
+            self.__add_to_output(item)
+
+    def add_threat_hunting_book(self):
+        for item in ThreatHuntingBook().get():
+            self.__add_to_output(item)
+
+    def add_nsm_attck(self):
+        for item in NSMAttck().get():
+            self.__add_to_output(item)
+
+    def add_litmust_test(self):
+        for item in LitmusTest().get():
+            self.__add_to_output(item)
+
     def __add_to_output(self, data):
         status = False
         for t in self._datasets['techniques']:
-            if data['technique_id'].startswith('T') and len(data['technique_id']) == 5:
-                if data['technique_id'] == t['technique_id']:
-                    status = True
-                    if 'commands' in data:
-                        if 'commands' not in t:
-                            t['commands'] = []
-                        for item in data['commands']:
-                            t['commands'].append(item)
-                    if 'parsed_datasets' in data:
-                        if 'parsed_datasets' not in t:
-                            t['parsed_datasets'] = []
-                        for item in data['parsed_datasets']:
-                            t['parsed_datasets'].append(item)
-                    if 'command_list' in data:
-                        if 'command_list' not in t:
-                            t['command_list'] = []
-                        for item in data['command_list']:
-                            t['command_list'].append(item)
-                    if 'attack_paths' in data:
-                        if 'attack_paths' not in t:
-                            t['attack_paths'] = []
-                        for item in data['attack_paths']:
-                            t['attack_paths'].append(item)
-                    if 'queries' in data:
-                        if 'queries' not in t:
-                            t['queries'] = []
-                        for item in data['queries']:
-                            t['queries'].append(item)
+            if 'technique_id' in data:
+                if data['technique_id'].startswith('T') and len(data['technique_id']) == 5:
+                    if data['technique_id'] == t['technique_id']:
+                        status = True
+                        if 'commands' in data:
+                            if 'commands' not in t:
+                                t['commands'] = []
+                            for item in data['commands']:
+                                t['commands'].append(item)
+                        if 'parsed_datasets' in data:
+                            if 'parsed_datasets' not in t:
+                                t['parsed_datasets'] = []
+                            for item in data['parsed_datasets']:
+                                t['parsed_datasets'].append(item)
+                        if 'command_list' in data:
+                            if 'command_list' not in t:
+                                t['command_list'] = []
+                            for item in data['command_list']:
+                                t['command_list'].append(item)
+                        if 'attack_paths' in data:
+                            if 'attack_paths' not in t:
+                                t['attack_paths'] = []
+                            for item in data['attack_paths']:
+                                t['attack_paths'].append(item)
+                        if 'queries' in data:
+                            if 'queries' not in t:
+                                t['queries'] = []
+                            for item in data['queries']:
+                                t['queries'].append(item)
+                        if 'possible_detections' in data:
+                            if 'possible_detections' not in t:
+                                t['possible_detections'] = []
+                            for item in data['possible_detections']:
+                                t['possible_detections'].append(item)
 
         if not status:
-            self._datasets['techniques'].append({
-                'technique_id': data['technique_id'],
-                'commands': [] if 'commands' not in data else data['commands'],
-                'parsed_datasets': [] if 'parsed_datasets' not in data else data['parsed_datasets'],
-                'command_list': [] if 'command_list' not in data else data['command_list'],
-                'attack_paths': [] if 'attack_paths' not in data else data['attack_paths'],
-                'queries': [] if 'queries' not in data else data['queries']
-            })
+            if 'technique_id' in data:
+                self._datasets['techniques'].append({
+                    'technique_id': data['technique_id'],
+                    'commands': [] if 'commands' not in data else data['commands'],
+                    'parsed_datasets': [] if 'parsed_datasets' not in data else data['parsed_datasets'],
+                    'command_list': [] if 'command_list' not in data else data['command_list'],
+                    'attack_paths': [] if 'attack_paths' not in data else data['attack_paths'],
+                    'queries': [] if 'queries' not in data else data['queries'],
+                    'possible_detections': [] if 'possible_detections' not in data else data['possible_detections']
+                })

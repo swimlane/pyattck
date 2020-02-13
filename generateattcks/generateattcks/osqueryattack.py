@@ -9,6 +9,13 @@ from .markdowntable import MarkdownTable
 
 
 class OsqueryAttack(GitHubController):
+    """
+    Data Source: https://github.com/teoseller/osquery-attck
+    Authors:
+        - teoseller
+
+    This class is a wrapper for the above data set
+    """
 
     __URL = 'https://raw.githubusercontent.com/teoseller/osquery-attck/master/{}'
     

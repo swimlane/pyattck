@@ -5,7 +5,14 @@ from .attacktemplate import AttackTemplate
 
 
 class BlueTeamLabs(GitHubController):
+    """ Data Source: https://github.com/BlueTeamLabs/sentinel-attack
+    Authors:
+        - [Edoardo Gerosa](https://twitter.com/netevert)
+        - [Olaf Hartong](https://twitter.com/olafhartong) 
 
+    This class is a wrapper for the above data set
+    """
+    
     __URL = 'https://raw.githubusercontent.com/BlueTeamLabs/sentinel-attack/master/{}'
     __REPO = 'BlueTeamLabs/sentinel-attack'
 

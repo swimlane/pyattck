@@ -6,7 +6,13 @@ from .attacktemplate import AttackTemplate
 
 
 class AtomicRedTeam(GitHubController):
+    """
+    Data Source: https://github.com/redcanaryco/atomic-red-team
+    Author: Red Canary
 
+    This class is a wrapper for the above data set
+    """
+    
     __RAW_URL = 'https://raw.githubusercontent.com/redcanaryco/atomic-red-team/master/{}'
     __REPO = 'redcanaryco/atomic-red-team'
 

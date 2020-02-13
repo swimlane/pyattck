@@ -1,5 +1,6 @@
 requests
-pyyaml
+pyyaml==5.1.0
 pygithub
 xlrd
 markdown
+googletrans

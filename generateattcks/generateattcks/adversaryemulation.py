@@ -6,6 +6,12 @@ from .attacktemplate import AttackTemplate
 
 
 class AdversaryEmulation(object):
+    """
+    Data Source: https://attack.mitre.org/docs/APT3_Adversary_Emulation_Field_Manual.xlsx
+    Author: Mitre
+
+    This class is a wrapper for the above data set
+    """
 
     URL = 'https://attack.mitre.org/docs/APT3_Adversary_Emulation_Field_Manual.xlsx'
 

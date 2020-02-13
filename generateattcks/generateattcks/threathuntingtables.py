@@ -4,6 +4,14 @@ from .attacktemplate import AttackTemplate
 
 
 class ThreatHuntingTables(object):
+    """
+    Data Source: https://github.com/dwestgard/threat_hunting_tables
+
+    Authors:
+        - dwestgard
+
+    This class is a wrapper for the above data set
+    """
 
     __URL = 'https://raw.githubusercontent.com/dwestgard/threat_hunting_tables/master/process_chains.csv'
 

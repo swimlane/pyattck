@@ -10,7 +10,17 @@ from .markdowntable import MarkdownTable
 
 
 class AtomicThreatCoverage(GitHubController):
+    """
+    Data Source: https://github.com/atc-project/atomic-threat-coverage
+    Authors:
+        - Daniil Yugoslavskiy, [@yugoslavskiy](https://github.com/yugoslavskiy)
+        - Jakob Weinzettl, [@mrblacyk](https://github.com/mrblacyk)
+        - Mateusz Wydra, [@sn0w0tter](https://github.com/sn0w0tter)
+        - Mikhail Aksenov, [@AverageS](https://github.com/AverageS)
 
+    This class is a wrapper for the above data set
+    """
+    
     __URL = 'https://raw.githubusercontent.com/atc-project/atomic-threat-coverage/master/{}'
     __REPO = 'atc-project/atomic-threat-coverage'
 
@@ -31,7 +41,10 @@ class AtomicThreatCoverage(GitHubController):
             else:
                 if file_content.path.endswith('md'):
                     if 'Atomic_Threat_Coverage/Detection_Rules/' in file_content.path:
-                        content = self.__download_raw_content(self.__URL.format(file_content.path))
+                        try:
+                            content = self.__download_raw_content(self.__URL.format(file_content.path))
+                        except:
+                            pass
                         return_list.append(content.get())
         return return_list
 
@@ -54,7 +67,9 @@ class AtomicThreatCoverage(GitHubController):
                             elif content is None and stripped_match.rstrip('\r\n').strip():
                                 content = stripped_match.strip()
                                 if 'Sigma' in name and content:
-                                    yml = yaml.load(content.replace('---',''), Loader=yaml.FullLoader)
+                                    if '---' in content:
+                                        content = content.split('---')[0]
+                                    yml = yaml.load(content, Loader=yaml.FullLoader)
                                     if 'tags' in yml:
                                         for t in yml['tags']:
                                             if len(t.split('.')) >= 2:

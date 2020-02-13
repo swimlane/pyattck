@@ -2,8 +2,16 @@ import requests, yaml
 
 from .attacktemplate import AttackTemplate
 
-class SysmonHunter(object):
 
+class SysmonHunter(object):
+    """
+    Data Source: https://github.com/baronpan/SysmonHunter
+    Authors:
+        - baronpan
+
+    This class is a wrapper for the above data set
+    """
+    
     __URL = 'https://raw.githubusercontent.com/baronpan/SysmonHunter/master/misc/attck.yaml'
 
     def __get_data(self):
