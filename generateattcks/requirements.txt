@@ -4,3 +4,4 @@ pygithub
 xlrd
 markdown
 googletrans
+bs4
