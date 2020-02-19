@@ -1,1 +1,5 @@
 requests
+pendulum
+pyfiglet
+PyYaml
+Pillow
