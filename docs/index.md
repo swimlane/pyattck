@@ -1,7 +1,3 @@
-# pyattck
-
-[![Documentation Status](https://readthedocs.org/projects/pyattck/badge/?version=latest)](https://pyattck.readthedocs.io/en/latest/?badge=latest)
-
 # Welcome to pyattck's documentation!
 
 ```
@@ -20,82 +16,24 @@
 
 ## FEATURES
 
-* Retrieve all Tactics, Techniques, Actors, Malware, Tools, and Mitigations from the MITRE ATT&CK Enterprise framework independently 
-* Every data point has exposed properties that allow the user to retrieve additional data based on relationships:
-* All techniques (if applicable) now have collected data from third-party resources that are accessible via properties on a technique.  These properties and values are:
-	* command_list = A list of commands from multiple open-source tools and repositories that contain potential commands used by a technique
-	* commands = A list of property objects that contain the `Name`, `Source, and `Command` dataset
-	* queries = A list of potential queries for different products to identify threats within your environment by technique
-	* datasets = A list of the datasets as it relates to a technique
-	* possible_detections =  A list of potential detections for different products (e.g. NSM rules) as it relates to a technique
-	* For more detailed information about these features, please view the following  [Generated Datasets](generateattcks/README.md)
-* Each Actor object (if available) enables you to access the following properties on the object or access the entire dataset using the `external_dataset` property:
-    * country
-    * operations
-    * attribution_links
-    * known_tools
-    * targets
-    * additional_comments
-    * external_description
-* Each Tools object (if available) enables you to access the following properties on the object or access the entire dataset using the `external_dataset` property:
-    * additional_names
-    * attribution_links
-    * additional_comments
-    * family
+* Retrieve all Tactics, Techniques, Actors, Malware, Tools, and Mitigations from the MITRE ATT&CK Enterprise framework independently as well as any defined relationships within the MITRE ATT&CK dataset
+* Techniques, Actors, and Tools (if applicable) now have collected data from third-party resources that are accessible via properties on a technique.  For more detailed information about these features, please view the following  [External Datasets](dataset/dataset.md)
 * You can update/sync the external datasets by calling the `update()` method on an `Attck` object.  By default it will check for updates every 30 days.
 * You can specify a local file path for the MITRE ATT&CK Enterprise Framework json, Generated Dataset, and/or a config.yml file.
 * You can retrieve, if available, a image_logo of an actor or alternatively a ascii_logo will be generated.
 * You can also search the external dataset for external commands that are similar using the `search_commands` method.
 
-```python
-from pyattck import Attck
-
-attck = Attck()
-
-for search in attck.enterprise.search_commands('powershell'):
-		print(search['technique'])
-		print(search['reason_for_match'])
-```
-
-
-* [Actor](enterprise/actor.md)
-	* Tools used by the Actor or Group
-	* Malware used by the Actor or Group
-	* Techniques this Actor or Group uses
-	* Retrieve a logo for an actor using either image_logo or ascii_logo properties
-* [Malware](enterprise/malware.md)
-    * Actor or Group(s) using this malware
-    * Techniques this malware is used with
-* [Mitigation](enterprise/mitigation.md)
-    * Techniques related to a specific set of mitigation suggestions
-* [Tactic](enterprise/tactic.md)
-    * Techniques found in a specific Tactic (phase)
-* [Technique](enterprise/technique.md)
-    * Tactics a technique is found in
-    * Mitigation suggestions for a given technique
-    * Actor or Group(s) identified as using this technique
-    * command_list = A list of commands from multiple open-source tools and repositories that contain potential commands used by a technique
-    * commands = A list of property objects that contain the `Name`, `Source, and `Command` dataset
-    * queries = A list of potential queries for different products to identify threats within your environment by technique
-    * datasets = A list of the datasets as it relates to a technique
-    * possible_detections =  A list of potential detections for different products (e.g. NSM rules) as it relates to a technique
-* [Tools](enterprise/tools.md)
-    * Techniques that the specified tool is used within
-    * Actor or Group(s) using a specified tool
-
-
-
 ## Installation
 
-OS X & Linux:
+### OS X & Linux:
 
-```sh
+```bash
 pip install pyattck
 ```
 
-Windows:
+### Windows:
 
-```sh
+```bash
 pip install pyattck
 ```
 
@@ -121,7 +59,7 @@ Pillow
 
 ## Usage example
 
-To use **pyattck** you must instantiate a **Attck** object:
+To use **pyattck** you must instantiate a **Attck** object.  Although you may interact directly with each class, the intended use is through a **Attck** object:
 
 ```python
 from pyattck import Attck
@@ -131,48 +69,24 @@ attack = Attck()
 
 Once you have a `Attck` object you can access the MITRE ATT&CK Enterprise framework's [Tactic](enterprise/tactic.md), [Technique](enterprise/technique.md), [Actor](enterprise/actor.md), [Malware](enterprise/malware.md), [Mitigation](enterprise/mitigation.md), and [Tools](enterprise/tools.md) using this object (as well as objects that are related to them).
 
-### Specifying an alternate storage location
-
-You can also specify an alternate location of different file objects.
-
-You can specify the path of an `attck_json` as well as `dataset_json` when instantiating a `Attck` object.
-
-Additionally, you can specify the location of a configuration file using `config_path` which must be a yaml file.
-
-   > Please note that if you use this parameter you will need to reference this path the next time you instantiate an Attck object to use these datasets.
-
-Storing and loading datasets from an alternate location
-
-```python
-from pyattck import Attck
-
-attack = Attck(attck_json='/Users/{profile_name}/Desktop/attck_json.json', dataset_json='/Users/{profile_name}/Desktop/dataset_json.json')
-```
-
-Specifying an alternate location for a config.yml file:
-
-```python
-from pyattck import Attck
-
-attack = Attck(config_path='/Users/{profile_name}/Desktop/config.yml')
-```
-
 You can access the following `main` properties on your **Attck** object:
 
 * enterprise
 
 Once specifying the MITRE ATT&CK Framework of your choosing, you can access additional properties.
 
-Here are the properties under the [Enterprise](enterprise/enterprise.md) property:
+Here are the accessible objects under the [Enterprise](enterprise/enterprise.md) property:
 
-* actor
-* malware
-* mitigation
-* tactic
-* technique
-* tools
+* [actors](enterprise/actor.md)
+* [malwares](enterprise/malware.md)
+* [mitigations](enterprise/mitigation.md)
+* [tactics](enterprise/tactic.md)
+* [techniques](enterprise/technique.md)
+* [tools](enterprise/tools.md)
 
-You can find more information about each property under the `enterprise` property here [Enterprise Documentation](enterprise/enterprise.md)
+You can find more information about each object type under the `enterprise` property here [Enterprise Documentation](enterprise/enterprise.md)
+
+## Note
 
 We understand that there are many different open-source projects being released, even on a daily basis but we wanted to provide a straightforward Python package that allowed the user to identify known relationships between all verticals of the MITRE ATT&CK Framework.
 
@@ -184,10 +98,9 @@ Techniques are the rows and categorized underneath specific tactics (columns).  
 
 This means, if your organization is focused on TTPs (Tactics Techniques and Procedures) used by certain actors/groups then MITRE ATT&CK Framework is perfect for you.  If you are not at this security maturing within your organization, no worries!  The ATT&CK Framework still provides really good guidance in a simple and straightforward layout, but programmatically it is not straightforward--especially if you wanted to measure (or map) your security controls using the framework.
 
-
 ### Development
 
-You can use the provided [Dockerfile](../Dockerfile) to get a development and testing environment up and running for `pyattck`.
+You can use the provided [Dockerfile](https://github.com/swimlane/pyattck/blob/master/Dockerfile) to get a development and testing environment up and running for `pyattck`.
 
 To use the `Dockerfile` run, cd to this repositories directory and run:
 
@@ -254,18 +167,9 @@ This data set is generated from many different sources. As we continue to add mo
 
 ```eval_rst
 .. toctree::
-   :maxdepth: 2
-   :caption: Contents:
-   
-   enterprise/enterprise
-   enterprise/actor
-   enterprise/malware
-   enterprise/mitigation
-   enterprise/tactic
-   enterprise/technique
-   enterprise/tools
-   dataset/dataset
+   :titlesonly:
+
    pyattck/attck
-   pyattck/configuration
-   pyattck/datasets
+   dataset/dataset
+   enterprise/enterprise
 ```

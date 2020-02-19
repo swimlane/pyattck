@@ -1,2 +1,2 @@
-from .pyattck import Attck
-from .pyattck import (AttckActor, AttckMalware, AttckMalware, AttckMitigation, AttckTactic, AttckTechnique, AttckTools)
+from .attck import Attck
+from .version import __version__
