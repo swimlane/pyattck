@@ -5,33 +5,65 @@ def jsonDefault(OrderedDict):
     return OrderedDict.__dict__
 
 class AttckObject(object):
-    """
-        Parent class to all other classes
-        Creates objects that are categorized as Mitre ATT&CK Groups (e.g. APT1, APT32, etc.)
+    '''Parent class of all other Mitre ATT&CK based classes
+
+    This is a private class and should not be accessed directly
     
-        Arguments:
-            AttckObject (dict) -- Takes the Mitre ATT&CK Json object as a kwargs values
-    """
+    Arguments:
+        AttckObject (dict) -- Takes the Mitre ATT&CK Json object as a kwargs values
+    '''
+
+    _RELATIONSHIPS = None
     
     def __init__(self, **kwargs):
-        """Creates objects that are categorized as Mitre ATT&CK Groups (e.g. APT1, APT32, etc.)
+        """
+        Sets standard properties that are found in all child classes as well as provides standard methods used by inherited classes
+        
+        Arguments:
+            kwargs (dict) -- Takes the Mitre ATT&CK Json object as a kwargs values
         """
         self.id = self._set_id(kwargs)
         self.name = self._set_attribute(kwargs, 'name')
-        self.alias = self._set_attribute(kwargs, 'aliases')
+        self.alias = self._set_attribute(kwargs, 'x_mitre_aliases')
         self.description = self._set_attribute(kwargs, 'description')
         self.reference = self._set_reference(kwargs)
         self.created = self._set_attribute(kwargs, 'created')
         self.modified = self._set_attribute(kwargs, 'modified')
         self.stix = self._set_attribute(kwargs, 'id')
         self.type = self._set_attribute(kwargs, 'type')
-        self.wiki = self._set_wiki(kwargs)
-        self.contributor = self._set_attribute(kwargs, 'contributor')
+        
 
     def __str__(self):
         return json.dumps(self, default=jsonDefault, indent=4)
 
+    def set_relationships(self, attck_obj):
+        if not AttckObject._RELATIONSHIPS:
+            relationship_obj = {}
+            for item in attck_obj['objects']:
+                if 'type' in item:
+                    if item['type'] == 'relationship':
+                        source_id = item['source_ref']
+                        target_id = item['target_ref']
+                        if source_id not in relationship_obj:
+                            relationship_obj[source_id] = []
+                        relationship_obj[source_id].append(target_id)
+
+                        if target_id not in relationship_obj:
+                            relationship_obj[target_id] = []
+                        relationship_obj[target_id].append(source_id)
+            AttckObject._RELATIONSHIPS = relationship_obj
+
     def set_relationship(self, obj, id, name):
+        """Sets relationships on two objects based on a defined relationship from Mitre ATT&CK
+        
+        Args:
+            obj (dict): Mitre ATT&CK Json object
+            id (str): A Mitre ATT&CK source reference ID
+            name (str): A Mitre ATT&CK object type
+        
+        Returns:
+            list: A list of related Mitre ATT&CK related objects based on provided inputs
+        """        
         return_list = []
         for item in obj['objects']:
             if 'source_ref' in item:
@@ -54,12 +86,22 @@ class AttckObject(object):
             (str) -- Returns either the value of the attribute requested or returns 'null'
         """
         try:
-            return obj.get(name)
+            value = obj.get(name)
+            return 'intentionally left blank' if not value else value
         except:
-            return 'null'
+            return 'intentionally left blank'
 
 
     def _set_list_items(self, obj, list_name):
+        """Private method used by child classes and normalizes list items
+        
+        Args:
+            obj (dict) -- Provided json objects are passed to this method
+            list_name (str) -- The json property name to set list items attribute in child classes
+        
+        Returns:
+            list: returns a list of values from the provided list_name property
+        """        
         item_value = []
         if list_name in obj:
             for item in obj[list_name]:
@@ -80,8 +122,9 @@ class AttckObject(object):
             for p in obj['external_references']:
                 for s in p:
                     if p[s] == 'mitre-attack':
-                        return p['external_id']        
-
+                        return p['external_id']
+        return 'S0000'
+        
     def _set_wiki(self, obj):
         """Returns the Mitre ATT&CK Framework Wiki URL
         
@@ -111,29 +154,9 @@ class AttckObject(object):
                 source_name (str) -- The Mitre ATT&CK Framework source name
                 description (str) -- The Mitre ATT&CK Framework description or None if it does not exist
         """
-        external_id = ''
-        url = ''
-        source_name = ''
-        description = ''
-
-        external_references = {}
+        return_list = []
         if "external_references" in obj:
             for p in obj['external_references']:
-                if 'external_id' in p:
-                    external_id = p['external_id']
-                if 'url' in p:
-                    url = p['url']
-                if 'source_name' in p:
-                    source_name = p['source_name']
-                if 'description' in p:
-                    description = p['description']
-                else:
-                    description = None
-
-                external_references.update({
-                    'external_id': external_id,
-                    'url': url,
-                    'source': source_name,
-                    'description': description
-                })
-            return external_references
+                return_list.append(p)
+        return return_list
+               
