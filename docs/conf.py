@@ -22,15 +22,15 @@ import pyattck
 # -- Project information -----------------------------------------------------
 
 project = u'pyattck'
-copyright = u'2019, Swimlane'
+copyright = u'2020, Swimlane'
 author = u'Swimlane, Josh Rickard (MSAdministrator)'
 
 # The short X.Y version
-version = u'1.0'
+version = u'2.0'
 # The full version, including alpha/beta/rc tags
-release = u'1.0.2'
+release = u'2.0.0'
 
-#import pyattck
+#import pyattck 
 
 #from pyattck import Attck
 #from pyattck import (actor, attckobject, malware, mitigation, tactic, technique, tools)
@@ -49,7 +49,9 @@ extensions = [
     'sphinx.ext.coverage',
     'sphinx.ext.viewcode',
     'sphinx.ext.githubpages',
+    'recommonmark'
 ]
+
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -184,6 +186,25 @@ epub_exclude_files = ['search.html']
 
 
 # -- Extension configuration -------------------------------------------------
+
+from recommonmark.transform import AutoStructify
+
+github_doc_root = 'https://github.com/rtfd/recommonmark/tree/master/doc/'
+def setup(app):
+    app.add_config_value('recommonmark_config', {
+            'url_resolver': lambda url: github_doc_root + url,
+            'auto_toc_tree_section': 'Contents',
+            }, True)
+    app.add_transform(AutoStructify)
+
+
+#from recommonmark.parser import CommonMarkParser
+
+#source_parsers = {
+#    '.md': CommonMarkParser,
+#}
+
+source_suffix = ['.rst', '.md']
 
 # -- Options for todo extension ----------------------------------------------
 
