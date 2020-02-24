@@ -9,9 +9,9 @@ You can also search the external dataset for external commands that are similar 
 ```python
 from pyattck import Attck
 
-attck = Attck()
+attack = Attck()
 
-for search in attck.enterprise.search_commands('powershell'):
+for search in attack.enterprise.search_commands('powershell'):
     print(search['technique'])
     print(search['reason_for_match'])
 ```
