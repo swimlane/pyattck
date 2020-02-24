@@ -93,126 +93,124 @@ from pyattck import Attck
 
 attack = Attck()
 
-# accessing actors
 for actor in attack.enterprise.actors:
-	print(actor.id)
-	print(actor.name)
+    print(actor.id)
+    print(actor.name)
 
-	# accessing malware used by an actor or group
-	for malware in actor.enterprise.malwares:
-		print(malware.id)
-		print(malware.name)
+    # accessing malware used by an actor or group
+    for malware in actor.malwares:
+        print(malware.id)
+        print(malware.name)
 
-	# accessing tools used by an actor or group
-	for tool in actor.enterprise.tools:
-		print(tool.id)
-		print(tool.name)
+    # accessing tools used by an actor or group
+    for tool in actor.tools:
+        print(tool.id)
+        print(tool.name)
 
-	# accessing techniques used by an actor or group
-	for technique in actor.enterprise.techniques:
-		print(technique.id)
-		print(technique.name)
-		# you can also access generated data sets on aa technique
-		print(technique.command_list)
-		print(technique.commands)
-		print(technique.queries)
-		print(technique.datasets)
-		print(technique.possible_detections)
+    # accessing techniques used by an actor or group
+    for technique in actor.techniques:
+        print(technique.id)
+        print(technique.name)
+        # you can also access generated data sets on aa technique
+        print(technique.command_list)
+        print(technique.commands)
+        print(technique.queries)
+        print(technique.datasets)
+        print(technique.possible_detections)
 
 # accessing malware
 for malware in attack.enterprise.malwares:
-	print(malware.id)
-	print(malware.name)
+    print(malware.id)
+    print(malware.name)
 
-	# accessing actor or groups using this malware
-	for actor in malware.enterprise.actors:
-		print(actor.id)
-		print(actor.name)
+    # accessing actor or groups using this malware
+    for actor in malware.actors:
+        print(actor.id)
+        print(actor.name)
 
-	# accessing techniques that this malware is used in
-	for technique in malware.enterprise.techniques:
-		print(technique.id)
-		print(technique.name)
+    # accessing techniques that this malware is used in
+    for technique in malware.techniques:
+        print(technique.id)
+        print(technique.name)
 
 # accessing mitigation
 for mitigation in attack.enterprise.mitigations:
-	print(mitigation.id)
-	print(mitigation.name)
+    print(mitigation.id)
+    print(mitigation.name)
 
-	# accessing techniques related to mitigation recommendations
-	for technique in mitigation.enterprise.techniques:
-		print(technique.id)
-		print(technique.name)
-		# you can also access generated data sets on aa technique
-		print(technique.command_list)
-		print(technique.commands)
-		print(technique.queries)
-		print(technique.datasets)
-		print(technique.possible_detections)
+    # accessing techniques related to mitigation recommendations
+    for technique in mitigation.techniques:
+        print(technique.id)
+        print(technique.name)
+        # you can also access generated data sets on aa technique
+        print(technique.command_list)
+        print(technique.commands)
+        print(technique.queries)
+        print(technique.datasets)
+        print(technique.possible_detections)
 
 # accessing tactics
 for tactic in attack.enterprise.tactics:
-	print(tactic.id)
-	print(tactic.name)
+    print(tactic.id)
+    print(tactic.name)
 
-	# accessing techniques related to this tactic
-	for technique in tactic.enterprise.techniques:
-		print(technique.id)
-		print(technique.name)
-		# you can also access generated data sets on aa technique
-		print(technique.command_list)
-		print(technique.commands)
-		print(technique.queries)
-		print(technique.datasets)
-		print(technique.possible_detections)
+    # accessing techniques related to this tactic
+    for technique in tactic.techniques:
+        print(technique.id)
+        print(technique.name)
+        # you can also access generated data sets on aa technique
+        print(technique.command_list)
+        print(technique.commands)
+        print(technique.queries)
+        print(technique.datasets)
+        print(technique.possible_detections)
 
 # accessing techniques
 for technique in attack.enterprise.techniques:
-	print(technique.id)
-	print(technique.name)
-	# you can also access generated data sets on aa technique
-	print(technique.command_list)
-	print(technique.commands)
-	print(technique.queries)
-	print(technique.datasets)
-	print(technique.possible_detections)
+    print(technique.id)
+    print(technique.name)
+    # you can also access generated data sets on aa technique
+    print(technique.command_list)
+    print(technique.commands)
+    print(technique.queries)
+    print(technique.datasets)
+    print(technique.possible_detections)
 
-	# accessing tactics that this technique belongs to
-	for tactic in technique.enterprise.tactics:
-		print(tactic.id)
-		print(tactic.name)
+    # accessing tactics that this technique belongs to
+    for tactic in technique.tactics:
+        print(tactic.id)
+        print(tactic.name)
 
-	# accessing mitigation recommendations for this technique
-	for mitigation in technique.enterprise.mitigations:
-		print(mitigation.id)
-		print(mitigation.name)
+    # accessing mitigation recommendations for this technique
+    for mitigation in technique.mitigations:
+        print(mitigation.id)
+        print(mitigation.name)
 
-	# accessing actors using this technique
-	for actor in technique.enterprise.actors:
-		print(actor.id)
-		print(actor.name)
-	
+    # accessing actors using this technique
+    for actor in technique.actors:
+        print(actor.id)
+        print(actor.name)
 
 # accessing tools
 for tool in attack.enterprise.tools:
-	print(tool.id)
-	print(tool.name)
+    print(tool.id)
+    print(tool.name)
 
-	# accessing techniques this tool is used in
-	for technique in tool.enterprise.techniques:
-		print(technique.id)
-		print(technique.name)
-		# you can also access generated data sets on aa technique
-		print(technique.command_list)
-		print(technique.commands)
-		print(technique.queries)
-		print(technique.datasets)
-		print(technique.possible_detections)
+    # accessing techniques this tool is used in
+    for technique in tool.techniques:
+        print(technique.id)
+        print(technique.name)
+        # you can also access generated data sets on aa technique
+        print(technique.command_list)
+        print(technique.commands)
+        print(technique.queries)
+        print(technique.datasets)
+        print(technique.possible_detections)
 
-	# accessing actor or groups using this tool
-	for actor in tool.enterprise.actors:
-		print(actor.id)
-		print(actor.name)
+    # accessing actor or groups using this tool
+    for actor in tool.actors:
+        print(actor.id)
+        print(actor.name)
 ```
 
 ## Enterprise Class
