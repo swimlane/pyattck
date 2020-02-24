@@ -27,7 +27,7 @@ This generated JSON file has the following main keys:
     - other
     - nato
     - russia
-    - _Each actor will contain a list of dictionaries also called 'actors'.  Each dictionary will have the following keys:_
+    - _Each actor will contain a list of dictionaries in the key 'actors'.  Each dictionary will have the following keys:_
         - actor_names
         - target
         - operations
