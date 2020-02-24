@@ -20,7 +20,7 @@
 * Techniques, Actors, and Tools (if applicable) now have collected data from third-party resources that are accessible via properties on a technique.  For more detailed information about these features, please view the following  [External Datasets](dataset/dataset.md)
 * You can update/sync the external datasets by calling the `update()` method on an `Attck` object.  By default it will check for updates every 30 days.
 * You can specify a local file path for the MITRE ATT&CK Enterprise Framework json, Generated Dataset, and/or a config.yml file.
-* You can retrieve, if available, a image_logo of an actor or alternatively a ascii_logo will be generated.
+* You can retrieve, if available, a image_logo of an actor or alternatively an ascii_logo will be generated.
 * You can also search the external dataset for external commands that are similar using the `search_commands` method.
 
 ## Installation
@@ -59,7 +59,7 @@ Pillow
 
 ## Usage example
 
-To use **pyattck** you must instantiate a **Attck** object.  Although you may interact directly with each class, the intended use is through a **Attck** object:
+To use **pyattck** you must instantiate an **Attck** object.  Although you can interact directly with each class, the intended use is through a **Attck** object:
 
 ```python
 from pyattck import Attck
@@ -67,7 +67,7 @@ from pyattck import Attck
 attack = Attck()
 ```
 
-Once you have a `Attck` object you can access the MITRE ATT&CK Enterprise framework's [Tactic](enterprise/tactic.md), [Technique](enterprise/technique.md), [Actor](enterprise/actor.md), [Malware](enterprise/malware.md), [Mitigation](enterprise/mitigation.md), and [Tools](enterprise/tools.md) using this object (as well as objects that are related to them).
+Once you have a `Attck` object, you can access the MITRE ATT&CK Enterprise framework's [Tactic](enterprise/tactic.md), [Technique](enterprise/technique.md), [Actor](enterprise/actor.md), [Malware](enterprise/malware.md), [Mitigation](enterprise/mitigation.md), and [Tools](enterprise/tools.md) using this object (as well as objects that are related to them).
 
 You can access the following `main` properties on your **Attck** object:
 
@@ -88,13 +88,13 @@ You can find more information about each object type under the `enterprise` prop
 
 ## Note
 
-We understand that there are many different open-source projects being released, even on a daily basis but we wanted to provide a straightforward Python package that allowed the user to identify known relationships between all verticals of the MITRE ATT&CK Framework.
+We understand that there are many different open-source projects being released, even on a daily basis, but we wanted to provide a straightforward Python package that allowed the user to identify known relationships between all verticals of the MITRE ATT&CK Framework.
 
-If you are unfamiliar with the MITRE ATT&CK Framework, there are a few key components to ensure you have a firm grasp around.  The first is Tactics & Techniques.  When looking at the MITRE ATT&CK Framework, the Tactics are the columns and represent the different phases of an attack.  
+If you are unfamiliar with the MITRE ATT&CK Framework, there are a few key components to ensure you have a firm grasp around.  The first is Tactics & Techniques.  When looking at the [MITRE ATT&CK Framework](https://attack.mitre.org/), the Tactics are the columns and represent the different phases of an attack.  
 
-   > The MITRE ATT&CK Framework is NOT an all encompassing/defacto security coverage map - it is rather a FRAMEWORK and other avenues should be considered when assessing your security posture.
+   > The MITRE ATT&CK Framework is NOT an all encompassing/defacto security coverage map - it is rather a FRAMEWORK and additional avenues should also be considered when assessing your security posture.
 
-Techniques are the rows and categorized underneath specific tactics (columns).  The Techniques are data points within the framework that provides guidance when assessing your security gaps.  Additionally, Techniques (most) contain mitigation guidance but they also contain information about their relationship to tools, malware, even actors/groups that are/have used this technique during recorded attacks.  
+Techniques are the rows of the framework and are categorized underneath specific Tactics (columns).  The Techniques are data points within the framework that provides guidance when assessing your security gaps.  Additionally, (most) Techniques contain mitigation guidance in addition to information about their relationship to tools, malware, and even actors/groups that have used this technique during recorded attacks.  
 
 This means, if your organization is focused on TTPs (Tactics Techniques and Procedures) used by certain actors/groups then MITRE ATT&CK Framework is perfect for you.  If you are not at this security maturing within your organization, no worries!  The ATT&CK Framework still provides really good guidance in a simple and straightforward layout, but programmatically it is not straightforward--especially if you wanted to measure (or map) your security controls using the framework.
 
