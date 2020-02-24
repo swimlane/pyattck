@@ -2,16 +2,28 @@ sudo: false
 language: python
 python:
 - '2.7'
-install:
-- pip install -U -r ./generateattcks/requirements.txt
-script:
-- python ./generateattcks/run.py
-after_script:
-  - git config credential.helper "store --file=.git/credentials"
-  - echo "https://${GH_TOKEN}:@github.com" > .git/credentials
-  - git add "generated_attck_data.json"
-  - git commit -m '[skip travis] build $TRAVIS_BUILD_NUMBER'
-  - git push origin HEAD:master --quiet --force
+stages:
+  - name: scheduled
+    if: type = cron
+  - test
+jobs:
+  include:
+  - stage: scheduled
+    install:
+      - pip install -U -r ./generateattcks/requirements.txt
+    script:
+      - python ./generateattcks/run.py
+      - git config credential.helper "store --file=.git/credentials"
+      - echo "https://${GH_TOKEN}:@github.com" > .git/credentials
+      - git add "generated_attck_data.json"
+      - git commit -m '[skip travis] scheduled regeneration of external attack data $TRAVIS_BUILD_NUMBER'
+      - git push origin master
+  - stage: test
+    install: 
+      - pip install -U -r requirements.txt
+      - pip install -U -r test-requirements.txt
+    script:
+      - python -m pytest
 env:
   global:
     - secure: NxQTrIRYPMOfz7bm0ki8+fOoaO8EwrfWaoI2lWvQwzNJ3wkYUynD1Ur1187N4mmOXi9m1NL217/CwvSdNf7Kb7l/JQEfSv2KzzU9Xr0GBPCvtkPFzYWtV8FYWvP1OddyJhs2eeflVoZYWI3/OyC00zHlpsLNkc1lYZZMyXxjRZsQFBBrinswlWDbyYJhJ+YXEf83oOcQxy2V5ECRWodLmf7h/lPgezpBmb4ZxLbVrrxJAI0RRMLdQmMAxHLfTTqEl8re+SHzbw5VHWgRC+TXyfKb+R4LvdK1ShD0Byg/vz13CFi/7XGLNvqWZKRNg/XkYw2li5DvwYUcYWr/e2xrW9XUNqs4/k7E2gCQ/yd6gopsRmdNy4KIwhOoPM2KxzPSMrQ4EMAFa96vl1QO4c3t2eXDbl+zp6EjxoAV/83MVyVAf8D5Qi3xWDY/YIIh2i7hJEtEE6DsT35945qJ2/i+9U2hLWlJxL7QAs95pk80iW0LyEoplmjRoUdRc8vGG6IZmC0vlp+cZlGWJ2LFpuSx7+bv9oSjNKPlRaMjkCNqB6W+4O0K8b5QLrC1+nbXcnrXOy1RQL042azSSulAzKsAY58uNB3zrzxk7De1nuCTvIxyf2CuzSpINawvEf812SyAnB81aYTE8OlSz0Zsobpzml5VSnEKiPBl0fQFA7hkb9Y=
