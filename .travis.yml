@@ -15,6 +15,7 @@ jobs:
       - python ./generateattcks/run.py
       - git config credential.helper "store --file=.git/credentials"
       - echo "https://${GH_TOKEN}:@github.com" > .git/credentials
+      - git checkout -b master
       - git add "generated_attck_data.json"
       - git commit -m '[skip travis] scheduled regeneration of external attack data $TRAVIS_BUILD_NUMBER'
       - git push origin master
