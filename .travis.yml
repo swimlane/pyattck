@@ -12,12 +12,14 @@ jobs:
     install:
       - pip install -U -r ./generateattcks/requirements.txt
     script:
-      - git checkout -b master
-      - python ./generateattcks/run.py
       - git config credential.helper "store --file=.git/credentials"
       - echo "https://${GH_TOKEN}:@github.com" > .git/credentials
+      - git checkout -b my-temp-branch
+      - python ./generateattcks/run.py
       - git add "generated_attck_data.json"
       - git commit -m '[skip travis] scheduled regeneration of external attack data $TRAVIS_BUILD_NUMBER'
+      - git checkout master
+      - git merge my-temp-branch
       - git push origin master
   - stage: test
     install: 
