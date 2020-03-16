@@ -31,7 +31,7 @@ You can install **pyattack** on OS X, Linux, or Windows. You can also install it
 
 ### Prerequisites
 
-The following libraries are required and installed by pyattck
+The following libraries are required and installed by pyattck:
 
 ```
 requests
