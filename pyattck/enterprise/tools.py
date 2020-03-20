@@ -1,6 +1,6 @@
 from .attckobject import AttckObject
 from ..datasets import AttckDatasets
-from ..utils.excetions import GeneratedDatasetException
+from ..utils.exceptions import GeneratedDatasetException
 
 class AttckTools(AttckObject):
     '''
