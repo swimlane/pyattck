@@ -50,16 +50,15 @@ class AtomicRedTeam(GitHubController):
                             if self.temp_command_string is None:
                                 try:
                                     self.temp_command_string = test['executor']['command'].replace(replacement_string, test['input_arguments'][key]['default'])
-                                    template.add_command(url,self.temp_command_string)
                                 except:
                                     pass
                             else:
                                 try:
                                     self.temp_command_string = self.temp_command_string.replace(replacement_string, test['input_arguments'][key]['default'])
-                                    template.add_command(url,self.temp_command_string)
                                 except:
                                     pass
-                                self.temp_command_string = None
+                            template.add_command(url,self.temp_command_string)
+                            self.temp_command_string = None
                     else:
                         template.add_command(url,test['executor']['command'])
         template.id = content['attack_technique']
