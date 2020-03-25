@@ -1,3 +1,5 @@
+![](https://travis-ci.org/swimlane/pyattck.svg?branch=master)
+
 # Welcome to pyattck's Documentation
 
 ```
