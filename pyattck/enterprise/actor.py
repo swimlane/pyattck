@@ -1,7 +1,7 @@
 
 from .attckobject import AttckObject
 from ..utils.logo import Logo
-from ..utils.excetions import GeneratedDatasetException
+from ..utils.exceptions import GeneratedDatasetException
 from ..datasets import AttckDatasets
 
 
