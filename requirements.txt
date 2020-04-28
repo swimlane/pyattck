@@ -1,5 +1,5 @@
 requests
-pendulum
+pendulum==2.0.5
 pyfiglet
 PyYaml
 Pillow
