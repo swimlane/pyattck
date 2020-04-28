@@ -1,0 +1,1 @@
+from generateattackdocs.generatedocs import GenerateDocs
