@@ -1,6 +1,7 @@
 name: Testing pyattck
 
-on: [push]
+on: 
+  push
 
 jobs:
   build:
