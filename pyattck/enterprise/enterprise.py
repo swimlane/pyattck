@@ -306,12 +306,29 @@ class Enterprise(object):
             (AttckTechnique) -- Returns a list of AttckTechnique objects
         """
         if self.__techniques is None:
+            subtechniques = []
             self.__techniques = []
             for technique in self.attck["objects"]:
-                if (technique['type'] == 'attack-pattern'):
-                    self.__techniques.append(AttckTechnique(attck_obj=self.attck, **technique))
-        return self.__techniques
+                if technique['type'] == 'attack-pattern':
+                    if 'x_mitre_is_subtechnique' in technique:
+                        if technique['x_mitre_is_subtechnique']:
+                            subtechniques.append(technique)
+                        else:
+                            self.__techniques.append(AttckTechnique(attck_obj=self.attck, **technique))
+                    else:
+                        self.__techniques.append(AttckTechnique(attck_obj=self.attck, **technique))
 
+            if subtechniques:
+                for item in subtechniques:
+                    if "external_references" in item:
+                        for p in item['external_references']:
+                            for s in p:
+                                if p[s] == 'mitre-attack':
+                                    for technique in self.__techniques:
+                                        if p['external_id'].split('.')[0] == technique.id:
+                                            technique.subtechniques = AttckTechnique(attck_obj=self.attck, **item)
+        return self.__techniques
+   
     def search_commands(self, search_term):
         """Search external datasets for potential commands using a search term  
         

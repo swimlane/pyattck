@@ -38,7 +38,7 @@ def test_attck_attribute_is_list_deprecated(target_attribute):
 )
 @pytest.mark.parametrize(
     'target_properties',
-    ['id','name','alias','description','reference','created','modified','stix','type']
+    ['id','name','reference','created','modified','stix','type']
 )
 
 def test_all_attck_objects_have_standard_properties(target_attribute,target_properties):
@@ -56,7 +56,7 @@ def test_all_attck_objects_have_standard_properties(target_attribute,target_prop
 )
 @pytest.mark.parametrize(
     'target_properties',
-    ['id','name','alias','description','reference','created','modified','stix','type']
+    ['id','name','reference','created','modified','stix','type']
 )
 
 def test_all_attck_objects_have_standard_properties_deprecated(target_attribute,target_properties):

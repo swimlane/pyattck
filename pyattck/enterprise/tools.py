@@ -178,19 +178,22 @@ class AttckTools(AttckObject):
                                 self.family.append(family)
                         if 'comments' in tool:
                             self.family.append(tool['comments'])
-                    for alias in self.alias:
-                        if alias.lower() in [x.lower() for x in tool['names']]:
-                            return_list.append(tool)
-                            for name in tool['names']:
-                                self.additional_names.append(name)
-                            if 'links' in tool:
-                                for link in tool['links']:
-                                    self.attribution_links.append(link)
-                            if 'family' in tool:
-                                for family in tool['family']:
-                                    self.family.append(family)
-                            if 'comments' in tool:
-                                self.family.append(tool['family'])
+                    # Backward compatibility for older version of ATT&CK vs subtechniques which removed the alias attribute
+                    if hasattr(self, 'alias'):
+                        if self.alias:
+                            for alias in self.alias:
+                                if alias.lower() in [x.lower() for x in tool['names']]:
+                                    return_list.append(tool)
+                                    for name in tool['names']:
+                                        self.additional_names.append(name)
+                                    if 'links' in tool:
+                                        for link in tool['links']:
+                                            self.attribution_links.append(link)
+                                    if 'family' in tool:
+                                        for family in tool['family']:
+                                            self.family.append(family)
+                                    if 'comments' in tool:
+                                        self.family.append(tool['family'])
         if return_list:
             return return_list
         else:
@@ -206,14 +209,17 @@ class AttckTools(AttckObject):
                         setattr(self, key, val)
                     except:
                         setattr(self, 'c2_{}'.format(key), val)
-            for item in self.alias:
-                if item.lower() == k.lower():
-                    return_dict[k] = v
-                    for key,val in v.items():
-                        try:
-                            setattr(self, key, val)
-                        except:
-                            setattr(self, 'c2_{}_{}'.format(item.lower(), key), val)
+            # Backward compatibility for older version of ATT&CK vs subtechniques which removed the alias attribute
+            if hasattr(self, 'alias'):
+                if self.alias:
+                    for item in self.alias:
+                        if item.lower() == k.lower():
+                            return_dict[k] = v
+                            for key,val in v.items():
+                                try:
+                                    setattr(self, key, val)
+                                except:
+                                    setattr(self, 'c2_{}_{}'.format(item.lower(), key), val)
         if return_dict:
             return return_dict
         else:

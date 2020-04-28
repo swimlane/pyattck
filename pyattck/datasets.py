@@ -12,6 +12,7 @@ class AttckDatasets(object):
     """    
 
     __MITRE_ATTCK_JSON_URL = 'https://raw.githubusercontent.com/mitre/cti/master/enterprise-attack/enterprise-attack.json'
+    __MITRE_ATTCK_SUBTECHNIQUES_JSON_URL = 'https://raw.githubusercontent.com/mitre/cti/subtechniques/enterprise-attack/enterprise-attack.json'
     __DATASETS_URL = 'https://raw.githubusercontent.com/swimlane/pyattck/master/generated_attck_data.json'
 
     def __init__(self):
@@ -19,7 +20,7 @@ class AttckDatasets(object):
         self.attck_json_path = config['enterprise_attck_json']
         self.dataset_json_path = config['enterprise_attck_dataset']
 
-    def mitre(self, force=False):
+    def mitre(self, force=False, subtechniques=False):
         """Downloads, saves, or retrieves the Mitre ATT&CK Enterprise JSON
         
         Args:
@@ -28,9 +29,14 @@ class AttckDatasets(object):
         Returns:
             [dict]: Mitre ATT&CK Enterprise Framework JSON
         """        
+        if subtechniques:
+            url = self.__MITRE_ATTCK_SUBTECHNIQUES_JSON_URL
+        else:
+            url = self.__MITRE_ATTCK_JSON_URL
+
         # first check to see if it already exists
         if force:
-            mitre = requests.get(self.__MITRE_ATTCK_JSON_URL).json()
+            mitre = requests.get(url).json()
             self.__save_locally(self.attck_json_path, mitre)
             return mitre
         else:
@@ -38,7 +44,7 @@ class AttckDatasets(object):
             if cached_data:
                 return cached_data
             else:
-                mitre = requests.get(self.__MITRE_ATTCK_JSON_URL).json()
+                mitre = requests.get(url).json()
                 self.__save_locally(self.attck_json_path, mitre)
                 return mitre
 

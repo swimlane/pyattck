@@ -87,9 +87,9 @@ class AttckObject(object):
         """
         try:
             value = obj.get(name)
-            return 'intentionally left blank' if not value else value
+            return None if not value else value
         except:
-            return 'intentionally left blank'
+            return None
 
 
     def _set_list_items(self, obj, list_name):
