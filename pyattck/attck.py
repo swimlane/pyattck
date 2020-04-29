@@ -7,18 +7,21 @@ from .datasets import AttckDatasets
 class Attck(object):
 
     '''
-        This class creates an interface to all Mitre ATT&CK frameworks.
+        This class creates an interface to all MITRE ATT&CK frameworks.
 
-        Currently, this class only enables access to the Enterprise framework with others coming soon.
+        Currently, this class enables access to the Enterprise & PRE-ATT&CK frameworks with others coming soon.  To acccess each framework, use the following properties
 
-        This interface enables you to retrieve all properties within each item in the Mitre ATT&CK Enterprise Framework.
+            * enterprise
+            * preattack
+
+        This interface enables you to retrieve all properties within each item in the MITRE ATT&CK Enterprise Framework.
 
         The following categorical items can be accessed using this class:
 
-            1. Tactics (Tactics are the phases defined by Mitre ATT&CK)
+            1. Tactics (Tactics are the phases defined by MITRE ATT&CK)
             2. Techniques (Techniques are the individual actions which can accomplish a tactic)
             3. Mitigations (Mitigations are recommendations to prevent or protect against a technique)
-            4. Actors (Actors or Groups are identified malicious actors/groups which have been identified and documented by Mitre & third-parties)
+            4. Actors (Actors or Groups are identified malicious actors/groups which have been identified and documented by MITRE & third-parties)
             5. Tools (Tools are software used to perform techniques)
             6. Malwares (Malwares are specific pieces of malware used by actors (or in general) to accomplish a technique)
 
@@ -113,10 +116,13 @@ class Attck(object):
                        # etc.
 
     Arguments:
-        attck_json (json) - The attck_json is supplied by the attck.py module when instantiated.
+        attck_json (json) - The attck_json is supplied by the attck.py module when instantiated but can be used to specify an alternate location of your Enterprise ATT&CK json file.  Default is None.
+        dataset_json (json) - The dataset_json is supplied by the attck.py module when instantiated but can be used to specify an alternate location of your dataset json file.  Default is None.
+        preattck_json (json) - The attck_json is supplied by the attck.py module when instantiated but can be used to specify an alternate location of your PRE-ATT&CK json file.  Default is None.
+        config_path (str) - The path to a specified configuration file.  Default is None which equates to ~/pyattck folder directory.
 
     Returns:
-        [Attck]: Returns a Attck object that contains all data from the Mitre ATT&CK Framework
+        [Attck]: Returns a Attck object that contains all data from MITRE ATT&CK Frameworks
     '''
 
     __ENTERPRISE_ATTCK_JSON = None
@@ -131,33 +137,39 @@ class Attck(object):
     __tools = None
     __malwares = None
 
-    def __init__(self, attck_json=None, dataset_json=None, config_path=None):
+    def __init__(self, attck_json=None, dataset_json=None, preattck_json=None, config_path=None):
         """The main entry point for pyattck.
 
-        When instantiating an Attck object you can currently access the Enterprise Mitre ATT&CK Framework.
+        When instantiating an Attck object you can access either the Enterprise or PRE-ATT&CK MITRE Frameworks.  Specify one of the following properties to access the frameworks specific data:
+
+            * enterprise
+            * preattack
 
         You can specify an alternate location of a local copy of the following objects:
 
-            1. attck_json = Path to the Mitre ATT&CK Enterprise Framework json
-            2. dataset_json = Path to a local dataset json file which is generated in the pyattck repo
+            1. attck_json = Path to the MITRE ATT&CK Enterprise Framework JSON
+            2. dataset_json = Path to a local dataset JSON file which is generated in the pyattck repo
+            3. preattck_json = Path to the the MITRE PRE-ATT&CK Framework JSON
             3. config_path = Path to a yaml configuration file which contains two key value pairs
                 Example content:
 
                     enterprise_attck_dataset: /Users/first.last/pyattck/enterprise_attck_dataset.json
+                    preattck_json: /Users/first.last/pyattck/preattck.json
                     enterprise_attck_json: /Users/first.last/pyattck/enterprise_attck.json
         
         Args:
-            attck_json (str, optional): Path to the Mitre ATT&CK Enterprise Framework json. Defaults to None.
+            attck_json (str, optional): Path to the MITRE ATT&CK Enterprise Framework json. Defaults to None.
             dataset_json (str, optional): Path to a local dataset json file which is generated in the pyattck repo. Defaults to None.
+            preattck_json (str, optional): Path to the MITRE PRE-ATT&CK Framework json. Defaults to None.
             config_path (str, optional): Path to a yaml configuration file which contains two key value pairs. Defaults to None.
         """
 
         if config_path:
             Configuration.__CONFIG_FILE = config_path
-        if attck_json or dataset_json:
-            Configuration().set(enterprise_attck_json_path=attck_json, enterprise_attck_dataset_path=dataset_json)
+        
+        Configuration().set(enterprise_attck_json_path=attck_json, preattck_json_path=preattck_json, enterprise_attck_dataset_path=dataset_json)
         self.__datasets = AttckDatasets()
-        self.__load_data()
+        
 
     @property
     def enterprise(self):
@@ -166,8 +178,21 @@ class Attck(object):
         Returns:
             Enterprise: Returns an Enterprise object
         """        
+        self.__load_data()
         from .enterprise.enterprise import Enterprise
         return Enterprise(self.__ENTERPRISE_ATTCK_JSON)
+
+    @property
+    def preattack(self):
+        """Retrieve objects from the MITRE PRE-ATT&CK Framework
+        
+        Returns:
+            PreAttack: Returns an PreAttack object
+        """
+        self.__load_data(type='preattack')
+        from .preattck.preattck import PreAttck
+        return PreAttck(self.__PRE_ATTCK_JSON)
+
 
     @property
     def actors(self):
@@ -181,7 +206,7 @@ class Attck(object):
         warnings.warn(
             '''Accessing actors property from an Attck object will be depreciated in version 3.
             
-            Please begin migrating to accessing the Enterprise Mitre ATT&CK objects using the enterprise property''',
+            Please begin migrating to accessing the Enterprise MITRE ATT&CK objects using the enterprise property''',
             DeprecationWarning)
         from .enterprise.actor import AttckActor
         if self.__actors is None:
@@ -203,7 +228,7 @@ class Attck(object):
         warnings.warn(
             '''Accessing tactics property from an Attck object will be depreciated in version 3.
             
-            Please begin migrating to accessing the Enterprise Mitre ATT&CK objects using the enterprise property''',
+            Please begin migrating to accessing the Enterprise MITRE ATT&CK objects using the enterprise property''',
             DeprecationWarning)
         from .enterprise.tactic import AttckTactic
         if self.__tactics is None:
@@ -225,7 +250,7 @@ class Attck(object):
         warnings.warn(
             '''Accessing mitigations property from an Attck object will be depreciated in version 3.
             
-            Please begin migrating to accessing the Enterprise Mitre ATT&CK objects using the enterprise property''',
+            Please begin migrating to accessing the Enterprise MITRE ATT&CK objects using the enterprise property''',
             DeprecationWarning)
         from .enterprise.mitigation import AttckMitigation
         if self.__mitigations is None:
@@ -247,7 +272,7 @@ class Attck(object):
         warnings.warn(
             '''Accessing tools property from an Attck object will be depreciated in version 3.
             
-            Please begin migrating to accessing the Enterprise Mitre ATT&CK objects using the enterprise property''',
+            Please begin migrating to accessing the Enterprise MITRE ATT&CK objects using the enterprise property''',
             DeprecationWarning)
         from .enterprise.tools import AttckTools
         if self.__tools is None:
@@ -269,7 +294,7 @@ class Attck(object):
         warnings.warn(
             '''Accessing malwares property from an Attck object will be depreciated in version 3.
             
-            Please begin migrating to accessing the Enterprise Mitre ATT&CK objects using the enterprise property''',
+            Please begin migrating to accessing the Enterprise MITRE ATT&CK objects using the enterprise property''',
             DeprecationWarning)
         from .enterprise.malware import AttckMalware
         if self.__malwares is None:
@@ -291,7 +316,7 @@ class Attck(object):
         warnings.warn(
             '''Accessing techniques property from an Attck object will be depreciated in version 3.
             
-            Please begin migrating to accessing the Enterprise Mitre ATT&CK objects using the enterprise property''',
+            Please begin migrating to accessing the Enterprise MITRE ATT&CK objects using the enterprise property''',
             DeprecationWarning)
         from .enterprise.technique import AttckTechnique
         if self.__techniques is None:
@@ -301,14 +326,22 @@ class Attck(object):
                     self.__techniques.append(AttckTechnique(attck_obj=self.__ENTERPRISE_ATTCK_JSON, **technique))
         return self.__techniques
 
-    def update(self):
+    def update(self, enterprise=None, preattack=None):
         """
         Calling this method will force update / sync all datasets from external sources
         """
-        self.__load_data(force=True)
+        if preattack:
+            self.__load_data(type='preattack', force=True)
+        else:
+            self.__load_data(force=True)
 
-    def __load_data(self, force=False):
-        if not Attck.__ENTERPRISE_ATTCK_JSON:
-            Attck.__ENTERPRISE_ATTCK_JSON = self.__datasets.mitre(force=force)
-        if not Attck.__ENTERPRISE_GENERATED_DATA_JSON:
-            Attck.__ENTERPRISE_GENERATED_DATA_JSON = self.__datasets.generated_attck_data(force=force)
+
+    def __load_data(self, type='enterprise', force=False):
+        if type == 'preattack':
+            if not Attck.__PRE_ATTCK_JSON:
+                Attck.__PRE_ATTCK_JSON = self.__datasets.mitre(type='preattack', force=force)
+        else:
+            if not Attck.__ENTERPRISE_ATTCK_JSON:
+                Attck.__ENTERPRISE_ATTCK_JSON = self.__datasets.mitre(force=force)
+            if not Attck.__ENTERPRISE_GENERATED_DATA_JSON:
+                Attck.__ENTERPRISE_GENERATED_DATA_JSON = self.__datasets.generated_attck_data(force=force)
