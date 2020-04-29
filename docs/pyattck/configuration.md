@@ -7,7 +7,7 @@ This documentation provides details about configuration options within the `pyat
 
 You can also specify an alternate location of different file objects.
 
-You can specify the path of an `attck_json` as well as `dataset_json` when instantiating a `Attck` object.
+You can specify the path of an `attck_json` as well as `preattck_json` and `dataset_json` when instantiating a `Attck` object.
 
 Additionally, you can specify the location of a configuration file using `config_path` which must be a yaml file.
 
@@ -18,7 +18,7 @@ Storing and loading datasets from an alternate location
 ```python
 from pyattck import Attck
 
-attack = Attck(attck_json='/Users/{profile_name}/Desktop/attck_json.json', dataset_json='/Users/{profile_name}/Desktop/dataset_json.json')
+attack = Attck(attck_json='/Users/{profile_name}/Desktop/attck_json.json', preattck_json='/Users/{profile_name}/Desktop/preattack.json', dataset_json='/Users/{profile_name}/Desktop/dataset_json.json')
 ```
 
 Specifying an alternate location for a config.yml file:

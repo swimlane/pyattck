@@ -5,6 +5,7 @@ This documentation provides details about the main entry point called `Attck` wi
 This class provides access to the Enterprise MITRE ATT&CK Framework data as well as additional ATT&CK frameworks in the future.
 
 * Enterprise MITRE ATT&CK Framework
+* MITRE PRE-ATT&CK Framework
 
 ## Attck Class
 
