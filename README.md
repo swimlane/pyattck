@@ -11,14 +11,15 @@
     | _|          |__| /__/     \__\  |__|        |__|      \______||__|\__\
 
 ```
-	A Python package to interact with the MITRE ATT&CK Framework
+	A Python package to interact with MITRE ATT&CK Frameworks
 
 
-**pyattck** is a light-weight framework for the MITRE ATT&CK Framework. This package extracts details about MITRE ATT&CK Tactics, Techniques, Actors/Groups, Tools, Malware, and Mitigations provided by MITRE.
+**pyattck** is a light-weight framework for MITRE ATT&CK Frameworks. This package extracts details from the MITRE ATT&CK Enterprise & PRE-ATT&CK Frameworks.
 
 ## Features
 
-The **pyattck** package retrieves all Tactics, Techniques, Actors, Malware, Tools, and Mitigations from the MITRE ATT&CK Enterprise framework as well as any defined relationships within the MITRE ATT&CK dataset. In addition, Techniques, Actors, and Tools (if applicable) now have collected data from third-party resources that are accessible via properties on a technique. For more detailed information about these features, see [External Datasets](docs/dataset/dataset.md).
+The **pyattck** package retrieves all Tactics, Techniques, Actors, Malware, Tools, and Mitigations from the MITRE ATT&CK Frameworks as well as any defined relationships within the MITRE ATT&CK dataset.
+In addition, Techniques, Actors, and Tools (if applicable) now have collected data from third-party resources that are accessible via properties on a technique. For more detailed information about these features, see [External Datasets](docs/dataset/dataset.md).
 
 The **pyattck** package allows you to:
 
@@ -26,6 +27,7 @@ The **pyattck** package allows you to:
   * Specify a local file path for the MITRE ATT&CK Enterprise Framework json, generated dataset, and/or a config.yml file.
   * Retrieve an image_logo of an actor (when available). If an image_logo isn't available, it generates an ascii_logo.
   * Search the external dataset for external commands that are similar using `search_commands`.
+  * Access data from the MITRE PRE-ATT&CK Framework
 
 ## Installation
 
@@ -78,6 +80,7 @@ Once you have a `Attck` object, you can access the MITRE ATT&CK Enterprise frame
 You can access the following `main` properties on your **Attck** object:
 
 * enterprise
+* preattack
 
 Once you specify the MITRE ATT&CK Framework, you can access additional properties.
 
@@ -91,6 +94,15 @@ Here are the accessible objects under the [Enterprise](docs/enterprise/enterpris
 * [tools](docs/enterprise/tools.md)
 
 For more information on object types under the `enterprise` property, see [Enterprise](docs/enterprise/enterprise.md).
+
+Here are the accessible objects under the [PreAttck](docs/preattck/preattck.md) property:
+
+* [actors](docs/preattck/actor.md)
+* [tactics](docs/preattck/tactic.md)
+* [techniques](docs/preattck/technique.md)
+
+
+For more information on object types under the `preattck` property, see [PreAttck](docs/preattck/preattck.md).
 
 ## Note
 
@@ -182,4 +194,5 @@ This data set is generated from many different sources. As we continue to add mo
    pyattck/attck
    dataset/dataset
    enterprise/enterprise
+   preattck/preattck
 ```
