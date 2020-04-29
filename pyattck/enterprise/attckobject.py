@@ -36,6 +36,13 @@ class AttckObject(object):
     def __str__(self):
         return json.dumps(self, default=jsonDefault, indent=4)
 
+    def __repr__(self):
+        return "{class_name}('{name}', '{id}')".format(
+            class_name=self.__class__.__name__,
+            name=self.name,
+            id=self.id
+        )
+
     def set_relationships(self, attck_obj):
         if not AttckObject._RELATIONSHIPS:
             relationship_obj = {}
