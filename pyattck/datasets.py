@@ -8,39 +8,56 @@ class AttckDatasets(object):
 
         Default locations to download datasets are as follows:
             MITRE_ATTCK_JSON_URL = 'https://raw.githubusercontent.com/mitre/cti/master/enterprise-attack/enterprise-attack.json'
+            MITRE_PREATTCK_ATTCK_JSON_URL  = 'https://raw.githubusercontent.com/mitre/cti/master/pre-attack/pre-attack.json'
             DATASETS_URL = 'https://raw.githubusercontent.com/swimlane/pyattck/master/generated_attck_data.json'
     """    
 
-    __MITRE_ATTCK_JSON_URL = 'https://raw.githubusercontent.com/mitre/cti/master/enterprise-attack/enterprise-attack.json'
+    __MITRE_ENTERPRISE_ATTCK_JSON_URL = 'https://raw.githubusercontent.com/mitre/cti/master/enterprise-attack/enterprise-attack.json'
+    __MITRE_PREATTCK_ATTCK_JSON_URL  = 'https://raw.githubusercontent.com/mitre/cti/master/pre-attack/pre-attack.json'
     __DATASETS_URL = 'https://raw.githubusercontent.com/swimlane/pyattck/master/generated_attck_data.json'
 
     def __init__(self):
         config = Configuration().get()
         self.attck_json_path = config['enterprise_attck_json']
+        self.preattck_json_path = config['preattck_json']
         self.dataset_json_path = config['enterprise_attck_dataset']
 
-    def mitre(self, force=False):
+
+    def __get_mitre_json(self, url, path, force=False):
+        if force:
+            mitre = requests.get(url).json()
+            self.__save_locally(path, mitre)
+            return mitre
+        else:
+            cached_data = self.__get_cached_data(path)
+            if cached_data:
+                return cached_data
+            else:
+                mitre = requests.get(url).json()
+                self.__save_locally(path, mitre)
+                return mitre
+
+    def mitre(self, type='enterprise', force=False):
         """Downloads, saves, or retrieves the Mitre ATT&CK Enterprise JSON
         
         Args:
+            type (str, optional): Will set the type of data to download/retrieve.  Defaults to Enterprise.  Options are enterprise, preattack
             force (bool, optional): Will force the download of a new JSON file. Defaults to False.
         
         Returns:
             [dict]: Mitre ATT&CK Enterprise Framework JSON
         """        
         # first check to see if it already exists
-        if force:
-            mitre = requests.get(self.__MITRE_ATTCK_JSON_URL).json()
-            self.__save_locally(self.attck_json_path, mitre)
-            return mitre
+        if type == 'enterprise':
+            url = self.__MITRE_ENTERPRISE_ATTCK_JSON_URL
+            return self.__get_mitre_json(url, self.attck_json_path, force=force)
+        elif type == 'preattack':
+            url = self.__MITRE_PREATTCK_ATTCK_JSON_URL
+            return self.__get_mitre_json(url, self.preattck_json_path, force=force)
         else:
-            cached_data = self.__get_cached_data(self.attck_json_path)
-            if cached_data:
-                return cached_data
-            else:
-                mitre = requests.get(self.__MITRE_ATTCK_JSON_URL).json()
-                self.__save_locally(self.attck_json_path, mitre)
-                return mitre
+            url = self.__MITRE_ENTERPRISE_ATTCK_JSON_URL
+            return self.__get_mitre_json(url, self.attck_json_path, force=force)
+
 
     def generated_attck_data(self, force=False):
         """Downloads, saves, or retrieves the Mitre ATT&CK Enterprise Generated Dataset JSON

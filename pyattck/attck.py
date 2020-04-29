@@ -333,7 +333,7 @@ class Attck(object):
         if preattack:
             self.__load_data(type='preattack', force=True)
         else:
-        self.__load_data(force=True)
+            self.__load_data(force=True)
 
 
     def __load_data(self, type='enterprise', force=False):
@@ -341,7 +341,7 @@ class Attck(object):
             if not Attck.__PRE_ATTCK_JSON:
                 Attck.__PRE_ATTCK_JSON = self.__datasets.mitre(type='preattack', force=force)
         else:
-        if not Attck.__ENTERPRISE_ATTCK_JSON:
-            Attck.__ENTERPRISE_ATTCK_JSON = self.__datasets.mitre(force=force)
-        if not Attck.__ENTERPRISE_GENERATED_DATA_JSON:
-            Attck.__ENTERPRISE_GENERATED_DATA_JSON = self.__datasets.generated_attck_data(force=force)
+            if not Attck.__ENTERPRISE_ATTCK_JSON:
+                Attck.__ENTERPRISE_ATTCK_JSON = self.__datasets.mitre(force=force)
+            if not Attck.__ENTERPRISE_GENERATED_DATA_JSON:
+                Attck.__ENTERPRISE_GENERATED_DATA_JSON = self.__datasets.generated_attck_data(force=force)
