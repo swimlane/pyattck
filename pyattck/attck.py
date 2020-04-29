@@ -133,7 +133,7 @@ class Attck(object):
     __tools = None
     __malwares = None
 
-    def __init__(self, attck_json=None, dataset_json=None, config_path=None):
+    def __init__(self, attck_json=None, dataset_json=None, preattck_json=None, config_path=None):
         """The main entry point for pyattck.
 
         When instantiating an Attck object you can currently access the Enterprise Mitre ATT&CK Framework.
@@ -156,10 +156,10 @@ class Attck(object):
 
         if config_path:
             Configuration.__CONFIG_FILE = config_path
-        if attck_json or dataset_json:
-            Configuration().set(enterprise_attck_json_path=attck_json, enterprise_attck_dataset_path=dataset_json)
+        
+        Configuration().set(enterprise_attck_json_path=attck_json, preattck_json_path=preattck_json, enterprise_attck_dataset_path=dataset_json)
         self.__datasets = AttckDatasets()
-        self.__load_data()
+        
 
     @property
     def enterprise(self):
@@ -168,8 +168,21 @@ class Attck(object):
         Returns:
             Enterprise: Returns an Enterprise object
         """        
+        self.__load_data()
         from .enterprise.enterprise import Enterprise
         return Enterprise(self.__ENTERPRISE_ATTCK_JSON)
+
+    @property
+    def preattack(self):
+        """Retrieve objects from the MITRE PRE-ATT&CK Framework
+        
+        Returns:
+            PreAttack: Returns an PreAttack object
+        """
+        self.__load_data(type='preattack')
+        from .preattck.preattck import PreAttck
+        return PreAttck(self.__PRE_ATTCK_JSON)
+
 
     @property
     def actors(self):
@@ -303,13 +316,21 @@ class Attck(object):
                     self.__techniques.append(AttckTechnique(attck_obj=self.__ENTERPRISE_ATTCK_JSON, **technique))
         return self.__techniques
 
-    def update(self):
+    def update(self, enterprise=None, preattack=None):
         """
         Calling this method will force update / sync all datasets from external sources
         """
+        if preattack:
+            self.__load_data(type='preattack', force=True)
+        else:
         self.__load_data(force=True)
 
-    def __load_data(self, force=False):
+
+    def __load_data(self, type='enterprise', force=False):
+        if type == 'preattack':
+            if not Attck.__PRE_ATTCK_JSON:
+                Attck.__PRE_ATTCK_JSON = self.__datasets.mitre(type='preattack', force=force)
+        else:
         if not Attck.__ENTERPRISE_ATTCK_JSON:
             Attck.__ENTERPRISE_ATTCK_JSON = self.__datasets.mitre(force=force)
         if not Attck.__ENTERPRISE_GENERATED_DATA_JSON:
