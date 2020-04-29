@@ -9,9 +9,10 @@ class Attck(object):
     '''
         This class creates an interface to all MITRE ATT&CK frameworks.
 
-        Currently, this class only enables access to the Enterprise framework with others coming soon.
+        Currently, this class enables access to the Enterprise & PRE-ATT&CK frameworks with others coming soon.  To acccess each framework, use the following properties
 
-        This interface enables you to retrieve all properties within each item in the Mitre ATT&CK Enterprise Framework.
+            * enterprise
+            * preattack
 
         This interface enables you to retrieve all properties within each item in the MITRE ATT&CK Enterprise Framework.
 
@@ -115,7 +116,10 @@ class Attck(object):
                        # etc.
 
     Arguments:
-        attck_json (json) - The attck_json is supplied by the attck.py module when instantiated.
+        attck_json (json) - The attck_json is supplied by the attck.py module when instantiated but can be used to specify an alternate location of your Enterprise ATT&CK json file.  Default is None.
+        dataset_json (json) - The dataset_json is supplied by the attck.py module when instantiated but can be used to specify an alternate location of your dataset json file.  Default is None.
+        preattck_json (json) - The attck_json is supplied by the attck.py module when instantiated but can be used to specify an alternate location of your PRE-ATT&CK json file.  Default is None.
+        config_path (str) - The path to a specified configuration file.  Default is None which equates to ~/pyattck folder directory.
 
     Returns:
         [Attck]: Returns a Attck object that contains all data from MITRE ATT&CK Frameworks
@@ -136,21 +140,27 @@ class Attck(object):
     def __init__(self, attck_json=None, dataset_json=None, preattck_json=None, config_path=None):
         """The main entry point for pyattck.
 
-        When instantiating an Attck object you can currently access the Enterprise Mitre ATT&CK Framework.
+        When instantiating an Attck object you can access either the Enterprise or PRE-ATT&CK MITRE Frameworks.  Specify one of the following properties to access the frameworks specific data:
+
+            * enterprise
+            * preattack
 
         You can specify an alternate location of a local copy of the following objects:
 
-            1. attck_json = Path to the Mitre ATT&CK Enterprise Framework json
-            2. dataset_json = Path to a local dataset json file which is generated in the pyattck repo
+            1. attck_json = Path to the MITRE ATT&CK Enterprise Framework JSON
+            2. dataset_json = Path to a local dataset JSON file which is generated in the pyattck repo
+            3. preattck_json = Path to the the MITRE PRE-ATT&CK Framework JSON
             3. config_path = Path to a yaml configuration file which contains two key value pairs
                 Example content:
 
                     enterprise_attck_dataset: /Users/first.last/pyattck/enterprise_attck_dataset.json
+                    preattck_json: /Users/first.last/pyattck/preattck.json
                     enterprise_attck_json: /Users/first.last/pyattck/enterprise_attck.json
         
         Args:
-            attck_json (str, optional): Path to the Mitre ATT&CK Enterprise Framework json. Defaults to None.
+            attck_json (str, optional): Path to the MITRE ATT&CK Enterprise Framework json. Defaults to None.
             dataset_json (str, optional): Path to a local dataset json file which is generated in the pyattck repo. Defaults to None.
+            preattck_json (str, optional): Path to the MITRE PRE-ATT&CK Framework json. Defaults to None.
             config_path (str, optional): Path to a yaml configuration file which contains two key value pairs. Defaults to None.
         """
 
