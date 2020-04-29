@@ -131,7 +131,7 @@ class Attck(object):
     __tools = None
     __malwares = None
 
-    def __init__(self, subtechniques=False, attck_json=None, dataset_json=None, config_path=None):
+    def __init__(self, subtechniques=False, attck_json=None, dataset_json=None, config_path=None, force=False):
         """The main entry point for pyattck.
 
         When instantiating an Attck object you can currently access the Enterprise Mitre ATT&CK Framework.
@@ -150,12 +150,15 @@ class Attck(object):
             attck_json (str, optional): Path to the Mitre ATT&CK Enterprise Framework json. Defaults to None.
             dataset_json (str, optional): Path to a local dataset json file which is generated in the pyattck repo. Defaults to None.
             config_path (str, optional): Path to a yaml configuration file which contains two key value pairs. Defaults to None.
+            force (bool, optional): Force reset configuration file and paths.  Defaults to False.
         """
         self.subtechniques = subtechniques
         if config_path:
             Configuration.__CONFIG_FILE = config_path
         if attck_json or dataset_json:
             Configuration().set(enterprise_attck_json_path=attck_json, enterprise_attck_dataset_path=dataset_json)
+        if force:
+            Configuration().set()
         self.__datasets = AttckDatasets()
         self.__load_data()
 
