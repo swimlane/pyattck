@@ -327,14 +327,15 @@ class Enterprise(object):
             Enterprise.__ENTERPRISE_GENERATED_DATA_JSON = AttckDatasets().generated_attck_data()
         for item in Enterprise.__ENTERPRISE_GENERATED_DATA_JSON['techniques']:
             if 'command_list' in item:
-                close_match = difflib.get_close_matches(search_term, item['command_list'])
-                if close_match:
-                    for technique in self.techniques:
-                        if technique.id.lower() == item['technique_id'].lower():
-                            return_list.append({
-                                'technique': technique,
-                                'reason_for_match': close_match
-                            })
+                if item['command_list']:
+                    for cmd in item['command_list']:
+                        if cmd:
+                            if search_term in cmd:
+                                for technique in self.techniques:
+                                    if technique.id.lower() == item['technique_id'].lower():
+                                        return_list.append({
+                                            'technique': technique
+                                        })
         if return_list:
             return return_list
         else:
