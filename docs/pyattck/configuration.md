@@ -18,7 +18,7 @@ Storing and loading datasets from an alternate location
 ```python
 from pyattck import Attck
 
-attack = Attck(attck_json='/Users/{profile_name}/Desktop/attck_json.json', preattck_json='/Users/{profile_name}/Desktop/preattack.json', dataset_json='/Users/{profile_name}/Desktop/dataset_json.json')
+attack = Attck(attck_json='/Users/{profile_name}/Desktop/attck_json.json', preattck_json='/Users/{profile_name}/Desktop/preattack.json', mobile_attck_json='/Users/{profile_name}/Desktop/mobile_attck.json', dataset_json='/Users/{profile_name}/Desktop/dataset_json.json')
 ```
 
 Specifying an alternate location for a config.yml file:

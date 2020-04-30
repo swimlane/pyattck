@@ -2,10 +2,11 @@
 
 This documentation provides details about the main entry point called `Attck` within the `pyattck` package.
 
-This class provides access to the Enterprise MITRE ATT&CK Framework data as well as additional ATT&CK frameworks in the future.
+This class provides access to the MITRE Enterprise, PRE-ATT&CK, and Mobile Frameworks.
 
-* Enterprise MITRE ATT&CK Framework
+* MITRE Enterprise ATT&CK Framework
 * MITRE PRE-ATT&CK Framework
+* MITRE Mobile ATT&CK Framework
 
 ## Attck Class
 
