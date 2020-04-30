@@ -9,17 +9,20 @@ class AttckDatasets(object):
         Default locations to download datasets are as follows:
             MITRE_ATTCK_JSON_URL = 'https://raw.githubusercontent.com/mitre/cti/master/enterprise-attack/enterprise-attack.json'
             MITRE_PREATTCK_ATTCK_JSON_URL  = 'https://raw.githubusercontent.com/mitre/cti/master/pre-attack/pre-attack.json'
+            MITRE_MOBILE_ATTCK_JSON_URL = 'https://raw.githubusercontent.com/mitre/cti/master/mobile-attack/mobile-attack.json'
             DATASETS_URL = 'https://raw.githubusercontent.com/swimlane/pyattck/master/generated_attck_data.json'
     """    
 
     __MITRE_ENTERPRISE_ATTCK_JSON_URL = 'https://raw.githubusercontent.com/mitre/cti/master/enterprise-attack/enterprise-attack.json'
     __MITRE_PREATTCK_ATTCK_JSON_URL  = 'https://raw.githubusercontent.com/mitre/cti/master/pre-attack/pre-attack.json'
+    __MITRE_MOBILE_ATTCK_JSON_URL = 'https://raw.githubusercontent.com/mitre/cti/master/mobile-attack/mobile-attack.json'
     __DATASETS_URL = 'https://raw.githubusercontent.com/swimlane/pyattck/master/generated_attck_data.json'
 
     def __init__(self):
         config = Configuration().get()
         self.attck_json_path = config['enterprise_attck_json']
         self.preattck_json_path = config['preattck_json']
+        self.mobile_attck_json_path = config['mobile_attck_json']
         self.dataset_json_path = config['enterprise_attck_dataset']
 
 
@@ -38,10 +41,10 @@ class AttckDatasets(object):
                 return mitre
 
     def mitre(self, type='enterprise', force=False):
-        """Downloads, saves, or retrieves the Mitre ATT&CK Enterprise JSON
+        """Downloads, saves, or retrieves MITRE ATT&CK Framework JSON files
         
         Args:
-            type (str, optional): Will set the type of data to download/retrieve.  Defaults to Enterprise.  Options are enterprise, preattack
+            type (str, optional): Will set the type of data to download/retrieve.  Defaults to Enterprise.  Options are enterprise, preattack, & mobile
             force (bool, optional): Will force the download of a new JSON file. Defaults to False.
         
         Returns:
@@ -54,6 +57,9 @@ class AttckDatasets(object):
         elif type == 'preattack':
             url = self.__MITRE_PREATTCK_ATTCK_JSON_URL
             return self.__get_mitre_json(url, self.preattck_json_path, force=force)
+        elif type == 'mobile':
+            url = self.__MITRE_MOBILE_ATTCK_JSON_URL
+            return self.__get_mitre_json(url, self.mobile_attck_json_path, force=force)
         else:
             url = self.__MITRE_ENTERPRISE_ATTCK_JSON_URL
             return self.__get_mitre_json(url, self.attck_json_path, force=force)
