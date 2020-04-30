@@ -1,9 +1,9 @@
 
 def test_preattck_actors_have_techniques(attck_fixture):
-    """All Mitre PRE-ATT&CK Techniques should have techniques
+    """All MITRE PRE-ATT&CK Actors should have techniques
     
     Args:
-        attck_fixture ([type]): our default Mitre PRE-ATT&CK JSON fixture
+        attck_fixture ([type]): our default MITRE PRE-ATT&CK JSON fixture
     """
     for actor in attck_fixture.preattack.actors:
         if actor.techniques:
@@ -11,10 +11,10 @@ def test_preattck_actors_have_techniques(attck_fixture):
 
 
 def test_some_preattck_actors_have_generated_datasets(attck_fixture):
-    """All Mitre PRE-ATT&CK Techniques should have techniques
+    """Some MITRE PRE-ATT&CK Actors should have generated datasets
     
     Args:
-        attck_fixture ([type]): our default Mitre PRE-ATT&CK JSON fixture
+        attck_fixture ([type]): our default MITRE PRE-ATT&CK JSON fixture
     """
     count = 0
     for actor in attck_fixture.preattack.actors:
@@ -24,10 +24,10 @@ def test_some_preattck_actors_have_generated_datasets(attck_fixture):
         assert True
 
 def test_some_preattck_actors_have_generated_datasets_properties(attck_fixture):
-    """All Mitre PRE-ATT&CK Techniques should have techniques
+    """Some MITRE PRE-ATT&CK Actors should have generated datasets properties
     
     Args:
-        attck_fixture ([type]): our default Mitre PRE-ATT&CK JSON fixture
+        attck_fixture ([type]): our default MITRE PRE-ATT&CK JSON fixture
     """
     country_count = 0
     operations_count = 0
@@ -56,10 +56,10 @@ def test_some_preattck_actors_have_generated_datasets_properties(attck_fixture):
         assert True
    
 def test_preattck_actors_has_ascii_logo(attck_fixture):
-    """All Mitre PRE-ATT&CK Techniques should have techniques
+    """All MITRE PRE-ATT&CK Actors should have ascii logo
     
     Args:
-        attck_fixture ([type]): our default Mitre PRE-ATT&CK JSON fixture
+        attck_fixture ([type]): our default MITRE PRE-ATT&CK JSON fixture
     """
     count = 0
     logo_count = 0

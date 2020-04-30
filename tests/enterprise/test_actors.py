@@ -1,29 +1,29 @@
 
 def test_actors_have_tools(attck_fixture):
-    """All Mitre ATT&CK Techniques should have tactics
+    """All MITRE Enterprise ATT&CK Actors should have tools
     
     Args:
-        attck_fixture ([type]): our default Mitre ATT&CK JSON fixture
+        attck_fixture ([type]): our default MITRE Enterprise ATT&CK JSON fixture
     """
     for actor in attck_fixture.enterprise.actors:
         if actor.tools:
             assert getattr(actor,'tools')
 
 def test_actors_have_malwares(attck_fixture):
-    """All Mitre ATT&CK Techniques should have tactics
+    """All MITRE Enterprise ATT&CK Actors should have malwares
     
     Args:
-        attck_fixture ([type]): our default Mitre ATT&CK JSON fixture
+        attck_fixture ([type]): our default MITRE Enterprise ATT&CK JSON fixture
     """
     for actor in attck_fixture.enterprise.actors:
         if actor.malwares:
             assert getattr(actor,'malwares')
 
 def test_actors_have_techniques(attck_fixture):
-    """All Mitre ATT&CK Techniques should have techniques
+    """All MITRE Enterprise ATT&CK Actors should have techniques
     
     Args:
-        attck_fixture ([type]): our default Mitre ATT&CK JSON fixture
+        attck_fixture ([type]): our default MITRE Enterprise ATT&CK JSON fixture
     """
     for actor in attck_fixture.enterprise.actors:
         if actor.techniques:
@@ -31,10 +31,10 @@ def test_actors_have_techniques(attck_fixture):
 
 
 def test_some_actors_have_generated_datasets(attck_fixture):
-    """All Mitre ATT&CK Techniques should have techniques
+    """Some MITRE Enterprise ATT&CK Actors should have generated datasets
     
     Args:
-        attck_fixture ([type]): our default Mitre ATT&CK JSON fixture
+        attck_fixture ([type]): our default MITRE Enterprise ATT&CK JSON fixture
     """
     count = 0
     for actor in attck_fixture.enterprise.actors:
@@ -44,10 +44,10 @@ def test_some_actors_have_generated_datasets(attck_fixture):
         assert True
 
 def test_some_actors_have_generated_datasets_properties(attck_fixture):
-    """All Mitre ATT&CK Techniques should have techniques
+    """Some MITRE Enterprise ATT&CK Actors should have generated datasets properties
     
     Args:
-        attck_fixture ([type]): our default Mitre ATT&CK JSON fixture
+        attck_fixture ([type]): our default MITRE Enterprise ATT&CK JSON fixture
     """
     country_count = 0
     operations_count = 0
@@ -76,10 +76,10 @@ def test_some_actors_have_generated_datasets_properties(attck_fixture):
         assert True
    
 def test_actors_has_ascii_logo(attck_fixture):
-    """All Mitre ATT&CK Techniques should have techniques
+    """All MITRE Enterprise ATT&CK Actors should have ascii logos
     
     Args:
-        attck_fixture ([type]): our default Mitre ATT&CK JSON fixture
+        attck_fixture ([type]): our default MITRE Enterprise ATT&CK JSON fixture
     """
     count = 0
     logo_count = 0
