@@ -1,4 +1,7 @@
-![](https://travis-ci.org/swimlane/pyattck.svg?branch=master)
+![pyattck](https://github.com/swimlane/pyattck/workflows/Testing%20pyattck/badge.svg)
+![](./images/ubuntu_support.svg)
+![](./images/macos_support.svg)
+![](./images/windows_support.svg)
 
 # Welcome to pyattck's Documentation
 
