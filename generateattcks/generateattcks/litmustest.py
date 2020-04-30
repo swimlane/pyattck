@@ -2,8 +2,8 @@ import requests, yaml, markdown
 
 from bs4 import BeautifulSoup
 
-from githubcontroller import GitHubController
-from attacktemplate import AttackTemplate
+from .githubcontroller import GitHubController
+from .attacktemplate import AttackTemplate
 
 
 class LitmusTest(GitHubController):

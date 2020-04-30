@@ -3,6 +3,7 @@ try:
     from StringIO import StringIO ## for Python 2
 except ImportError:
     from io import StringIO ## for Python 3
+
 from .githubcontroller import GitHubController
 from .attacktemplate import AttackTemplate
 from .markdowntable import MarkdownTable

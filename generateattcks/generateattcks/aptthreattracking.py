@@ -2,7 +2,7 @@ import csv
 
 import requests
 
-from attacktemplate import AttackTemplate
+from .attacktemplate import AttackTemplate
 
 
 class APTThreatTracking(object):
