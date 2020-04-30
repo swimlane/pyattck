@@ -1,9 +1,9 @@
 
 def test_tactics_have_techniques(attck_fixture):
-    """All Mitre ATT&CK Techniques should have tactics
+    """All MITRE Enterprise ATT&CK Tactics should have Techniques
     
     Args:
-        attck_fixture ([type]): our default Mitre ATT&CK JSON fixture
+        attck_fixture ([type]): our default MITRE Enterprise ATT&CK JSON fixture
     """
     for tactic in attck_fixture.enterprise.tactics:
         assert getattr(tactic,'techniques')

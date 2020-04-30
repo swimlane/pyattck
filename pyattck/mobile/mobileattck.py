@@ -2,41 +2,29 @@ import json
 
 import difflib
 
-from .technique import AttckTechnique
-from .actor import AttckActor
-from .malware import AttckMalware
-from .tools import AttckTools
-from .mitigation import AttckMitigation
-from .tactic import AttckTactic
+from .technique import MobileAttckTechnique
+from .actor import MobileAttckActor
+from .malware import MobileAttckMalware
+from .tools import MobileAttckTools
+from .mitigation import MobileAttckMitigation
+from .tactic import MobileAttckTactic
 
 
-class Enterprise(object):
+class MobileAttck(object):
 
     '''
-        This class creates an interface to all data points in the Mitre ATT&CK Enterprise framework.
+        This class creates an interface to all data points in the MITRE Mobile ATT&CK framework.
 
-        This interface enables you to retrieve all properties within each item in the Mitre ATT&CK Enterprise Framework.
+        This interface enables you to retrieve all properties within each item in the MITRE Mobile ATT&CK Framework.
 
         The following categorical items can be accessed using this class:
 
-            1. Tactics (Tactics are the phases defined by Mitre ATT&CK)
+            1. Tactics (Tactics are the phases defined by MITRE Mobile ATT&CK)
             2. Techniques (Techniques are the individual actions which can accomplish a tactic)
             3. Mitigations (Mitigations are recommendations to prevent or protect against a technique)
-            4. Actors (Actors or Groups are identified malicious actors/groups which have been identified and documented by Mitre & third-parties)
+            4. Actors (Actors or Groups are identified malicious actors/groups which have been identified and documented by MITRE & third-parties)
             5. Tools (Tools are software used to perform techniques)
             6. Malwares (Malwares are specific pieces of malware used by actors (or in general) to accomplish a technique)
-        
-        You can also search the external dataset for external commands that are similar using the `search_commands` method.
-
-           .. code-block:: python
-               
-               from pyattck import Attck
-
-               attck = Attck()
-               
-               for search in attck.enterprise.search_commands('powershell'):
-                   print(search['technique'])
-                   print(search['reason_for_match'])
 
         Additionally, as of pyattck 2.0.0 you can now access additional datasets related to a technique.
         These datasets are [documented here](https://github.com/swimlane/pyattck/blob/master/generateattcks/README.md).
@@ -64,7 +52,6 @@ class Enterprise(object):
         pyattck also enables you to retrieve or generate logos for the actor or group using the following properties:
         
             - ascii_logo - Generated ASCII logo based on the actor or groups name
-            - image_logo - Generated ASCII logo based on a provided logo
 
         Each Tools object (if available) enables you to access the following properties on the object:
 
@@ -161,12 +148,12 @@ class Enterprise(object):
 
                attck = Attck()
                
-               for technique in attck.enterprise.techniques:
+               for technique in attck.mobile.techniques:
                    print(technique.id)
                    print(technique.name)
                    print(technique.description)
                    # etc.
-               for mitigation in attck.enterprise.mitigations:
+               for mitigation in attck.mobile.mitigations:
                    print(mitigation.id)
                    print(mitigation.name)
                    print(mitigation.description)
@@ -180,34 +167,28 @@ class Enterprise(object):
 
                attck = Attck()
                
-               for technique in attck.enterprise.techniques:
+               for technique in attck.mobile.techniques:
                    print(technique.id)
                    print(technique.name)
                    print(technique.description)
                    # etc.
 
-                   for actor in technique.enterprise.actors:
+                   for actor in technique.actors:
                        print(actor.id)
                        print(actor.name)
                        print(actor.description)
                        # etc.
 
-               for mitigation in attck.enterprise.mitigations:
+               for mitigation in attck.mobile.mitigations:
                    print(mitigation.id)
                    print(mitigation.name)
                    print(mitigation.description)
                    # etc.
 
-                   for technique in mitigation.enterprise.techniques:
+                   for technique in mitigation.techniques:
                        print(technique.name)
                        print(technique.description)
                        # etc.
-
-    Arguments:
-        attck_json (json) - The attck_json is supplied by the attck.py module when instantiated.
-
-    Returns:
-        [Attck]: Returns a Attck object that contains all data from the Mitre ATT&CK Framework
     '''
 
     __ENTERPRISE_GENERATED_DATA_JSON = None
@@ -219,124 +200,99 @@ class Enterprise(object):
     __tools = None
     __malwares = None
     
-    def __init__(self, attck_json):
+    def __init__(self, mobile_attck_json):
         """
         Sets standard properties that are found in all child classes as well as provides standard methods used by inherited classes
-        
+
         Arguments:
-            kwargs (dict) -- Takes the Mitre ATT&CK Json object as a kwargs values
+            mobile_attck_json (json) - Takes the MITRE Mobile ATT&CK Json object as argument
+
+        Returns:
+            [MobileAttck]: Returns a Attck object that contains all data from the MITRE Mobile ATT&CK Framework
         """
-        self.attck = attck_json
+        self.mobile_attck = mobile_attck_json
 
     @property
     def actors(self):
-        """Creates AttckActor objects
+        """Creates MobileAttckActor objects
         
         Returns:
-            (AttckActor) -- (Returns a list of AttckActor objects)
+            (MobileAttckActor) -- (Returns a list of MobileAttckActor objects)
         """
         if self.__actors is None:
             self.__actors = []
-            for group in self.attck['objects']:
+            for group in self.mobile_attck['objects']:
                 if group['type'] == 'intrusion-set':
-                    self.__actors.append(AttckActor(attck_obj=self.attck, **group))
+                    self.__actors.append(MobileAttckActor(mobile_attck_obj=self.mobile_attck, **group))
         return self.__actors
 
     @property
     def tactics(self):
-        """Creates AttckTactic objects
+        """Creates MobileAttckTactic objects
         
         Returns:
-            (AttckTactic) -- (Returns a list of AttckTactic objects)
+            (MobileAttckTactic) -- (Returns a list of MobileAttckTactic objects)
         """
         if self.__tactics is None:
             self.__tactics = []
-            for tactic in self.attck['objects']:
+            for tactic in self.mobile_attck['objects']:
                 if tactic['type'] == 'x-mitre-tactic':
-                    self.__tactics.append(AttckTactic(attck_obj=self.attck, **tactic))
+                    self.__tactics.append(MobileAttckTactic(mobile_attck_obj=self.mobile_attck, **tactic))
         return self.__tactics
 
     @property
     def mitigations(self):
-        """Creates AttckMitigation objects
+        """Creates MobileAttckMitigation objects
         
         Returns:
-            (AttckMitigation) -- (Returns a list of AttckMitigation objects)
+            (MobileAttckMitigation) -- (Returns a list of MobileAttckMitigation objects)
         """
         if self.__mitigations is None:
             self.__mitigations = []
-            for mitigation in self.attck['objects']:
+            for mitigation in self.mobile_attck['objects']:
                 if mitigation['type'] == 'course-of-action':
-                    self.__mitigations.append(AttckMitigation(attck_obj=self.attck, **mitigation))
+                    self.__mitigations.append(MobileAttckMitigation(mobile_attck_obj=self.mobile_attck, **mitigation))
         return self.__mitigations
 
     @property
     def tools(self):
-        """Creates AttckTools objects
+        """Creates MobileAttckTools objects
         
         Returns:
-            (AttckTools) -- Returns a list of AttckTools objects
+            (MobileAttckTools) -- Returns a list of MobileAttckTools objects
         """
         if self.__tools is None:
             self.__tools = []
-            for tools in self.attck['objects']:
+            for tools in self.mobile_attck['objects']:
                 if (tools['type'] == 'tool'):
-                    self.__tools.append(AttckTools(attck_obj=self.attck, **tools))
+                    self.__tools.append(MobileAttckTools(mobile_attck_obj=self.mobile_attck, **tools))
         return self.__tools
 
     @property
     def malwares(self):
-        """Creates AttckMalware objects
+        """Creates MobileAttckMalware objects
         
         Returns:
-            (AttckMalware) -- Returns a list of AttckMalware objects
+            (MobileAttckMalware) -- Returns a list of MobileAttckMalware objects
         """
         if self.__malwares is None:
             self.__malwares = []
-            for malware in self.attck['objects']:
+            for malware in self.mobile_attck['objects']:
                 if (malware['type'] == 'malware'):
-                    self.__malwares.append(AttckMalware(attck_obj=self.attck, **malware))
+                    self.__malwares.append(MobileAttckMalware(mobile_attck_obj=self.mobile_attck, **malware))
         return self.__malwares
 
     @property
     def techniques(self):
-        """Creates AttckTechnique objects
+        """Creates MobileAttckTechnique objects
         
         Returns:
-            (AttckTechnique) -- Returns a list of AttckTechnique objects
+            (MobileAttckTechnique) -- Returns a list of MobileAttckTechnique objects
         """
         if self.__techniques is None:
             self.__techniques = []
-            for technique in self.attck["objects"]:
+            for technique in self.mobile_attck["objects"]:
                 if (technique['type'] == 'attack-pattern'):
-                    self.__techniques.append(AttckTechnique(attck_obj=self.attck, **technique))
+                    self.__techniques.append(MobileAttckTechnique(mobile_attck_obj=self.mobile_attck, **technique))
         return self.__techniques
-
-    def search_commands(self, search_term):
-        """Search external datasets for potential commands using a search term  
-        
-        Args:
-            search_term (str): A command to search for close matches against all external datasets containing potential commands
-        
-        Returns:
-            list: A list of dictionaries containing the technique and the reason for a close match
-        """        
-        from ..datasets import AttckDatasets
-        return_list = []
-        if not Enterprise.__ENTERPRISE_GENERATED_DATA_JSON:
-            Enterprise.__ENTERPRISE_GENERATED_DATA_JSON = AttckDatasets().generated_attck_data()
-        for item in Enterprise.__ENTERPRISE_GENERATED_DATA_JSON['techniques']:
-            if 'command_list' in item:
-                if item['command_list']:
-                    for cmd in item['command_list']:
-                        if cmd:
-                            if search_term in cmd:
-                                for technique in self.techniques:
-                                    if technique.id.lower() == item['technique_id'].lower():
-                                        return_list.append({
-                                            'technique': technique
-                                        })
-        if return_list:
-            return return_list
-        else:
-            return 'No similar commands found'
+    

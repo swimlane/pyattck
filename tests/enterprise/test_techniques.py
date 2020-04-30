@@ -2,20 +2,20 @@ import pytest
 
 
 def test_techniques_have_tactics(attck_fixture):
-    """All Mitre ATT&CK Techniques should have tactics
+    """All MITRE Enterprise ATT&CK Techniques should have tactics
     
     Args:
-        attck_fixture ([type]): our default Mitre ATT&CK JSON fixture
+        attck_fixture ([type]): our default MITRE Enterprise ATT&CK JSON fixture
     """
     for technique in attck_fixture.enterprise.techniques:
         if technique.tactics:
             assert getattr(technique,'tactics')
     
 def test_techniques_have_mitigations(attck_fixture):
-    """All Mitre ATT&CK Techniques should have tactics
+    """Some MITRE Enterprise ATT&CK Techniques should have mitigations
     
     Args:
-        attck_fixture ([type]): our default Mitre ATT&CK JSON fixture
+        attck_fixture ([type]): our default MITRE Enterprise ATT&CK JSON fixture
     """
     count = 0
     for technique in attck_fixture.enterprise.techniques:
@@ -26,10 +26,10 @@ def test_techniques_have_mitigations(attck_fixture):
         assert True
 
 def test_techniques_have_actors(attck_fixture):
-    """All Mitre ATT&CK Techniques should have tactics
+    """All MITRE Enterprise ATT&CK Techniques should have Actors
     
     Args:
-        attck_fixture ([type]): our default Mitre ATT&CK JSON fixture
+        attck_fixture ([type]): our default MITRE Enterprise ATT&CK JSON fixture
     """
     count = 0
     for technique in attck_fixture.enterprise.techniques:
@@ -42,10 +42,10 @@ def test_techniques_have_actors(attck_fixture):
 
 
 def test_some_techniques_have_generated_datasets_properties(attck_fixture):
-    """All Mitre ATT&CK Techniques should have techniques
+    """Some MITRE Enterprise ATT&CK Techniques should have generated datasets properties
     
     Args:
-        attck_fixture ([type]): our default Mitre ATT&CK JSON fixture
+        attck_fixture ([type]): our default MITRE Enterprise ATT&CK JSON fixture
     """
     command_list_count = 0
     commands_count = 0

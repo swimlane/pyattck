@@ -1,19 +1,19 @@
 
-def test_actors_have_techniques(attck_fixture):
-    """All Mitre ATT&CK Techniques should have tactics
+def test_tools_have_techniques(attck_fixture):
+    """All MITRE Enterprise ATT&CK Tools should have Techniques
     
     Args:
-        attck_fixture ([type]): our default Mitre ATT&CK JSON fixture
+        attck_fixture ([type]): our default MITRE Enterprise ATT&CK JSON fixture
     """
     for tool in attck_fixture.enterprise.tools:
         if tool.techniques:
             assert getattr(tool,'techniques')
 
-def test_actors_have_actors(attck_fixture):
-    """All Mitre ATT&CK Techniques should have tactics
+def test_tools_have_actors(attck_fixture):
+    """All Mitre ATT&CK Tools should have Actors
     
     Args:
-        attck_fixture ([type]): our default Mitre ATT&CK JSON fixture
+        attck_fixture ([type]): our default MITRE Enterprise ATT&CK JSON fixture
     """
     for tool in attck_fixture.enterprise.tools:
         if tool.actors:
@@ -22,10 +22,10 @@ def test_actors_have_actors(attck_fixture):
 
 
 def test_some_tools_have_c2_data(attck_fixture):
-    """All Mitre ATT&CK Techniques should have techniques
+    """Some MITRE Enterprise ATT&CK Tools should have C2 Matrix Data
     
     Args:
-        attck_fixture ([type]): our default Mitre ATT&CK JSON fixture
+        attck_fixture ([type]): our default MITRE Enterprise ATT&CK JSON fixture
     """
     count = 0
     for tool in attck_fixture.enterprise.tools:
@@ -35,10 +35,10 @@ def test_some_tools_have_c2_data(attck_fixture):
         assert True
 
 def test_some_tools_have_generated_datasets(attck_fixture):
-    """All Mitre ATT&CK Techniques should have techniques
+    """Some MITRE Enterprise ATT&CK Tools should have generated datasets
     
     Args:
-        attck_fixture ([type]): our default Mitre ATT&CK JSON fixture
+        attck_fixture ([type]): our default MITRE Enterprise ATT&CK JSON fixture
     """
     count = 0
     for tool in attck_fixture.enterprise.tools:
@@ -47,11 +47,11 @@ def test_some_tools_have_generated_datasets(attck_fixture):
     if count >= 1:
         assert True
 
-def test_some_actors_have_generated_datasets_properties(attck_fixture):
-    """All Mitre ATT&CK Techniques should have techniques
+def test_some_tools_have_generated_datasets_properties(attck_fixture):
+    """Some MITRE Enterprise ATT&CK Tools should have generated datsets properties
     
     Args:
-        attck_fixture ([type]): our default Mitre ATT&CK JSON fixture
+        attck_fixture ([type]): our default MITRE Enterprise ATT&CK JSON fixture
     """
     additional_names_count = 0
     attribution_links_count = 0

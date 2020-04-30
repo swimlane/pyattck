@@ -17,6 +17,7 @@ class Configuration(object):
     def __init__(self):
         self.enterprise_attck_json_path = None
         self.preatack_json_path = None
+        self.mobile_attck_json = None
         self.enterprise_attck_dataset_path = None
 
     def get(self):
@@ -37,7 +38,7 @@ class Configuration(object):
             self.set()
             return self.get()
 
-    def set(self, enterprise_attck_json_path=None, preattck_json_path=None, enterprise_attck_dataset_path=None):
+    def set(self, enterprise_attck_json_path=None, preattck_json_path=None, mobile_attck_json_path=None, enterprise_attck_dataset_path=None):
         """This method will set pyattcks configuration file settings.
 
         If no config.yml is found, it will generate one with default settings
@@ -45,6 +46,7 @@ class Configuration(object):
         Args:
             enterprise_attck_json_path (str, optional): Path to store the Enterprise MITRE ATT&CK JSON data file. Defaults to None.
             preattck_json_path (str, optional): Path to store the MITRE PRE-ATT&CK JSON data file. Defaults to None.
+            mobile_attck_json_path (str, optional): Path to store the MITRE Mobile ATT&CK JSON data file. Defaults to None.
             enterprise_attck_dataset_path (str, optional): Path to store the Enterprise MITRE ATT&CK Generated JSON data file. Defaults to None.
         """        
         config = {}
@@ -65,6 +67,15 @@ class Configuration(object):
         else:
             config['preattck_json'] = os.path.join(os.path.expanduser('~'), 'pyattck', 'preattck' + '.json')
         
+
+        if mobile_attck_json_path:
+            if '.json' not in mobile_attck_json_path:
+                config['mobile_attck_json'] = '{}/mobile_attck.json'.format(self.__get_absolute_path(mobile_attck_json_path))
+            else:
+                config['mobile_attck_json'] = self.__get_absolute_path(mobile_attck_json_path)
+        else:
+            config['mobile_attck_json'] = os.path.join(os.path.expanduser('~'), 'pyattck', 'mobile_attck' + '.json')
+
 
         if enterprise_attck_dataset_path:
             if '.json' not in enterprise_attck_dataset_path:

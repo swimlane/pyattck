@@ -137,37 +137,41 @@ class Attck(object):
     __tools = None
     __malwares = None
 
-    def __init__(self, attck_json=None, dataset_json=None, preattck_json=None, config_path=None):
+    def __init__(self, attck_json=None, dataset_json=None, preattck_json=None, mobile_json=None, config_path=None):
         """The main entry point for pyattck.
 
         When instantiating an Attck object you can access either the Enterprise or PRE-ATT&CK MITRE Frameworks.  Specify one of the following properties to access the frameworks specific data:
 
             * enterprise
             * preattack
+            * mobile
 
         You can specify an alternate location of a local copy of the following objects:
 
             1. attck_json = Path to the MITRE ATT&CK Enterprise Framework JSON
             2. dataset_json = Path to a local dataset JSON file which is generated in the pyattck repo
             3. preattck_json = Path to the the MITRE PRE-ATT&CK Framework JSON
-            3. config_path = Path to a yaml configuration file which contains two key value pairs
+            4. mobile_json = Path to the the MITRE Mobile ATT&CK Framework JSON
+            5. config_path = Path to a yaml configuration file which contains two key value pairs
                 Example content:
 
                     enterprise_attck_dataset: /Users/first.last/pyattck/enterprise_attck_dataset.json
                     preattck_json: /Users/first.last/pyattck/preattck.json
+                    mobile_json: /Users/first.last/pyattck/mobile_attck.json
                     enterprise_attck_json: /Users/first.last/pyattck/enterprise_attck.json
         
         Args:
             attck_json (str, optional): Path to the MITRE ATT&CK Enterprise Framework json. Defaults to None.
             dataset_json (str, optional): Path to a local dataset json file which is generated in the pyattck repo. Defaults to None.
             preattck_json (str, optional): Path to the MITRE PRE-ATT&CK Framework json. Defaults to None.
+            mobile_json (str, optional): Path to the MITRE Mobile ATT&CK Framework json. Defaults to None.
             config_path (str, optional): Path to a yaml configuration file which contains two key value pairs. Defaults to None.
         """
 
         if config_path:
             Configuration.__CONFIG_FILE = config_path
         
-        Configuration().set(enterprise_attck_json_path=attck_json, preattck_json_path=preattck_json, enterprise_attck_dataset_path=dataset_json)
+        Configuration().set(enterprise_attck_json_path=attck_json, preattck_json_path=preattck_json, mobile_attck_json_path=mobile_json, enterprise_attck_dataset_path=dataset_json)
         self.__datasets = AttckDatasets()
         
 
@@ -192,6 +196,17 @@ class Attck(object):
         self.__load_data(type='preattack')
         from .preattck.preattck import PreAttck
         return PreAttck(self.__PRE_ATTCK_JSON)
+
+    @property
+    def mobile(self):
+        """Retrieve objects from the MITRE Mobile ATT&CK Framework
+        
+        Returns:
+            PreAttack: Returns an MobileAttack object
+        """
+        self.__load_data(type='mobile')
+        from .mobile.mobileattck import MobileAttck
+        return MobileAttck(self.__MOBILE_ATTCK_JSON)
 
 
     @property
@@ -326,13 +341,15 @@ class Attck(object):
                     self.__techniques.append(AttckTechnique(attck_obj=self.__ENTERPRISE_ATTCK_JSON, **technique))
         return self.__techniques
 
-    def update(self, enterprise=None, preattack=None):
+    def update(self, enterprise=False, preattack=False, mobile=False):
         """
         Calling this method will force update / sync all datasets from external sources
         """
         if preattack:
             self.__load_data(type='preattack', force=True)
-        else:
+        if mobile:
+            self.__load_data(type='mobile', force=True)
+        if enterprise:
             self.__load_data(force=True)
 
 
@@ -340,6 +357,9 @@ class Attck(object):
         if type == 'preattack':
             if not Attck.__PRE_ATTCK_JSON:
                 Attck.__PRE_ATTCK_JSON = self.__datasets.mitre(type='preattack', force=force)
+        elif type == 'mobile':
+            if not Attck.__MOBILE_ATTCK_JSON:
+                Attck.__MOBILE_ATTCK_JSON = self.__datasets.mitre(type='mobile', force=force)
         else:
             if not Attck.__ENTERPRISE_ATTCK_JSON:
                 Attck.__ENTERPRISE_ATTCK_JSON = self.__datasets.mitre(force=force)
