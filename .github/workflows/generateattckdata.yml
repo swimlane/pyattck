@@ -20,15 +20,15 @@ jobs:
         python -m pip install --upgrade pip
         pip install -U -r ./generateattcks/requirements.txt
     - name: Generate ATTCK Data
-        run: |
-          python ./generateattcks/run.py
+      run: |
+        python ./generateattcks/run.py
     - name: Commit files
       run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git add "generated_attck_data.json"
-          git commit -m "Adding daily generated_attck_data"
-      - name: Push changes
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add "generated_attck_data.json"
+        git commit -m "Adding daily generated_attck_data"
+    - name: Push changes
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
