@@ -41,11 +41,13 @@ class AtomicThreatCoverage(GitHubController):
             else:
                 if file_content.path.endswith('md'):
                     if 'Atomic_Threat_Coverage/Detection_Rules/' in file_content.path:
+                        content = None
                         try:
                             content = self.__download_raw_content(self.__URL.format(file_content.path))
                         except:
                             pass
-                        return_list.append(content.get())
+                        if content:
+                            return_list.append(content.get())
         return return_list
 
     def __download_raw_content(self, url):
