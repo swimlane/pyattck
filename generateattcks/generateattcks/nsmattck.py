@@ -31,7 +31,14 @@ class NSMAttck(GitHubController):
         while contents:
             file_content = contents.pop(0)
             if file_content.type == "dir":
-                contents.extend(repo.get_contents(file_content.path.encode('utf-8')))
+                try:
+                    contents.extend(repo.get_contents(file_content.path.decode('utf-8')))
+                except:
+                    try:
+                        contents.extend(repo.get_contents(file_content.path.encode('utf-8')))
+                    except:
+                        print('Can not encode or decode {type} in threathuntingbook.  file_content.path is {val}'.format(type=type(file_content.path), val=file_content.path))
+                        continue
             else:
                 if file_content.path.endswith('.md') and file_content.path.split('/')[0].startswith('T'):
                     content = self.__download_raw_content(file_content.download_url)

@@ -37,10 +37,10 @@ class ThreatHuntingBook(GitHubController):
             file_content = contents.pop(0)
             if file_content.type == "dir":
                 try:
-                    contents.extend(repo.get_contents(file_content.path.encode('utf-8')))
+                    contents.extend(repo.get_contents(file_content.path.decode('utf-8')))
                 except:
                     try:
-                        contents.extend(repo.get_contents(file_content.path.decode('utf-8')))
+                        contents.extend(repo.get_contents(file_content.path.encode('utf-8')))
                     except:
                         print('Can not encode or decode {type} in threathuntingbook.  file_content.path is {val}'.format(type=type(file_content.path), val=file_content.path))
                         continue
