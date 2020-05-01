@@ -36,7 +36,7 @@ class ThreatHuntingBook(GitHubController):
         while contents:
             file_content = contents.pop(0)
             if file_content.type == "dir":
-                contents.extend(repo.get_contents(file_content.path.encode('utf-8')))
+                contents.extend(repo.get_contents(file_content.path.decode('utf-8')))
             else:
                 if file_content.path.endswith('.md') and file_content.path.split('/')[-1].startswith('T'):
                     content = self.__download_raw_content(file_content.download_url)
