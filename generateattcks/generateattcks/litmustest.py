@@ -49,6 +49,8 @@ class LitmusTest(GitHubController):
             data_sources = False
             queries = False
             for line in content.splitlines():
+                line = str(line)
+                #print(type(line))
                 if template_id is False:
                     if line.startswith('# '):
                         if line.strip('# ').split('-')[0].startswith('T'):

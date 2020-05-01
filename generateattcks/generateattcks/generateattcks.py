@@ -47,7 +47,8 @@ class GenerateAttcks(object):
                 for key,val in item.items():
                     if key == 'malware':
                         self._datasets['tools'] = val
-                        item.pop(key)
+                        del item[key]
+                        break
         self._datasets['actors'] = apt_threat_tracking
            
     def add_c2_matrix(self):

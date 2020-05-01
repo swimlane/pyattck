@@ -38,7 +38,7 @@ class APTThreatTracking(object):
         for key,val in self.__GID_MAP.items():
             if key != 'readme':
                 response = requests.get(self._URL.format(gid=val))
-                data = response.content
+                data = response.text
                 return_list.append(self._parse(key,data))
         return return_list
         

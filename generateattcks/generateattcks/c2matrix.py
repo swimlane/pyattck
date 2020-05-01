@@ -21,7 +21,7 @@ class C2Matrix(object):
 
     def get(self):
         response = requests.get(self._URL)
-        data = response.content
+        data = response.text
         return self._parse(data)
         
     def _parse(self, data):
