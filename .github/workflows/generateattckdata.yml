@@ -1,9 +1,8 @@
 name: Generate ATT&CK Data
 
 on:
-  push:
   schedule:
-    - cron: "0 3 * * *"
+    - cron: "0 16 * * *"
 
 jobs:
   build:
