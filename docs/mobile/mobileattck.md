@@ -27,7 +27,7 @@ The following is only a small sample of the available properties on each object 
 
 
 * Every data point has exposed properties that allow the user to retrieve additional data based on relationships:
-    * [Actor](mobile/actor.md)
+    * [Actor](actor.md)
         * Relationship Objects
             * Tools used by the Actor or Group
             * Malware used by the Actor or Group
@@ -41,14 +41,14 @@ The following is only a small sample of the available properties on each object 
             * targets
             * additional_comments
             * external_description
-    * [Malware](mobile/malware.md)
+    * [Malware](malware.md)
         * Actor or Group(s) using this malware
         * Techniques this malware is used with
-    * [Mitigation](mobile/mitigation.md)
+    * [Mitigation](mitigation.md)
         * Techniques related to a specific set of mitigation suggestions
-    * [Tactic](mobile/tactic.md)
+    * [Tactic](tactic.md)
         * Techniques found in a specific Tactic (phase)
-    * [Technique](mobile/technique.md)
+    * [Technique](technique.md)
         * Relationship Objects
             * Tactics a technique is found in
             * Mitigation suggestions for a given technique
@@ -59,8 +59,8 @@ The following is only a small sample of the available properties on each object 
             * queries - A list of potential queries for different products to identify threats within your environment by technique
             * datasets - A list of the datasets as it relates to a technique
             * possible_detections -  A list of potential detections for different products (e.g. NSM rules) as it relates to a technique
-            * For more detailed information about these features, please view the following  [External Datasets](dataset/dataset.md)
-    * [Tools](mobile/tools.md)
+            * For more detailed information about these features, please view the following  [External Datasets](../dataset/dataset.md)
+    * [Tools](tools.md)
         * Relationship Objects
             * Techniques that the specified tool is used within
             * Actor or Group(s) using a specified tool

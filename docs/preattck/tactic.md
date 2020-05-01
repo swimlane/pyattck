@@ -9,7 +9,7 @@ This class provides information about the tactics (columns) within the MITRE PRE
 ## PreAttckTactic Class
 
 ```eval_rst
-.. autoclass:: pyattck.preattack.preattack.PreAttckTactic
+.. autoclass:: pyattck.preattck.preattck.PreAttckTactic
    :members:
    :undoc-members:
    :show-inheritance:

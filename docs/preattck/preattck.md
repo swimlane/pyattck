@@ -29,7 +29,7 @@ The following is only a small sample of the available properties on each object 
 
 
 * Every data point has exposed properties that allow the user to retrieve additional data based on relationships:
-    * [Actor](preattack/actor.md)
+    * [Actor](actor.md)
         * Relationship Objects
             * Techniques this Actor or Group uses
         * External Data
@@ -41,9 +41,9 @@ The following is only a small sample of the available properties on each object 
             * targets
             * additional_comments
             * external_description
-    * [Tactic](preattack/tactic.md)
+    * [Tactic](tactic.md)
         * Techniques found in a specific Tactic (phase)
-    * [Technique](preattack/technique.md)
+    * [Technique](technique.md)
         * Relationship Objects
             * Tactics a technique is found in
             * Actor or Group(s) identified as using this technique
@@ -94,7 +94,7 @@ for technique in attack.preattack.techniques:
 ## PreAttck Class
 
 ```eval_rst
-.. autoclass:: pyattck.preattack.preattack.PreAttck
+.. autoclass:: pyattck.preattck.preattck.PreAttck
    :members:
    :undoc-members:
    :show-inheritance:

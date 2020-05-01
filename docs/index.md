@@ -97,13 +97,13 @@ Here are the accessible objects under the [Enterprise](enterprise/enterprise.md)
 
 For more information on object types under the `enterprise` property, see [Enterprise](enterprise/enterprise.md).
 
-Here are the accessible objects under the [PreAttck](docs/preattck/preattck.md) property:
+Here are the accessible objects under the [PreAttck](preattck/preattck.md) property:
 
-* [actors](docs/preattck/actor.md)
-* [tactics](docs/preattck/tactic.md)
-* [techniques](docs/preattck/technique.md)
+* [actors](preattck/actor.md)
+* [tactics](preattck/tactic.md)
+* [techniques](preattck/technique.md)
 
-For more information on object types under the `preattck` property, see [PreAttck](docs/preattck/preattck.md).
+For more information on object types under the `preattck` property, see [PreAttck](preattck/preattck.md).
 
 Here are the accessible objects under the [Mobile](mobile/mobileattck.md) property:
 

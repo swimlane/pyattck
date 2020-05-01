@@ -10,7 +10,7 @@ This class provides information about the techniques found under each tactic (co
 ## PreAttckTechnique Class
 
 ```eval_rst
-.. autoclass:: pyattck.preattack.preattack.PreAttckTechnique
+.. autoclass:: pyattck.preattck.preattck.PreAttckTechnique
    :members:
    :undoc-members:
    :show-inheritance:
