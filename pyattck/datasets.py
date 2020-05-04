@@ -88,7 +88,13 @@ class AttckDatasets(object):
                     self.__save_locally(self.dataset_json_path, datasets)
                     return datasets
             else:
-                datasets = requests.get(self.__DATASETS_URL).json()
+                datasets = requests.get(self.__DATASETS_URL)
+                if datasets:
+                    try:
+                        datasets = datasets.json()
+                    except:
+                        print('Unable to downlad and load external datasets')
+                        pass
                 self.__save_locally(self.dataset_json_path, datasets)
                 return datasets
 
