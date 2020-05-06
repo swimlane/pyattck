@@ -121,7 +121,7 @@ class MobileAttckObject(object):
         if "external_references" in obj:
             for p in obj['external_references']:
                 for s in p:
-                    if p[s] == 'mitre-attack':
+                    if p[s] == 'mitre-mobile-attack':
                         return p['external_id']
         return 'S0000'
         
