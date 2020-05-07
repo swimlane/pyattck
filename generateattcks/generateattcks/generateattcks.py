@@ -14,7 +14,7 @@ from .nsmattck import NSMAttck
 from .litmustest import LitmusTest
 from .c2matrix import C2Matrix
 from .aptthreattracking import APTThreatTracking
-
+from .elemental import ElementalAttack
 
 class GenerateAttcks(object):
 
@@ -38,8 +38,13 @@ class GenerateAttcks(object):
         self.add_litmust_test()
         self.add_c2_matrix()
         self.add_apt_threat_tracking()
+        self.add_elemental_attack()
         return self._datasets
         
+    def add_elemental_attack(self):
+        for item in ElementalAttack().get():
+            self.__add_to_output(item)
+
     def add_apt_threat_tracking(self):
         apt_threat_tracking = APTThreatTracking().get()
         for item in apt_threat_tracking:
