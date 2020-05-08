@@ -1,5 +1,6 @@
 from .preattckobject import PreAttckObject
 
+
 class PreAttckTechnique(PreAttckObject):
     '''A child class of AttckObject
     
@@ -69,7 +70,7 @@ class PreAttckTechnique(PreAttckObject):
            The PreAttckTechnique object is a technique used by attackers.
         """
         super(PreAttckTechnique, self).__init__(**kwargs)
-        self.preattck_obj = preattck_obj
+        self.__preattck_obj = preattck_obj
 
         self.old_attack_id = self._set_attribute(kwargs, 'x_mitre_old_attack_id')
         self.common_defenses = self._set_attribute(kwargs, 'x_mitre_detectable_by_common_defenses_explanation')
@@ -83,7 +84,7 @@ class PreAttckTechnique(PreAttckObject):
         self.deprecated = self._set_attribute(kwargs, 'x_mitre_deprecated')
         self.stix = self._set_attribute(kwargs, 'id')
 
-        self.set_relationships(self.preattck_obj)
+        self.set_relationships(self.__preattck_obj)
 
     @property
     def tactics(self):
@@ -94,7 +95,7 @@ class PreAttckTechnique(PreAttckObject):
         """
         from .tactic import PreAttckTactic
         tactic_list = []
-        for item in self.preattck_obj['objects']:
+        for item in self.__preattck_obj['objects']:
             if 'x-mitre-tactic' in item['type']:
                 for tact in self._tactic:
                     if str(tact).lower() == str(item['x_mitre_shortname']).lower():
@@ -134,7 +135,7 @@ class PreAttckTechnique(PreAttckObject):
         from .actor import PreAttckActor
         return_list = []
         item_dict = {}
-        for item in self.preattck_obj['objects']:
+        for item in self.__preattck_obj['objects']:
             if 'type' in item:
                 if item['type'] == 'intrusion-set':
                     item_dict[item['id']] = item

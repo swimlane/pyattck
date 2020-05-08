@@ -81,7 +81,7 @@ class PreAttckActor(PreAttckObject):
             GeneratedDatasetException: Error when accessing third-party generated datasets
         """
         super(PreAttckActor, self).__init__(**kwargs)
-        self.preattck_obj = preattck_obj
+        self.__preattck_obj = preattck_obj
 
         self.created_by_ref = self._set_attribute(kwargs, 'created_by_ref')
         self.version = self._set_attribute(kwargs, 'x_mitre_version')
@@ -91,7 +91,7 @@ class PreAttckActor(PreAttckObject):
         self.stix = self._set_attribute(kwargs, 'id')
         self.contributor = self._set_list_items(kwargs, 'x_mitre_contributors')
 
-        self.set_relationships(self.preattck_obj)
+        self.set_relationships(self.__preattck_obj)
 
         logo = Logo(self.name.strip().replace(' ','_').lower())
         self.ascii_logo = logo.get_ascii()
@@ -202,7 +202,7 @@ class PreAttckActor(PreAttckObject):
         from .technique import PreAttckTechnique
         return_list = []
         item_dict = {}
-        for item in self.preattck_obj['objects']:
+        for item in self.__preattck_obj['objects']:
             if 'type' in item:
                 if item['type'] == 'attack-pattern':
                     item_dict[item['id']] = item

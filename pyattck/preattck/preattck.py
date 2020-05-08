@@ -100,7 +100,7 @@ class PreAttck(object):
         Returns:
             [PreAttck]: Returns a PreAttck object that contains all data from the MITRE PRE-ATT&CK Framework
         """
-        self.preattck = preattck_json
+        self.__preattck = preattck_json
 
     @property
     def actors(self):
@@ -111,9 +111,9 @@ class PreAttck(object):
         """
         if self.__actors is None:
             self.__actors = []
-            for group in self.preattck['objects']:
+            for group in self.__preattck['objects']:
                 if group['type'] == 'intrusion-set':
-                    self.__actors.append(PreAttckActor(preattck_obj=self.preattck, **group))
+                    self.__actors.append(PreAttckActor(preattck_obj=self.__preattck, **group))
         return self.__actors
 
     @property
@@ -125,9 +125,9 @@ class PreAttck(object):
         """
         if self.__tactics is None:
             self.__tactics = []
-            for tactic in self.preattck['objects']:
+            for tactic in self.__preattck['objects']:
                 if tactic['type'] == 'x-mitre-tactic':
-                    self.__tactics.append(PreAttckTactic(preattck_obj=self.preattck, **tactic))
+                    self.__tactics.append(PreAttckTactic(preattck_obj=self.__preattck, **tactic))
         return self.__tactics
 
 
@@ -140,7 +140,7 @@ class PreAttck(object):
         """
         if self.__techniques is None:
             self.__techniques = []
-            for technique in self.preattck["objects"]:
+            for technique in self.__preattck["objects"]:
                 if (technique['type'] == 'attack-pattern'):
-                    self.__techniques.append(PreAttckTechnique(preattck_obj=self.preattck, **technique))
+                    self.__techniques.append(PreAttckTechnique(preattck_obj=self.__preattck, **technique))
         return self.__techniques
