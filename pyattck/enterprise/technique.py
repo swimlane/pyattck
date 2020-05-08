@@ -2,6 +2,7 @@ from .attckobject import AttckObject
 from ..datasets import AttckDatasets
 from ..utils.exceptions import GeneratedDatasetException
 
+
 class AttckTechnique(AttckObject):
     '''A child class of AttckObject
     
@@ -72,7 +73,7 @@ class AttckTechnique(AttckObject):
            The AttckTechnique object is a technique used by attackers.
         """
         super(AttckTechnique, self).__init__(**kwargs)
-        self.attck_obj = attck_obj
+        self.__attck_obj = attck_obj
 
         self.created_by_reference = self._set_attribute(kwargs, 'created_by_ref')
         self.platforms = self._set_list_items(kwargs, 'x_mitre_platforms')
@@ -104,7 +105,7 @@ class AttckTechnique(AttckObject):
 
         self.tactics = kwargs
 
-        self.set_relationships(self.attck_obj)
+        self.set_relationships(self.__attck_obj)
 
     def __get_filtered_dataset(self, technique_id, attribute_name):
         for item in AttckTechnique.__ATTCK_DATASETS['techniques']:
@@ -116,7 +117,7 @@ class AttckTechnique(AttckObject):
         '''Returns all tactics as a list that this technique is found in'''
         from .tactic import AttckTactic
         tactic_list = []
-        for item in self.attck_obj['objects']:
+        for item in self.__attck_obj['objects']:
             if 'x-mitre-tactic' in item['type']:
                 for tact in self._tactic:
                     if str(tact).lower() == str(item['x_mitre_shortname']).lower():
@@ -151,7 +152,7 @@ class AttckTechnique(AttckObject):
         from .mitigation import AttckMitigation
         return_list = []
         item_dict = {}
-        for item in self.attck_obj['objects']:
+        for item in self.__attck_obj['objects']:
             if 'type' in item:
                 if item['type'] == 'mitigates':
                     item_dict[item['id']] = item
@@ -169,7 +170,7 @@ class AttckTechnique(AttckObject):
         from .actor import AttckActor
         return_list = []
         item_dict = {}
-        for item in self.attck_obj['objects']:
+        for item in self.__attck_obj['objects']:
             if 'type' in item:
                 if item['type'] == 'intrusion-set':
                     item_dict[item['id']] = item

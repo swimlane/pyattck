@@ -2,6 +2,7 @@ from .attckobject import AttckObject
 from ..datasets import AttckDatasets
 from ..utils.exceptions import GeneratedDatasetException
 
+
 class AttckTools(AttckObject):
     '''
         A child class of AttckObject
@@ -124,7 +125,7 @@ class AttckTools(AttckObject):
         """
 
         super(AttckTools, self).__init__(**kwargs)
-        self.attck_obj = attck_obj
+        self.__attck_obj = attck_obj
 
         self.id = self._set_id(kwargs)
         self.name = self._set_attribute(kwargs, 'name')
@@ -138,7 +139,7 @@ class AttckTools(AttckObject):
         self.wiki = self._set_wiki(kwargs)
         self.contributor = self._set_attribute(kwargs, 'contributor')
 
-        self.set_relationships(self.attck_obj)
+        self.set_relationships(self.__attck_obj)
 
         if AttckTools.__ATTCK_C2_DATASETS is None or AttckTools.__ATTCK_TOOLS_DATASETS is None:
             try:
@@ -225,7 +226,7 @@ class AttckTools(AttckObject):
         from .technique import AttckTechnique
         return_list = []
         item_dict = {}
-        for item in self.attck_obj['objects']:
+        for item in self.__attck_obj['objects']:
             if 'type' in item:
                 if item['type'] == 'attack-pattern':
                     item_dict[item['id']] = item
@@ -241,7 +242,7 @@ class AttckTools(AttckObject):
         from .actor import AttckActor
         return_list = []
         item_dict = {}
-        for item in self.attck_obj['objects']:
+        for item in self.__attck_obj['objects']:
             if 'type' in item:
                 if item['type'] == 'intrusion-set':
                     item_dict[item['id']] = item

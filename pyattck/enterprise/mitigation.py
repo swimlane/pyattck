@@ -1,5 +1,6 @@
 from .attckobject import AttckObject
 
+
 class AttckMitigation(AttckObject):
     '''A child class of AttckObject
 
@@ -54,7 +55,7 @@ class AttckMitigation(AttckObject):
            The AttckMitigation object is considered a list of mitigations to threats based on the Mitre ATT&CK Framework
         """
         super(AttckMitigation, self).__init__(**kwargs)
-        self.attck_obj = attck_obj
+        self.__attck_obj = attck_obj
         
         self.created_by_ref = self._set_attribute(kwargs, 'created_by_ref')
         self.id = self._set_id(kwargs)
@@ -68,7 +69,7 @@ class AttckMitigation(AttckObject):
         self.wiki = self._set_wiki(kwargs)
         self.contributor = self._set_attribute(kwargs, 'contributor')
 
-        self.set_relationships(self.attck_obj)
+        self.set_relationships(self.__attck_obj)
 
     @property
     def techniques(self):
@@ -76,7 +77,7 @@ class AttckMitigation(AttckObject):
         from .technique import AttckTechnique
         return_list = []
         item_dict = {}
-        for item in self.attck_obj['objects']:
+        for item in self.__attck_obj['objects']:
             if 'type' in item:
                 if item['type'] == 'attack-pattern':
                     item_dict[item['id']] = item

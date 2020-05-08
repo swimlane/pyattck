@@ -79,7 +79,7 @@ class AttckActor(AttckObject):
 
     def __init__(self, attck_obj = None, **kwargs):
         super(AttckActor, self).__init__(**kwargs)
-        self.attck_obj = attck_obj
+        self.__attck_obj = attck_obj
 
         self.id = self._set_id(kwargs)
         self.created_by_ref = self._set_attribute(kwargs, 'created_by_ref')
@@ -95,7 +95,7 @@ class AttckActor(AttckObject):
         self.wiki = self._set_wiki(kwargs)
         self.contributor = self._set_list_items(kwargs, 'x_mitre_contributors')
 
-        self.set_relationships(self.attck_obj)
+        self.set_relationships(self.__attck_obj)
 
         logo = Logo(self.name.strip().replace(' ','_').lower())
         self.ascii_logo = logo.get_ascii()
@@ -204,7 +204,7 @@ class AttckActor(AttckObject):
         from .malware import AttckMalware
         return_list = []
         item_dict = {}
-        for item in self.attck_obj['objects']:
+        for item in self.__attck_obj['objects']:
             if 'type' in item:
                 if item['type'] == 'malware':
                     item_dict[item['id']] = item
@@ -220,7 +220,7 @@ class AttckActor(AttckObject):
         from .tools import AttckTools
         return_list = []
         item_dict = {}
-        for item in self.attck_obj['objects']:
+        for item in self.__attck_obj['objects']:
             if 'type' in item:
                 if item['type'] == 'tool':
                     item_dict[item['id']] = item
@@ -236,7 +236,7 @@ class AttckActor(AttckObject):
         from .technique import AttckTechnique
         return_list = []
         item_dict = {}
-        for item in self.attck_obj['objects']:
+        for item in self.__attck_obj['objects']:
             if 'type' in item:
                 if item['type'] == 'attack-pattern':
                     item_dict[item['id']] = item

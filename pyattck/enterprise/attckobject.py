@@ -1,8 +1,4 @@
-import json 
-from collections import OrderedDict
 
-def jsonDefault(OrderedDict):
-    return OrderedDict.__dict__
 
 class AttckObject(object):
     '''Parent class of all other Mitre ATT&CK based classes
@@ -34,7 +30,11 @@ class AttckObject(object):
         
 
     def __str__(self):
-        return json.dumps(self, default=jsonDefault, indent=4)
+        return_dict = {}
+        for key,val in self.__dict__.items():
+            if not key.startswith('_'):
+                return_dict[key] = val
+        return str(return_dict)
 
     def set_relationships(self, attck_obj):
         if not AttckObject._RELATIONSHIPS:

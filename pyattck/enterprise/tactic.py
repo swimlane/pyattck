@@ -1,5 +1,6 @@
 from .attckobject import AttckObject
 
+
 class AttckTactic(AttckObject):
     
     def __init__(self, attck_obj = None, **kwargs):
@@ -54,7 +55,7 @@ class AttckTactic(AttckObject):
             AttckObject (dict) -- Takes the Mitre ATT&CK Json object as a kwargs values
         '''
         super(AttckTactic, self).__init__(**kwargs)
-        self.attck_obj = attck_obj
+        self.__attck_obj = attck_obj
 
         self.id = self._set_id(kwargs)
         self.created_by_ref = self._set_attribute(kwargs, 'created_by_ref')
@@ -69,14 +70,14 @@ class AttckTactic(AttckObject):
         self.wiki = self._set_wiki(kwargs)
         self.contributor = self._set_attribute(kwargs, 'contributor')
 
-        self.set_relationships(self.attck_obj)
+        self.set_relationships(self.__attck_obj)
 
     @property
     def techniques(self):
         '''Returns all techniques as a list that are related to this tactic'''
         from .technique import AttckTechnique
         technique_list = []
-        for item in self.attck_obj['objects']:
+        for item in self.__attck_obj['objects']:
             if 'kill_chain_phases' in item:
                 for prop in item['kill_chain_phases']:
                     if str(prop['phase_name']).lower() == str(self.short_name).lower():
