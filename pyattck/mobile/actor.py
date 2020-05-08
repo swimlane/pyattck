@@ -84,7 +84,7 @@ class MobileAttckActor(MobileAttckObject):
             GeneratedDatasetException: Error occurred when access third-party generated data
         """
         super(MobileAttckActor, self).__init__(**kwargs)
-        self.mobile_attck_obj = mobile_attck_obj
+        self.__mobile_attck_obj = mobile_attck_obj
 
         self.created_by_ref = self._set_attribute(kwargs, 'created_by_ref')
         self.revoked = self._set_attribute(kwargs, 'revoked')
@@ -94,7 +94,7 @@ class MobileAttckActor(MobileAttckObject):
         self.version = self._set_attribute(kwargs, 'x_mitre_version')
         self.contributor = self._set_list_items(kwargs, 'x_mitre_contributors')
 
-        self.set_relationships(self.mobile_attck_obj)
+        self.set_relationships(self.__mobile_attck_obj)
 
         logo = Logo(self.name.strip().replace(' ','_').lower())
         self.ascii_logo = logo.get_ascii()
@@ -206,7 +206,7 @@ class MobileAttckActor(MobileAttckObject):
         from .malware import MobileAttckMalware
         return_list = []
         item_dict = {}
-        for item in self.mobile_attck_obj['objects']:
+        for item in self.__mobile_attck_obj['objects']:
             if 'type' in item:
                 if item['type'] == 'malware':
                     item_dict[item['id']] = item
@@ -226,7 +226,7 @@ class MobileAttckActor(MobileAttckObject):
         from .tools import MobileAttckTools
         return_list = []
         item_dict = {}
-        for item in self.mobile_attck_obj['objects']:
+        for item in self.__mobile_attck_obj['objects']:
             if 'type' in item:
                 if item['type'] == 'tool':
                     item_dict[item['id']] = item
@@ -246,7 +246,7 @@ class MobileAttckActor(MobileAttckObject):
         from .technique import MobileAttckTechnique
         return_list = []
         item_dict = {}
-        for item in self.mobile_attck_obj['objects']:
+        for item in self.__mobile_attck_obj['objects']:
             if 'type' in item:
                 if item['type'] == 'attack-pattern':
                     item_dict[item['id']] = item
