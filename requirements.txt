@@ -1,6 +1,6 @@
 requests
 pendulum==2.0.5
-pyfiglet
-PyYaml
-Pillow
+pyfiglet==0.8.post1
+PyYaml>=5.0
+Pillow==7.1.2
 fire==0.3.1
