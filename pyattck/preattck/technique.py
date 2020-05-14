@@ -66,8 +66,10 @@ class PreAttckTechnique(PreAttckObject):
     __LOCAL_FOLDER_PATH = None
 
     def __init__(self, preattck_obj = None, **kwargs):
-        """Creates an PreAttckTechnique object.  
-           The PreAttckTechnique object is a technique used by attackers.
+        """This class represents a Techniques as defined with the MITRE PRE-ATT&CK framework.
+
+        Keyword Arguments:
+            preattck_obj {json} -- A MITRE PRE-ATT&CK Framework json object (default: {None})
         """
         super(PreAttckTechnique, self).__init__(**kwargs)
         self.__preattck_obj = preattck_obj

@@ -3,8 +3,7 @@ from .preattckobject import PreAttckObject
 
 class PreAttckTactic(PreAttckObject):
     
-    def __init__(self, preattck_obj = None, **kwargs):
-        '''A child class of PreAttckObject
+    '''A child class of PreAttckObject
     
         Creates objects that are categorized as MITRE PRE-ATT&CK Tactics
     
@@ -54,6 +53,13 @@ class PreAttckTactic(PreAttckObject):
             attck_obj (json) -- Takes the raw MITRE PRE-ATT&CK Json object
             AttckObject (dict) -- Takes the MITRE PRE-ATT&CK Json object as a kwargs values
         '''
+
+    def __init__(self, preattck_obj = None, **kwargs):
+        """This class represents a Tactic as defined with the MITRE PRE-ATT&CK framework.
+
+        Keyword Arguments:
+            preattck_obj {json} -- A MITRE PRE-ATT&CK Framework json object (default: {None})
+        """
         super(PreAttckTactic, self).__init__(**kwargs)
         self.__preattck_obj = preattck_obj
 

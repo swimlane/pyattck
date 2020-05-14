@@ -93,12 +93,12 @@ class PreAttck(object):
     def __init__(self, preattck_json):
         """
         Sets standard properties that are found in all child classes as well as provides standard methods used by inherited classes
-        
+
         Arguments:
-            preattck_json (json) - The preattck_json is supplied by the attck.py module when instantiated.
+            preattck_json (json) - Takes the MITRE PRE-ATT&CK Json object as argument
 
         Returns:
-            [PreAttck]: Returns a PreAttck object that contains all data from the MITRE PRE-ATT&CK Framework
+            [PreAttck]: Returns a Attck object that contains all data from the MITRE PRE-ATT&CK Framework
         """
         self.__preattck = preattck_json
 
