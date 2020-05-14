@@ -1,4 +1,7 @@
-![](https://travis-ci.org/swimlane/pyattck.svg?branch=master)
+![pyattck](https://github.com/swimlane/pyattck/workflows/Testing%20pyattck/badge.svg)
+![](images/ubuntu_support.svg)
+![](images/macos_support.svg)
+![](images/windows_support.svg)
 
 # Welcome to pyattck's Documentation
 
@@ -40,10 +43,11 @@ The following libraries are required and installed by pyattck:
 
 ```
 requests
-pendulum
-pyfiglet
-PyYaml
-Pillow
+pendulum==2.0.5
+pyfiglet==0.8.post1
+PyYaml>=5.0
+Pillow==7.1.2
+fire==0.3.1
 ```
 
 ### OS X & Linux:
@@ -75,8 +79,6 @@ from pyattck import Attck
 
 attack = Attck()
 ```
-
-Once you have a `Attck` object, you can access the MITRE ATT&CK Enterprise framework's [Tactic](enterprise/tactic.md), [Technique](enterprise/technique.md), [Actor](enterprise/actor.md), [Malware](enterprise/malware.md), [Mitigation](enterprise/mitigation.md), and [Tools](enterprise/tools.md). You can access with this `Attck` object or any other objects that is related to it.
 
 You can access the following `main` properties on your **Attck** object:
 
@@ -197,6 +199,9 @@ This data set is generated from many different sources. As we continue to add mo
 * [threat_hunting_tables (by dwestgard)](https://github.com/dwestgard/threat_hunting_tables)
 * [APT Groups & Operations](https://docs.google.com/spreadsheets/d/1H9_xaxQHpWaa4O_Son4Gx0YOIzlcBWMsdvePFX68EKU/edit#gid=1864660085)
 * [C2Matrix (by @jorgeorchilles, @brysonbort, @adam_mashinchi)](https://www.thec2matrix.com/)
+* [Elemental](https://github.com/Elemental-attack/Elemental)
+* [MalwareArchaeology - ATTACK](https://github.com/MalwareArchaeology/ATTACK)
+* [Attack-Technique-Dataset](https://github.com/NewBee119/Attack-Technique-Dataset)
 
 
 ```eval_rst

@@ -8,6 +8,7 @@ class AttackTemplate(object):
         self.attack_paths = []
         self.possible_query_list = []
         self.detection_data_source_list = []
+        self.external_reference = []
         self.c2_data = []
         self.actor_data = []
         self.tool_data = []
@@ -42,6 +43,8 @@ class AttackTemplate(object):
             return_dict['actors'] = self.actor_data
         if self.tool_data:
             return_dict['tools'] = self.tool_data
+        if self.external_reference:
+            return_dict['external_reference'] = self.external_reference
         return return_dict
 
     def add_command(self, source, command, name=None):
@@ -70,6 +73,9 @@ class AttackTemplate(object):
             'query': query,
             'name': name
         })
+
+    def add_external_reference(self, reference):
+        self.external_reference.append(reference)
 
     def add_detection_data_sources(self, data_source):
         self.detection_data_source_list.append({

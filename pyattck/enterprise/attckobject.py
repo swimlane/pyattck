@@ -1,8 +1,4 @@
-import json 
-from collections import OrderedDict
 
-def jsonDefault(OrderedDict):
-    return OrderedDict.__dict__
 
 class AttckObject(object):
     '''Parent class of all other Mitre ATT&CK based classes
@@ -34,9 +30,18 @@ class AttckObject(object):
         
 
     def __str__(self):
-        return json.dumps(self, default=jsonDefault, indent=4)
+        return_dict = {}
+        for key,val in self.__dict__.items():
+            if not key.startswith('_'):
+                return_dict[key] = val
+        return str(return_dict)
 
     def set_relationships(self, attck_obj):
+        """Generates relationships within attck_obj based on a defined relationship from Mitre ATT&CK
+        
+        Args:
+            attck_obj (dict): MITRE ATT&CK Json object
+        """
         if not AttckObject._RELATIONSHIPS:
             relationship_obj = {}
             for item in attck_obj['objects']:
@@ -53,26 +58,6 @@ class AttckObject(object):
                         relationship_obj[target_id].append(source_id)
             AttckObject._RELATIONSHIPS = relationship_obj
 
-    def set_relationship(self, obj, id, name):
-        """Sets relationships on two objects based on a defined relationship from Mitre ATT&CK
-        
-        Args:
-            obj (dict): Mitre ATT&CK Json object
-            id (str): A Mitre ATT&CK source reference ID
-            name (str): A Mitre ATT&CK object type
-        
-        Returns:
-            list: A list of related Mitre ATT&CK related objects based on provided inputs
-        """        
-        return_list = []
-        for item in obj['objects']:
-            if 'source_ref' in item:
-                if id in item['source_ref']:
-                    for o in obj['objects']:
-                        if o['type'] == name:
-                            if item['target_ref'] in o['id']:
-                                return_list.append(o)
-        return return_list
 
     def _set_attribute(self, obj, name):
         """Parent class method to set attribute based on passed in object

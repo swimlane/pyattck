@@ -2,6 +2,7 @@ from .attckobject import AttckObject
 from ..datasets import AttckDatasets
 from ..utils.exceptions import GeneratedDatasetException
 
+
 class AttckTechnique(AttckObject):
     '''A child class of AttckObject
     
@@ -32,7 +33,7 @@ class AttckTechnique(AttckObject):
 
                attck = Attck()
 
-               for technique in attck.techniques:
+               for technique in attck.enterprise.techniques:
                    print(technique.id)
                    print(technique.name)
                    print(technique.aliases)
@@ -47,7 +48,7 @@ class AttckTechnique(AttckObject):
 
                attck = Attck()
 
-               for technique in attck.techniques:
+               for technique in attck.enterprise.techniques:
                    print(technique.id)
                    print(technique.name)
                    print(technique.aliases)
@@ -60,19 +61,24 @@ class AttckTechnique(AttckObject):
                        # etc.
 
     Arguments:
-        attck_obj (json) -- Takes the raw Mitre ATT&CK Json object
-        AttckObject (dict) -- Takes the Mitre ATT&CK Json object as a kwargs values
+        attck_obj (json) -- Takes the raw MITRE ATT&CK Json object
+        AttckObject (dict) -- Takes the MITRE ATT&CK Json object as a kwargs values
     '''
 
     __LOCAL_FOLDER_PATH = None
     __ATTCK_DATASETS = None
 
     def __init__(self, attck_obj = None, **kwargs):
-        """Creates an AttckTechnique object.  
-           The AttckTechnique object is a technique used by attackers.
+        """This class represents a Technique as defined with the Enterprise MITRE ATT&CK framework.
+
+        Keyword Arguments:
+            attck_obj {json} -- A Enterprise MITRE ATT&CK Framework json object (default: {None})
+
+        Raises:
+            GeneratedDatasetException: Raised an exception when unable to access or process the external generated dataset.
         """
         super(AttckTechnique, self).__init__(**kwargs)
-        self.attck_obj = attck_obj
+        self.__attck_obj = attck_obj
 
         self.created_by_reference = self._set_attribute(kwargs, 'created_by_ref')
         self.platforms = self._set_list_items(kwargs, 'x_mitre_platforms')
@@ -104,7 +110,7 @@ class AttckTechnique(AttckObject):
 
         self.tactics = kwargs
 
-        self.set_relationships(self.attck_obj)
+        self.set_relationships(self.__attck_obj)
 
     def __get_filtered_dataset(self, technique_id, attribute_name):
         for item in AttckTechnique.__ATTCK_DATASETS['techniques']:
@@ -113,10 +119,14 @@ class AttckTechnique(AttckObject):
 
     @property
     def tactics(self):
-        '''Returns all tactics as a list that this technique is found in'''
+        """Returns all tactic object that a technique belongs to
+
+        Returns:
+            [list] -- A list of tactic objects defined within the Enterprise MITRE ATT&CK Framework
+        """
         from .tactic import AttckTactic
         tactic_list = []
-        for item in self.attck_obj['objects']:
+        for item in self.__attck_obj['objects']:
             if 'x-mitre-tactic' in item['type']:
                 for tact in self._tactic:
                     if str(tact).lower() == str(item['x_mitre_shortname']).lower():
@@ -129,7 +139,7 @@ class AttckTechnique(AttckObject):
         """Sets the associated tactic/phase this technique is in
         
         Arguments:
-            obj (dict) -- A Mitre ATT&CK Framework json object
+            obj (dict) -- A MITRE ATT&CK Framework json object
         
         Returns:
             (string) -- Returns a string that sets the tactic/phase this technique is in. 
@@ -147,11 +157,15 @@ class AttckTechnique(AttckObject):
 
     @property
     def mitigations(self):
-        '''Returns all mitigation objects as a list that are documented to help mitigate the current technique object'''
+        """Returns all mitigation objects that a technique is associated with
+
+        Returns:
+            [list] -- A list of mitigation objects defined within the Enterprise MITRE ATT&CK Framework
+        """
         from .mitigation import AttckMitigation
         return_list = []
         item_dict = {}
-        for item in self.attck_obj['objects']:
+        for item in self.__attck_obj['objects']:
             if 'type' in item:
                 if item['type'] == 'mitigates':
                     item_dict[item['id']] = item
@@ -165,11 +179,15 @@ class AttckTechnique(AttckObject):
 
     @property
     def actors(self):
-        '''Returns all actor objects that have been identified as using this technique'''
+        """Returns all actor objects that use a technique
+
+        Returns:
+            [list] -- A list of actor objects defined within the Enterprise MITRE ATT&CK Framework
+        """
         from .actor import AttckActor
         return_list = []
         item_dict = {}
-        for item in self.attck_obj['objects']:
+        for item in self.__attck_obj['objects']:
             if 'type' in item:
                 if item['type'] == 'intrusion-set':
                     item_dict[item['id']] = item

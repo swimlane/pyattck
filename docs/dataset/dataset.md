@@ -1,6 +1,6 @@
 # External Datasets
 
-This page outlines and provides detailed information regarding the data generated and used with the `pyattck` python package.
+This page outlines and provides detailed information regarding the data generated and used with the `pyattck` python package and the PowerShell Module `PSAttck`
 
 ## Data Categories
 
@@ -27,15 +27,15 @@ This generated JSON file has the following main keys:
     - other
     - nato
     - russia
-    - _Each actor will contain a list of dictionaries in the key 'actors'.  Each dictionary will have the following keys:_
-        - actor_names
-        - target
-        - operations
-        - description
-        - tools
-        - links
-        - attck_id
-        - comment
+- _Each actor will contain a list of dictionaries in the key 'actors'.  Each dictionary will have the following keys:_
+    - actor_names
+    - target
+    - operations
+    - description
+    - tools
+    - links
+    - attck_id
+    - comment
 - tools
     - names
     - links
@@ -43,53 +43,53 @@ This generated JSON file has the following main keys:
     - comments
 - c2_data
     - name_of_c2
-        - HTTP
-        - Implementation
-        - Custom Profile
-        - DomainFront
-        - Multi-User
-        - SMB
-        - Kill Date
-        - macOS
-        - GitHub
-        - Key Exchange
-        - Chaining
-        - Price
-        - TCP
-        - Proxy Aware
-        - HTTP3
-        - HTTP2
-        - Date
-        - Evaluator
-        - Working Hours
-        - Slack
-        - FTP
-        - Version Reviewed
-        - Logging
-        - Name
-        - License
-        - Windows
-        - Stego
-        - Notes
-        - Server
-        - Actively Maint.
-        - Dashboard
-        - DNS
-        - Popular Site
-        - ICMP
-        - IMAP
-        - DoH
-        - Jitter
-        - How-To
-        - ATT&CK Mapping
-        - Kali
-        - Twitter
-        - MAPI
-        - Site
-        - Agent
-        - API
-        - UI
-        - Linux
+    - HTTP
+    - Implementation
+    - Custom Profile
+    - DomainFront
+    - Multi-User
+    - SMB
+    - Kill Date
+    - macOS
+    - GitHub
+    - Key Exchange
+    - Chaining
+    - Price
+    - TCP
+    - Proxy Aware
+    - HTTP3
+    - HTTP2
+    - Date
+    - Evaluator
+    - Working Hours
+    - Slack
+    - FTP
+    - Version Reviewed
+    - Logging
+    - Name
+    - License
+    - Windows
+    - Stego
+    - Notes
+    - Server
+    - Actively Maint.
+    - Dashboard
+    - DNS
+    - Popular Site
+    - ICMP
+    - IMAP
+    - DoH
+    - Jitter
+    - How-To
+    - ATT&CK Mapping
+    - Kali
+    - Twitter
+    - MAPI
+    - Site
+    - Agent
+    - API
+    - UI
+    - Linux
 
 
 ## Generated Attck Data Structure
@@ -156,7 +156,7 @@ The [generated_attck_data.json](https://raw.githubusercontent.com/swimlane/pyatt
 
 First of all, I would like to thank everyone who contributes to open-source projects, especially the maintainers and creators of these projects.  Without them, this capability would not be possible.
 
-This data set is generated from many different sources. As we continue to add more sources, we will continue to add them here.  Again thank you to all of these projects.  In no particular order, `pyattck` utilizes data from the following projects:
+This data set is generated from many different sources. As we continue to add more sources, we will continue to add them here.  Again thank you to all of these projects.  In no particular order, `pyattck` and `PSAttck` utilizes data from the following projects:
 
 
 * [Mitre ATT&CK APT3 Adversary Emulation Field Manual](https://attack.mitre.org/docs/APT3_Adversary_Emulation_Field_Manual.xlsx)
@@ -173,3 +173,6 @@ This data set is generated from many different sources. As we continue to add mo
 * [threat_hunting_tables (by dwestgard)](https://github.com/dwestgard/threat_hunting_tables)
 * [APT Groups & Operations](https://docs.google.com/spreadsheets/d/1H9_xaxQHpWaa4O_Son4Gx0YOIzlcBWMsdvePFX68EKU/edit#gid=1864660085)
 * [C2Matrix (by @jorgeorchilles, @brysonbort, @adam_mashinchi)](https://www.thec2matrix.com/)
+* [Elemental](https://github.com/Elemental-attack/Elemental)
+* [MalwareArchaeology - ATTACK](https://github.com/MalwareArchaeology/ATTACK)
+* [Attack-Technique-Dataset](https://github.com/NewBee119/Attack-Technique-Dataset)

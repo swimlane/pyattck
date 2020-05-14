@@ -223,6 +223,7 @@ class Attck(object):
             
             Please begin migrating to accessing the Enterprise MITRE ATT&CK objects using the enterprise property''',
             DeprecationWarning)
+        self.__load_data()
         from .enterprise.actor import AttckActor
         if self.__actors is None:
             self.__actors = []
@@ -245,6 +246,7 @@ class Attck(object):
             
             Please begin migrating to accessing the Enterprise MITRE ATT&CK objects using the enterprise property''',
             DeprecationWarning)
+        self.__load_data()
         from .enterprise.tactic import AttckTactic
         if self.__tactics is None:
             self.__tactics = []
@@ -267,6 +269,7 @@ class Attck(object):
             
             Please begin migrating to accessing the Enterprise MITRE ATT&CK objects using the enterprise property''',
             DeprecationWarning)
+        self.__load_data()
         from .enterprise.mitigation import AttckMitigation
         if self.__mitigations is None:
             self.__mitigations = []
@@ -289,9 +292,11 @@ class Attck(object):
             
             Please begin migrating to accessing the Enterprise MITRE ATT&CK objects using the enterprise property''',
             DeprecationWarning)
+        self.__load_data()
         from .enterprise.tools import AttckTools
         if self.__tools is None:
             self.__tools = []
+            #print(self.__ENTERPRISE_ATTCK_JSON)
             for tools in self.__ENTERPRISE_ATTCK_JSON['objects']:
                 if (tools['type'] == 'tool'):
                     self.__tools.append(AttckTools(attck_obj=self.__ENTERPRISE_ATTCK_JSON, **tools))
@@ -311,6 +316,7 @@ class Attck(object):
             
             Please begin migrating to accessing the Enterprise MITRE ATT&CK objects using the enterprise property''',
             DeprecationWarning)
+        self.__load_data()
         from .enterprise.malware import AttckMalware
         if self.__malwares is None:
             self.__malwares = []
@@ -333,6 +339,7 @@ class Attck(object):
             
             Please begin migrating to accessing the Enterprise MITRE ATT&CK objects using the enterprise property''',
             DeprecationWarning)
+        self.__load_data()
         from .enterprise.technique import AttckTechnique
         if self.__techniques is None:
             self.__techniques = []

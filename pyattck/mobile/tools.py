@@ -2,6 +2,7 @@ from .mobileattckobject import MobileAttckObject
 from ..datasets import AttckDatasets
 from ..utils.exceptions import GeneratedDatasetException
 
+
 class MobileAttckTools(MobileAttckObject):
     '''
         A child class of MobileAttckObject
@@ -124,7 +125,7 @@ class MobileAttckTools(MobileAttckObject):
             AttckObject (dict) -- Takes the MITRE Mobile ATT&CK Json object as a kwargs values
         """
         super(MobileAttckTools, self).__init__(**kwargs)
-        self.mobile_attck_obj = mobile_attck_obj
+        self.__mobile_attck_obj = mobile_attck_obj
       
         self.external_reference = self._set_reference(kwargs)
         self.platforms = self._set_list_items(kwargs, 'x_mitre_platforms')
@@ -136,7 +137,7 @@ class MobileAttckTools(MobileAttckObject):
         self.old_attack_id = self._set_attribute(kwargs, 'x_mitre_old_attack_id')
         self.stix = self._set_attribute(kwargs, 'id')
 
-        self.set_relationships(self.mobile_attck_obj)
+        self.set_relationships(self.__mobile_attck_obj)
 
         if MobileAttckTools.__ATTCK_C2_DATASETS is None or MobileAttckTools.__ATTCK_TOOLS_DATASETS is None:
             try:
@@ -231,7 +232,7 @@ class MobileAttckTools(MobileAttckObject):
         from .technique import MobileAttckTechnique
         return_list = []
         item_dict = {}
-        for item in self.mobile_attck_obj['objects']:
+        for item in self.__mobile_attck_obj['objects']:
             if 'type' in item:
                 if item['type'] == 'attack-pattern':
                     item_dict[item['id']] = item
@@ -251,7 +252,7 @@ class MobileAttckTools(MobileAttckObject):
         from .actor import MobileAttckActor
         return_list = []
         item_dict = {}
-        for item in self.mobile_attck_obj['objects']:
+        for item in self.__mobile_attck_obj['objects']:
             if 'type' in item:
                 if item['type'] == 'intrusion-set':
                     item_dict[item['id']] = item

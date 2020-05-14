@@ -1,5 +1,6 @@
 from .mobileattckobject import MobileAttckObject
 
+
 class MobileAttckMitigation(MobileAttckObject):
     '''A child class of MobileAttckObject
 
@@ -55,7 +56,7 @@ class MobileAttckMitigation(MobileAttckObject):
             AttckObject (dict) -- Takes the MITRE Mobile ATT&CK Json object as a kwargs values
         """
         super(MobileAttckMitigation, self).__init__(**kwargs)
-        self.mobile_attck_obj = mobile_attck_obj
+        self.__mobile_attck_obj = mobile_attck_obj
 
         self.old_attack_id = self._set_attribute(kwargs, 'x_mitre_old_attack_id')
         self.external_reference = self._set_reference(kwargs)
@@ -63,7 +64,7 @@ class MobileAttckMitigation(MobileAttckObject):
         self.version = self._set_attribute(kwargs, 'x_mitre_version')
         self.stix = self._set_attribute(kwargs, 'id')
         
-        self.set_relationships(self.mobile_attck_obj)
+        self.set_relationships(self.__mobile_attck_obj)
 
     @property
     def techniques(self):
@@ -75,7 +76,7 @@ class MobileAttckMitigation(MobileAttckObject):
         from .technique import MobileAttckTechnique
         return_list = []
         item_dict = {}
-        for item in self.mobile_attck_obj['objects']:
+        for item in self.__mobile_attck_obj['objects']:
             if 'type' in item:
                 if item['type'] == 'attack-pattern':
                     item_dict[item['id']] = item

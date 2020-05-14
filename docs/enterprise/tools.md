@@ -63,7 +63,7 @@ You can also access external data properties from the C2 Matrix project. The fol
 
 You can retrieve the entire dataset using the `c2_data` property.
 
-This class provides information about the tools used by actors or groups within the MITRE ATT&CK Framework.  Additionally, a `AttckTools` object allows the user to access additional relationships within the MITRE ATT&CK Framework:
+This class provides information about the tools used by actors or groups within the MITRE Enterprise ATT&CK Framework.  Additionally, a `AttckTools` object allows the user to access additional relationships within the MITRE Enterprise ATT&CK Framework:
 
 * Techniques that the specified tool is used within
 * Actor or Group(s) using a specified tool

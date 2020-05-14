@@ -73,18 +73,16 @@ class MobileAttckActor(MobileAttckObject):
     __ATTCK_DATASETS = None
 
     def __init__(self, mobile_attck_obj = None, **kwargs):
-        """Create a single MobileAttckActor object
+        """This class represents a Actor (or group) as defined with the Mobile MITRE ATT&CK framework.
 
-       
-        Arguments:
-            mobile_attck_obj (json) -- Takes the raw MITRE Mobile ATT&CK Json object
-            AttckObject (dict) -- Takes the MITRE Mobile ATT&CK Json object as a kwargs values
+        Keyword Arguments:
+            attck_obj {json} -- A Mobile MITRE ATT&CK Framework json object (default: {None})
 
         Raises:
-            GeneratedDatasetException: Error occurred when access third-party generated data
+            GeneratedDatasetException: Raised an exception when unable to access or process the external generated dataset.
         """
         super(MobileAttckActor, self).__init__(**kwargs)
-        self.mobile_attck_obj = mobile_attck_obj
+        self.__mobile_attck_obj = mobile_attck_obj
 
         self.created_by_ref = self._set_attribute(kwargs, 'created_by_ref')
         self.revoked = self._set_attribute(kwargs, 'revoked')
@@ -94,7 +92,7 @@ class MobileAttckActor(MobileAttckObject):
         self.version = self._set_attribute(kwargs, 'x_mitre_version')
         self.contributor = self._set_list_items(kwargs, 'x_mitre_contributors')
 
-        self.set_relationships(self.mobile_attck_obj)
+        self.set_relationships(self.__mobile_attck_obj)
 
         logo = Logo(self.name.strip().replace(' ','_').lower())
         self.ascii_logo = logo.get_ascii()
@@ -198,15 +196,15 @@ class MobileAttckActor(MobileAttckObject):
 
     @property
     def malwares(self):
-        """Accessing an actors known malware as part of the MITRE Mobile ATT&CK Framework
+        """Returns all malware objects as a list that are documented as being used by an Actor or Group
 
         Returns:
-            list: Returns all malware objects as a list that are documented as being used by an Actor or Group
+            [list] -- A list of related malware objects defined within the Mobile MITRE ATT&CK Framework
         """
         from .malware import MobileAttckMalware
         return_list = []
         item_dict = {}
-        for item in self.mobile_attck_obj['objects']:
+        for item in self.__mobile_attck_obj['objects']:
             if 'type' in item:
                 if item['type'] == 'malware':
                     item_dict[item['id']] = item
@@ -218,15 +216,15 @@ class MobileAttckActor(MobileAttckObject):
 
     @property
     def tools(self):
-        """Accessing an actors known tools as part of the MITRE Mobile ATT&CK Framework
+        """Returns all tool object as a list that are documented as being used by an Actor or Group
 
         Returns:
-            list: Returns all tools objects as a list that are documented as being used by an Actor or Group
+            [list] -- A list of related tool objects defined within the Mobile MITRE ATT&CK Framework
         """
         from .tools import MobileAttckTools
         return_list = []
         item_dict = {}
-        for item in self.mobile_attck_obj['objects']:
+        for item in self.__mobile_attck_obj['objects']:
             if 'type' in item:
                 if item['type'] == 'tool':
                     item_dict[item['id']] = item
@@ -238,15 +236,15 @@ class MobileAttckActor(MobileAttckObject):
 
     @property
     def techniques(self):
-        """Accessing an actors known techniques as part of the MITRE Mobile ATT&CK Framework
+        """Returns all technique objects as a list that are documented as being used by an Actor or Group
 
         Returns:
-            list: Returns all technique objects as a list that are documented as being used by an Actor or Group
+            [list] -- A list of related technique objects defined within the Mobile MITRE ATT&CK Framework
         """
         from .technique import MobileAttckTechnique
         return_list = []
         item_dict = {}
-        for item in self.mobile_attck_obj['objects']:
+        for item in self.__mobile_attck_obj['objects']:
             if 'type' in item:
                 if item['type'] == 'attack-pattern':
                     item_dict[item['id']] = item

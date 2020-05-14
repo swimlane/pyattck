@@ -65,7 +65,7 @@ class AttckActor(AttckObject):
                    print(actor.aliases)
                    print(actor.description)
 
-                   for malware in actor.enterprise.malwares:
+                   for malware in actor.malwares:
                        print(malware.name)
                        print(malware.description)
                        # etc.
@@ -78,8 +78,16 @@ class AttckActor(AttckObject):
     __ATTCK_DATASETS = None
 
     def __init__(self, attck_obj = None, **kwargs):
+        """This class represents a Actor (or group) as defined with the Enterprise MITRE ATT&CK framework.
+
+        Keyword Arguments:
+            attck_obj {json} -- A Enterprise MITRE ATT&CK Framework json object (default: {None})
+
+        Raises:
+            GeneratedDatasetException: Raised an exception when unable to access or process the external generated dataset.
+        """
         super(AttckActor, self).__init__(**kwargs)
-        self.attck_obj = attck_obj
+        self.__attck_obj = attck_obj
 
         self.id = self._set_id(kwargs)
         self.created_by_ref = self._set_attribute(kwargs, 'created_by_ref')
@@ -95,7 +103,7 @@ class AttckActor(AttckObject):
         self.wiki = self._set_wiki(kwargs)
         self.contributor = self._set_list_items(kwargs, 'x_mitre_contributors')
 
-        self.set_relationships(self.attck_obj)
+        self.set_relationships(self.__attck_obj)
 
         logo = Logo(self.name.strip().replace(' ','_').lower())
         self.ascii_logo = logo.get_ascii()
@@ -199,12 +207,15 @@ class AttckActor(AttckObject):
 
     @property
     def malwares(self):
-        '''Returns all malware objects as a list that are documented as being used by an Actor or Group
-        '''
+        """Returns all malware objects as a list that are documented as being used by an Actor or Group
+
+        Returns:
+            [list] -- A list of related malware objects defined within the Enterprise MITRE ATT&CK Framework
+        """
         from .malware import AttckMalware
         return_list = []
         item_dict = {}
-        for item in self.attck_obj['objects']:
+        for item in self.__attck_obj['objects']:
             if 'type' in item:
                 if item['type'] == 'malware':
                     item_dict[item['id']] = item
@@ -216,11 +227,15 @@ class AttckActor(AttckObject):
 
     @property
     def tools(self):
-        '''Returns all tool object as a list that are documented as being used by an Actor or Group'''
+        """Returns all tool object as a list that are documented as being used by an Actor or Group
+
+        Returns:
+            [list] -- A list of related tool objects defined within the Enterprise MITRE ATT&CK Framework
+        """
         from .tools import AttckTools
         return_list = []
         item_dict = {}
-        for item in self.attck_obj['objects']:
+        for item in self.__attck_obj['objects']:
             if 'type' in item:
                 if item['type'] == 'tool':
                     item_dict[item['id']] = item
@@ -232,11 +247,15 @@ class AttckActor(AttckObject):
 
     @property
     def techniques(self):
-        '''Returns all technique objects as a list that are documented as being used by an Actor or Group'''
+        """Returns all technique objects as a list that are documented as being used by an Actor or Group
+
+        Returns:
+            [list] -- A list of related technique objects defined within the Enterprise MITRE ATT&CK Framework
+        """
         from .technique import AttckTechnique
         return_list = []
         item_dict = {}
-        for item in self.attck_obj['objects']:
+        for item in self.__attck_obj['objects']:
             if 'type' in item:
                 if item['type'] == 'attack-pattern':
                     item_dict[item['id']] = item

@@ -15,6 +15,8 @@ from .litmustest import LitmusTest
 from .c2matrix import C2Matrix
 from .aptthreattracking import APTThreatTracking
 from .elemental import ElementalAttack
+from .malwarearchaeology import MalwareArchaeology
+from .newbeeattackdata import NewBeeAttackDataset
 
 class GenerateAttcks(object):
 
@@ -39,8 +41,18 @@ class GenerateAttcks(object):
         self.add_c2_matrix()
         self.add_apt_threat_tracking()
         self.add_elemental_attack()
+        self.add_malware_archaeology()
+        self.add_new_bee_attack_data()
         return self._datasets
-        
+
+    def add_new_bee_attack_data(self):
+        for item in NewBeeAttackDataset().get():
+            self.__add_to_output(item)
+
+    def add_malware_archaeology(self):
+        for item in MalwareArchaeology().get():
+            self.__add_to_output(item)
+
     def add_elemental_attack(self):
         for item in ElementalAttack().get():
             self.__add_to_output(item)
@@ -55,14 +67,14 @@ class GenerateAttcks(object):
                         del item[key]
                         break
         self._datasets['actors'] = apt_threat_tracking
-           
+
     def add_c2_matrix(self):
         c2_dict = {}
         c2 = C2Matrix().get()
         for item in c2['c2_data']:
             c2_dict[item['name']] = item['data']
         self._datasets['c2_data'] = c2_dict
-        
+
     def save(self):
         with open('generated_attck_data.json', 'w') as f:
             f.write(json.dumps(self.get()))
@@ -96,7 +108,7 @@ class GenerateAttcks(object):
     def add_atomic_threat_coverage(self):
         for item in AtomicThreatCoverage().get():
             self.__add_to_output(item)
-        
+
     def add_osquery_attack(self):
         for item in OsqueryAttack().get():
             self.__add_to_output(item)
@@ -154,6 +166,11 @@ class GenerateAttcks(object):
                                 t['possible_detections'] = []
                             for item in data['possible_detections']:
                                 t['possible_detections'].append(item)
+                        if 'external_reference' in data:
+                            if 'external_reference' not in t:
+                                t['external_reference'] = []
+                            for item in data['external_reference']:
+                                t['external_reference'].append(item)
 
         if not status:
             if 'technique_id' in data:
@@ -164,5 +181,6 @@ class GenerateAttcks(object):
                     'command_list': [] if 'command_list' not in data else data['command_list'],
                     'attack_paths': [] if 'attack_paths' not in data else data['attack_paths'],
                     'queries': [] if 'queries' not in data else data['queries'],
-                    'possible_detections': [] if 'possible_detections' not in data else data['possible_detections']
+                    'possible_detections': [] if 'possible_detections' not in data else data['possible_detections'],
+                    'external_reference': [] if 'external_reference' not in data else data['external_reference']
                 })

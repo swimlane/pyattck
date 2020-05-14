@@ -2,6 +2,7 @@ from .mobileattckobject import MobileAttckObject
 from ..datasets import AttckDatasets
 from ..utils.exceptions import GeneratedDatasetException
 
+
 class MobileAttckTechnique(MobileAttckObject):
     '''A child class of MobileAttckObject
     
@@ -73,7 +74,7 @@ class MobileAttckTechnique(MobileAttckObject):
             AttckObject (dict) -- Takes the MITRE Mobile ATT&CK Json object as a kwargs values
         """
         super(MobileAttckTechnique, self).__init__(**kwargs)
-        self.mobile_attck_obj = mobile_attck_obj
+        self.__mobile_attck_obj = mobile_attck_obj
 
         self.old_attack_id = self._set_attribute(kwargs, 'x_mitre_old_attack_id')
         self.platforms = self._set_list_items(kwargs, 'x_mitre_platforms')
@@ -102,7 +103,7 @@ class MobileAttckTechnique(MobileAttckObject):
 
         self.tactics = kwargs
 
-        self.set_relationships(self.mobile_attck_obj)
+        self.set_relationships(self.__mobile_attck_obj)
 
     def __get_filtered_dataset(self, technique_id, attribute_name):
         for item in MobileAttckTechnique.__ATTCK_DATASETS['techniques']:
@@ -118,7 +119,7 @@ class MobileAttckTechnique(MobileAttckObject):
         """
         from .tactic import MobileAttckTactic
         tactic_list = []
-        for item in self.mobile_attck_obj['objects']:
+        for item in self.__mobile_attck_obj['objects']:
             if 'x-mitre-tactic' in item['type']:
                 for tact in self._tactic:
                     if str(tact).lower() == str(item['x_mitre_shortname']).lower():
@@ -157,7 +158,7 @@ class MobileAttckTechnique(MobileAttckObject):
         from .mitigation import MobileAttckMitigation
         return_list = []
         item_dict = {}
-        for item in self.mobile_attck_obj['objects']:
+        for item in self.__mobile_attck_obj['objects']:
             if 'type' in item:
                 if item['type'] == 'mitigates':
                     item_dict[item['id']] = item
@@ -179,7 +180,7 @@ class MobileAttckTechnique(MobileAttckObject):
         from .actor import MobileAttckActor
         return_list = []
         item_dict = {}
-        for item in self.mobile_attck_obj['objects']:
+        for item in self.__mobile_attck_obj['objects']:
             if 'type' in item:
                 if item['type'] == 'intrusion-set':
                     item_dict[item['id']] = item
