@@ -1,7 +1,6 @@
 import os, json
 
-
-from generateattackdocs.attckdocs import AttckDocs
+from .attckdocs import AttckDocs
 
 
 class ToolDocs(AttckDocs):

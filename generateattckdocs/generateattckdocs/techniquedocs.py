@@ -2,7 +2,7 @@ import os, json
 
 import pprint
 
-from generateattackdocs.attckdocs import AttckDocs
+from .attckdocs import AttckDocs
 
 
 class TechniqueDocs(AttckDocs):

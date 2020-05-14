@@ -1,1 +1,1 @@
-from generateattackdocs.generatedocs import GenerateDocs
+from .generatedocs import GenerateDocs

@@ -1,2 +1,2 @@
-pyattck=>2.0.0
+pyattck=>2.0.2
 pprint

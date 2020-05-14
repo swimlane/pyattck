@@ -1,9 +1,9 @@
-from generateattackdocs.actordocs import ActorDocs
-from generateattackdocs.techniquedocs import TechniqueDocs
-from generateattackdocs.tooldocs import ToolDocs
-from generateattackdocs.tacticdocs import TacticDocs
-from generateattackdocs.malwaredocs import MalwareDocs
-from generateattackdocs.mitigationdocs import MitigationDocs
+from .actordocs import ActorDocs
+from .techniquedocs import TechniqueDocs
+from .tooldocs import ToolDocs
+from .tacticdocs import TacticDocs
+from .malwaredocs import MalwareDocs
+from .mitigationdocs import MitigationDocs
 
 class GenerateDocs(object):
 
