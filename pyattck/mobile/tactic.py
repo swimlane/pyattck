@@ -3,8 +3,7 @@ from .mobileattckobject import MobileAttckObject
 
 class MobileAttckTactic(MobileAttckObject):
     
-    def __init__(self, mobile_attck_obj = None, **kwargs):
-        '''A child class of MobileAttckObject
+    '''A child class of MobileAttckObject
     
         Creates objects that are categorized as MITRE Mobile ATT&CK Tactics
     
@@ -54,6 +53,13 @@ class MobileAttckTactic(MobileAttckObject):
             mobile_attck_obj (json) -- Takes the raw MITRE Mobile ATT&CK Json object
             AttckObject (dict) -- Takes the MITRE Mobile ATT&CK Json object as a kwargs values
         '''
+
+    def __init__(self, mobile_attck_obj = None, **kwargs):
+        """This class represents a Tactic as defined with the Mobile MITRE ATT&CK framework.
+
+        Keyword Arguments:
+            mobile_attck_obj {json} -- A Mobile MITRE ATT&CK Framework json object (default: {None})
+        """
         super(MobileAttckTactic, self).__init__(**kwargs)
         self.__mobile_attck_obj = mobile_attck_obj
    
