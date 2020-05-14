@@ -5,6 +5,13 @@ from .attacktemplate import AttackTemplate
 
 class NewBeeAttackDataset(object):
 
+    """
+    Data Source: https://github.com/NewBee119/Attack-Technique-Dataset
+    Author:  NewBee119
+
+    This class is a wrapper for the above data set
+    """
+
     URL = 'https://raw.githubusercontent.com/NewBee119/Attack-Technique-Dataset/master/tech_refer.json'
 
     def __get_data(self):
