@@ -9,16 +9,16 @@ from .tactic import AttckTactic
 class Enterprise(object):
 
     '''
-        This class creates an interface to all data points in the Mitre ATT&CK Enterprise framework.
+        This class creates an interface to all data points in the MITRE ATT&CK Enterprise framework.
 
-        This interface enables you to retrieve all properties within each item in the Mitre ATT&CK Enterprise Framework.
+        This interface enables you to retrieve all properties within each item in the MITRE ATT&CK Enterprise Framework.
 
         The following categorical items can be accessed using this class:
 
-            1. Tactics (Tactics are the phases defined by Mitre ATT&CK)
+            1. Tactics (Tactics are the phases defined by MITRE ATT&CK)
             2. Techniques (Techniques are the individual actions which can accomplish a tactic)
             3. Mitigations (Mitigations are recommendations to prevent or protect against a technique)
-            4. Actors (Actors or Groups are identified malicious actors/groups which have been identified and documented by Mitre & third-parties)
+            4. Actors (Actors or Groups are identified malicious actors/groups which have been identified and documented by MITRE & third-parties)
             5. Tools (Tools are software used to perform techniques)
             6. Malwares (Malwares are specific pieces of malware used by actors (or in general) to accomplish a technique)
         
@@ -162,6 +162,7 @@ class Enterprise(object):
                    print(technique.name)
                    print(technique.description)
                    # etc.
+
                for mitigation in attck.enterprise.mitigations:
                    print(mitigation.id)
                    print(mitigation.name)
@@ -182,7 +183,7 @@ class Enterprise(object):
                    print(technique.description)
                    # etc.
 
-                   for actor in technique.enterprise.actors:
+                   for actor in technique.actors:
                        print(actor.id)
                        print(actor.name)
                        print(actor.description)
@@ -194,7 +195,7 @@ class Enterprise(object):
                    print(mitigation.description)
                    # etc.
 
-                   for technique in mitigation.enterprise.techniques:
+                   for technique in mitigation.techniques:
                        print(technique.name)
                        print(technique.description)
                        # etc.
@@ -203,7 +204,7 @@ class Enterprise(object):
         attck_json (json) - The attck_json is supplied by the attck.py module when instantiated.
 
     Returns:
-        [Attck]: Returns a Attck object that contains all data from the Mitre ATT&CK Framework
+        [Attck]: Returns a Attck object that contains all data from the MITRE ATT&CK Framework
     '''
 
     __ENTERPRISE_GENERATED_DATA_JSON = None
@@ -220,7 +221,7 @@ class Enterprise(object):
         Sets standard properties that are found in all child classes as well as provides standard methods used by inherited classes
         
         Arguments:
-            kwargs (dict) -- Takes the Mitre ATT&CK Json object as a kwargs values
+            kwargs (dict) -- Takes the MITRE ATT&CK Json object as a kwargs values
         """
         self.__attck = attck_json
 
@@ -276,7 +277,7 @@ class Enterprise(object):
         if self.__tools is None:
             self.__tools = []
             for tools in self.__attck['objects']:
-                if (tools['type'] == 'tool'):
+                if tools['type'] == 'tool':
                     self.__tools.append(AttckTools(attck_obj=self.__attck, **tools))
         return self.__tools
 
@@ -290,7 +291,7 @@ class Enterprise(object):
         if self.__malwares is None:
             self.__malwares = []
             for malware in self.__attck['objects']:
-                if (malware['type'] == 'malware'):
+                if malware['type'] == 'malware':
                     self.__malwares.append(AttckMalware(attck_obj=self.__attck, **malware))
         return self.__malwares
 
@@ -304,7 +305,7 @@ class Enterprise(object):
         if self.__techniques is None:
             self.__techniques = []
             for technique in self.__attck["objects"]:
-                if (technique['type'] == 'attack-pattern'):
+                if technique['type'] == 'attack-pattern':
                     self.__techniques.append(AttckTechnique(attck_obj=self.__attck, **technique))
         return self.__techniques
 

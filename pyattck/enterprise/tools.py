@@ -86,7 +86,7 @@ class AttckTools(AttckObject):
 
                 attck = Attck()
 
-                for tool in attck.tools:
+                for tool in attck.enterprise.tools:
                     print(tool.id)
                     print(tool.name)
                     print(tool.description)
@@ -100,7 +100,7 @@ class AttckTools(AttckObject):
 
                 attck = Attck()
 
-                for tool in attck.tools:
+                for tool in attck.enterprise.tools:
                     print(tool.id)
                     print(tool.name)
                     print(tool.description)
@@ -112,18 +112,22 @@ class AttckTools(AttckObject):
                         # etc.
 
         Arguments:
-            attck_obj (json) -- Takes the raw Mitre ATT&CK Json object
-            AttckObject (dict) -- Takes the Mitre ATT&CK Json object as a kwargs values
+            attck_obj (json) -- Takes the raw MITRE ATT&CK Json object
+            AttckObject (dict) -- Takes the MITRE ATT&CK Json object as a kwargs values
     '''
 
     __ATTCK_C2_DATASETS = None
     __ATTCK_TOOLS_DATASETS = None
 
     def __init__(self, attck_obj = None, **kwargs):
-        """Creates an AttckTools object.  
-           The AttckTools object is based on software which have been categorized as software used in attacks
-        """
+        """This class represents a Tool as defined with the Enterprise MITRE ATT&CK framework.
 
+        Keyword Arguments:
+            attck_obj {json} -- A Enterprise MITRE ATT&CK Framework json object (default: {None})
+
+        Raises:
+            GeneratedDatasetException: Raised an exception when unable to access or process the external generated dataset.
+        """
         super(AttckTools, self).__init__(**kwargs)
         self.__attck_obj = attck_obj
 
@@ -222,7 +226,11 @@ class AttckTools(AttckObject):
 
     @property
     def techniques(self):
-        '''Returns all technique objects as a list that this tool has been identified or used'''
+        """Returns all technique objects that a tool object is associated with
+
+        Returns:
+            [list] -- A list of technique objects defined within the Enterprise MITRE ATT&CK Framework
+        """
         from .technique import AttckTechnique
         return_list = []
         item_dict = {}
@@ -238,7 +246,11 @@ class AttckTools(AttckObject):
 
     @property
     def actors(self):
-        '''Returns all actor objects as a list that are documented to use this tool'''
+        """Returns all actor objects that use a tool
+
+        Returns:
+            [list] -- A list of actor objects defined within the Enterprise MITRE ATT&CK Framework
+        """
         from .actor import AttckActor
         return_list = []
         item_dict = {}

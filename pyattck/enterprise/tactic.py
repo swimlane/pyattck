@@ -2,9 +2,8 @@ from .attckobject import AttckObject
 
 
 class AttckTactic(AttckObject):
-    
-    def __init__(self, attck_obj = None, **kwargs):
-        '''A child class of AttckObject
+
+    '''A child class of AttckObject
     
         Creates objects that are categorized as Mitre ATT&CK Tactics
     
@@ -54,6 +53,13 @@ class AttckTactic(AttckObject):
             attck_obj (json) -- Takes the raw Mitre ATT&CK Json object
             AttckObject (dict) -- Takes the Mitre ATT&CK Json object as a kwargs values
         '''
+    
+    def __init__(self, attck_obj = None, **kwargs):
+        """This class represents a Tactic as defined with the Enterprise MITRE ATT&CK framework.
+
+        Keyword Arguments:
+            attck_obj {json} -- A Enterprise MITRE ATT&CK Framework json object (default: {None})
+        """
         super(AttckTactic, self).__init__(**kwargs)
         self.__attck_obj = attck_obj
 
@@ -74,7 +80,11 @@ class AttckTactic(AttckObject):
 
     @property
     def techniques(self):
-        '''Returns all techniques as a list that are related to this tactic'''
+        """Returns all technique objects as a list that are associated with a Tactic
+
+        Returns:
+            [list] -- A list of related technique objects defined within the Enterprise MITRE ATT&CK Framework
+        """
         from .technique import AttckTechnique
         technique_list = []
         for item in self.__attck_obj['objects']:

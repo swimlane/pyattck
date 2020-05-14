@@ -65,7 +65,7 @@ class AttckActor(AttckObject):
                    print(actor.aliases)
                    print(actor.description)
 
-                   for malware in actor.enterprise.malwares:
+                   for malware in actor.malwares:
                        print(malware.name)
                        print(malware.description)
                        # etc.
@@ -78,6 +78,14 @@ class AttckActor(AttckObject):
     __ATTCK_DATASETS = None
 
     def __init__(self, attck_obj = None, **kwargs):
+        """This class represents a Actor (or group) as defined with the Enterprise MITRE ATT&CK framework.
+
+        Keyword Arguments:
+            attck_obj {json} -- A Enterprise MITRE ATT&CK Framework json object (default: {None})
+
+        Raises:
+            GeneratedDatasetException: Raised an exception when unable to access or process the external generated dataset.
+        """
         super(AttckActor, self).__init__(**kwargs)
         self.__attck_obj = attck_obj
 
@@ -199,8 +207,11 @@ class AttckActor(AttckObject):
 
     @property
     def malwares(self):
-        '''Returns all malware objects as a list that are documented as being used by an Actor or Group
-        '''
+        """Returns all malware objects as a list that are documented as being used by an Actor or Group
+
+        Returns:
+            [list] -- A list of related malware objects defined within the Enterprise MITRE ATT&CK Framework
+        """
         from .malware import AttckMalware
         return_list = []
         item_dict = {}
@@ -216,7 +227,11 @@ class AttckActor(AttckObject):
 
     @property
     def tools(self):
-        '''Returns all tool object as a list that are documented as being used by an Actor or Group'''
+        """Returns all tool object as a list that are documented as being used by an Actor or Group
+
+        Returns:
+            [list] -- A list of related tool objects defined within the Enterprise MITRE ATT&CK Framework
+        """
         from .tools import AttckTools
         return_list = []
         item_dict = {}
@@ -232,7 +247,11 @@ class AttckActor(AttckObject):
 
     @property
     def techniques(self):
-        '''Returns all technique objects as a list that are documented as being used by an Actor or Group'''
+        """Returns all technique objects as a list that are documented as being used by an Actor or Group
+
+        Returns:
+            [list] -- A list of related technique objects defined within the Enterprise MITRE ATT&CK Framework
+        """
         from .technique import AttckTechnique
         return_list = []
         item_dict = {}
