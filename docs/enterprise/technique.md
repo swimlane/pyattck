@@ -2,7 +2,7 @@
 
 This documentation provides details about the `AttckTechnique` class within the `pyattck` package.
 
-This class provides information about the techniques found under each tactic (columns) within the MITRE ATT&CK Framework.  Additionally, a `AttckTechnique` object allows the user to access additional relationships within the MITRE ATT&CK Framework:
+This class provides information about the techniques found under each tactic (columns) within the MITRE Enterprise ATT&CK Framework.  Additionally, a `AttckTechnique` object allows the user to access additional relationships within the MITRE Enterprise ATT&CK Framework:
 
 * Tactics a technique is found in
 * Mitigation suggestions for a given technique
