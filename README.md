@@ -43,7 +43,7 @@ The following libraries are required and installed by pyattck:
 
 ```
 requests
-pendulum==2.0.5
+pendulum>=1.2.3,<1.3
 pyfiglet==0.8.post1
 PyYaml>=5.0
 Pillow==7.1.2
