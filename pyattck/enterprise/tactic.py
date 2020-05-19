@@ -25,7 +25,7 @@ class AttckTactic(AttckObject):
                for tactic in attck.tactics:
                    print(tactic.id)
                    print(tactic.name)
-                   print(tactic.aliases)
+                   print(tactic.alias)
                    print(tactic.description)
                    # etc.
 
@@ -40,7 +40,7 @@ class AttckTactic(AttckObject):
                for tactic in attck.tactics:
                    print(tactic.id)
                    print(tactic.name)
-                   print(tactic.aliases)
+                   print(tactic.alias)
                    print(tactic.description)
                    # etc.
 

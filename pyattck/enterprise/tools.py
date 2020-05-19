@@ -133,7 +133,6 @@ class AttckTools(AttckObject):
 
         self.id = self._set_id(kwargs)
         self.name = self._set_attribute(kwargs, 'name')
-        self.alias = self._set_attribute(kwargs, 'aliases')
         self.description = self._set_attribute(kwargs, 'description')
         self.reference = self._set_reference(kwargs)
         self.created = self._set_attribute(kwargs, 'created')
