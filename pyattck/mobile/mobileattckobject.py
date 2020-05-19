@@ -89,7 +89,6 @@ class MobileAttckObject(object):
         if list_name in obj:
             for item in obj[list_name]:
                 item_value.append(item)
-                
             return item_value
 
     def _set_id(self, obj):
@@ -101,12 +100,10 @@ class MobileAttckObject(object):
         Returns:
             (str) -- Returns the MITRE Mobile ATT&CK Framework external ID
         """
-        if "external_references" in obj:
+        if obj.get('external_references'):
             for p in obj['external_references']:
-                for s in p:
-                    if p[s] == 'mitre-mobile-attack':
-                        return p['external_id']
-        return 'S0000'
+                if p.get('source_name') == 'mitre-mobile-attack' or p.get('source_name') == 'mitre-attack':
+                    return p.get('external_id')
         
     def _set_wiki(self, obj):
         """Returns the MITRE Mobile ATT&CK Framework Wiki URL
@@ -117,11 +114,10 @@ class MobileAttckObject(object):
         Returns:
             (str) -- Returns the MITRE Mobile ATT&CK Framework Wiki URL
         """
-        if "external_references" in obj:
+        if obj.get('external_references'):
             for p in obj['external_references']:
-                for s in p:
-                    if p[s] == 'mitre-attack':
-                        return p['url']
+                if p.get('source_name') == 'mitre-mobile-attack' or p.get('source_name') == 'mitre-attack':
+                    return p.get('url')
 
 
     def _set_reference(self, obj):
@@ -138,8 +134,7 @@ class MobileAttckObject(object):
                 description (str) -- The MITRE Mobile ATT&CK Framework description or None if it does not exist
         """
         return_list = []
-        if "external_references" in obj:
+        if obj.get('external_references'):
             for p in obj['external_references']:
                 return_list.append(p)
         return return_list
-               
