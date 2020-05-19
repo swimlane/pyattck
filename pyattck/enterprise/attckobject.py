@@ -72,9 +72,9 @@ class AttckObject(object):
         """
         try:
             value = obj.get(name)
-            return 'intentionally left blank' if not value else value
+            return None if not value else value
         except:
-            return 'intentionally left blank'
+            return None
 
 
     def _set_list_items(self, obj, list_name):
@@ -91,7 +91,6 @@ class AttckObject(object):
         if list_name in obj:
             for item in obj[list_name]:
                 item_value.append(item)
-                
             return item_value
 
     def _set_id(self, obj):
@@ -103,12 +102,10 @@ class AttckObject(object):
         Returns:
             (str) -- Returns the Mitre ATT&CK Framework external ID
         """
-        if "external_references" in obj:
+        if obj.get('external_references'):
             for p in obj['external_references']:
-                for s in p:
-                    if p[s] == 'mitre-attack':
-                        return p['external_id']
-        return 'S0000'
+                if p.get('source_name') == 'mitre-attack':
+                    return p.get('external_id')
         
     def _set_wiki(self, obj):
         """Returns the Mitre ATT&CK Framework Wiki URL
@@ -119,12 +116,10 @@ class AttckObject(object):
         Returns:
             (str) -- Returns the Mitre ATT&CK Framework Wiki URL
         """
-        if "external_references" in obj:
+        if obj.get('external_references'):
             for p in obj['external_references']:
-                for s in p:
-                    if p[s] == 'mitre-attack':
-                        return p['url']
-
+                if p.get('source_name') == 'mitre-attack':
+                    return p.get('url')
 
     def _set_reference(self, obj):
         """Returns a list of external references from the provided Mitre ATT&CK Framework json object
@@ -140,8 +135,8 @@ class AttckObject(object):
                 description (str) -- The Mitre ATT&CK Framework description or None if it does not exist
         """
         return_list = []
-        if "external_references" in obj:
+        if obj.get('external_references'):
             for p in obj['external_references']:
                 return_list.append(p)
         return return_list
-               
+       
