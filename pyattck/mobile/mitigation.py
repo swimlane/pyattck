@@ -63,6 +63,7 @@ class MobileAttckMitigation(MobileAttckObject):
         self.created_by_ref = self._set_attribute(kwargs, 'created_by_ref')
         self.version = self._set_attribute(kwargs, 'x_mitre_version')
         self.stix = self._set_attribute(kwargs, 'id')
+        self.wiki = self._set_wiki(kwargs)
         
         self.set_relationships(self.__mobile_attck_obj)
 

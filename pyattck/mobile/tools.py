@@ -136,7 +136,8 @@ class MobileAttckTools(MobileAttckObject):
         self.labels = self._set_list_items(kwargs, 'labels')
         self.old_attack_id = self._set_attribute(kwargs, 'x_mitre_old_attack_id')
         self.stix = self._set_attribute(kwargs, 'id')
-
+        self.wiki = self._set_wiki(kwargs)
+        
         self.set_relationships(self.__mobile_attck_obj)
 
         if MobileAttckTools.__ATTCK_C2_DATASETS is None or MobileAttckTools.__ATTCK_TOOLS_DATASETS is None:

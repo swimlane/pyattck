@@ -90,7 +90,8 @@ class PreAttckActor(PreAttckObject):
         self.external_reference = self._set_reference(kwargs)
         self.stix = self._set_attribute(kwargs, 'id')
         self.contributor = self._set_list_items(kwargs, 'x_mitre_contributors')
-
+        self.wiki = self._set_wiki(kwargs)
+        
         self.set_relationships(self.__preattck_obj)
 
         logo = Logo(self.name.strip().replace(' ','_').lower())

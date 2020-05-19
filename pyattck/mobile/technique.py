@@ -86,6 +86,7 @@ class MobileAttckTechnique(MobileAttckObject):
         self.external_reference = self._set_reference(kwargs)
         self.possible_detections = self._set_attribute(kwargs, 'x_mitre_detection')
         self.revoked = self._set_attribute(kwargs, 'revoked')
+        self.wiki = self._set_wiki(kwargs)
         
         self.stix = self._set_attribute(kwargs, 'id')
 

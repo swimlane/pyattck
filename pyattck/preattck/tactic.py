@@ -66,7 +66,7 @@ class PreAttckTactic(PreAttckObject):
         self.created_by_ref = self._set_attribute(kwargs, 'created_by_ref')
         self.stix = self._set_attribute(kwargs, 'id')
         self.short_name = self._set_attribute(kwargs, 'x_mitre_shortname')
-        
+        self.wiki = self._set_wiki(kwargs)
 
         self.set_relationships(self.__preattck_obj)
 

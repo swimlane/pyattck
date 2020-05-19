@@ -91,7 +91,8 @@ class MobileAttckActor(MobileAttckObject):
         self.stix = self._set_attribute(kwargs, 'id')
         self.version = self._set_attribute(kwargs, 'x_mitre_version')
         self.contributor = self._set_list_items(kwargs, 'x_mitre_contributors')
-
+        self.wiki = self._set_wiki(kwargs)
+        
         self.set_relationships(self.__mobile_attck_obj)
 
         logo = Logo(self.name.strip().replace(' ','_').lower())
