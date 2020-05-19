@@ -34,7 +34,7 @@ class PreAttckTechnique(PreAttckObject):
                for technique in attck.techniques:
                    print(technique.id)
                    print(technique.name)
-                   print(technique.aliases)
+                   print(technique.alias)
                    print(technique.description)
                    # etc.
 
@@ -49,7 +49,7 @@ class PreAttckTechnique(PreAttckObject):
                for technique in attck.techniques:
                    print(technique.id)
                    print(technique.name)
-                   print(technique.aliases)
+                   print(technique.alias)
                    print(technique.description)
                    # etc.
 
