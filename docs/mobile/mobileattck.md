@@ -16,7 +16,7 @@ for technique in attack.mobile.techniques:
 	# if you want to return individual properties of this object you call them directly
 	print(technique.id)
 	print(technique.name)
-	print(technique.aliases)
+	print(technique.alias)
 	print(technique.description)
 	print(technique.stix)
 	print(technique.platforms)
