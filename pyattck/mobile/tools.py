@@ -130,7 +130,6 @@ class MobileAttckTools(MobileAttckObject):
         self.external_reference = self._set_reference(kwargs)
         self.platforms = self._set_list_items(kwargs, 'x_mitre_platforms')
         self.version = self._set_attribute(kwargs, 'x_mitre_version')
-        self.aliases = self._set_list_items(kwargs, 'x_mitre_aliases')
         self.created_by_ref = self._set_attribute(kwargs, 'created_by_ref')
         self.contributor = self._set_list_items(kwargs, 'x_mitre_contributors')
         self.labels = self._set_list_items(kwargs, 'labels')
@@ -178,8 +177,8 @@ class MobileAttckTools(MobileAttckObject):
                                 self.family.append(family)
                         if 'comments' in tool:
                             self.family.append(tool['comments'])
-                    if self.aliases:
-                        for alias in self.aliases:
+                    if self.alias:
+                        for alias in self.alias:
                             if alias:
                                 if alias.lower() in [x.lower() for x in tool['names']]:
                                     return_list.append(tool)
@@ -208,8 +207,8 @@ class MobileAttckTools(MobileAttckObject):
                         setattr(self, key, val)
                     except:
                         setattr(self, 'c2_{}'.format(key), val)
-            if self.aliases:
-                for item in self.aliases:
+            if self.alias:
+                for item in self.alias:
                     if item:
                         if item.lower() == k.lower():
                             return_dict[k] = v
