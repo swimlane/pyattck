@@ -47,7 +47,7 @@ class AttckActor(AttckObject):
                for actor in attck.enterprise.actors:
                    print(actor.id)
                    print(actor.name)
-                   print(actor.aliases)
+                   print(actor.alias)
                    print(actor.description)
                    # etc.
 
@@ -62,7 +62,7 @@ class AttckActor(AttckObject):
                for actor in attck.enterprise.actors:
                    print(actor.id)
                    print(actor.name)
-                   print(actor.aliases)
+                   print(actor.alias)
                    print(actor.description)
 
                    for malware in actor.malwares:
@@ -93,7 +93,6 @@ class AttckActor(AttckObject):
         self.created_by_ref = self._set_attribute(kwargs, 'created_by_ref')
         self.revoked = self._set_attribute(kwargs, 'revoked')
         self.name = self._set_attribute(kwargs, 'name')
-        self.aliases = self._set_list_items(kwargs, 'aliases')
         self.description = self._set_attribute(kwargs, 'description')
         self.external_reference = self._set_reference(kwargs)
         self.created = self._set_attribute(kwargs, 'created')
@@ -166,8 +165,8 @@ class AttckActor(AttckObject):
                                         if actor['description']:
                                             if actor['description'] not in self.external_description:
                                                 self.external_description.append(actor['description'])
-                            if self.aliases:
-                                for alias in self.aliases:
+                            if self.alias:
+                                for alias in self.alias:
                                     if alias in actor['names']:
                                         if k not in self.country:
                                             self.country.append(k)

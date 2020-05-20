@@ -25,7 +25,7 @@ class MobileAttckTactic(MobileAttckObject):
                for tactic in attck.mobile.tactics:
                    print(tactic.id)
                    print(tactic.name)
-                   print(tactic.aliases)
+                   print(tactic.alias)
                    print(tactic.description)
                    # etc.
 
@@ -40,7 +40,7 @@ class MobileAttckTactic(MobileAttckObject):
                for tactic in attck.mobile.tactics:
                    print(tactic.id)
                    print(tactic.name)
-                   print(tactic.aliases)
+                   print(tactic.alias)
                    print(tactic.description)
                    # etc.
 
@@ -67,6 +67,7 @@ class MobileAttckTactic(MobileAttckObject):
         self.short_name = self._set_attribute(kwargs, 'x_mitre_shortname')
         self.external_reference = self._set_reference(kwargs)
         self.stix = self._set_attribute(kwargs, 'id')
+        self.wiki = self._set_wiki(kwargs)
         
         self.set_relationships(self.__mobile_attck_obj)
 

@@ -36,7 +36,7 @@ class AttckTechnique(AttckObject):
                for technique in attck.enterprise.techniques:
                    print(technique.id)
                    print(technique.name)
-                   print(technique.aliases)
+                   print(technique.alias)
                    print(technique.description)
                    # etc.
 
@@ -51,7 +51,7 @@ class AttckTechnique(AttckObject):
                for technique in attck.enterprise.techniques:
                    print(technique.id)
                    print(technique.name)
-                   print(technique.aliases)
+                   print(technique.alias)
                    print(technique.description)
                    # etc.
 

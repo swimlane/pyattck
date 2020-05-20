@@ -18,10 +18,10 @@ class ActorDocs(AttckDocs):
     def go(self):
         for actor in self._attck.enterprise.actors:
             markdown = None
-            aliases = None
-            if hasattr(actor, 'aliases'):
-                if actor.aliases:
-                    aliases = actor.aliases
+            alias = None
+            if hasattr(actor, 'alias'):
+                if actor.alias:
+                    alias = actor.alias
             markdown = '''
 # {name}
 
@@ -43,7 +43,6 @@ class ActorDocs(AttckDocs):
 
 ```
 {alias}
-{aliases}
 ```
 
 ## Known Tools
@@ -86,8 +85,7 @@ class ActorDocs(AttckDocs):
     logo=actor.ascii_logo,
     description=actor.description,
     external_description='' if not hasattr(actor, 'external_description') else '\n'.join([str(x) for x in actor.external_description]),
-    alias=actor.alias,
-    aliases='' if not aliases else '\n'.join([str(x) for x in aliases]),
+    alias='' if not alias else '\n'.join([str(x) for x in alias]),
     known_tools='' if not hasattr(actor, 'known_tools') else '\n'.join([str(x) for x in actor.known_tools]),
     operations='' if not hasattr(actor, 'operations') else '\n'.join([str(x) for x in actor.operations]),
     targets='' if not hasattr(actor, 'targets') else '\n'.join([str(x) for x in actor.targets]),

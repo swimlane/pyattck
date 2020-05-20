@@ -105,7 +105,6 @@ class ToolDocs(AttckDocs):
     def go(self):
         for tool in self._attck.enterprise.tools:
             markdown = None
-            aliases = None
             command_list = None
     
             additional_names = self.add_markdown_section(tool, 'Additional Names', 'additional_names')
@@ -114,6 +113,10 @@ class ToolDocs(AttckDocs):
             additional_comments = self.add_markdown_section(tool, 'Additional Comments', 'additional_comments')
             c2_data = None
             c2_properties = None
+            alias = None
+            if hasattr(tool, 'alias'):
+                if tool.alias:
+                    alias = tool.alias
             if hasattr(tool, 'c2_data'):
                 if getattr(tool, 'c2_data', None):
                     c2_data = json.dumps(tool.c2_data)
@@ -141,7 +144,7 @@ class ToolDocs(AttckDocs):
 '''.format(
     name=tool.name,
     description=tool.description,
-    alias=tool.alias,
+    alias='' if not alias else '\n'.join([str(x) for x in alias]),
     type=tool.type,
     wiki=tool.wiki
 )

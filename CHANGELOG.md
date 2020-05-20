@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+# [2.0.5] - 2020-05-19
+
+    - Fixed relationship links in enterprise malwares and techniques
+    - Fixed retrieval of id property in preattack actors
+    - Updated methods _set_wiki, _set_id, and _set_reference in each frameworks base classes
+
 # [2.0.4] - 2020-05-15
 
     - Updated pendulum requirements version to have max version

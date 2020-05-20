@@ -20,8 +20,11 @@ class TechniqueDocs(AttckDocs):
     def go(self):
         for technique in self._attck.enterprise.techniques:
             markdown = None
-            aliases = None
+            alias = None
             command_list = None
+            if hasattr(technique, 'alias'):
+                if technique.alias:
+                    alias = technique.alias
             if hasattr(technique, 'command_list'):
                 if technique.command_list:
                     command_list = technique.command_list
@@ -61,6 +64,12 @@ class TechniqueDocs(AttckDocs):
 ### MITRE Description
 
 > {description}
+
+## Aliases
+
+```
+{alias}
+```
 
 ## Additional Attributes
 
@@ -105,6 +114,7 @@ class TechniqueDocs(AttckDocs):
 '''.format(
     name=technique.name,
     description=technique.description,
+    alias='' if not alias else '\n'.join([str(x) for x in alias]),
     bypass=technique.bypass,
     effective_permissions=technique.effective_permissions,
     network=technique.network,

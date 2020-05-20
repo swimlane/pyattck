@@ -34,7 +34,7 @@ class PreAttckTechnique(PreAttckObject):
                for technique in attck.techniques:
                    print(technique.id)
                    print(technique.name)
-                   print(technique.aliases)
+                   print(technique.alias)
                    print(technique.description)
                    # etc.
 
@@ -49,7 +49,7 @@ class PreAttckTechnique(PreAttckObject):
                for technique in attck.techniques:
                    print(technique.id)
                    print(technique.name)
-                   print(technique.aliases)
+                   print(technique.alias)
                    print(technique.description)
                    # etc.
 
@@ -85,7 +85,8 @@ class PreAttckTechnique(PreAttckObject):
         self.possible_detections = self._set_attribute(kwargs, 'x_mitre_detectable_by_common_defenses_explanation')
         self.deprecated = self._set_attribute(kwargs, 'x_mitre_deprecated')
         self.stix = self._set_attribute(kwargs, 'id')
-
+        self.wiki = self._set_wiki(kwargs)
+        
         self.set_relationships(self.__preattck_obj)
 
     @property

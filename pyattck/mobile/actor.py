@@ -46,7 +46,7 @@ class MobileAttckActor(MobileAttckObject):
                for actor in attck.mobile.actors:
                    print(actor.id)
                    print(actor.name)
-                   print(actor.aliases)
+                   print(actor.alias)
                    print(actor.description)
                    # etc.
 
@@ -61,7 +61,7 @@ class MobileAttckActor(MobileAttckObject):
                for actor in attck.mobile.actors:
                    print(actor.id)
                    print(actor.name)
-                   print(actor.aliases)
+                   print(actor.alias)
                    print(actor.description)
 
                    for malware in actor.malwares:
@@ -86,12 +86,12 @@ class MobileAttckActor(MobileAttckObject):
 
         self.created_by_ref = self._set_attribute(kwargs, 'created_by_ref')
         self.revoked = self._set_attribute(kwargs, 'revoked')
-        self.aliases = self._set_list_items(kwargs, 'aliases')
         self.external_reference = self._set_reference(kwargs)
         self.stix = self._set_attribute(kwargs, 'id')
         self.version = self._set_attribute(kwargs, 'x_mitre_version')
         self.contributor = self._set_list_items(kwargs, 'x_mitre_contributors')
-
+        self.wiki = self._set_wiki(kwargs)
+        
         self.set_relationships(self.__mobile_attck_obj)
 
         logo = Logo(self.name.strip().replace(' ','_').lower())
@@ -155,8 +155,8 @@ class MobileAttckActor(MobileAttckObject):
                                         if actor['description']:
                                             if actor['description'] not in self.external_description:
                                                 self.external_description.append(actor['description'])
-                            if self.aliases:
-                                for alias in self.aliases:
+                            if self.alias:
+                                for alias in self.alias:
                                     if alias in actor['names']:
                                         if k not in self.country:
                                             self.country.append(k)

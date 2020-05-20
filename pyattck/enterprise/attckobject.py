@@ -20,7 +20,7 @@ class AttckObject(object):
         """
         self.id = self._set_id(kwargs)
         self.name = self._set_attribute(kwargs, 'name')
-        self.alias = self._set_attribute(kwargs, 'x_mitre_aliases')
+        self.alias = self.__set_alias(kwargs)
         self.description = self._set_attribute(kwargs, 'description')
         self.reference = self._set_reference(kwargs)
         self.created = self._set_attribute(kwargs, 'created')
@@ -59,6 +59,24 @@ class AttckObject(object):
             AttckObject._RELATIONSHIPS = relationship_obj
 
 
+    def __set_alias(self, obj):
+        """Returns the Mitre ATT&CK Framework aliases
+        
+        Arguments:
+            obj (dict) -- A Mitre ATT&CK Framework json object
+        
+        Returns:
+            (str) -- Returns the Mitre ATT&CK Framework aliases
+        """
+        return_list = []
+        if obj.get('aliases'):
+            for item in obj['aliases']:
+                return_list.append(item)
+        if obj.get('x_mitre_aliases'):
+            for item in obj['x_mitre_aliases']:
+                return_list.append(item)
+        return return_list
+
     def _set_attribute(self, obj, name):
         """Parent class method to set attribute based on passed in object
            and the name of the property
@@ -72,9 +90,9 @@ class AttckObject(object):
         """
         try:
             value = obj.get(name)
-            return 'intentionally left blank' if not value else value
+            return None if not value else value
         except:
-            return 'intentionally left blank'
+            return None
 
 
     def _set_list_items(self, obj, list_name):
@@ -91,7 +109,6 @@ class AttckObject(object):
         if list_name in obj:
             for item in obj[list_name]:
                 item_value.append(item)
-                
             return item_value
 
     def _set_id(self, obj):
@@ -103,12 +120,11 @@ class AttckObject(object):
         Returns:
             (str) -- Returns the Mitre ATT&CK Framework external ID
         """
-        if "external_references" in obj:
+        if obj.get('external_references'):
             for p in obj['external_references']:
-                for s in p:
-                    if p[s] == 'mitre-attack':
-                        return p['external_id']
-        return 'S0000'
+                if p.get('source_name') == 'mitre-attack':
+                    return p.get('external_id')
+        return 'No ID Defined'
         
     def _set_wiki(self, obj):
         """Returns the Mitre ATT&CK Framework Wiki URL
@@ -119,12 +135,10 @@ class AttckObject(object):
         Returns:
             (str) -- Returns the Mitre ATT&CK Framework Wiki URL
         """
-        if "external_references" in obj:
+        if obj.get('external_references'):
             for p in obj['external_references']:
-                for s in p:
-                    if p[s] == 'mitre-attack':
-                        return p['url']
-
+                if p.get('source_name') == 'mitre-attack':
+                    return p.get('url')
 
     def _set_reference(self, obj):
         """Returns a list of external references from the provided Mitre ATT&CK Framework json object
@@ -140,8 +154,8 @@ class AttckObject(object):
                 description (str) -- The Mitre ATT&CK Framework description or None if it does not exist
         """
         return_list = []
-        if "external_references" in obj:
+        if obj.get('external_references'):
             for p in obj['external_references']:
                 return_list.append(p)
         return return_list
-               
+       
