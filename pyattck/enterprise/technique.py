@@ -87,6 +87,7 @@ class AttckTechnique(AttckObject):
         self.effective_permissions = self._set_list_items(kwargs, 'x_mitre_effective_permissions')
         self.network = self._set_attribute(kwargs, 'x_mitre_network_requirements')
         self.remote = self._set_attribute(kwargs, 'x_mitre_remote_support')
+        self.sub_techniques = self._set_attribute(kwargs, 'x_mitre_is_subtechnique')
         self.system_requirements = self._set_attribute(kwargs, 'x_mitre_system_requirements')
         self.detection = self._set_attribute(kwargs, 'x_mitre_detection')
         self.data_source = self._set_list_items(kwargs, 'x_mitre_data_sources')
