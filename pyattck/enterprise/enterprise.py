@@ -305,7 +305,7 @@ class Enterprise(object):
         if self.__techniques is None:
             self.__techniques = []
             for technique in self.__attck["objects"]:
-                if technique['type'] == 'attack-pattern':
+                if technique['type'] == 'attack-pattern' and technique.get('revoked') is None:
                     self.__techniques.append(AttckTechnique(attck_obj=self.__attck, **technique))
         return self.__techniques
 
