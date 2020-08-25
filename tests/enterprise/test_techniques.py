@@ -68,3 +68,17 @@ def test_some_techniques_have_generated_datasets_properties(attck_fixture):
 
     if command_list_count >= 1 and commands_count >= 1 and queries_count >= 1 and datasets_count >= 1 and possible_detections_count >= 1:
         assert True
+
+def test_techniques_have_nested_subtechniques(attck_fixture_nested_subtechniques_false):
+    """All MITRE Enterprise ATT&CK Techniques should have tactics
+    
+    Args:
+        attck_fixture ([type]): our default MITRE Enterprise ATT&CK JSON fixture
+    """
+    count = 0
+    for technique in attck_fixture_nested_subtechniques_false.enterprise.techniques:
+        if hasattr(technique, 'subtechniques'):
+            if technique.subtechniques:
+                count += 1
+    if count >= 1:
+        assert True
