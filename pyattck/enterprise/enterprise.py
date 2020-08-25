@@ -216,14 +216,16 @@ class Enterprise(object):
     __tools = None
     __malwares = None
     
-    def __init__(self, attck_json):
+    def __init__(self, attck_json, nested_subtechniques=True):
         """
         Sets standard properties that are found in all child classes as well as provides standard methods used by inherited classes
         
         Arguments:
             kwargs (dict) -- Takes the MITRE ATT&CK Json object as a kwargs values
+            nested_subtechniques (bool) -- Determines if nested subtechniques will be used or not. This is passed from attck class
         """
         self.__attck = attck_json
+        self.__nested_subtechniques = nested_subtechniques
 
     @property
     def actors(self):
@@ -303,10 +305,27 @@ class Enterprise(object):
             (AttckTechnique) -- Returns a list of AttckTechnique objects
         """
         if self.__techniques is None:
+            subtechniques = []
             self.__techniques = []
             for technique in self.__attck["objects"]:
-                if technique['type'] == 'attack-pattern':
-                    self.__techniques.append(AttckTechnique(attck_obj=self.__attck, **technique))
+                if technique.get('type') == 'attack-pattern' and technique.get('revoked') is not True:
+                    if self.__nested_subtechniques:
+                        if technique.get('x_mitre_is_subtechnique'):
+                            subtechniques.append(technique)
+                        else:
+                            self.__techniques.append(AttckTechnique(attck_obj=self.__attck, **technique))
+                    else:
+                        self.__techniques.append(AttckTechnique(attck_obj=self.__attck, **technique))
+
+            if subtechniques:
+                for item in subtechniques:
+                    if item.get('external_references'):
+                        for p in item.get('external_references'):
+                            for s in p:
+                                if p[s] == 'mitre-attack':
+                                    for technique in self.__techniques:
+                                        if p['external_id'].split('.')[0] == technique.id:
+                                            technique.subtechniques = AttckTechnique(attck_obj=self.__attck, **item)
         return self.__techniques
 
     def search_commands(self, search_term):
