@@ -165,7 +165,6 @@ class AttckTechnique(AttckObject):
         except:
             self._tactic = ['no phase_name']
         
-
     @property
     def mitigations(self):
         """Returns all mitigation objects that a technique is associated with
@@ -178,7 +177,7 @@ class AttckTechnique(AttckObject):
         item_dict = {}
         for item in self.__attck_obj['objects']:
             if 'type' in item:
-                if item['type'] == 'mitigates':
+                if item['type'] == 'course-of-action':
                     item_dict[item['id']] = item
         try:
             for item in self._RELATIONSHIPS[self.stix]:
