@@ -140,10 +140,10 @@ class Attck(object):
     def __init__(self, nested_subtechniques=True, attck_json=None, dataset_json=None, preattck_json=None, mobile_json=None, config_path=None):
         """The main entry point for pyattck.
 
-        When instantiating an Attck object you can specify if you want the new subtechniques to be 
+        When instantiating an Attck object you can specify if you want the new subtechniques to be
         nested underneath their parent techniques or not.
 
-        Setting nested_subtechniques to False will result in all techniques accessible under the techniques property.  
+        Setting nested_subtechniques to False will result in all techniques accessible under the techniques property.
         If using the default value of True, subtechniques will be accessible underneath technique.subtechniques.
 
         When instantiating an Attck object you can access either the Enterprise, PRE-ATT&CK, or Mobile MITRE Frameworks.  Specify one of the following properties to access the frameworks specific data:
@@ -180,7 +180,6 @@ class Attck(object):
         
         Configuration().set(enterprise_attck_json_path=attck_json, preattck_json_path=preattck_json, mobile_attck_json_path=mobile_json, enterprise_attck_dataset_path=dataset_json)
         self.__datasets = AttckDatasets()
-        
 
     @property
     def enterprise(self):

@@ -36,6 +36,11 @@ class AttckObject(object):
         return str(return_dict)
 
     def __repr__(self):
+        """Returns a printable representation of an object
+
+        Returns:
+            str: Returns a printable representation of an object
+        """
         return "{class_name}('{name}', '{id}')".format(
             class_name=self.__class__.__name__,
             name=self.name,
