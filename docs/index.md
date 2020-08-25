@@ -21,7 +21,8 @@
 
 ## Features
 
-The **pyattck** package retrieves all Tactics, Techniques, Actors, Malware, Tools, and Mitigations from the MITRE ATT&CK Frameworks as well as any defined relationships within the MITRE ATT&CK dataset.
+The **pyattck** package retrieves all Tactics, Techniques, Actors, Malware, Tools, and Mitigations from the MITRE ATT&CK Frameworks as well as any defined relationships within the MITRE ATT&CK dataset (including subtechniques).
+
 In addition, Techniques, Actors, and Tools (if applicable) now have collected data from third-party resources that are accessible via properties on a technique. For more detailed information about these features, see [External Datasets](dataset/dataset.md).
 
 The **pyattck** package allows you to:
@@ -32,6 +33,7 @@ The **pyattck** package allows you to:
   * Search the external dataset for external commands that are similar using `search_commands`.
   * Access data from the MITRE PRE-ATT&CK Framework
   * Access data from the MITRE Mobile ATT&CK Framework
+  * Access subtechniques as nested objects or you can turn it off and access as normal technique
 
 ## Installation
 
@@ -78,6 +80,23 @@ To use **pyattck** you must instantiate an **Attck** object. Although you can in
 from pyattck import Attck
 
 attack = Attck()
+```
+
+By default, `subtechniques` are accessible under each technique object.  You can turn this behavior off by passing `nested_subtechniques=False` when creating your `Attck` object.
+
+As an example, the default behavior looks like the following example:
+
+```python
+from pyattck import Attck
+
+attack = Attck()
+
+for technique in attack.enterprise.techniques:
+    print(technique.id)
+    print(technique.name)
+    for subtechnique in technique.subtechniques:
+        print(subtechnique.id)
+        print(subtechnique.name)
 ```
 
 You can access the following `main` properties on your **Attck** object:
