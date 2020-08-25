@@ -35,6 +35,13 @@ class AttckObject(object):
                 return_dict[key] = val
         return str(return_dict)
 
+    def __repr__(self):
+        return "{class_name}('{name}', '{id}')".format(
+            class_name=self.__class__.__name__,
+            name=self.name,
+            id=self.id
+        )
+
     def set_relationships(self, attck_obj):
         """Generates relationships within attck_obj based on a defined relationship from Mitre ATT&CK
         

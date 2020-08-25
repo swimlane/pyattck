@@ -94,7 +94,11 @@ class AttckTechnique(AttckObject):
         self.modified = self._set_attribute(kwargs, 'modified')
         self.__subtechniques = []
         self.wiki = self._set_wiki(kwargs)
-        self.contributor = self._set_attribute(kwargs, 'contributor')
+        self.contributors = self._set_list_items(kwargs, 'x_mitre_contributors')
+        self.revoked = self._set_attribute(kwargs, 'revoked')
+        self.subtechnique = self._set_attribute(kwargs, 'x_mitre_is_subtechnique')
+        self.__subtechniques = []
+
 
         if AttckTechnique.__ATTCK_DATASETS is None:
             try:

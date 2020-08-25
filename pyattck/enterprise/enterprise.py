@@ -327,6 +327,7 @@ class Enterprise(object):
                                         if p['external_id'].split('.')[0] == technique.id:
                                             technique.subtechniques = AttckTechnique(attck_obj=self.__attck, **item)
         return self.__techniques
+   
 
     def search_commands(self, search_term):
         """Search external datasets for potential commands using a search term  
@@ -336,7 +337,7 @@ class Enterprise(object):
         
         Returns:
             list: A list of dictionaries containing the technique and the reason for a close match
-        """        
+        """
         from ..datasets import AttckDatasets
         return_list = []
         if not Enterprise.__ENTERPRISE_GENERATED_DATA_JSON:

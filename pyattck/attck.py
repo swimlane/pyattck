@@ -172,6 +172,7 @@ class Attck(object):
             preattck_json (str, optional): Path to the MITRE PRE-ATT&CK Framework json. Defaults to None.
             mobile_json (str, optional): Path to the MITRE Mobile ATT&CK Framework json. Defaults to None.
             config_path (str, optional): Path to a yaml configuration file which contains two key value pairs. Defaults to None.
+            force (bool, optional): Force reset configuration file and paths.  Defaults to False.
         """
         self.__nested_subtechniques = nested_subtechniques
         if config_path:
