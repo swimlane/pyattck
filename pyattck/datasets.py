@@ -49,7 +49,7 @@ class AttckDatasets(object):
         
         Returns:
             [dict]: Mitre ATT&CK Enterprise Framework JSON
-        """        
+        """
         # first check to see if it already exists
         if type == 'enterprise':
             url = self.__MITRE_ENTERPRISE_ATTCK_JSON_URL

@@ -27,7 +27,6 @@ class AttckObject(object):
         self.modified = self._set_attribute(kwargs, 'modified')
         self.stix = self._set_attribute(kwargs, 'id')
         self.type = self._set_attribute(kwargs, 'type')
-        
 
     def __str__(self):
         return_dict = {}
@@ -36,8 +35,22 @@ class AttckObject(object):
                 return_dict[key] = val
         return str(return_dict)
 
+    def __repr__(self):
+        """
+        Returns a printable representation of an object
+
+        Returns:
+            str: Returns a printable representation of an object
+        """
+        return "{class_name}('{name}', '{id}')".format(
+            class_name=self.__class__.__name__,
+            name=self.name,
+            id=self.id
+        )
+
     def set_relationships(self, attck_obj):
-        """Generates relationships within attck_obj based on a defined relationship from Mitre ATT&CK
+        """
+        Generates relationships within attck_obj based on a defined relationship from Mitre ATT&CK
         
         Args:
             attck_obj (dict): MITRE ATT&CK Json object
@@ -57,7 +70,6 @@ class AttckObject(object):
                             relationship_obj[target_id] = []
                         relationship_obj[target_id].append(source_id)
             AttckObject._RELATIONSHIPS = relationship_obj
-
 
     def __set_alias(self, obj):
         """Returns the Mitre ATT&CK Framework aliases
@@ -93,7 +105,6 @@ class AttckObject(object):
             return None if not value else value
         except:
             return None
-
 
     def _set_list_items(self, obj, list_name):
         """Private method used by child classes and normalizes list items
@@ -158,4 +169,3 @@ class AttckObject(object):
             for p in obj['external_references']:
                 return_list.append(p)
         return return_list
-       

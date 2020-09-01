@@ -161,7 +161,7 @@ class MobileAttckTechnique(MobileAttckObject):
         item_dict = {}
         for item in self.__mobile_attck_obj['objects']:
             if 'type' in item:
-                if item['type'] == 'mitigates':
+                if item['type'] == 'course-of-action':
                     item_dict[item['id']] = item
         try:
             for item in self._RELATIONSHIPS[self.stix]:

@@ -2,7 +2,7 @@ from pyattck import Attck
 
 attack = Attck()
 
-# Examples of MITRE Enterprise ATT&CK
+# Examples of MITRE Enterprise ATT&CK using nested subtechniques
 
 for actor in attack.enterprise.actors:
     print(actor.id)
@@ -28,6 +28,13 @@ for actor in attack.enterprise.actors:
         print(technique.queries)
         print(technique.datasets)
         print(technique.possible_detections)
+        # You can access subtechniques nested under techniques by default
+        for subtechnique in technique.subtechniques:
+            print(subtechnique.id)
+            print(subtechnique.name)
+            # etc.
+        # To access all techniques under a single technique object set
+        # Attck(nested_subtechniques=False)
 
 # accessing malware
 for malware in attack.enterprise.malwares:
@@ -76,7 +83,6 @@ for tactic in attack.enterprise.tactics:
         print(technique.datasets)
         print(technique.possible_detections)
 
-# accessing techniques
 for technique in attack.enterprise.techniques:
     print(technique.id)
     print(technique.name)
@@ -86,6 +92,16 @@ for technique in attack.enterprise.techniques:
     print(technique.queries)
     print(technique.datasets)
     print(technique.possible_detections)
+
+    # Access all subtechnique objects
+    print(technique.subtechniques)
+
+    # iterate through subtechniques
+    for subtechnique in technique.subtechniques:
+        print(subtechnique.name)
+        print(subtechnique.id)
+    input('press')
+    
 
     # accessing tactics that this technique belongs to
     for tactic in technique.tactics:

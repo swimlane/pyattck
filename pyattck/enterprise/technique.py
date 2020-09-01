@@ -92,9 +92,13 @@ class AttckTechnique(AttckObject):
         self.data_source = self._set_list_items(kwargs, 'x_mitre_data_sources')
         self.created = self._set_attribute(kwargs, 'created')
         self.modified = self._set_attribute(kwargs, 'modified')
-
+        self.__subtechniques = []
         self.wiki = self._set_wiki(kwargs)
-        self.contributor = self._set_attribute(kwargs, 'contributor')
+        self.contributors = self._set_list_items(kwargs, 'x_mitre_contributors')
+        self.revoked = self._set_attribute(kwargs, 'revoked')
+        self.subtechnique = self._set_attribute(kwargs, 'x_mitre_is_subtechnique')
+        self.__subtechniques = []
+
 
         if AttckTechnique.__ATTCK_DATASETS is None:
             try:
@@ -107,7 +111,7 @@ class AttckTechnique(AttckObject):
         self.queries = self.__get_filtered_dataset(self.id, 'queries')
         self.datasets = self.__get_filtered_dataset(self.id, 'parsed_datasets')
         self.possible_detections = self.__get_filtered_dataset(self.id, 'possible_detections')
-
+        self.subtechnique = self._set_attribute(kwargs, 'x_mitre_is_subtechnique')
         self.tactics = kwargs
 
         self.set_relationships(self.__attck_obj)
@@ -116,6 +120,17 @@ class AttckTechnique(AttckObject):
         for item in AttckTechnique.__ATTCK_DATASETS['techniques']:
             if item['technique_id'] == technique_id:
                 return item[attribute_name]
+
+    def __get_subtechnique_id(self, obj):
+        return obj.id
+
+    @property
+    def subtechniques(self):
+        return sorted(self.__subtechniques, key=self.__get_subtechnique_id)
+
+    @subtechniques.setter
+    def subtechniques(self, value):
+        self.__subtechniques.append(value)
 
     @property
     def tactics(self):
@@ -154,7 +169,6 @@ class AttckTechnique(AttckObject):
         except:
             self._tactic = ['no phase_name']
         
-
     @property
     def mitigations(self):
         """Returns all mitigation objects that a technique is associated with
@@ -167,7 +181,7 @@ class AttckTechnique(AttckObject):
         item_dict = {}
         for item in self.__attck_obj['objects']:
             if 'type' in item:
-                if item['type'] == 'mitigates':
+                if item['type'] == 'course-of-action':
                     item_dict[item['id']] = item
         try:
             for item in self._RELATIONSHIPS[self.stix]:

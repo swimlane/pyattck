@@ -6,7 +6,7 @@ def parse_requirements(requirement_file):
 
 setup(
     name='pyattck',
-    version='2.0.5',
+    version='2.1.0',
     packages=find_packages(exclude=['tests*']),
     license='MIT',
     description='A Python package to interact with the Mitre ATT&CK Frameworks',

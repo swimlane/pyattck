@@ -137,10 +137,16 @@ class Attck(object):
     __tools = None
     __malwares = None
 
-    def __init__(self, attck_json=None, dataset_json=None, preattck_json=None, mobile_json=None, config_path=None):
+    def __init__(self, nested_subtechniques=True, attck_json=None, dataset_json=None, preattck_json=None, mobile_json=None, config_path=None):
         """The main entry point for pyattck.
 
-        When instantiating an Attck object you can access either the Enterprise or PRE-ATT&CK MITRE Frameworks.  Specify one of the following properties to access the frameworks specific data:
+        When instantiating an Attck object you can specify if you want the new subtechniques to be
+        nested underneath their parent techniques or not.
+
+        Setting nested_subtechniques to False will result in all techniques accessible under the techniques property.
+        If using the default value of True, subtechniques will be accessible underneath technique.subtechniques.
+
+        When instantiating an Attck object you can access either the Enterprise, PRE-ATT&CK, or Mobile MITRE Frameworks.  Specify one of the following properties to access the frameworks specific data:
 
             * enterprise
             * preattack
@@ -166,14 +172,14 @@ class Attck(object):
             preattck_json (str, optional): Path to the MITRE PRE-ATT&CK Framework json. Defaults to None.
             mobile_json (str, optional): Path to the MITRE Mobile ATT&CK Framework json. Defaults to None.
             config_path (str, optional): Path to a yaml configuration file which contains two key value pairs. Defaults to None.
+            force (bool, optional): Force reset configuration file and paths.  Defaults to False.
         """
-
+        self.__nested_subtechniques = nested_subtechniques
         if config_path:
             Configuration.__CONFIG_FILE = config_path
         
         Configuration().set(enterprise_attck_json_path=attck_json, preattck_json_path=preattck_json, mobile_attck_json_path=mobile_json, enterprise_attck_dataset_path=dataset_json)
         self.__datasets = AttckDatasets()
-        
 
     @property
     def enterprise(self):
@@ -184,7 +190,7 @@ class Attck(object):
         """        
         self.__load_data()
         from .enterprise.enterprise import Enterprise
-        return Enterprise(self.__ENTERPRISE_ATTCK_JSON)
+        return Enterprise(self.__ENTERPRISE_ATTCK_JSON, nested_subtechniques=self.__nested_subtechniques)
 
     @property
     def preattack(self):
@@ -296,7 +302,6 @@ class Attck(object):
         from .enterprise.tools import AttckTools
         if self.__tools is None:
             self.__tools = []
-            #print(self.__ENTERPRISE_ATTCK_JSON)
             for tools in self.__ENTERPRISE_ATTCK_JSON['objects']:
                 if (tools['type'] == 'tool'):
                     self.__tools.append(AttckTools(attck_obj=self.__ENTERPRISE_ATTCK_JSON, **tools))

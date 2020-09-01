@@ -80,6 +80,23 @@ from pyattck import Attck
 attack = Attck()
 ```
 
+By default, `subtechniques` are accessible under each technique object.  You can turn this behavior off by passing `nested_subtechniques=False` when creating your `Attck` object.
+
+As an example, the default behavior looks like the following example:
+
+```python
+from pyattck import Attck
+
+attack = Attck()
+
+for technique in attack.enterprise.techniques:
+    print(technique.id)
+    print(technique.name)
+    for subtechnique in technique.subtechniques:
+        print(subtechnique.id)
+        print(subtechnique.name)
+```
+
 You can access the following `main` properties on your **Attck** object:
 
 * enterprise
