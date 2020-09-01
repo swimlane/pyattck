@@ -36,7 +36,8 @@ class AttckObject(object):
         return str(return_dict)
 
     def __repr__(self):
-        """Returns a printable representation of an object
+        """
+        Returns a printable representation of an object
 
         Returns:
             str: Returns a printable representation of an object
@@ -48,7 +49,8 @@ class AttckObject(object):
         )
 
     def set_relationships(self, attck_obj):
-        """Generates relationships within attck_obj based on a defined relationship from Mitre ATT&CK
+        """
+        Generates relationships within attck_obj based on a defined relationship from Mitre ATT&CK
         
         Args:
             attck_obj (dict): MITRE ATT&CK Json object
