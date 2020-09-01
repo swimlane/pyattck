@@ -33,7 +33,6 @@ for actor in attack.enterprise.actors:
             print(subtechnique.id)
             print(subtechnique.name)
             # etc.
-        
         # To access all techniques under a single technique object set
         # Attck(nested_subtechniques=False)
 
