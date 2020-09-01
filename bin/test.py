@@ -93,6 +93,16 @@ for technique in attack.enterprise.techniques:
     print(technique.datasets)
     print(technique.possible_detections)
 
+    # Access all subtechnique objects
+    print(technique.subtechniques)
+
+    # iterate through subtechniques
+    for subtechnique in technique.subtechniques:
+        print(subtechnique.name)
+        print(subtechnique.id)
+    input('press')
+    
+
     # accessing tactics that this technique belongs to
     for tactic in technique.tactics:
         print(tactic.id)
