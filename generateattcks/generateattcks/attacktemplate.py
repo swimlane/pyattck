@@ -30,7 +30,7 @@ class AttackTemplate(object):
         if self.parsed_datasets:
             return_dict['parsed_datasets'] = self.parsed_datasets
         if self.command_list:
-            return_dict['command_list'] = self.command_list
+            return_dict['command_list'] = list(set(self.command_list))
         if self.attack_paths:
             return_dict['attack_paths'] = self.attack_paths
         if self.possible_query_list:
@@ -48,7 +48,7 @@ class AttackTemplate(object):
         return return_dict
 
     def add_command(self, source, command, name=None):
-        self.command_list.append(self.__convert_to_utf8(command))
+        self.command_list.append(self.__convert_to_utf8(command.strip()))
         self.commands.append({
             'source': self.__convert_to_utf8(source),
             'command': self.__convert_to_utf8(command),
@@ -87,6 +87,7 @@ class AttackTemplate(object):
             'name': name,
             'data': value
         })
+
     def add_actor_data(self, names, targets, operations, description, tools, links, attck_id=None, comment=None):
         self.actor_data.append({
             'names': names,

@@ -37,7 +37,7 @@ class NSMAttck(GitHubController):
                     try:
                         contents.extend(repo.get_contents(file_content.path.encode('utf-8')))
                     except:
-                        print('Can not encode or decode {type} in threathuntingbook.  file_content.path is {val}'.format(type=type(file_content.path), val=file_content.path))
+                        print('Can not encode or decode {type} in nsm-attack.  file_content.path is {val}'.format(type=type(file_content.path), val=file_content.path))
                         continue
             else:
                 if file_content.path.endswith('.md') and file_content.path.split('/')[0].startswith('T'):
@@ -54,8 +54,7 @@ class NSMAttck(GitHubController):
                 template.add_possible_queries('Suricata (NSM)', detection['Signature'], name='{} Rule'.format(detection['Rules']))
                 template.add_dataset(self.__REPO, detection)
             return template.get()
-    
-        
+
     def __download_raw_content(self, url):
         response = self.session.get(url.encode('utf-8'))
         if response.status_code == 200:
