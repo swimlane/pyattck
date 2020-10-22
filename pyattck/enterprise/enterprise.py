@@ -329,7 +329,7 @@ class Enterprise(object):
         return self.__techniques
    
 
-    def search_commands(self, search_term):
+    def search_commands(self, search_term, json=False):
         """Search external datasets for potential commands using a search term  
         
         Args:
@@ -338,6 +338,8 @@ class Enterprise(object):
         Returns:
             list: A list of dictionaries containing the technique and the reason for a close match
         """
+        if json:
+            import json
         from ..datasets import AttckDatasets
         return_list = []
         if not Enterprise.__ENTERPRISE_GENERATED_DATA_JSON:
@@ -350,9 +352,15 @@ class Enterprise(object):
                             if search_term in cmd:
                                 for technique in self.techniques:
                                     if technique.id.lower() == item['technique_id'].lower():
-                                        return_list.append({
-                                            'technique': technique
-                                        })
+                                        if json:
+                                            return_list.append({
+                                                'technique': json.dumps(str(technique))
+                                            })
+                                        else:
+                                            return_list.append({
+                                                'technique': technique,
+                                                'command_list': technique.command_list
+                                            })
         if return_list:
             return return_list
         else:
