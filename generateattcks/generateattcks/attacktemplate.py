@@ -48,7 +48,8 @@ class AttackTemplate(object):
         return return_dict
 
     def add_command(self, source, command, name=None):
-        self.command_list.append(self.__convert_to_utf8(command.strip()))
+        if command:
+            self.command_list.append(self.__convert_to_utf8(command.strip()))
         self.commands.append({
             'source': self.__convert_to_utf8(source),
             'command': self.__convert_to_utf8(command),

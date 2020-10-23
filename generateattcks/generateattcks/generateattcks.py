@@ -20,7 +20,7 @@ from .newbeeattackdata import NewBeeAttackDataset
 
 class GenerateAttcks(object):
 
-    __conversion_file = os.path.abspath(os.path.join(os.path.dirname(__file__), 'techniqueconversion' + '.json'))
+    __conversion_file = os.path.abspath(os.path.join(os.path.dirname(__file__), 'conversion' + '.json'))
     conversion_data = None
 
     def __init__(self):
@@ -55,16 +55,14 @@ class GenerateAttcks(object):
         self.add_new_bee_attack_data()
         technique_list = []
         for technique in self._datasets['techniques']:
-            for item in self.conversion_data:
-                for key,val in item.items():
-                    if key == technique['technique_id']:
-                        for v in val:
-                            if v['id'] is not key:
-                                clone_technique = technique
-                                clone_technique['technique_id'] = v['id']
-                                technique_list.append(clone_technique)
-                            else:
-                                technique_list.append(technique)
+            if self.conversion_data.get(technique['technique_id']):
+                for t in self.conversion_data[technique['technique_id']]:
+                    clone_technique = technique
+                    clone_technique['technique_id'] = t
+                    technique_list.append(clone_technique)
+            else:
+                technique_list.append(technique)
+                
                             
         self._datasets['techniques'] = technique_list
         return self._datasets
