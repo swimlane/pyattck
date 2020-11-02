@@ -87,22 +87,43 @@ class MitreStockpile(GitHubController):
         
         self.attack_paths = return_list
 
+    def gen_dict_extract(self, key, var):
+        if hasattr(var,'items'):
+            for k, v in var.items():
+                if k == key:
+                    yield v
+                if isinstance(v, dict):
+                    for result in self.gen_dict_extract(key, v):
+                        yield result
+                elif isinstance(v, list):
+                    for d in v:
+                        for result in self.gen_dict_extract(key, d):
+                            yield result
                         
     def __parse_yaml_content(self, content, url):
         if isinstance(content, list):
             template = AttackTemplate()
             for item in content:
                 template.id = item['technique']['attack_id']
-                template.add_command(url,item['platforms'], name=item['description'])
+                if item.get('platforms'):
+                    if isinstance(item['platforms'], dict):
+                        new_item = self.gen_dict_extract('command', item)
+                        if new_item:
+                            for command in new_item:
+                                template.add_command(url, command, name=item['description'])
+                    else:
+                        template.add_command(url,item['platforms'], name=item['description'])
                 template.add_dataset('Mitre Stockpile - {}'.format(item['description']),item)
             return template.get()
         else:
             if content:
                 if 'phases' in content:
                     self.__temp_attack_paths.append(content)
-               
-           
+
     def __download_raw_content(self, url):
         response = self.session.get(url)
         if response.status_code == 200:
-            return yaml.load(response.content, Loader=yaml.FullLoader)
+            try:
+                return yaml.load(response.content, Loader=yaml.FullLoader)
+            except:
+                pass

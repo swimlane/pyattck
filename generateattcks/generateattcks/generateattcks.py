@@ -1,4 +1,4 @@
-import datetime, json
+import datetime, json, os
 
 from .adversaryemulation import AdversaryEmulation
 from .atomicredteam import AtomicRedTeam
@@ -20,10 +20,20 @@ from .newbeeattackdata import NewBeeAttackDataset
 
 class GenerateAttcks(object):
 
+    __conversion_file = os.path.abspath(os.path.join(os.path.dirname(__file__), 'conversion' + '.json'))
+    conversion_data = None
+
     def __init__(self):
         self._datasets = {}
         self._datasets['last_updated'] = datetime.datetime.now().isoformat()
         self._datasets['techniques'] = []
+        self.conversion_data = self.__get_conversion_data()
+
+    def __get_conversion_data(self):
+        if not self.conversion_data:
+            with open(self.__conversion_file, 'r') as file:
+                self.conversion_data = json.load(file)
+        return self.conversion_data
 
     def get(self):
         self.add_adversary_emulation()
@@ -43,6 +53,18 @@ class GenerateAttcks(object):
         self.add_elemental_attack()
         self.add_malware_archaeology()
         self.add_new_bee_attack_data()
+        technique_list = []
+        for technique in self._datasets['techniques']:
+            if self.conversion_data.get(technique['technique_id']):
+                for t in self.conversion_data[technique['technique_id']]:
+                    clone_technique = technique
+                    clone_technique['technique_id'] = t
+                    technique_list.append(clone_technique)
+            else:
+                technique_list.append(technique)
+                
+                            
+        self._datasets['techniques'] = technique_list
         return self._datasets
 
     def add_new_bee_attack_data(self):
