@@ -6,7 +6,7 @@ def parse_requirements(requirement_file):
 
 setup(
     name='pyattck',
-    version='2.1.1',
+    version='2.1.2',
     packages=find_packages(exclude=['tests*']),
     license='MIT',
     description='A Python package to interact with the Mitre ATT&CK Frameworks',
@@ -19,7 +19,7 @@ setup(
     author_email='info@swimlane.com',
     python_requires='>=2.6, !=3.0.*, !=3.1.*, !=3.2.*, <4',
     package_data={
-        'pyattck':  ['data/actors/*.png', 'data/attck_data/*.json']
+        'pyattck':  ['data/actors/*.png']
     },
     entry_points={
           'console_scripts': [
