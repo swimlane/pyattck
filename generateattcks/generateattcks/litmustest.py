@@ -4,9 +4,10 @@ from bs4 import BeautifulSoup
 
 from .githubcontroller import GitHubController
 from .attacktemplate import AttackTemplate
+from .base import Base
 
 
-class LitmusTest(GitHubController):
+class LitmusTest(GitHubController, Base):
     """ Data Source: https://github.com/Kirtar22/Litmus_Test
     Authors:
         - Kirtar22

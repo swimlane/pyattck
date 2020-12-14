@@ -3,9 +3,10 @@ from github import Github
 
 from .githubcontroller import GitHubController
 from .attacktemplate import AttackTemplate
+from .base import Base
 
 
-class ElementalAttack(GitHubController):
+class ElementalAttack(GitHubController, Base):
     """
     Data Source: https://github.com/Elemental-attack/Elemental
     Author: 

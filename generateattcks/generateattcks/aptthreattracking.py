@@ -3,9 +3,10 @@ import csv
 import requests
 
 from .attacktemplate import AttackTemplate
+from .base import Base
 
 
-class APTThreatTracking(object):
+class APTThreatTracking(Base):
 
     """
     Data Source: https://docs.google.com/spreadsheets/d/1H9_xaxQHpWaa4O_Son4Gx0YOIzlcBWMsdvePFX68EKU/edit#
@@ -85,7 +86,6 @@ class APTThreatTracking(object):
             return { 'other': self.__parse_data(dict_list) }
         elif sheet_name == 'unknown':
             return { 'unknown': self.__parse_data(dict_list) }
-        
 
     def __parse_malware_tool_data(self, dict_list):
         tool_names = []
@@ -110,7 +110,6 @@ class APTThreatTracking(object):
             comments = None
             links = []
         return template.get()
-
 
     def __parse_data(self, dict_list):
         actor_names = []

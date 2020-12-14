@@ -18,6 +18,7 @@ from .elemental import ElementalAttack
 from .malwarearchaeology import MalwareArchaeology
 from .newbeeattackdata import NewBeeAttackDataset
 
+
 class GenerateAttcks(object):
 
     __conversion_file = os.path.abspath(os.path.join(os.path.dirname(__file__), 'conversion' + '.json'))

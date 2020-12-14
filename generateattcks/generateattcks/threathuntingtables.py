@@ -1,9 +1,10 @@
 import requests, csv
 
 from .attacktemplate import AttackTemplate
+from .base import Base
 
 
-class ThreatHuntingTables(object):
+class ThreatHuntingTables(Base):
     """
     Data Source: https://github.com/dwestgard/threat_hunting_tables
 

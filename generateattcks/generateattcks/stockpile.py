@@ -2,9 +2,10 @@ import requests, yaml, base64
 
 from .githubcontroller import GitHubController
 from .attacktemplate import AttackTemplate
+from .base import Base
 
 
-class MitreStockpile(GitHubController):
+class MitreStockpile(GitHubController, Base):
     """
     Data Source: https://github.com/mitre/stockpile
     Authors:
@@ -45,7 +46,7 @@ class MitreStockpile(GitHubController):
     def get_attack_paths(self):
         return self.__attack_paths
 
-    def run(self):
+    def get(self):
         return_list = []
         repo = self.github.get_repo(self.__REPO)
         contents = repo.get_contents("")

@@ -3,9 +3,10 @@ from io import BytesIO
 from zipfile import ZipFile
 
 from .attacktemplate import AttackTemplate
+from .base import Base
 
 
-class AttckEmpire(object):
+class AttckEmpire(Base):
     """
     Data Source: https://github.com/dstepanic/attck_empire
     Author: dstepanic

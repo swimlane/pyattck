@@ -3,9 +3,10 @@ from io import BytesIO
 from zipfile import ZipFile
 
 from .attacktemplate import AttackTemplate
+from .base import Base
 
 
-class AdversaryEmulation(object):
+class AdversaryEmulation(Base):
     """
     Data Source: https://attack.mitre.org/docs/APT3_Adversary_Emulation_Field_Manual.xlsx
     Author: Mitre

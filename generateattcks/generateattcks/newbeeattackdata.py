@@ -1,9 +1,10 @@
 import requests
 
 from .attacktemplate import AttackTemplate
+from .base import Base
 
 
-class NewBeeAttackDataset(object):
+class NewBeeAttackDataset(Base):
 
     """
     Data Source: https://github.com/NewBee119/Attack-Technique-Dataset

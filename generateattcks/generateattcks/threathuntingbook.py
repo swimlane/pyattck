@@ -8,8 +8,10 @@ from googletrans import Translator
 
 from .githubcontroller import GitHubController
 from .attacktemplate import AttackTemplate
+from .base import Base
 
-class ThreatHuntingBook(GitHubController):
+
+class ThreatHuntingBook(GitHubController, Base):
     """
     Data Source: https://github.com/12306Bro/Threathunting-book
 

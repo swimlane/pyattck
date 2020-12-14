@@ -1,11 +1,11 @@
 import csv
-
 import requests
 
 from .attacktemplate import AttackTemplate
+from .base import Base
 
 
-class C2Matrix(object):
+class C2Matrix(Base):
     """
     Data Source: https://www.thec2matrix.com/
     Authors:

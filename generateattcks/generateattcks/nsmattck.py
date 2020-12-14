@@ -3,9 +3,10 @@ import requests
 from .githubcontroller import GitHubController
 from .markdowntable import MarkdownTable
 from .attacktemplate import AttackTemplate
+from .base import Base
 
 
-class NSMAttck(GitHubController):
+class NSMAttck(GitHubController, Base):
     """
     Data Source: https://github.com/0xtf/nsm-attack
     Authors:

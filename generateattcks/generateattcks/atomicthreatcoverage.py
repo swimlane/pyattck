@@ -7,9 +7,10 @@ except ImportError:
 from .githubcontroller import GitHubController
 from .attacktemplate import AttackTemplate
 from .markdowntable import MarkdownTable
+from .base import Base
 
 
-class AtomicThreatCoverage(GitHubController):
+class AtomicThreatCoverage(GitHubController, Base):
     """
     Data Source: https://github.com/atc-project/atomic-threat-coverage
     Authors:

@@ -3,9 +3,10 @@ from github import Github
 
 from .githubcontroller import GitHubController
 from .attacktemplate import AttackTemplate
+from .base import Base
 
 
-class AtomicRedTeam(GitHubController):
+class AtomicRedTeam(GitHubController, Base):
     """
     Data Source: https://github.com/redcanaryco/atomic-red-team
     Author: Red Canary

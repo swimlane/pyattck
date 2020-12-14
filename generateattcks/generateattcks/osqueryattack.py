@@ -7,9 +7,10 @@ except ImportError:
 from .githubcontroller import GitHubController
 from .attacktemplate import AttackTemplate
 from .markdowntable import MarkdownTable
+from .base import Base
 
 
-class OsqueryAttack(GitHubController):
+class OsqueryAttack(GitHubController, Base):
     """
     Data Source: https://github.com/teoseller/osquery-attck
     Authors:
