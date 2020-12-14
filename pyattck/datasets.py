@@ -25,7 +25,6 @@ class AttckDatasets(object):
         self.mobile_attck_json_path = config['mobile_attck_json']
         self.dataset_json_path = config['enterprise_attck_dataset']
 
-
     def __get_mitre_json(self, url, path, force=False):
         if force:
             mitre = requests.get(url).json()
@@ -103,13 +102,13 @@ class AttckDatasets(object):
 
     def __get_cached_data(self, local_file_path):
         if os.path.isfile(local_file_path):
-            with open(local_file_path) as f:
-                try:
-                    return json.load(f)
-                except:
-                    pass
-        else:
-            return None
+            if os.path.getsize(local_file_path) > 0:
+                with open(local_file_path) as f:
+                    try:
+                        return json.load(f)
+                    except:
+                        pass
+        return None
 
     def __save_locally(self, local_file_path, data):
         with open(local_file_path, 'w+') as outfile:
