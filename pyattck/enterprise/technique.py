@@ -96,6 +96,7 @@ class AttckTechnique(AttckObject):
         self.wiki = self._set_wiki(kwargs)
         self.contributors = self._set_list_items(kwargs, 'x_mitre_contributors')
         self.revoked = self._set_attribute(kwargs, 'revoked')
+        self.deprecated = self._set_attribute(kwargs, 'x_mitre_deprecated')
         self.subtechnique = self._set_attribute(kwargs, 'x_mitre_is_subtechnique')
         self.__subtechniques = []
 
