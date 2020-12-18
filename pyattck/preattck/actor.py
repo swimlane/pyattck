@@ -98,7 +98,7 @@ class PreAttckActor(PreAttckObject):
         
         if PreAttckActor.__PREATTCK_DATASETS is None:
             try:
-                data = AttckDatasets().generated_attck_data()
+                data = AttckDatasets().get_data(data_type='generated_data')
                 if 'actors' in data:
                     PreAttckActor.__PREATTCK_DATASETS = data['actors']
             except:
