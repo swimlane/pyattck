@@ -60,6 +60,19 @@ class AttckTechnique(AttckObject):
                        print(malware.description)
                        # etc.
 
+                   # to get a count of controls for a technique do the following
+                   print(len(technique.controls))
+
+                   # below will print each controls properties & values
+                   for control in technique.controls:
+                       print(control.__dict__)
+                    
+                   # below will print the id, name and description of a control
+                   for control in technique.controls:
+                       print(control.id)
+                       print(control.name)
+                       print(control.description)   
+
     Arguments:
         attck_obj (json) -- Takes the raw MITRE ATT&CK Json object
         AttckObject (dict) -- Takes the MITRE ATT&CK Json object as a kwargs values
@@ -132,6 +145,21 @@ class AttckTechnique(AttckObject):
     @subtechniques.setter
     def subtechniques(self, value):
         self.__subtechniques.append(value)
+
+    @property
+    def controls(self):
+        """Returns all compliance control objects that are associated with a technique
+
+        Returns:
+            [list] -- A list of control objects defined within the Enterprise MITRE ATT&CK Framework
+        """
+        from .control import AttckControl
+        control_list = []
+        if AttckTechnique.__NIST_DATA_MAP.get(self.stix):
+            for control in AttckTechnique.__NIST_DATASETS:
+                if control.get('id') in AttckTechnique.__NIST_DATA_MAP[self.stix]:
+                    control_list.append(AttckControl(**control))
+        return control_list
 
     @property
     def tactics(self):
