@@ -1,4 +1,7 @@
-import requests, json, pendulum, os
+import requests
+import json
+import pendulum
+import os
 from .configuration import Configuration
 
 
