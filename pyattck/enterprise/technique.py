@@ -81,6 +81,8 @@ class AttckTechnique(AttckObject):
 
     __LOCAL_FOLDER_PATH = None
     __ATTCK_DATASETS = None
+    __NIST_DATA_MAP = None
+    __NIST_DATASETS = None
 
     def __init__(self, attck_obj = None, **kwargs):
         """This class represents a Technique as defined with the Enterprise MITRE ATT&CK framework.
