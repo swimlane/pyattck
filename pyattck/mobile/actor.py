@@ -100,7 +100,7 @@ class MobileAttckActor(MobileAttckObject):
 
         if MobileAttckActor.__ATTCK_DATASETS is None:
             try:
-                data = AttckDatasets().generated_attck_data()
+                data = AttckDatasets().get_data(data_type='generated_data')
                 if 'actors' in data:
                     MobileAttckActor.__ATTCK_DATASETS = data['actors']
             except:
