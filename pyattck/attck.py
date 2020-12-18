@@ -162,24 +162,35 @@ class Attck(object):
 
         You can specify an alternate location of a local copy of the following objects:
 
-            1. attck_json = Path to the MITRE ATT&CK Enterprise Framework JSON
-            2. dataset_json = Path to a local dataset JSON file which is generated in the pyattck repo
-            3. preattck_json = Path to the the MITRE PRE-ATT&CK Framework JSON
-            4. mobile_json = Path to the the MITRE Mobile ATT&CK Framework JSON
-            5. config_path = Path to a yaml configuration file which contains two key value pairs
+            1. config_file_path = Path to a yaml configuration file which contains two key value pairs
                 Example content:
 
-                    enterprise_attck_dataset: /Users/first.last/pyattck/enterprise_attck_dataset.json
-                    preattck_json: /Users/first.last/pyattck/preattck.json
-                    mobile_json: /Users/first.last/pyattck/mobile_attck.json
-                    enterprise_attck_json: /Users/first.last/pyattck/enterprise_attck.json
-        
+                    data_path: /Users/username/pyattck
+                    enterprise:
+                        filename: enterprise_attck.json
+                        url: https://raw.githubusercontent.com/mitre/cti/master/enterprise-attack/enterprise-attack.json
+                    generated_data:
+                        filename: enterprise_attck_dataset.json
+                        url: https://raw.githubusercontent.com/swimlane/pyattck/master/generated_attck_data.json
+                    mobile:
+                        filename: mobile_attck.json
+                        url: https://raw.githubusercontent.com/mitre/cti/master/mobile-attack/mobile-attack.json
+                    nist_800_53_rev4_controls:
+                        filename: enterprise_attck_nist_800_53_rev4_controls.json
+                        url: https://raw.githubusercontent.com/center-for-threat-informed-defense/attack-control-framework-mappings/master/frameworks/nist800-53-r4/stix/nist800-53-r4-controls.json
+                    nist_data:
+                        filename: enterprise_attck_nist_data.json
+                        url: https://raw.githubusercontent.com/swimlane/pyattck/master/attck_to_nist_controls_data.json
+                    preattck:
+                        filename: preattack.json
+                        url: https://raw.githubusercontent.com/mitre/cti/master/pre-attack/pre-attack.json
+
+            
+            2. data_path = The path to hold the external data locally on your system.  The default is your user home path.
+
         Args:
-            attck_json (str, optional): Path to the MITRE ATT&CK Enterprise Framework json. Defaults to None.
-            dataset_json (str, optional): Path to a local dataset json file which is generated in the pyattck repo. Defaults to None.
-            preattck_json (str, optional): Path to the MITRE PRE-ATT&CK Framework json. Defaults to None.
-            mobile_json (str, optional): Path to the MITRE Mobile ATT&CK Framework json. Defaults to None.
-            config_path (str, optional): Path to a yaml configuration file which contains two key value pairs. Defaults to None.
+            config_file_path (str, optional): Path to a yaml configuration file which contains two key value pairs. Defaults to None.
+            data_path (str, optional): Path to store the external data locally on your system.  Defaults to current user path.
             force (bool, optional): Force reset configuration file and paths.  Defaults to False.
         """
         self.__nested_subtechniques = nested_subtechniques
