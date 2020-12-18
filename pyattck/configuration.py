@@ -5,9 +5,9 @@ import os
 class Configuration(object):
 
     """
-    This class will set and get a config.yml file which contains the location of data json files
-    used by pyattck.
-    
+    This class will set and get a config.yml file which contains the
+    location of data json files used by pyattck.
+
     Returns:
         Configuration: Will return a Configuration instance
     """
