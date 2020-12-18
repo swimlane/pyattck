@@ -29,6 +29,7 @@ jobs:
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
         git add "generated_attck_data.json"
+        git add "attck_to_nist_controls.json"
         git commit -m "Adding daily generated_attck_data"
     - name: Push changes
       uses: ad-m/github-push-action@master
