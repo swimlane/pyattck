@@ -250,16 +250,27 @@ class Attck(object):
         if enterprise:
             self.__load_data(force=True)
 
-
     def __load_data(self, type='enterprise', force=False):
         if type == 'preattack':
             if not Attck.__PRE_ATTCK_JSON:
-                Attck.__PRE_ATTCK_JSON = self.__datasets.mitre(type='preattack', force=force)
+                Attck.__PRE_ATTCK_JSON = self.__datasets.get_data(
+                    data_type='preattck', force=force
+                )
         elif type == 'mobile':
             if not Attck.__MOBILE_ATTCK_JSON:
-                Attck.__MOBILE_ATTCK_JSON = self.__datasets.mitre(type='mobile', force=force)
+                Attck.__MOBILE_ATTCK_JSON = self.__datasets.get_data(
+                    data_type='mobile', force=force
+                )
         else:
             if not Attck.__ENTERPRISE_ATTCK_JSON:
-                Attck.__ENTERPRISE_ATTCK_JSON = self.__datasets.mitre(force=force)
+                Attck.__ENTERPRISE_ATTCK_JSON = self.__datasets.get_data(
+                    data_type='enterprise', force=force
+                )
             if not Attck.__ENTERPRISE_GENERATED_DATA_JSON:
-                Attck.__ENTERPRISE_GENERATED_DATA_JSON = self.__datasets.generated_attck_data(force=force)
+                Attck.__ENTERPRISE_GENERATED_DATA_JSON = self.__datasets.get_data(
+                    data_type='generated_data', force=force
+                )
+            if not Attck.__ENTERPRISE_NIST_DATA_JSON:
+                Attck.__ENTERPRISE_NIST_DATA_JSON = self.__datasets.get_data(
+                    data_type='nist_data', force=force
+                )
