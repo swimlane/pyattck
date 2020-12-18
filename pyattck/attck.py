@@ -145,7 +145,7 @@ class Attck(object):
     __tools = None
     __malwares = None
 
-    def __init__(self, nested_subtechniques=True, attck_json=None, dataset_json=None, preattck_json=None, mobile_json=None, config_path=None):
+    def __init__(self, nested_subtechniques=True, config_file_path=None, data_path='~'):
         """The main entry point for pyattck.
 
         When instantiating an Attck object you can specify if you want the new subtechniques to be
