@@ -208,8 +208,9 @@ class Attck(object):
 
     @property
     def enterprise(self):
-        """Retrieve objects from the Enterprise MITRE ATT&CK Framework and additional generated data which provides additional context
-        
+        """Retrieve objects from the Enterprise MITRE ATT&CK Framework and additional generated
+           data which provides additional context
+
         Returns:
             Enterprise: Returns an Enterprise object
         """        
@@ -220,7 +221,7 @@ class Attck(object):
     @property
     def preattack(self):
         """Retrieve objects from the MITRE PRE-ATT&CK Framework
-        
+
         Returns:
             PreAttack: Returns an PreAttack object
         """
@@ -231,7 +232,7 @@ class Attck(object):
     @property
     def mobile(self):
         """Retrieve objects from the MITRE Mobile ATT&CK Framework
-        
+
         Returns:
             PreAttack: Returns an MobileAttack object
         """
