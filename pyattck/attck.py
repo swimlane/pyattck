@@ -127,10 +127,7 @@ class Attck(object):
                        # etc.
 
     Arguments:
-        attck_json (json) - The attck_json is supplied by the attck.py module when instantiated but can be used to specify an alternate location of your Enterprise ATT&CK json file.  Default is None.
-        dataset_json (json) - The dataset_json is supplied by the attck.py module when instantiated but can be used to specify an alternate location of your dataset json file.  Default is None.
-        preattck_json (json) - The attck_json is supplied by the attck.py module when instantiated but can be used to specify an alternate location of your PRE-ATT&CK json file.  Default is None.
-        config_path (str) - The path to a specified configuration file.  Default is None which equates to ~/pyattck folder directory.
+        config_file_path (str, optional): Path to a yaml configuration file which contains two key value pairs. Defaults to None.
 
     Returns:
         [Attck]: Returns a Attck object that contains all data from MITRE ATT&CK Frameworks
