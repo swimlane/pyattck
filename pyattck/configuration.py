@@ -61,58 +61,20 @@ class Configuration(object):
             self.set()
             return self.get()
 
-    def set(self, enterprise_attck_json_path=None, preattck_json_path=None, mobile_attck_json_path=None, enterprise_attck_dataset_path=None):
+    def set(self, data_path=None):
         """This method will set pyattcks configuration file settings.
 
         If no config.yml is found, it will generate one with default settings
-        
+
         Args:
-            enterprise_attck_json_path (str, optional): Path to store the Enterprise MITRE ATT&CK JSON data file. Defaults to None.
-            preattck_json_path (str, optional): Path to store the MITRE PRE-ATT&CK JSON data file. Defaults to None.
-            mobile_attck_json_path (str, optional): Path to store the MITRE Mobile ATT&CK JSON data file. Defaults to None.
-            enterprise_attck_dataset_path (str, optional): Path to store the Enterprise MITRE ATT&CK Generated JSON data file. Defaults to None.
-        """        
-        config = {}
-        if enterprise_attck_json_path:
-            if '.json' not in enterprise_attck_json_path:
-                config['enterprise_attck_json'] = '{}/enterprise_attck.json'.format(self.__get_absolute_path(enterprise_attck_json_path))
-            else:
-                config['enterprise_attck_json'] = self.__get_absolute_path(enterprise_attck_json_path)
+            data_path (str, optional): Path to store all external data. Defaults to ~/pyattck.
+        """
+        if data_path and data_path != '~':
+            self.__DATASETS_MAP['data_path'] = os.path.abspath(data_path)
         else:
-            config['enterprise_attck_json'] = os.path.join(os.path.expanduser('~'), 'pyattck', 'enterprise_attck' + '.json')
+            self.__DATASETS_MAP['data_path'] = os.path.join(os.path.expanduser('~'), 'pyattck')
 
-        
-        if preattck_json_path:
-            if '.json' not in preattck_json_path:
-                config['preattck_json'] = '{}/preattack.json'.format(self.__get_absolute_path(preattck_json_path))
-            else:
-                config['preattck_json'] = self.__get_absolute_path(preattck_json_path)
-        else:
-            config['preattck_json'] = os.path.join(os.path.expanduser('~'), 'pyattck', 'preattck' + '.json')
-        
-
-        if mobile_attck_json_path:
-            if '.json' not in mobile_attck_json_path:
-                config['mobile_attck_json'] = '{}/mobile_attck.json'.format(self.__get_absolute_path(mobile_attck_json_path))
-            else:
-                config['mobile_attck_json'] = self.__get_absolute_path(mobile_attck_json_path)
-        else:
-            config['mobile_attck_json'] = os.path.join(os.path.expanduser('~'), 'pyattck', 'mobile_attck' + '.json')
-
-
-        if enterprise_attck_dataset_path:
-            if '.json' not in enterprise_attck_dataset_path:
-                config['enterprise_attck_dataset'] = '{}/enterprise_attck_dataset.json'.format(self.__get_absolute_path(enterprise_attck_dataset_path))
-            else:
-                config['enterprise_attck_dataset'] = self.__get_absolute_path(enterprise_attck_dataset_path)
-        else:
-            config['enterprise_attck_dataset'] = os.path.join(os.path.expanduser('~'), 'pyattck', 'enterprise_attck_dataset' + '.json')
-
-    
-        self.__write_config(config)
-
-    def __get_absolute_path(self, value):
-        return os.path.abspath(value)
+        self.__write_config(self.__DATASETS_MAP)
 
     def __write_config(self, config):
         mode = None
