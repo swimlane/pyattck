@@ -12,17 +12,40 @@ class Configuration(object):
         Configuration: Will return a Configuration instance
     """
 
-    __CONFIG_FILE = os.path.join(os.path.expanduser('~'), 'pyattck', 'config' + '.yml')
-    
-    def __init__(self):
-        self.enterprise_attck_json_path = None
-        self.preatack_json_path = None
-        self.mobile_attck_json = None
-        self.enterprise_attck_dataset_path = None
+    __CONFIG_FILE = os.path.join(
+        os.path.expanduser('~'), 'pyattck', 'config' + '.yml'
+    )
+    __DATASETS_MAP = {
+        'data_path': None,
+        'enterprise': {
+            'url': 'https://raw.githubusercontent.com/mitre/cti/master/enterprise-attack/enterprise-attack.json',
+            'filename': 'enterprise_attck.json',
+        },
+        'preattck': {
+            'url': 'https://raw.githubusercontent.com/mitre/cti/master/pre-attack/pre-attack.json',
+            'filename': 'preattack.json',
+        },
+        'mobile': {
+            'url': 'https://raw.githubusercontent.com/mitre/cti/master/mobile-attack/mobile-attack.json',
+            'filename': 'mobile_attck.json',
+        },
+        'nist_800_53_rev4_controls': {
+            'url': 'https://raw.githubusercontent.com/center-for-threat-informed-defense/attack-control-framework-mappings/master/frameworks/nist800-53-r4/stix/nist800-53-r4-controls.json',
+            'filename': 'enterprise_attck_nist_800_53_rev4_controls.json',
+        },
+        'generated_data': {
+            'url': 'https://raw.githubusercontent.com/swimlane/pyattck/master/generated_attck_data.json',
+            'filename': 'enterprise_attck_dataset.json',
+        },
+        'nist_data': {
+            'url': 'https://raw.githubusercontent.com/swimlane/pyattck/master/attck_to_nist_controls_data.json',
+            'filename': 'enterprise_attck_nist_data.json',
+        }
+    }
 
     def get(self):
         """Calling the get method will return configuration settings within the config.yml file
-        
+
         Returns:
             dict: A dictionary containing configuration settings
         """        
