@@ -39,8 +39,6 @@ def test_techniques_have_actors(attck_fixture):
     if count >= 1:
         assert True
 
-
-
 def test_some_techniques_have_generated_datasets_properties(attck_fixture):
     """Some MITRE Enterprise ATT&CK Techniques should have generated datasets properties
     
@@ -64,8 +62,6 @@ def test_some_techniques_have_generated_datasets_properties(attck_fixture):
             datasets_count += 1
         if hasattr(technique, 'possible_detections'):
             possible_detections_count += 1
-        
-
     if command_list_count >= 1 and commands_count >= 1 and queries_count >= 1 and datasets_count >= 1 and possible_detections_count >= 1:
         assert True
 
@@ -81,4 +77,20 @@ def test_techniques_have_nested_subtechniques(attck_fixture_nested_subtechniques
             if technique.subtechniques:
                 count += 1
     if count >= 1:
+        assert True
+
+def test_some_techniques_have_compliance_controls(attck_fixture):
+    """Some MITRE Enterprise ATT&CK Techniques should have compliance controls
+    
+    Args:
+        attck_fixture ([type]): our default MITRE Enterprise ATT&CK JSON fixture
+    """
+    count = 0
+    for technique in attck_fixture.enterprise.techniques:
+        if technique.controls:
+            for control in technique.controls:
+                if control:
+                    count += 1
+
+    if count >= 600:
         assert True
