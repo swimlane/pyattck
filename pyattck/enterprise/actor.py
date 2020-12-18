@@ -110,14 +110,13 @@ class AttckActor(AttckObject):
 
         if AttckActor.__ATTCK_DATASETS is None:
             try:
-                data = AttckDatasets().generated_attck_data()
+                data = AttckDatasets().get_data(data_type='generated_data')
                 if 'actors' in data:
                     AttckActor.__ATTCK_DATASETS = data['actors']
             except:
                 raise GeneratedDatasetException('Unable to retrieve generated attack data properties')
             
         self.external_dataset = self.__get_actors_dataset()
-        
 
     def __get_actors_dataset(self):
         return_list = []
@@ -203,7 +202,6 @@ class AttckActor(AttckObject):
         else:
             return None
 
-
     @property
     def malwares(self):
         """Returns all malware objects as a list that are documented as being used by an Actor or Group
@@ -218,7 +216,6 @@ class AttckActor(AttckObject):
             if 'type' in item:
                 if item['type'] == 'malware':
                     item_dict[item['id']] = item
-        
         for item in self._RELATIONSHIPS[self.stix]:
             if item in item_dict:
                 return_list.append(AttckMalware(**item_dict[item]))
@@ -258,7 +255,6 @@ class AttckActor(AttckObject):
             if 'type' in item:
                 if item['type'] == 'attack-pattern':
                     item_dict[item['id']] = item
-        
         for item in self._RELATIONSHIPS[self.stix]:
             if item in item_dict:
                 return_list.append(AttckTechnique(**item_dict[item]))
