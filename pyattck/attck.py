@@ -154,10 +154,13 @@ class Attck(object):
         When instantiating an Attck object you can specify if you want the new subtechniques to be
         nested underneath their parent techniques or not.
 
-        Setting nested_subtechniques to False will result in all techniques accessible under the techniques property.
-        If using the default value of True, subtechniques will be accessible underneath technique.subtechniques.
+        Setting nested_subtechniques to False will result in all techniques accessible under the
+        techniques property. If using the default value of True, subtechniques will be accessible
+        underneath technique.subtechniques.
 
-        When instantiating an Attck object you can access either the Enterprise, PRE-ATT&CK, or Mobile MITRE Frameworks.  Specify one of the following properties to access the frameworks specific data:
+        When instantiating an Attck object you can access either the Enterprise, PRE-ATT&CK, or
+        Mobile MITRE Frameworks.  Specify one of the following properties to access the frameworks
+        specific data:
 
             * enterprise
             * preattack
