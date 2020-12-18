@@ -20,80 +20,49 @@ class AttckDatasets(object):
     def __init__(self):
         self.__DATASETS_MAP = Configuration().get()
 
-    def __get_mitre_json(self, url, path, force=False):
+    def __get_json_data(self, url, path, force=False):
         if force:
-            mitre = requests.get(url).json()
-            self.__save_locally(path, mitre)
-            return mitre
+            data = requests.get(url).json()
+            self.__save_locally(path, data)
+            return data
         else:
             cached_data = self.__get_cached_data(path)
             if cached_data:
-                return cached_data
-            else:
-                mitre = requests.get(url).json()
-                self.__save_locally(path, mitre)
-                return mitre
-
-    def mitre(self, type='enterprise', force=False):
-        """Downloads, saves, or retrieves MITRE ATT&CK Framework JSON files
-        
-        Args:
-            type (str, optional): Will set the type of data to download/retrieve.  Defaults to Enterprise.  Options are enterprise, preattack, & mobile
-            force (bool, optional): Will force the download of a new JSON file. Defaults to False.
-        
-        Returns:
-            [dict]: Mitre ATT&CK Enterprise Framework JSON
-        """
-        # first check to see if it already exists
-        if type == 'enterprise':
-            url = self.__MITRE_ENTERPRISE_ATTCK_JSON_URL
-            return self.__get_mitre_json(url, self.attck_json_path, force=force)
-        elif type == 'preattack':
-            url = self.__MITRE_PREATTCK_ATTCK_JSON_URL
-            return self.__get_mitre_json(url, self.preattck_json_path, force=force)
-        elif type == 'mobile':
-            url = self.__MITRE_MOBILE_ATTCK_JSON_URL
-            return self.__get_mitre_json(url, self.mobile_attck_json_path, force=force)
-        else:
-            url = self.__MITRE_ENTERPRISE_ATTCK_JSON_URL
-            return self.__get_mitre_json(url, self.attck_json_path, force=force)
-
-
-    def generated_attck_data(self, force=False):
-        """Downloads, saves, or retrieves the Mitre ATT&CK Enterprise Generated Dataset JSON
-        
-        Args:
-            force (bool, optional): Will force the download of a new Generated Datset JSON file. Defaults to False.
-        
-        Returns:
-            [dict]: Mitre ATT&CK Enterprise Generated Dataset JSON
-        """
-        if force:
-            datasets = self.__get_datasets()
-            self.__save_locally(self.dataset_json_path, datasets)
-            return datasets
-        else:
-            cached_data = self.__get_cached_data(self.dataset_json_path)
-            if cached_data:
-                if pendulum.now().add(days=30).to_iso8601_string() >= pendulum.parse(cached_data['last_updated']).to_iso8601_string():
-                    return cached_data
+                if cached_data.get('last_updated'):
+                    if pendulum.now().add(days=30).to_iso8601_string() >= pendulum.parse(cached_data['last_updated']).to_iso8601_string():
+                        return cached_data
+                    else:
+                        datasets = self.__download_data(url)
+                        self.__save_locally(path, datasets)
+                        return datasets
                 else:
-                    datasets = requests.get(self.__DATASETS_URL).json()
-                    self.__save_locally(self.dataset_json_path, datasets)
+                    datasets = self.__download_data(url)
+                    self.__save_locally(path, datasets)
                     return datasets
             else:
-                datasets = requests.get(self.__DATASETS_URL)
-                if datasets:
-                    try:
-                        datasets = datasets.json()
-                    except:
-                        print('Unable to downlad and load external datasets')
-                        pass
-                self.__save_locally(self.dataset_json_path, datasets)
-                return datasets
+                data = requests.get(url).json()
+                self.__save_locally(path, data)
+                return data
 
-    def __get_datasets(self):
-        return requests.get(self.__DATASETS_URL).json()
+    def get_data(self, data_type, force=False):
+        """Downloads, saves, or retrieves MITRE ATT&CK Framework JSON files
+
+        Args:
+            type (str): Will set the type of data to download/retrieve. Options are enterprise, preattack, mobile, generated_data, nist_data
+            force (bool, optional): Will force the download of a new JSON file. Defaults to False.
+
+        Returns:
+            [dict]: Returns JSON data
+        """
+        if self.__DATASETS_MAP.get(data_type):
+            return self.__get_json_data(
+                self.__DATASETS_MAP[data_type]['url'], 
+                os.path.join(self.__DATASETS_MAP['data_path'], self.__DATASETS_MAP[data_type]['filename']), 
+                force=force
+            )
+
+    def __download_data(self, url):
+        return requests.get(url).json()
 
     def __get_cached_data(self, local_file_path):
         if os.path.isfile(local_file_path):
@@ -106,6 +75,8 @@ class AttckDatasets(object):
         return None
 
     def __save_locally(self, local_file_path, data):
+        if not data.get('last_updated'):
+            data['last_updated'] = pendulum.now().to_iso8601_string()
         with open(local_file_path, 'w+') as outfile:
             try:
                 json.dump(data, outfile)
