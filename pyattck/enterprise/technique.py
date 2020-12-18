@@ -193,7 +193,6 @@ class AttckTechnique(AttckObject):
                     if str(tact).lower() == str(item['x_mitre_shortname']).lower():
                         tactic_list.append(AttckTactic(**item))
         return tactic_list
-            
 
     @tactics.setter
     def tactics(self, obj):
@@ -206,7 +205,6 @@ class AttckTechnique(AttckObject):
             (string) -- Returns a string that sets the tactic/phase this technique is in. 
                         If there is no phase found, it will return 'no phase_name'
         """
-
         temp_list = []
         try:
             for phase in obj['kill_chain_phases']:
