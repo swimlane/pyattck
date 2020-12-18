@@ -146,7 +146,7 @@ class AttckTools(AttckObject):
 
         if AttckTools.__ATTCK_C2_DATASETS is None or AttckTools.__ATTCK_TOOLS_DATASETS is None:
             try:
-                data = AttckDatasets().generated_attck_data()
+                data = AttckDatasets().get_data(data_type='generated_data')
             except:
                 raise GeneratedDatasetException('Unable to retrieve generated attack data properties')
             if AttckTools.__ATTCK_C2_DATASETS is None:
