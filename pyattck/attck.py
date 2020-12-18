@@ -1,5 +1,4 @@
 import warnings
-
 from .configuration import Configuration
 from .datasets import AttckDatasets
 
@@ -9,42 +8,54 @@ class Attck(object):
     '''
         This class creates an interface to all MITRE ATT&CK frameworks.
 
-        Currently, this class enables access to the Enterprise & PRE-ATT&CK frameworks with others coming soon.  To acccess each framework, use the following properties
+        Currently, this class enables access to the Enterprise & PRE-ATT&CK
+        frameworks with others coming soon.  To acccess each framework, use
+        the following properties
 
             * enterprise
             * preattack
 
-        This interface enables you to retrieve all properties within each item in the MITRE ATT&CK Enterprise Framework.
+        This interface enables you to retrieve all properties within each
+        item in the MITRE ATT&CK Enterprise Framework.
 
         The following categorical items can be accessed using this class:
 
             1. Tactics (Tactics are the phases defined by MITRE ATT&CK)
-            2. Techniques (Techniques are the individual actions which can accomplish a tactic)
-            3. Mitigations (Mitigations are recommendations to prevent or protect against a technique)
-            4. Actors (Actors or Groups are identified malicious actors/groups which have been identified and documented by MITRE & third-parties)
+            2. Techniques (Techniques are the individual actions which can
+               accomplish a tactic)
+            3. Mitigations (Mitigations are recommendations to prevent or
+               protect against a technique)
+            4. Actors (Actors or Groups are identified malicious
+               actors/groups which have been identified and documented by
+               MITRE & third-parties)
             5. Tools (Tools are software used to perform techniques)
-            6. Malwares (Malwares are specific pieces of malware used by actors (or in general) to accomplish a technique)
+            6. Malwares (Malwares are specific pieces of malware used by
+               actors (or in general) to accomplish a technique)
 
-        You can also search the external dataset for external commands that are similar using the `search_commands` method.
+        You can also search the external dataset for external commands that
+        are similar using the `search_commands` method.
 
            .. code-block:: python
-               
+
                from pyattck import Attck
 
                attck = Attck()
-               
+
                for search in attck.enterprise.search_commands('powershell'):
                    print(search['technique'])
                    print(search['reason_for_match'])
 
-        Additionally, as of pyattck 2.0.0 you can now access additional datasets related to a technique.
-        These datasets are [documented here](https://github.com/swimlane/pyattck/blob/master/generateattcks/README.md).
-    
-    Example:
-        Once an Attck object is instantiated, you can access each object type as a list of objects (e.g. techniques, tactics, actors, etc.)
+        Additionally, as of pyattck 2.0.0 you can now access additional
+        datasets related to a technique. These datasets are
+        [documented here](https://github.com/swimlane/pyattck/blob/master/generateattcks/README.md).
 
-        You can iterate over each object list and access specific properties and relationship properties of each.
-        
+    Example:
+        Once an Attck object is instantiated, you can access each object
+        type as a list of objects (e.g. techniques, tactics, actors, etc.)
+
+        You can iterate over each object list and access specific properties
+        and relationship properties of each.
+
         The following relationship properties are accessible:
             1. Actors
                 1. Tools used by the Actor or Group
@@ -64,15 +75,15 @@ class Attck(object):
             6. Tools
                 1. Techniques that the specified tool is used within
                 2. Actor or Group(s) using a specified tool
-        
+
             1. To iterate over a list, do the following:
 
             .. code-block:: python
-               
+
                from pyattck import Attck
 
                attck = Attck()
-               
+
                for technique in attck.enterprise.techniques:
                    print(technique.id)
                    print(technique.name)
@@ -91,7 +102,7 @@ class Attck(object):
                from pyattck import Attck
 
                attck = Attck()
-               
+
                for technique in attck.enterprise.techniques:
                    print(technique.id)
                    print(technique.name)
