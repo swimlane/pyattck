@@ -128,6 +128,8 @@ class Attck(object):
 
     Arguments:
         config_file_path (str, optional): Path to a yaml configuration file which contains two key value pairs. Defaults to None.
+        data_path (str, optional): Path to store the external data locally on your system.  Defaults to current user path.
+        force (bool, optional): Force reset configuration file and paths.  Defaults to False.
 
     Returns:
         [Attck]: Returns a Attck object that contains all data from MITRE ATT&CK Frameworks
