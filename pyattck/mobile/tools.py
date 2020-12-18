@@ -141,7 +141,7 @@ class MobileAttckTools(MobileAttckObject):
 
         if MobileAttckTools.__ATTCK_C2_DATASETS is None or MobileAttckTools.__ATTCK_TOOLS_DATASETS is None:
             try:
-                data = AttckDatasets().generated_attck_data()
+                data = AttckDatasets().get_data(data_type='generated_data')
             except:
                 raise GeneratedDatasetException('Unable to retrieve generated attack data properties')
             if MobileAttckTools.__ATTCK_C2_DATASETS is None:
@@ -153,8 +153,6 @@ class MobileAttckTools(MobileAttckObject):
 
         self.c2_data = self.__get_c2_dataset()
         self.external_dataset =  self.__get_tools_dataset()
-
-
 
     def __get_tools_dataset(self):
         return_list = []
