@@ -15,19 +15,10 @@ class AttckDatasets(object):
             MITRE_MOBILE_ATTCK_JSON_URL = 'https://raw.githubusercontent.com/mitre/cti/master/mobile-attack/mobile-attack.json'
             DATASETS_URL = 'https://raw.githubusercontent.com/swimlane/pyattck/master/generated_attck_data.json'
             NIST_DATASETS_URL = 'https://raw.githubusercontent.com/swimlane/pyattck/master/attck_to_nist_controls.json'
-    """    
-
-    __MITRE_ENTERPRISE_ATTCK_JSON_URL = 'https://raw.githubusercontent.com/mitre/cti/master/enterprise-attack/enterprise-attack.json'
-    __MITRE_PREATTCK_ATTCK_JSON_URL  = 'https://raw.githubusercontent.com/mitre/cti/master/pre-attack/pre-attack.json'
-    __MITRE_MOBILE_ATTCK_JSON_URL = 'https://raw.githubusercontent.com/mitre/cti/master/mobile-attack/mobile-attack.json'
-    __DATASETS_URL = 'https://raw.githubusercontent.com/swimlane/pyattck/master/generated_attck_data.json'
+    """
 
     def __init__(self):
-        config = Configuration().get()
-        self.attck_json_path = config['enterprise_attck_json']
-        self.preattck_json_path = config['preattck_json']
-        self.mobile_attck_json_path = config['mobile_attck_json']
-        self.dataset_json_path = config['enterprise_attck_dataset']
+        self.__DATASETS_MAP = Configuration().get()
 
     def __get_mitre_json(self, url, path, force=False):
         if force:
