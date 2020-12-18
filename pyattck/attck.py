@@ -139,6 +139,7 @@ class Attck(object):
     __MOBILE_ATTCK_JSON = None
     __PRE_ATTCK_JSON = None
     __ENTERPRISE_GENERATED_DATA_JSON = None
+    __ENTERPRISE_NIST_DATA_JSON = None
 
     __tactics = None
     __techniques = None
