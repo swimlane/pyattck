@@ -200,10 +200,10 @@ class Attck(object):
             force (bool, optional): Force reset configuration file and paths.  Defaults to False.
         """
         self.__nested_subtechniques = nested_subtechniques
-        if config_path:
-            Configuration.__CONFIG_FILE = config_path
-        
-        Configuration().set(enterprise_attck_json_path=attck_json, preattck_json_path=preattck_json, mobile_attck_json_path=mobile_json, enterprise_attck_dataset_path=dataset_json)
+        if config_file_path:
+            Configuration.__CONFIG_FILE = config_file_path
+
+        Configuration().set(data_path=data_path)
         self.__datasets = AttckDatasets()
 
     @property
