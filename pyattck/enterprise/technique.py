@@ -114,12 +114,7 @@ class AttckTechnique(AttckObject):
         self.subtechnique = self._set_attribute(kwargs, 'x_mitre_is_subtechnique')
         self.__subtechniques = []
 
-
-        if AttckTechnique.__ATTCK_DATASETS is None:
-            try:
-                AttckTechnique.__ATTCK_DATASETS = AttckDatasets().generated_attck_data()
-            except:
-                raise GeneratedDatasetException('Unable to retrieve generated attack data properties')
+        self.__retrieve_datasets()
 
         self.command_list = self.__get_filtered_dataset(self.id, 'command_list')
         self.commands = self.__get_filtered_dataset(self.id, 'commands')
@@ -130,6 +125,25 @@ class AttckTechnique(AttckObject):
         self.tactics = kwargs
 
         self.set_relationships(self.__attck_obj)
+
+    def __retrieve_datasets(self):
+        if AttckTechnique.__ATTCK_DATASETS is None:
+            try:
+                AttckTechnique.__ATTCK_DATASETS = AttckDatasets().get_data(data_type='generated_data')
+            except:
+                raise GeneratedDatasetException('Unable to retrieve generated attack data properties')
+        
+        if AttckTechnique.__NIST_DATA_MAP is None:
+            try:
+                AttckTechnique.__NIST_DATA_MAP = AttckDatasets().get_data(data_type='nist_data')
+            except:
+                raise GeneratedDatasetException('Unable to retrieve generated NIST Controls data map')
+        
+        if AttckTechnique.__NIST_DATASETS is None:
+            try:
+                AttckTechnique.__NIST_DATASETS = AttckDatasets().get_data(data_type='nist_800_53_rev4_controls')['objects']
+            except:
+                raise GeneratedDatasetException('Unable to retrieve NIST 800-53 Control data')
 
     def __get_filtered_dataset(self, technique_id, attribute_name):
         for item in AttckTechnique.__ATTCK_DATASETS['techniques']:
