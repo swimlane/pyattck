@@ -93,7 +93,7 @@ class MobileAttckTechnique(MobileAttckObject):
 
         if MobileAttckTechnique.__ATTCK_DATASETS is None:
             try:
-                MobileAttckTechnique.__ATTCK_DATASETS = AttckDatasets().generated_attck_data()
+                MobileAttckTechnique.__ATTCK_DATASETS = AttckDatasets().get_data(data_type='generated_data')
             except:
                 raise GeneratedDatasetException('Unable to retrieve generated attack data properties')
 
