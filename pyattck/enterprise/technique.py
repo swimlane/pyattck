@@ -1,5 +1,6 @@
 from .attckobject import AttckObject
 from ..datasets import AttckDatasets
+from .control import AttckControl
 from ..utils.exceptions import GeneratedDatasetException
 
 
