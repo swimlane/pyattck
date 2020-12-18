@@ -36,6 +36,19 @@ for actor in attack.enterprise.actors:
         # To access all techniques under a single technique object set
         # Attck(nested_subtechniques=False)
 
+        # to get a count of controls for a technique do the following
+        print(len(technique.controls))
+
+        # below will print each controls properties & values
+        for control in technique.controls:
+            print(control.__dict__)
+        
+        # below will print the id, name and description of a control
+        for control in technique.controls:
+            print(control.id)
+            print(control.name)
+            print(control.description)
+
 # accessing malware
 for malware in attack.enterprise.malwares:
     print(malware.id)
@@ -50,6 +63,19 @@ for malware in attack.enterprise.malwares:
     for technique in malware.techniques:
         print(technique.id)
         print(technique.name)
+
+        # to get a count of controls for a technique do the following
+        print(len(technique.controls))
+
+        # below will print each controls properties & values
+        for control in technique.controls:
+            print(control.__dict__)
+        
+        # below will print the id, name and description of a control
+        for control in technique.controls:
+            print(control.id)
+            print(control.name)
+            print(control.description)
 
 # accessing mitigation
 for mitigation in attack.enterprise.mitigations:
@@ -66,6 +92,19 @@ for mitigation in attack.enterprise.mitigations:
         print(technique.queries)
         print(technique.datasets)
         print(technique.possible_detections)
+    
+        # to get a count of controls for a technique do the following
+        print(len(technique.controls))
+
+        # below will print each controls properties & values
+        for control in technique.controls:
+            print(control.__dict__)
+        
+        # below will print the id, name and description of a control
+        for control in technique.controls:
+            print(control.id)
+            print(control.name)
+            print(control.description)
 
 # accessing tactics
 for tactic in attack.enterprise.tactics:
@@ -82,10 +121,38 @@ for tactic in attack.enterprise.tactics:
         print(technique.queries)
         print(technique.datasets)
         print(technique.possible_detections)
+    
+        # to get a count of controls for a technique do the following
+        print(len(technique.controls))
+
+        # below will print each controls properties & values
+        for control in technique.controls:
+            print(control.__dict__)
+        
+        # below will print the id, name and description of a control
+        for control in technique.controls:
+            print(control.id)
+            print(control.name)
+            print(control.description)
 
 for technique in attack.enterprise.techniques:
     print(technique.id)
+    print(technique.stix)
     print(technique.name)
+
+    # to get a count of controls for a technique do the following
+    print(len(technique.controls))
+
+    # below will print each controls properties & values
+    for control in technique.controls:
+        print(control.__dict__)
+    
+    # below will print the id, name and description of a control
+    for control in technique.controls:
+        print(control.id)
+        print(control.name)
+        print(control.description)
+
     # you can also access generated data sets on aa technique
     print(technique.command_list)
     print(technique.commands)
@@ -100,8 +167,6 @@ for technique in attack.enterprise.techniques:
     for subtechnique in technique.subtechniques:
         print(subtechnique.name)
         print(subtechnique.id)
-    input('press')
-    
 
     # accessing tactics that this technique belongs to
     for tactic in technique.tactics:
@@ -138,8 +203,6 @@ for tool in attack.enterprise.tools:
     for actor in tool.actors:
         print(actor.id)
         print(actor.name)
-
-
 
 # Examples of MITRE PRE-ATT&CK 
 
