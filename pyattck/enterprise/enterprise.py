@@ -123,7 +123,34 @@ class Enterprise(object):
 
         You can retrieve the entire dataset using the `c2_data` property.
 
-    
+        As of pyattck 3.0 you can now access defined Compliance Controls related to a technique.
+
+        Here is an example of retrieving a list of compliance controls:
+
+            .. code-block:: python
+               
+               from pyattck import Attck
+
+               attck = Attck()
+               
+               for technique in attck.enterprise.techniques:
+                   print(technique.id)
+                   print(technique.name)
+                   print(technique.description)
+
+                   # to get a count of controls for a technique do the following
+                   print(len(technique.controls))
+
+                   # below will print each controls properties & values
+                   for control in technique.controls:
+                       print(control.__dict__)
+                    
+                   # below will print the id, name and description of a control
+                   for control in technique.controls:
+                       print(control.id)
+                       print(control.name)
+                       print(control.description)
+
     Example:
         Once an Attck object is instantiated, you can access each object type as a list of objects (e.g. techniques, tactics, actors, etc.)
 
@@ -343,7 +370,7 @@ class Enterprise(object):
         from ..datasets import AttckDatasets
         return_list = []
         if not Enterprise.__ENTERPRISE_GENERATED_DATA_JSON:
-            Enterprise.__ENTERPRISE_GENERATED_DATA_JSON = AttckDatasets().generated_attck_data()
+            Enterprise.__ENTERPRISE_GENERATED_DATA_JSON = AttckDatasets().get_data('generated_data')
         for item in Enterprise.__ENTERPRISE_GENERATED_DATA_JSON['techniques']:
             if 'command_list' in item:
                 if item['command_list']:
