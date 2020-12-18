@@ -34,6 +34,7 @@ The **pyattck** package allows you to:
   * Access data from the MITRE PRE-ATT&CK Framework
   * Access data from the MITRE Mobile ATT&CK Framework
   * Access subtechniques as nested objects or you can turn it off and access as normal technique
+  * Access compliance controls (currently NIST 800-53) related to a MITRE ATT&CK Technique
 
 ## Installation
 
@@ -110,6 +111,7 @@ Once you specify the MITRE ATT&CK Framework, you can access additional propertie
 Here are the accessible objects under the [Enterprise](enterprise/enterprise.md) property:
 
 * [actors](enterprise/actor.md)
+* [controls](enterprise/control.md)
 * [malwares](enterprise/malware.md)
 * [mitigations](enterprise/mitigation.md)
 * [tactics](enterprise/tactic.md)

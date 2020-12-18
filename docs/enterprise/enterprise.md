@@ -227,6 +227,7 @@ for tool in attack.enterprise.tools:
 .. toctree::
    
    actor
+   control
    malware
    mitigation
    tactic
