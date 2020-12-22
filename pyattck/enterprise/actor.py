@@ -6,12 +6,14 @@ from ..datasets import AttckDatasets
 
 
 class AttckActor(AttckObject):
+    """
+    A child class of AttckObject
 
-    '''A child class of AttckObject
-    
-    Creates objects that are categorized as Mitre ATT&CK Enterprise Actors or Groups (e.g. APT1, APT32, etc.)
+    Creates objects that are categorized as Mitre ATT&CK Enterprise
+    Actors or Groups (e.g. APT1, APT32, etc.)
 
-    You can also access external data properties. The following properties are generated using external data:
+    You can also access external data properties. The following properties
+    are generated using external data:
 
         1. country
         2. operations
@@ -23,23 +25,25 @@ class AttckActor(AttckObject):
 
     You can retrieve the entire dataset using the `external_dataset` property.
 
-    pyattck also enables you to retrieve or generate logos for the actor or group using the following properties:
-        
+    pyattck also enables you to retrieve or generate logos for the actor or
+    group using the following properties:
+
         - ascii_logo - Generated ASCII logo based on the actor or groups name
         - image_logo - Generated ASCII logo based on a provided logo
-    
+
     Example:
-        You can iterate over an `actors` list and access specific properties and relationship properties.
+        You can iterate over an `actors` list and access specific properties and
+        relationship properties.
 
         The following relationship properties are accessible:
                 1. malwares
                 2. tools
                 3. techniques
-        
+
             1. To iterate over an `actors` list, do the following:
 
             .. code-block:: python
-               
+
                from pyattck import Attck
 
                attck = Attck()
@@ -72,23 +76,28 @@ class AttckActor(AttckObject):
 
     Arguments:
         attck_obj (json) -- Takes the raw Mitre ATT&CK Json object
-        AttckObject (dict) -- Takes the Mitre ATT&CK Json object as a kwargs values
-    '''
+        AttckObject (dict) -- Takes the Mitre ATT&CK Json object as a
+                              kwargs values
+    """
 
     __ATTCK_DATASETS = None
 
     def __init__(self, attck_obj = None, **kwargs):
-        """This class represents a Actor (or group) as defined with the Enterprise MITRE ATT&CK framework.
+        """
+        This class represents a Actor (or group) as defined by the
+        Enterprise MITRE ATT&CK framework.
 
         Keyword Arguments:
-            attck_obj {json} -- A Enterprise MITRE ATT&CK Framework json object (default: {None})
+            attck_obj {json} -- A Enterprise MITRE ATT&CK Framework
+                                json object (default: {None})
 
         Raises:
-            GeneratedDatasetException: Raised an exception when unable to access or process the external generated dataset.
+            GeneratedDatasetException: Raised an exception when unable
+                                       to access or process the external
+                                       generated dataset.
         """
         super(AttckActor, self).__init__(**kwargs)
         self.__attck_obj = attck_obj
-
         self.id = self._set_id(kwargs)
         self.created_by_ref = self._set_attribute(kwargs, 'created_by_ref')
         self.revoked = self._set_attribute(kwargs, 'revoked')
@@ -101,13 +110,14 @@ class AttckActor(AttckObject):
         self.type = self._set_attribute(kwargs, 'type')
         self.wiki = self._set_wiki(kwargs)
         self.contributor = self._set_list_items(kwargs, 'x_mitre_contributors')
-
         self.set_relationships(self.__attck_obj)
-
         logo = Logo(self.name.strip().replace(' ','_').lower())
         self.ascii_logo = logo.get_ascii()
         self.image_logo = logo.get_image()
+        self.__retrieve_datasets()
+        self.external_dataset = self.__get_actors_dataset()
 
+    def __retrieve_datasets(self):
         if AttckActor.__ATTCK_DATASETS is None:
             try:
                 data = AttckDatasets().get_data(data_type='generated_data')
@@ -115,8 +125,6 @@ class AttckActor(AttckObject):
                     AttckActor.__ATTCK_DATASETS = data['actors']
             except:
                 raise GeneratedDatasetException('Unable to retrieve generated attack data properties')
-            
-        self.external_dataset = self.__get_actors_dataset()
 
     def __get_actors_dataset(self):
         return_list = []
@@ -204,10 +212,13 @@ class AttckActor(AttckObject):
 
     @property
     def malwares(self):
-        """Returns all malware objects as a list that are documented as being used by an Actor or Group
+        """
+        Returns all malware objects as a list that are documented as being
+        used by an Actor or Group
 
         Returns:
-            [list] -- A list of related malware objects defined within the Enterprise MITRE ATT&CK Framework
+            [list] -- A list of related malware objects defined within the
+                      Enterprise MITRE ATT&CK Framework
         """
         from .malware import AttckMalware
         return_list = []
@@ -223,10 +234,13 @@ class AttckActor(AttckObject):
 
     @property
     def tools(self):
-        """Returns all tool object as a list that are documented as being used by an Actor or Group
+        """
+        Returns all tool object as a list that are documented as being
+        used by an Actor or Group
 
         Returns:
-            [list] -- A list of related tool objects defined within the Enterprise MITRE ATT&CK Framework
+            [list] -- A list of related tool objects defined within the
+            Enterprise MITRE ATT&CK Framework
         """
         from .tools import AttckTools
         return_list = []
@@ -235,7 +249,6 @@ class AttckActor(AttckObject):
             if 'type' in item:
                 if item['type'] == 'tool':
                     item_dict[item['id']] = item
-        
         for item in self._RELATIONSHIPS[self.stix]:
             if item in item_dict:
                 return_list.append(AttckTools(**item_dict[item]))
@@ -243,10 +256,13 @@ class AttckActor(AttckObject):
 
     @property
     def techniques(self):
-        """Returns all technique objects as a list that are documented as being used by an Actor or Group
+        """
+        Returns all technique objects as a list that are documented as
+        being used by an Actor or Group
 
         Returns:
-            [list] -- A list of related technique objects defined within the Enterprise MITRE ATT&CK Framework
+            [list] -- A list of related technique objects defined within the
+            Enterprise MITRE ATT&CK Framework
         """
         from .technique import AttckTechnique
         return_list = []

@@ -1,9 +1,5 @@
-from ..datasets import AttckDatasets
-from ..utils.exceptions import GeneratedDatasetException
-
-
 class AttckControl:
-    '''
+    """
     An object that represents a compliance control type.
     Currently this object is only utilized by NIST 800-53 controls
     but will be expanded in the future.
@@ -11,27 +7,15 @@ class AttckControl:
     Each control relates to a technique and can assist with identifying
     compliance needs and coverage for specific techniques
     and sub-techniques.
-    
-    Each control gives you access to the following properties on the object:
-
-        1. created - The created date of the object
-        2. description - The description of the control
-        3. external_references - 
-        1. command_list - A list of commands associated with a technique
-        2. commands = A list of dictionary objects containing source, command, and provided name associated with a technique
-        3. queries = A list of dictionary objects containing product, query, and name associated with a technique
-        4. datasets = A list of raw datasets associated with a technique
-        5. possible_detections = A list of raw datasets containing possible detection methods for a technique
-
 
     Example:
-        You can iterate over an `techniques` list and access specific control properties.
+        You can iterate over an `techniques` list and access specific
+        control properties.
 
-        
             1. To iterate over an `techniques` list, do the following:
 
             .. code-block:: python
-               
+
                from pyattck import Attck
 
                attck = Attck()
@@ -51,9 +35,16 @@ class AttckControl:
 
     Arguments:
         kwargs (dict) -- Takes the raw control Json object
-    '''
+    """
 
     def __init__(self, **kwargs):
+        """
+        This class represents a compliance Control as defined from
+        external data sources.
+
+        Keyword Arguments:
+            kwargs (dict) -- A compliance control JSON object
+        """
         self.id = self._set_id(kwargs.pop('external_references'))
         self.stix = kwargs.pop('id')
         for key,val in kwargs.items():
@@ -82,11 +73,12 @@ class AttckControl:
         )
 
     def _set_id(self, external_references):
-        """Returns the compliance control (external) ID 
-        
+        """
+        Returns the compliance control (external) ID
+
         Arguments:
             external_references (list) -- A list of external_references
-        
+
         Returns:
             (str) -- Returns the compliance control (external) ID
         """

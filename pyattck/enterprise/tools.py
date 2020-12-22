@@ -4,133 +4,139 @@ from ..utils.exceptions import GeneratedDatasetException
 
 
 class AttckTools(AttckObject):
-    '''
-        A child class of AttckObject
-    
-        Creates objects which have been categorized as tools or software which have been categorized as software used in attacks
-        
-        You can also access external data properties. The following properties are generated using external data:
+    """
+    A child class of AttckObject
 
-            1. additional_names
-            2. attribution_links
-            3. additional_comments
-            4. family
+    Creates objects which have been categorized as tools or software which have
+    been categorized as software used in attacks
 
-        You can retrieve the entire dataset using the `external_dataset` property.
+    You can also access external data properties. The following properties are
+    generated using external data:
 
-        You can also access external data properties from the C2 Matrix project. The following properties are generated using C2 Matrix external data:
+        1. additional_names
+        2. attribution_links
+        3. additional_comments
+        4. family
 
-            - HTTP
-            - Implementation
-            - Custom Profile
-            - DomainFront
-            - Multi-User
-            - SMB
-            - Kill Date
-            - macOS
-            - GitHub
-            - Key Exchange
-            - Chaining
-            - Price
-            - TCP
-            - Proxy Aware
-            - HTTP3
-            - HTTP2
-            - Date
-            - Evaluator
-            - Working Hours
-            - Slack
-            - FTP
-            - Version Reviewed
-            - Logging
-            - Name
-            - License
-            - Windows
-            - Stego
-            - Notes
-            - Server
-            - Actively Maint.
-            - Dashboard
-            - DNS
-            - Popular Site
-            - ICMP
-            - IMAP
-            - DoH
-            - Jitter
-            - How-To
-            - ATT&CK Mapping
-            - Kali
-            - Twitter
-            - MAPI
-            - Site
-            - Agent
-            - API
-            - UI
-            - Linux
+    You can retrieve the entire dataset using the `external_dataset` property.
 
-        You can retrieve the entire dataset using the `c2_data` property.
+    You can also access external data properties from the C2 Matrix project.
+    The following properties are generated using C2 Matrix external data:
 
+        - HTTP
+        - Implementation
+        - Custom Profile
+        - DomainFront
+        - Multi-User
+        - SMB
+        - Kill Date
+        - macOS
+        - GitHub
+        - Key Exchange
+        - Chaining
+        - Price
+        - TCP
+        - Proxy Aware
+        - HTTP3
+        - HTTP2
+        - Date
+        - Evaluator
+        - Working Hours
+        - Slack
+        - FTP
+        - Version Reviewed
+        - Logging
+        - Name
+        - License
+        - Windows
+        - Stego
+        - Notes
+        - Server
+        - Actively Maint.
+        - Dashboard
+        - DNS
+        - Popular Site
+        - ICMP
+        - IMAP
+        - DoH
+        - Jitter
+        - How-To
+        - ATT&CK Mapping
+        - Kali
+        - Twitter
+        - MAPI
+        - Site
+        - Agent
+        - API
+        - UI
+        - Linux
 
-        Example:
-            You can iterate over an `tools` list and access specific properties and relationship properties.
+    You can retrieve the entire dataset using the `c2_data` property.
 
-            The following relationship properties are accessible:
-                    1. techniques
-                    2. actors
-            
-                1. To iterate over an `tools` list, do the following:
+    Example:
+        You can iterate over an `tools` list and access specific properties
+        and relationship properties.
 
-                .. code-block:: python
-                
-                from pyattck import Attck
+        The following relationship properties are accessible:
+                1. techniques
+                2. actors
 
-                attck = Attck()
+            1. To iterate over an `tools` list, do the following:
 
-                for tool in attck.enterprise.tools:
-                    print(tool.id)
-                    print(tool.name)
-                    print(tool.description)
+            .. code-block:: python
+
+            from pyattck import Attck
+
+            attck = Attck()
+
+            for tool in attck.enterprise.tools:
+                print(tool.id)
+                print(tool.name)
+                print(tool.description)
+                # etc.
+
+            2. To access relationship properties, do the following:
+
+            .. code-block:: python
+
+            from pyattck import Attck
+
+            attck = Attck()
+
+            for tool in attck.enterprise.tools:
+                print(tool.id)
+                print(tool.name)
+                print(tool.description)
+                # etc.
+
+                for technique in tool.techniques:
+                    print(technique.name)
+                    print(technique.description)
                     # etc.
 
-                2. To access relationship properties, do the following:
-
-                .. code-block:: python
-
-                from pyattck import Attck
-
-                attck = Attck()
-
-                for tool in attck.enterprise.tools:
-                    print(tool.id)
-                    print(tool.name)
-                    print(tool.description)
-                    # etc.
-
-                    for technique in tool.techniques:
-                        print(technique.name)
-                        print(technique.description)
-                        # etc.
-
-        Arguments:
-            attck_obj (json) -- Takes the raw MITRE ATT&CK Json object
-            AttckObject (dict) -- Takes the MITRE ATT&CK Json object as a kwargs values
-    '''
+    Arguments:
+        attck_obj (json) -- Takes the raw MITRE ATT&CK Json object
+        AttckObject (dict) -- Takes the MITRE ATT&CK Json object as a kwargs values
+    """
 
     __ATTCK_C2_DATASETS = None
     __ATTCK_TOOLS_DATASETS = None
 
     def __init__(self, attck_obj = None, **kwargs):
-        """This class represents a Tool as defined with the Enterprise MITRE ATT&CK framework.
+        """
+        This class represents a Tool as defined by the
+        Enterprise MITRE ATT&CK framework.
 
         Keyword Arguments:
-            attck_obj {json} -- A Enterprise MITRE ATT&CK Framework json object (default: {None})
+            attck_obj {json} -- A Enterprise MITRE ATT&CK Framework
+                                json object (default: {None})
 
         Raises:
-            GeneratedDatasetException: Raised an exception when unable to access or process the external generated dataset.
+            GeneratedDatasetException: Raised an exception when unable to access
+                                       or process the external generated dataset.
         """
         super(AttckTools, self).__init__(**kwargs)
         self.__attck_obj = attck_obj
-
         self.id = self._set_id(kwargs)
         self.name = self._set_attribute(kwargs, 'name')
         self.description = self._set_attribute(kwargs, 'description')
@@ -141,9 +147,12 @@ class AttckTools(AttckObject):
         self.type = self._set_attribute(kwargs, 'type')
         self.wiki = self._set_wiki(kwargs)
         self.contributor = self._set_attribute(kwargs, 'contributor')
-
         self.set_relationships(self.__attck_obj)
+        self.__retrieve_datasets()
+        self.c2_data = self.__get_c2_dataset()
+        self.external_dataset =  self.__get_tools_dataset()
 
+    def __retrieve_datasets(self):
         if AttckTools.__ATTCK_C2_DATASETS is None or AttckTools.__ATTCK_TOOLS_DATASETS is None:
             try:
                 data = AttckDatasets().get_data(data_type='generated_data')
@@ -155,11 +164,6 @@ class AttckTools(AttckObject):
             if AttckTools.__ATTCK_TOOLS_DATASETS is None:
                 if 'tools' in data:
                     AttckTools.__ATTCK_TOOLS_DATASETS = data['tools']
-
-        self.c2_data = self.__get_c2_dataset()
-        self.external_dataset =  self.__get_tools_dataset()
-
-
 
     def __get_tools_dataset(self):
         return_list = []
@@ -227,10 +231,12 @@ class AttckTools(AttckObject):
 
     @property
     def techniques(self):
-        """Returns all technique objects that a tool object is associated with
+        """
+        Returns all technique objects that a tool object is associated with
 
         Returns:
-            [list] -- A list of technique objects defined within the Enterprise MITRE ATT&CK Framework
+            [list] -- A list of technique objects defined within the
+                      Enterprise MITRE ATT&CK Framework
         """
         from .technique import AttckTechnique
         return_list = []
@@ -247,10 +253,12 @@ class AttckTools(AttckObject):
 
     @property
     def actors(self):
-        """Returns all actor objects that use a tool
+        """
+        Returns all actor objects that use a tool
 
         Returns:
-            [list] -- A list of actor objects defined within the Enterprise MITRE ATT&CK Framework
+            [list] -- A list of actor objects defined within the
+                      Enterprise MITRE ATT&CK Framework
         """
         from .actor import AttckActor
         return_list = []
@@ -259,7 +267,6 @@ class AttckTools(AttckObject):
             if 'type' in item:
                 if item['type'] == 'intrusion-set':
                     item_dict[item['id']] = item
-        
         for item in self._RELATIONSHIPS[self.stix]:
             if item in item_dict:
                 return_list.append(AttckActor(**item_dict[item]))

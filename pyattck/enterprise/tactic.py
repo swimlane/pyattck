@@ -2,67 +2,70 @@ from .attckobject import AttckObject
 
 
 class AttckTactic(AttckObject):
+    """
+    A child class of AttckObject
 
-    '''A child class of AttckObject
-    
-        Creates objects that are categorized as Mitre ATT&CK Tactics
-    
-        Example:
-        
-            You can iterate over an `tactics` list and access specific properties and relationship properties.
+    Creates objects that are categorized as Mitre ATT&CK Tactics
 
-            The following relationship properties are accessible:
-                    1. techniques
-        
-            1. To iterate over an `tactics` list, do the following:
+    Example:
 
-            .. code-block:: python
-               
-               from pyattck import Attck
+        You can iterate over an `tactics` list and access specific
+        properties and relationship properties.
 
-               attck = Attck()
+        The following relationship properties are accessible:
+                1. techniques
 
-               for tactic in attck.tactics:
-                   print(tactic.id)
-                   print(tactic.name)
-                   print(tactic.alias)
-                   print(tactic.description)
-                   # etc.
+        1. To iterate over an `tactics` list, do the following:
 
-            2. To access relationship properties, do the following:
+        .. code-block:: python
 
-            .. code-block:: python
+            from pyattck import Attck
 
-               from pyattck import Attck
+            attck = Attck()
 
-               attck = Attck()
+            for tactic in attck.tactics:
+                print(tactic.id)
+                print(tactic.name)
+                print(tactic.alias)
+                print(tactic.description)
+                # etc.
 
-               for tactic in attck.tactics:
-                   print(tactic.id)
-                   print(tactic.name)
-                   print(tactic.alias)
-                   print(tactic.description)
-                   # etc.
+        2. To access relationship properties, do the following:
 
-                   for technique in tactic.techniques:
-                       print(technique.name)
-                       print(technique.description)
-                       # etc.
+        .. code-block:: python
 
-        Arguments:
-            attck_obj (json) -- Takes the raw Mitre ATT&CK Json object
-            AttckObject (dict) -- Takes the Mitre ATT&CK Json object as a kwargs values
-        '''
-    
+            from pyattck import Attck
+
+            attck = Attck()
+
+            for tactic in attck.tactics:
+                print(tactic.id)
+                print(tactic.name)
+                print(tactic.alias)
+                print(tactic.description)
+                # etc.
+
+                for technique in tactic.techniques:
+                    print(technique.name)
+                    print(technique.description)
+                    # etc.
+
+    Arguments:
+        attck_obj (json) -- Takes the raw Mitre ATT&CK Json object
+        AttckObject (dict) -- Takes the Mitre ATT&CK Json object as a kwargs values
+    """
+
     def __init__(self, attck_obj = None, **kwargs):
-        """This class represents a Tactic as defined with the Enterprise MITRE ATT&CK framework.
+        """
+        This class represents a Tactic as defined by the
+        Enterprise MITRE ATT&CK framework.
 
         Keyword Arguments:
-            attck_obj {json} -- A Enterprise MITRE ATT&CK Framework json object (default: {None})
+            attck_obj {json} -- A Enterprise MITRE ATT&CK Framework
+                                json object (default: {None})
         """
         super(AttckTactic, self).__init__(**kwargs)
         self.__attck_obj = attck_obj
-
         self.id = self._set_id(kwargs)
         self.created_by_ref = self._set_attribute(kwargs, 'created_by_ref')
         self.type = self._set_attribute(kwargs, 'type')
@@ -75,15 +78,17 @@ class AttckTactic(AttckObject):
         self.short_name = self._set_attribute(kwargs, 'x_mitre_shortname')
         self.wiki = self._set_wiki(kwargs)
         self.contributor = self._set_attribute(kwargs, 'contributor')
-
         self.set_relationships(self.__attck_obj)
 
     @property
     def techniques(self):
-        """Returns all technique objects as a list that are associated with a Tactic
+        """
+        Returns all technique objects as a list that are
+        associated with a Tactic
 
         Returns:
-            [list] -- A list of related technique objects defined within the Enterprise MITRE ATT&CK Framework
+            [list] -- A list of related technique objects defined
+                      within the Enterprise MITRE ATT&CK Framework
         """
         from .technique import AttckTechnique
         technique_list = []

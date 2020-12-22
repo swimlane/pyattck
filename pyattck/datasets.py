@@ -6,8 +6,8 @@ from .configuration import Configuration
 
 
 class AttckDatasets(object):
-
-    """AttckDatasets is used to download, save or retrieve datasets for pyattck.
+    """
+    AttckDatasets is used to download, save or retrieve datasets for pyattck.
 
         Default locations to download datasets are as follows:
             MITRE_ATTCK_JSON_URL = 'https://raw.githubusercontent.com/mitre/cti/master/enterprise-attack/enterprise-attack.json'
@@ -18,6 +18,9 @@ class AttckDatasets(object):
     """
 
     def __init__(self):
+        """
+        The main class to retrieve and save datasets external from this package.
+        """
         self.__DATASETS_MAP = Configuration().get()
 
     def __get_json_data(self, url, path, force=False):
@@ -45,19 +48,22 @@ class AttckDatasets(object):
                 return data
 
     def get_data(self, data_type, force=False):
-        """Downloads, saves, or retrieves JSON data
+        """
+        Downloads, saves, or retrieves JSON data
 
         Args:
-            type (str): Will set the type of data to download/retrieve. Options are enterprise, preattack, mobile, generated_data, nist_data
-            force (bool, optional): Will force the download of a new JSON file. Defaults to False.
+            type (str): Will set the type of data to download/retrieve. Options are
+                        enterprise, preattack, mobile, generated_data, nist_data
+            force (bool, optional): Will force the download of a new JSON file.
+                                    Defaults to False.
 
         Returns:
             [dict]: Returns JSON data
         """
         if self.__DATASETS_MAP.get(data_type):
             return self.__get_json_data(
-                self.__DATASETS_MAP[data_type]['url'], 
-                os.path.join(self.__DATASETS_MAP['data_path'], self.__DATASETS_MAP[data_type]['filename']), 
+                self.__DATASETS_MAP[data_type]['url'],
+                os.path.join(self.__DATASETS_MAP['data_path'], self.__DATASETS_MAP[data_type]['filename']),
                 force=force
             )
 

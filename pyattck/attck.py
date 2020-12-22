@@ -3,50 +3,49 @@ from .datasets import AttckDatasets
 
 
 class Attck(object):
+    """
+    This class creates an interface to all MITRE ATT&CK frameworks.
 
-    '''
-        This class creates an interface to all MITRE ATT&CK frameworks.
+    Currently, this class enables access to the Enterprise & PRE-ATT&CK
+    frameworks with others coming soon.  To acccess each framework, use
+    the following properties
 
-        Currently, this class enables access to the Enterprise & PRE-ATT&CK
-        frameworks with others coming soon.  To acccess each framework, use
-        the following properties
+        * enterprise
+        * preattack
 
-            * enterprise
-            * preattack
+    This interface enables you to retrieve all properties within each
+    item in the MITRE ATT&CK Enterprise Framework.
 
-        This interface enables you to retrieve all properties within each
-        item in the MITRE ATT&CK Enterprise Framework.
+    The following categorical items can be accessed using this class:
 
-        The following categorical items can be accessed using this class:
+        1. Tactics (Tactics are the phases defined by MITRE ATT&CK)
+        2. Techniques (Techniques are the individual actions which can
+            accomplish a tactic)
+        3. Mitigations (Mitigations are recommendations to prevent or
+            protect against a technique)
+        4. Actors (Actors or Groups are identified malicious
+            actors/groups which have been identified and documented by
+            MITRE & third-parties)
+        5. Tools (Tools are software used to perform techniques)
+        6. Malwares (Malwares are specific pieces of malware used by
+            actors (or in general) to accomplish a technique)
 
-            1. Tactics (Tactics are the phases defined by MITRE ATT&CK)
-            2. Techniques (Techniques are the individual actions which can
-               accomplish a tactic)
-            3. Mitigations (Mitigations are recommendations to prevent or
-               protect against a technique)
-            4. Actors (Actors or Groups are identified malicious
-               actors/groups which have been identified and documented by
-               MITRE & third-parties)
-            5. Tools (Tools are software used to perform techniques)
-            6. Malwares (Malwares are specific pieces of malware used by
-               actors (or in general) to accomplish a technique)
+    You can also search the external dataset for external commands that
+    are similar using the `search_commands` method.
 
-        You can also search the external dataset for external commands that
-        are similar using the `search_commands` method.
+        .. code-block:: python
 
-           .. code-block:: python
+            from pyattck import Attck
 
-               from pyattck import Attck
+            attck = Attck()
 
-               attck = Attck()
+            for search in attck.enterprise.search_commands('powershell'):
+                print(search['technique'])
+                print(search['reason_for_match'])
 
-               for search in attck.enterprise.search_commands('powershell'):
-                   print(search['technique'])
-                   print(search['reason_for_match'])
-
-        Additionally, as of pyattck 2.0.0 you can now access additional
-        datasets related to a technique. These datasets are
-        [documented here](https://github.com/swimlane/pyattck/blob/master/generateattcks/README.md).
+    Additionally, as of pyattck 2.0.0 you can now access additional
+    datasets related to a technique. These datasets are
+    [documented here](https://github.com/swimlane/pyattck/blob/master/generateattcks/README.md).
 
     Example:
         Once an Attck object is instantiated, you can access each object
@@ -132,14 +131,13 @@ class Attck(object):
 
     Returns:
         [Attck]: Returns a Attck object that contains all data from MITRE ATT&CK Frameworks
-    '''
+    """
 
     __ENTERPRISE_ATTCK_JSON = None
     __MOBILE_ATTCK_JSON = None
     __PRE_ATTCK_JSON = None
     __ENTERPRISE_GENERATED_DATA_JSON = None
     __ENTERPRISE_NIST_DATA_JSON = None
-
     __tactics = None
     __techniques = None
     __mitigations = None
@@ -148,26 +146,32 @@ class Attck(object):
     __malwares = None
 
     def __init__(self, nested_subtechniques=True, config_file_path=None, data_path='~'):
-        """The main entry point for pyattck.
+        """
+        The main entry point for pyattck.
 
-        When instantiating an Attck object you can specify if you want the new subtechniques to be
-        nested underneath their parent techniques or not.
+        When instantiating an Attck object you can specify if you want the
+        new subtechniques to be nested underneath their parent techniques
+        or not.
 
-        Setting nested_subtechniques to False will result in all techniques accessible under the
-        techniques property. If using the default value of True, subtechniques will be accessible
-        underneath technique.subtechniques.
+        Setting nested_subtechniques to False will result in all techniques
+        accessible under the techniques property. If using the default value
+        of True, subtechniques will be accessible underneath
+        technique.subtechniques.
 
-        When instantiating an Attck object you can access either the Enterprise, PRE-ATT&CK, or
-        Mobile MITRE Frameworks.  Specify one of the following properties to access the frameworks
-        specific data:
+        When instantiating an Attck object you can access either the
+        Enterprise, PRE-ATT&CK, or Mobile MITRE Frameworks.  Specify
+        one of the following properties to access the frameworks specific
+        data:
 
             * enterprise
             * preattack
             * mobile
 
-        You can specify an alternate location of a local copy of the following objects:
+        You can specify an alternate location of a local copy of the
+        following objects:
 
-            1. config_file_path = Path to a yaml configuration file which contains two key value pairs
+            1. config_file_path = Path to a yaml configuration file
+                                  which contains two key value pairs
                 Example content:
 
                     data_path: /Users/username/pyattck
@@ -190,36 +194,41 @@ class Attck(object):
                         filename: preattack.json
                         url: https://raw.githubusercontent.com/mitre/cti/master/pre-attack/pre-attack.json
 
-            
-            2. data_path = The path to hold the external data locally on your system.  The default is your user home path.
+            2. data_path = The path to hold the external data locally on your system.
+                           The default is your user home path.
 
         Args:
-            config_file_path (str, optional): Path to a yaml configuration file which contains two key value pairs. Defaults to None.
-            data_path (str, optional): Path to store the external data locally on your system.  Defaults to current user path.
-            force (bool, optional): Force reset configuration file and paths.  Defaults to False.
+            config_file_path (str, optional): Path to a yaml configuration
+                                              file which contains two key value pairs.
+                                              Defaults to None.
+            data_path (str, optional): Path to store the external data locally on your
+                                       system.  Defaults to current user path.
+            force (bool, optional): Force reset configuration file and paths.
+                                    Defaults to False.
         """
         self.__nested_subtechniques = nested_subtechniques
         if config_file_path:
             Configuration.__CONFIG_FILE = config_file_path
-
         Configuration().set(data_path=data_path)
         self.__datasets = AttckDatasets()
 
     @property
     def enterprise(self):
-        """Retrieve objects from the Enterprise MITRE ATT&CK Framework and additional generated
-           data which provides additional context
+        """
+        Retrieve objects from the Enterprise MITRE ATT&CK Framework and
+        additional generated data which provides additional context
 
         Returns:
             Enterprise: Returns an Enterprise object
-        """        
+        """
         self.__load_data()
         from .enterprise.enterprise import Enterprise
         return Enterprise(self.__ENTERPRISE_ATTCK_JSON, nested_subtechniques=self.__nested_subtechniques)
 
     @property
     def preattack(self):
-        """Retrieve objects from the MITRE PRE-ATT&CK Framework
+        """
+        Retrieve objects from the MITRE PRE-ATT&CK Framework
 
         Returns:
             PreAttack: Returns an PreAttack object
@@ -230,7 +239,8 @@ class Attck(object):
 
     @property
     def mobile(self):
-        """Retrieve objects from the MITRE Mobile ATT&CK Framework
+        """
+        Retrieve objects from the MITRE Mobile ATT&CK Framework
 
         Returns:
             PreAttack: Returns an MobileAttack object
@@ -241,7 +251,8 @@ class Attck(object):
 
     def update(self, enterprise=False, preattack=False, mobile=False):
         """
-        Calling this method will force update / sync all datasets from external sources
+        Calling this method will force update / sync all datasets from
+        external sources
         """
         if preattack:
             self.__load_data(type='preattack', force=True)

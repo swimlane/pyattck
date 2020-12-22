@@ -80,8 +80,9 @@ def test_techniques_have_nested_subtechniques(attck_fixture_nested_subtechniques
         assert True
 
 def test_some_techniques_have_compliance_controls(attck_fixture):
-    """Some MITRE Enterprise ATT&CK Techniques should have compliance controls
-    
+    """
+    Some MITRE Enterprise ATT&CK Techniques should have compliance controls
+
     Args:
         attck_fixture ([type]): our default MITRE Enterprise ATT&CK JSON fixture
     """

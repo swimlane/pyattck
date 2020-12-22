@@ -1,20 +1,23 @@
 
 
 class AttckObject(object):
-    '''Parent class of all other Mitre ATT&CK based classes
+    """
+    Parent class of all other Mitre ATT&CK based classes
 
     This is a private class and should not be accessed directly
     
     Arguments:
-        AttckObject (dict) -- Takes the Mitre ATT&CK Json object as a kwargs values
-    '''
+        AttckObject (dict) -- Takes the Mitre ATT&CK Json object as
+                              a kwargs values
+    """
 
     _RELATIONSHIPS = None
     
     def __init__(self, **kwargs):
         """
-        Sets standard properties that are found in all child classes as well as provides standard methods used by inherited classes
-        
+        Sets standard properties that are found in all child classes as well as
+        provides standard methods used by inherited classes
+
         Arguments:
             kwargs (dict) -- Takes the Mitre ATT&CK Json object as a kwargs values
         """
@@ -50,8 +53,9 @@ class AttckObject(object):
 
     def set_relationships(self, attck_obj):
         """
-        Generates relationships within attck_obj based on a defined relationship from Mitre ATT&CK
-        
+        Generates relationships within attck_obj based on a defined relationship
+        from Mitre ATT&CK
+
         Args:
             attck_obj (dict): MITRE ATT&CK Json object
         """
@@ -65,18 +69,18 @@ class AttckObject(object):
                         if source_id not in relationship_obj:
                             relationship_obj[source_id] = []
                         relationship_obj[source_id].append(target_id)
-
                         if target_id not in relationship_obj:
                             relationship_obj[target_id] = []
                         relationship_obj[target_id].append(source_id)
             AttckObject._RELATIONSHIPS = relationship_obj
 
     def __set_alias(self, obj):
-        """Returns the Mitre ATT&CK Framework aliases
-        
+        """
+        Returns the Mitre ATT&CK Framework aliases
+
         Arguments:
             obj (dict) -- A Mitre ATT&CK Framework json object
-        
+
         Returns:
             (str) -- Returns the Mitre ATT&CK Framework aliases
         """
@@ -90,15 +94,17 @@ class AttckObject(object):
         return return_list
 
     def _set_attribute(self, obj, name):
-        """Parent class method to set attribute based on passed in object
+        """
+        Parent class method to set attribute based on passed in object
            and the name of the property
-        
+
         Arguments:
             obj (dict) -- Provided json objects are passed to this method
             name (str) -- The json property name to set attribute in child classes
-        
+
         Returns:
-            (str) -- Returns either the value of the attribute requested or returns 'null'
+            (str) -- Returns either the value of the attribute requested or
+                     returns 'null'
         """
         try:
             value = obj.get(name)
@@ -107,15 +113,17 @@ class AttckObject(object):
             return None
 
     def _set_list_items(self, obj, list_name):
-        """Private method used by child classes and normalizes list items
-        
+        """
+        Private method used by child classes and normalizes list items
+
         Args:
             obj (dict) -- Provided json objects are passed to this method
-            list_name (str) -- The json property name to set list items attribute in child classes
-        
+            list_name (str) -- The json property name to set list items
+                               attribute in child classes
+
         Returns:
             list: returns a list of values from the provided list_name property
-        """        
+        """
         item_value = []
         if list_name in obj:
             for item in obj[list_name]:
@@ -123,11 +131,12 @@ class AttckObject(object):
             return item_value
 
     def _set_id(self, obj):
-        """Returns the Mitre ATT&CK Framework external ID 
-        
+        """
+        Returns the Mitre ATT&CK Framework external ID 
+
         Arguments:
             obj (dict) -- A Mitre ATT&CK Framework json object
-        
+
         Returns:
             (str) -- Returns the Mitre ATT&CK Framework external ID
         """
@@ -136,13 +145,14 @@ class AttckObject(object):
                 if p.get('source_name') == 'mitre-attack':
                     return p.get('external_id')
         return 'No ID Defined'
-        
+
     def _set_wiki(self, obj):
-        """Returns the Mitre ATT&CK Framework Wiki URL
-        
+        """
+        Returns the Mitre ATT&CK Framework Wiki URL
+
         Arguments:
             obj (dict) -- A Mitre ATT&CK Framework json object
-        
+
         Returns:
             (str) -- Returns the Mitre ATT&CK Framework Wiki URL
         """
@@ -152,17 +162,20 @@ class AttckObject(object):
                     return p.get('url')
 
     def _set_reference(self, obj):
-        """Returns a list of external references from the provided Mitre ATT&CK Framework json object
-        
+        """
+        Returns a list of external references from the provided
+        Mitre ATT&CK Framework json object
+
         Arguments:
             obj (dict) -- A Mitre ATT&CK Framework json object
-        
+
         Returns:
             (dict) -- Returns a dict containing the following key/value pairs
                 external_id (str) -- The Mitre ATT&CK Framework external ID
                 url (str)         -- The Mitre ATT&CK Framework URL
                 source_name (str) -- The Mitre ATT&CK Framework source name
-                description (str) -- The Mitre ATT&CK Framework description or None if it does not exist
+                description (str) -- The Mitre ATT&CK Framework description
+                                     or None if it does not exist
         """
         return_list = []
         if obj.get('external_references'):

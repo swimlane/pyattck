@@ -7,33 +7,43 @@ from .tactic import MobileAttckTactic
 
 
 class MobileAttck(object):
+    """
+    This class creates an interface to all data points in the
+    MITRE Mobile ATT&CK framework.
 
-    '''
-    This class creates an interface to all data points in the MITRE Mobile ATT&CK framework.
-
-    This interface enables you to retrieve all properties within each item in the MITRE Mobile ATT&CK Framework.
+    This interface enables you to retrieve all properties within
+    each item in the MITRE Mobile ATT&CK Framework.
 
     The following categorical items can be accessed using this class:
 
         1. Tactics (Tactics are the phases defined by MITRE Mobile ATT&CK)
-        2. Techniques (Techniques are the individual actions which can accomplish a tactic)
-        3. Mitigations (Mitigations are recommendations to prevent or protect against a technique)
-        4. Actors (Actors or Groups are identified malicious actors/groups which have been identified and documented by MITRE & third-parties)
+        2. Techniques (Techniques are the individual actions which can accomplish
+           a tactic)
+        3. Mitigations (Mitigations are recommendations to prevent or protect against
+           a technique)
+        4. Actors (Actors or Groups are identified malicious actors/groups
+           which have been identified and documented by MITRE & third-parties)
         5. Tools (Tools are software used to perform techniques)
-        6. Malwares (Malwares are specific pieces of malware used by actors (or in general) to accomplish a technique)
+        6. Malwares (Malwares are specific pieces of malware used by actors
+           (or in general) to accomplish a technique)
 
-    Additionally, as of pyattck 2.0.0 you can now access additional datasets related to a technique.
-    These datasets are [documented here](https://github.com/swimlane/pyattck/blob/master/generateattcks/README.md).
+    Additionally, as of pyattck 2.0.0 you can now access additional datasets related
+    to a technique. These datasets are
+    [documented here](https://github.com/swimlane/pyattck/blob/master/generateattcks/README.md).
 
     Each technique enables you to access the following properties on the object:
 
         1. command_list - A list of commands associated with a technique
-        2. commands = A list of dictionary objects containing source, command, and provided name associated with a technique
-        3. queries = A list of dictionary objects containing product, query, and name associated with a technique
+        2. commands = A list of dictionary objects containing source, command, and
+                      provided name associated with a technique
+        3. queries = A list of dictionary objects containing product, query, and name
+                     associated with a technique
         4. datasets = A list of raw datasets associated with a technique
-        5. possible_detections = A list of raw datasets containing possible detection methods for a technique
+        5. possible_detections = A list of raw datasets containing possible detection
+                                 methods for a technique
 
-    Each Actor object (if available) enables you to access the following properties on the object:
+    Each Actor object (if available) enables you to access the following properties on
+    the object:
 
         1. country
         2. operations
@@ -43,10 +53,10 @@ class MobileAttck(object):
         6. additional_comments
         7. external_description
 
-    You can retrieve the entire dataset using the `external_dataset` property on a `actor` object.
+    You can retrieve the entire dataset using the `external_dataset` property on
+    a `actor` object. pyattck also enables you to retrieve or generate logos for
+    the actor or group using the following properties:
 
-    pyattck also enables you to retrieve or generate logos for the actor or group using the following properties:
-    
         - ascii_logo - Generated ASCII logo based on the actor or groups name
 
     Each Tools object (if available) enables you to access the following properties on the object:
@@ -56,9 +66,10 @@ class MobileAttck(object):
         3. additional_comments
         4. family
 
-    You can retrieve the entire dataset using the `external_dataset` property on a `tool` object.
-
-    You can also access external data properties from the C2 Matrix project. The following properties are generated using C2 Matrix external data:
+    You can retrieve the entire dataset using the `external_dataset` property
+    on a `tool` object. You can also access external data properties from the
+    C2 Matrix project. The following properties are generated using C2 Matrix
+    external data:
 
         - HTTP
         - Implementation
@@ -110,14 +121,15 @@ class MobileAttck(object):
 
     You can retrieve the entire dataset using the `c2_data` property.
 
-
     Example:
-        Once an Attck object is instantiated, you can access each object type as a list of objects (e.g. techniques, tactics, actors, etc.)
+        Once an Attck object is instantiated, you can access each object type as a
+        list of objects (e.g. techniques, tactics, actors, etc.)
 
-        You can iterate over each object list and access specific properties and relationship properties of each.
+        You can iterate over each object list and access specific properties and
+        relationship properties of each.
     
         The following relationship properties are accessible:
-        
+
         1. Actors
             1. Tools used by the Actor or Group
             2. Malware used by the Actor or Group
@@ -136,11 +148,11 @@ class MobileAttck(object):
         6. Tools
             1. Techniques that the specified tool is used within
             2. Actor or Group(s) using a specified tool
-    
+
         1. To iterate over a list, do the following:
 
         .. code-block:: python
-            
+
             from pyattck import Attck
 
             attck = Attck()
@@ -163,7 +175,7 @@ class MobileAttck(object):
             from pyattck import Attck
 
             attck = Attck()
-            
+
             for technique in attck.mobile.techniques:
                 print(technique.id)
                 print(technique.name)
@@ -186,33 +198,36 @@ class MobileAttck(object):
                     print(technique.name)
                     print(technique.description)
                     # etc.
-    '''
+    """
 
     __ENTERPRISE_GENERATED_DATA_JSON = None
-    
     __tactics = None
     __techniques = None
     __mitigations = None
     __actors = None
     __tools = None
     __malwares = None
-    
+
     def __init__(self, mobile_attck_json):
         """
-        Sets standard properties that are found in all child classes as well as provides standard methods used by inherited classes
+        Sets standard properties that are found in all child classes as well as
+        provides standard methods used by inherited classes
 
         Arguments:
-            mobile_attck_json (json) - Takes the MITRE Mobile ATT&CK Json object as argument
+            mobile_attck_json (json) - Takes the MITRE Mobile ATT&CK Json object
+                                       as argument
 
         Returns:
-            [MobileAttck]: Returns a Attck object that contains all data from the MITRE Mobile ATT&CK Framework
+            [MobileAttck]: Returns a Attck object that contains all data from the
+                           MITRE Mobile ATT&CK Framework
         """
         self.__mobile_attck = mobile_attck_json
 
     @property
     def actors(self):
-        """Creates MobileAttckActor objects
-        
+        """
+        Creates MobileAttckActor objects
+
         Returns:
             (MobileAttckActor) -- (Returns a list of MobileAttckActor objects)
         """
@@ -225,8 +240,9 @@ class MobileAttck(object):
 
     @property
     def tactics(self):
-        """Creates MobileAttckTactic objects
-        
+        """
+        Creates MobileAttckTactic objects
+
         Returns:
             (MobileAttckTactic) -- (Returns a list of MobileAttckTactic objects)
         """
@@ -239,8 +255,9 @@ class MobileAttck(object):
 
     @property
     def mitigations(self):
-        """Creates MobileAttckMitigation objects
-        
+        """
+        Creates MobileAttckMitigation objects
+
         Returns:
             (MobileAttckMitigation) -- (Returns a list of MobileAttckMitigation objects)
         """
@@ -253,8 +270,9 @@ class MobileAttck(object):
 
     @property
     def tools(self):
-        """Creates MobileAttckTools objects
-        
+        """
+        Creates MobileAttckTools objects
+
         Returns:
             (MobileAttckTools) -- Returns a list of MobileAttckTools objects
         """
@@ -267,8 +285,9 @@ class MobileAttck(object):
 
     @property
     def malwares(self):
-        """Creates MobileAttckMalware objects
-        
+        """
+        Creates MobileAttckMalware objects
+
         Returns:
             (MobileAttckMalware) -- Returns a list of MobileAttckMalware objects
         """
@@ -281,8 +300,9 @@ class MobileAttck(object):
 
     @property
     def techniques(self):
-        """Creates MobileAttckTechnique objects
-        
+        """
+        Creates MobileAttckTechnique objects
+
         Returns:
             (MobileAttckTechnique) -- Returns a list of MobileAttckTechnique objects
         """
@@ -292,4 +312,3 @@ class MobileAttck(object):
                 if technique['type'] == 'attack-pattern':
                     self.__techniques.append(MobileAttckTechnique(mobile_attck_obj=self.__mobile_attck, **technique))
         return self.__techniques
-    

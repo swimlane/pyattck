@@ -3,7 +3,6 @@ import os
 
 
 class Configuration(object):
-
     """
     This class will set and get a config.yml file which contains the
     location of data json files used by pyattck.
@@ -44,11 +43,13 @@ class Configuration(object):
     }
 
     def get(self):
-        """Calling the get method will return configuration settings within the config.yml file
+        """
+        Calling the get method will return configuration settings within
+        the config.yml file
 
         Returns:
             dict: A dictionary containing configuration settings
-        """        
+        """
         if os.path.isfile(self.__CONFIG_FILE):
             with open(self.__CONFIG_FILE) as f:
                 config = yaml.load(f, Loader=yaml.FullLoader)
@@ -62,12 +63,14 @@ class Configuration(object):
             return self.get()
 
     def set(self, data_path=None):
-        """This method will set pyattcks configuration file settings.
+        """
+        This method will set pyattcks configuration file settings.
 
         If no config.yml is found, it will generate one with default settings
 
         Args:
-            data_path (str, optional): Path to store all external data. Defaults to ~/pyattck.
+            data_path (str, optional): Path to store all external data.
+                                       Defaults to ~/pyattck.
         """
         if data_path and data_path != '~':
             self.__DATASETS_MAP['data_path'] = os.path.abspath(data_path)
