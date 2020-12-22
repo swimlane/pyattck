@@ -2,8 +2,9 @@ import pytest
 
 
 def test_mobile_attck_techniques_have_tactics(attck_fixture):
-    """All MITRE Mobile ATT&CK Techniques should have tactics
-    
+    """
+    All MITRE Mobile ATT&CK Techniques should have tactics
+
     Args:
         attck_fixture ([type]): our default MITRE Mobile ATT&CK JSON fixture
     """
@@ -12,8 +13,9 @@ def test_mobile_attck_techniques_have_tactics(attck_fixture):
             assert getattr(technique,'tactics')
 
 def test_mobile_attck_techniques_have_actors(attck_fixture):
-    """All MITRE Mobile ATT&CK Techniques should have tactics
-    
+    """
+    All MITRE Mobile ATT&CK Techniques should have tactics
+
     Args:
         attck_fixture ([type]): our default MITRE Mobile ATT&CK JSON fixture
     """

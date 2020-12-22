@@ -2,8 +2,9 @@ import pytest
 
 
 def test_preattck_techniques_have_tactics(attck_fixture):
-    """All MITRE PRE-ATT&CK Techniques should have tactics
-    
+    """
+    All MITRE PRE-ATT&CK Techniques should have tactics
+
     Args:
         attck_fixture ([type]): our default MITRE PRE-ATT&CK JSON fixture
     """
@@ -12,8 +13,9 @@ def test_preattck_techniques_have_tactics(attck_fixture):
             assert getattr(technique,'tactics')
 
 def test_preattck_techniques_have_actors(attck_fixture):
-    """All MITRE PRE-ATT&CK Techniques should have Actors
-    
+    """
+    All MITRE PRE-ATT&CK Techniques should have Actors
+
     Args:
         attck_fixture ([type]): our default MITRE PRE-ATT&CK JSON fixture
     """
