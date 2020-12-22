@@ -38,7 +38,7 @@ class Configuration(object):
             'filename': 'enterprise_attck_dataset.json',
         },
         'nist_data': {
-            'url': 'https://raw.githubusercontent.com/swimlane/pyattck/master/attck_to_nist_controls_data.json',
+            'url': 'https://raw.githubusercontent.com/swimlane/pyattck/master/attck_to_nist_controls.json',
             'filename': 'enterprise_attck_nist_data.json',
         }
     }
