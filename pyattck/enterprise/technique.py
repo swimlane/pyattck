@@ -4,6 +4,7 @@ from ..utils.exceptions import GeneratedDatasetException
 
 
 class AttckTechnique(AttckObject):
+
     """
     A child class of AttckObject
 
@@ -161,7 +162,7 @@ class AttckTechnique(AttckObject):
     def subtechniques(self):
         """
         Subtechniques are by default nested under their parent technique.
-        To flatten all techniques onto the same level provide 
+        To flatten all techniques onto the same level provide
         nested_subtechniques=False when instantiating the Attck object.
 
         Returns:

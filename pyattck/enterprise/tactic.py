@@ -2,6 +2,7 @@ from .attckobject import AttckObject
 
 
 class AttckTactic(AttckObject):
+
     """
     A child class of AttckObject
 

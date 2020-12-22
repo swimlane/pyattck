@@ -7,6 +7,7 @@ ASCII_CHARS = ['.',',',':',';','+','*','?','%','S','#','@']
 ASCII_CHARS = ASCII_CHARS[::-1]
 
 class Logo(object):
+
     """
     Generate or retrieve a logo for a given MITRE ATT&CK Actor or Group name
     

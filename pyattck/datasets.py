@@ -6,6 +6,7 @@ from .configuration import Configuration
 
 
 class AttckDatasets(object):
+
     """
     AttckDatasets is used to download, save or retrieve datasets for pyattck.
 

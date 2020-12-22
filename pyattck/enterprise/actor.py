@@ -6,6 +6,7 @@ from ..datasets import AttckDatasets
 
 
 class AttckActor(AttckObject):
+
     """
     A child class of AttckObject
 

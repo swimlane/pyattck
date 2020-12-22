@@ -4,6 +4,7 @@ from ..utils.exceptions import GeneratedDatasetException
 
 
 class AttckTools(AttckObject):
+
     """
     A child class of AttckObject
 

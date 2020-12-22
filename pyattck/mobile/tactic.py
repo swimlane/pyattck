@@ -2,6 +2,7 @@ from .mobileattckobject import MobileAttckObject
 
 
 class MobileAttckTactic(MobileAttckObject):
+
     """
     A child class of MobileAttckObject
 

@@ -2,6 +2,7 @@ from .preattckobject import PreAttckObject
 
 
 class PreAttckTechnique(PreAttckObject):
+
     """
     A child class of AttckObject
 

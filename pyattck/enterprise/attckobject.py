@@ -1,6 +1,7 @@
 
 
 class AttckObject(object):
+
     """
     Parent class of all other Mitre ATT&CK based classes
 
@@ -32,6 +33,13 @@ class AttckObject(object):
         self.type = self._set_attribute(kwargs, 'type')
 
     def __str__(self):
+        """
+        Returns dictionary string of all properties and
+        values for the instance
+
+        Returns:
+            (str): All properties and values of instance
+        """
         return_dict = {}
         for key,val in self.__dict__.items():
             if not key.startswith('_'):
@@ -132,7 +140,7 @@ class AttckObject(object):
 
     def _set_id(self, obj):
         """
-        Returns the Mitre ATT&CK Framework external ID 
+        Returns the Mitre ATT&CK Framework external ID
 
         Arguments:
             obj (dict) -- A Mitre ATT&CK Framework json object

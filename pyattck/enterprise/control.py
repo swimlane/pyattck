@@ -1,4 +1,5 @@
 class AttckControl:
+
     """
     An object that represents a compliance control type.
     Currently this object is only utilized by NIST 800-53 controls
@@ -53,6 +54,13 @@ class AttckControl:
                 setattr(self, prop_name, val)
 
     def __str__(self):
+        """
+        Returns dictionary string of all properties and
+        values for the instance
+
+        Returns:
+            (str): All properties and values of instance
+        """
         return_dict = {}
         for key,val in self.__dict__.items():
             if not key.startswith('_'):

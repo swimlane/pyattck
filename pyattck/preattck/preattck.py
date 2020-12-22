@@ -4,6 +4,7 @@ from .tactic import PreAttckTactic
 
 
 class PreAttck(object):
+
     """
     This class creates an interface to all data points in the
     MITRE PRE-ATT&CK framework.

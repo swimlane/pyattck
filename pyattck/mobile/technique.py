@@ -4,6 +4,7 @@ from ..utils.exceptions import GeneratedDatasetException
 
 
 class MobileAttckTechnique(MobileAttckObject):
+
     """
     A child class of MobileAttckObject
 

@@ -6,6 +6,7 @@ from ..datasets import AttckDatasets
 
 
 class MobileAttckActor(MobileAttckObject):
+
     """
     A child class of MobileAttckObject
 

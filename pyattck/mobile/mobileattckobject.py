@@ -1,6 +1,7 @@
 
 
 class MobileAttckObject(object):
+
     """
     Parent class of all other MITRE Mobile ATT&CK based classes
 

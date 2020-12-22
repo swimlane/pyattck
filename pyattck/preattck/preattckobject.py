@@ -1,4 +1,5 @@
 class PreAttckObject(object):
+
     """
     Parent class of all other MITRE PRE-ATT&CK based classes
 
@@ -113,7 +114,7 @@ class PreAttckObject(object):
 
     def _set_id(self, obj):
         """
-        Returns the MITRE PRE-ATT&CK Framework external ID 
+        Returns the MITRE PRE-ATT&CK Framework external ID
 
         Arguments:
             obj (dict) -- A MITRE PRE-ATT&CK Framework json object

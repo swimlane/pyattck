@@ -7,6 +7,7 @@ from .tactic import AttckTactic
 
 
 class Enterprise(object):
+
     """
     This class creates an interface to all data points in the
     MITRE ATT&CK Enterprise framework.
