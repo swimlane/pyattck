@@ -45,7 +45,7 @@ class AttckDatasets(object):
                 return data
 
     def get_data(self, data_type, force=False):
-        """Downloads, saves, or retrieves MITRE ATT&CK Framework JSON files
+        """Downloads, saves, or retrieves JSON data
 
         Args:
             type (str): Will set the type of data to download/retrieve. Options are enterprise, preattack, mobile, generated_data, nist_data
