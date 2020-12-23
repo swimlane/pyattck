@@ -8,9 +8,8 @@ ASCII_CHARS = ASCII_CHARS[::-1]
 
 class Logo(object):
 
-    """
-    Generate or retrieve a logo for a given MITRE ATT&CK Actor or Group name
-    
+    """Generate or retrieve a logo for a given MITRE ATT&CK Actor or Group name
+
     Returns:
         str: The path to a image logo or string containing a generated ASCII text
              based on the Actor or Group name

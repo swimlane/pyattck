@@ -2,8 +2,7 @@
 
 class AttckObject(object):
 
-    """
-    Parent class of all other Mitre ATT&CK based classes
+    """Parent class of all other Mitre ATT&CK based classes
 
     This is a private class and should not be accessed directly
     

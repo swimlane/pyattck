@@ -5,7 +5,8 @@ from ..utils.exceptions import GeneratedDatasetException
 
 class MobileAttckTools(MobileAttckObject):
 
-    """
+    """Mobile MITRE ATT&CK Tool object.
+
     A child class of MobileAttckObject
 
     Creates objects which have been categorized as tools or software

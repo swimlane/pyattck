@@ -3,7 +3,8 @@ from .mobileattckobject import MobileAttckObject
 
 class MobileAttckMitigation(MobileAttckObject):
 
-    """
+    """Mobile MITRE ATT&CK Mitigation object.
+
     A child class of MobileAttckObject
 
     Creates objects which have been categorized as potential mitigations

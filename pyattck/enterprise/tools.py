@@ -5,7 +5,8 @@ from ..utils.exceptions import GeneratedDatasetException
 
 class AttckTools(AttckObject):
 
-    """
+    """Enterprise MITRE ATT&CK Tool object.
+
     A child class of AttckObject
 
     Creates objects which have been categorized as tools or software which have

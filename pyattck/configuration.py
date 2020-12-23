@@ -4,7 +4,8 @@ import os
 
 class Configuration(object):
 
-    """
+    """Sets and gets configuration details.
+
     This class will set and get a config.yml file which contains the
     location of data json files used by pyattck.
 

@@ -7,7 +7,8 @@ from ..datasets import AttckDatasets
 
 class MobileAttckActor(MobileAttckObject):
 
-    """
+    """Mobile MITRE ATT&CK Actor object.
+
     A child class of MobileAttckObject
 
     Creates objects that are categorized as MITRE Mobile ATT&CK

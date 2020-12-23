@@ -1,7 +1,7 @@
 class AttckControl:
 
-    """
-    An object that represents a compliance control type.
+    """An object that represents a compliance control type.
+
     Currently this object is only utilized by NIST 800-53 controls
     but will be expanded in the future.
 
@@ -91,6 +91,6 @@ class AttckControl:
             (str) -- Returns the compliance control (external) ID
         """
         for reference in external_references:
-            if reference.get('source_name') == 'NIST 800-53 Revision 4':
+            if 'NIST' in reference.get('source_name'):
                 return reference.get('external_id')
         return 'No ID Defined'

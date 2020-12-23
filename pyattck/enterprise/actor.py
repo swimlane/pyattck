@@ -7,7 +7,8 @@ from ..datasets import AttckDatasets
 
 class AttckActor(AttckObject):
 
-    """
+    """Enterprise MITRE ATT&CK Actor object
+
     A child class of AttckObject
 
     Creates objects that are categorized as Mitre ATT&CK Enterprise

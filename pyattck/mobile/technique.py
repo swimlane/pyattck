@@ -5,7 +5,8 @@ from ..utils.exceptions import GeneratedDatasetException
 
 class MobileAttckTechnique(MobileAttckObject):
 
-    """
+    """Mobile MITRE ATT&CK Technique object.
+
     A child class of MobileAttckObject
 
     Creates objects which have been categorized as a technique used by attackers

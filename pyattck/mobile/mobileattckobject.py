@@ -2,7 +2,8 @@
 
 class MobileAttckObject(object):
 
-    """
+    """Mobile MITRE ATT&CK Parent object.
+
     Parent class of all other MITRE Mobile ATT&CK based classes
 
     This is a private class and should not be accessed directly

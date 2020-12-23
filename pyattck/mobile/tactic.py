@@ -3,7 +3,8 @@ from .mobileattckobject import MobileAttckObject
 
 class MobileAttckTactic(MobileAttckObject):
 
-    """
+    """Mobile MITRE ATT&CK Tactic object.
+
     A child class of MobileAttckObject
 
     Creates objects that are categorized as MITRE Mobile ATT&CK Tactics

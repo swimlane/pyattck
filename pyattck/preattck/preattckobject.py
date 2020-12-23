@@ -1,6 +1,7 @@
 class PreAttckObject(object):
 
-    """
+    """MITRE PRE-ATT&CK parent object.
+
     Parent class of all other MITRE PRE-ATT&CK based classes
 
     This is a private class and should not be accessed directly

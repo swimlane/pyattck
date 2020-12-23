@@ -3,7 +3,8 @@ from .attckobject import AttckObject
 
 class AttckMitigation(AttckObject):
 
-    """
+    """Enterprise MITRE ATT&CK Mitigation object.
+
     A child class of AttckObject
 
     Creates objects which have been categorized as potential mitigations

@@ -5,7 +5,8 @@ from ..utils.exceptions import GeneratedDatasetException
 
 class AttckTechnique(AttckObject):
 
-    """
+    """Enterprise MITRE ATT&CK Technique object.
+
     A child class of AttckObject
 
     Creates objects which have been categorized as a technique used by attackers

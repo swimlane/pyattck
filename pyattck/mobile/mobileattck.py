@@ -8,7 +8,8 @@ from .tactic import MobileAttckTactic
 
 class MobileAttck(object):
 
-    """
+    """Mobile MITRE ATT&CK interface.
+
     This class creates an interface to all data points in the
     MITRE Mobile ATT&CK framework.
 

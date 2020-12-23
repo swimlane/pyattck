@@ -3,7 +3,8 @@ from .attckobject import AttckObject
 
 class AttckTactic(AttckObject):
 
-    """
+    """Enterprise MITRE ATT&CK Tactic object.
+
     A child class of AttckObject
 
     Creates objects that are categorized as Mitre ATT&CK Tactics

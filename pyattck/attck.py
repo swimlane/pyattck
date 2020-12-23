@@ -4,8 +4,7 @@ from .datasets import AttckDatasets
 
 class Attck(object):
 
-    """
-    This class creates an interface to all MITRE ATT&CK frameworks.
+    """Interface to all MITRE ATT&CK frameworks.
 
     Currently, this class enables access to the Enterprise & PRE-ATT&CK
     frameworks with others coming soon.  To acccess each framework, use

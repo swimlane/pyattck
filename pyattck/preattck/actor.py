@@ -6,7 +6,8 @@ from ..datasets import AttckDatasets
 
 class PreAttckActor(PreAttckObject):
 
-    """
+    """MITRE PRE-ATT&CK Actor object.
+
     A child class of PreAttckObject
 
     Creates objects that are categorized as MITRE PRE-ATT&CK Actors or

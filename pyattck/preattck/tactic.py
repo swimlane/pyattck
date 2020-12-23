@@ -3,7 +3,8 @@ from .preattckobject import PreAttckObject
 
 class PreAttckTactic(PreAttckObject):
 
-    """
+    """MITRE PRE-ATT&CK Tactic object.
+
     A child class of PreAttckObject
 
     Creates objects that are categorized as MITRE PRE-ATT&CK Tactics
