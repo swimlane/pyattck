@@ -247,10 +247,10 @@ class AttckTools(AttckObject):
             if 'type' in item:
                 if item['type'] == 'attack-pattern':
                     item_dict[item['id']] = item
-        
-        for item in self._RELATIONSHIPS[self.stix]:
-            if item in item_dict:
-                return_list.append(AttckTechnique(**item_dict[item]))
+        if self._RELATIONSHIPS.get(self.stix):
+            for item in self._RELATIONSHIPS[self.stix]:
+                if item in item_dict:
+                    return_list.append(AttckTechnique(attck_obj=self.__attck_obj, **item_dict[item]))
         return return_list
 
     @property
@@ -269,7 +269,8 @@ class AttckTools(AttckObject):
             if 'type' in item:
                 if item['type'] == 'intrusion-set':
                     item_dict[item['id']] = item
-        for item in self._RELATIONSHIPS[self.stix]:
-            if item in item_dict:
-                return_list.append(AttckActor(**item_dict[item]))
+        if self._RELATIONSHIPS.get(self.stix):
+            for item in self._RELATIONSHIPS[self.stix]:
+                if item in item_dict:
+                    return_list.append(AttckActor(attck_obj=self.__attck_obj, **item_dict[item]))
         return return_list

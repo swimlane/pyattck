@@ -111,7 +111,7 @@ class PreAttckTechnique(PreAttckObject):
             if 'x-mitre-tactic' in item['type']:
                 for tact in self._tactic:
                     if str(tact).lower() == str(item['x_mitre_shortname']).lower():
-                        tactic_list.append(PreAttckTactic(**item))
+                        tactic_list.append(PreAttckTactic(preattck_obj=self.__preattck_obj, **item))
         return tactic_list
 
     @tactics.setter
@@ -154,7 +154,7 @@ class PreAttckTechnique(PreAttckObject):
         try:
             for item in self._RELATIONSHIPS[self.stix]:
                 if item in item_dict:
-                    return_list.append(PreAttckActor(**item_dict[item]))
+                    return_list.append(PreAttckActor(preattck_obj=self.__preattck_obj, **item_dict[item]))
         except:
             pass
         return return_list

@@ -131,7 +131,7 @@ class MobileAttckTechnique(MobileAttckObject):
             if 'x-mitre-tactic' in item['type']:
                 for tact in self._tactic:
                     if str(tact).lower() == str(item['x_mitre_shortname']).lower():
-                        tactic_list.append(MobileAttckTactic(**item))
+                        tactic_list.append(MobileAttckTactic(mobile_attck_obj=self.__mobile_attck_obj, **item))
         return tactic_list
 
     @tactics.setter
@@ -175,7 +175,7 @@ class MobileAttckTechnique(MobileAttckObject):
         try:
             for item in self._RELATIONSHIPS[self.stix]:
                 if item in item_dict:
-                    return_list.append(MobileAttckMitigation(**item_dict[item]))
+                    return_list.append(MobileAttckMitigation(mobile_attck_obj=self.__mobile_attck_obj, **item_dict[item]))
         except:
             pass
         return return_list 
@@ -200,7 +200,7 @@ class MobileAttckTechnique(MobileAttckObject):
         try:
             for item in self._RELATIONSHIPS[self.stix]:
                 if item in item_dict:
-                    return_list.append(MobileAttckActor(**item_dict[item]))
+                    return_list.append(MobileAttckActor(mobile_attck_obj=self.__mobile_attck_obj, **item_dict[item]))
         except:
             pass
         return return_list

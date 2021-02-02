@@ -207,7 +207,7 @@ class AttckTechnique(AttckObject):
             if 'x-mitre-tactic' in item['type']:
                 for tact in self._tactic:
                     if str(tact).lower() == str(item['x_mitre_shortname']).lower():
-                        tactic_list.append(AttckTactic(**item))
+                        tactic_list.append(AttckTactic(attck_obj=self.__attck_obj, **item))
         return tactic_list
 
     @tactics.setter
@@ -246,12 +246,10 @@ class AttckTechnique(AttckObject):
             if 'type' in item:
                 if item['type'] == 'course-of-action':
                     item_dict[item['id']] = item
-        try:
+        if self._RELATIONSHIPS.get(self.stix):
             for item in self._RELATIONSHIPS[self.stix]:
                 if item in item_dict:
-                    return_list.append(AttckMitigation(**item_dict[item]))
-        except:
-            pass
+                    return_list.append(AttckMitigation(attck_obj=self.__attck_obj, **item_dict[item]))
         return return_list 
 
     @property
@@ -270,10 +268,8 @@ class AttckTechnique(AttckObject):
             if 'type' in item:
                 if item['type'] == 'intrusion-set':
                     item_dict[item['id']] = item
-        try:
+        if self._RELATIONSHIPS.get(self.stix):
             for item in self._RELATIONSHIPS[self.stix]:
                 if item in item_dict:
-                    return_list.append(AttckActor(**item_dict[item]))
-        except:
-            pass
+                    return_list.append(AttckActor(attck_obj=self.__attck_obj, **item_dict[item]))
         return return_list

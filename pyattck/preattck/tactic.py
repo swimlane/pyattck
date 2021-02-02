@@ -89,5 +89,5 @@ class PreAttckTactic(PreAttckObject):
             if 'kill_chain_phases' in item:
                 for prop in item['kill_chain_phases']:
                     if str(prop['phase_name']).lower() == str(self.short_name).lower():
-                        technique_list.append(PreAttckTechnique(**item))
+                        technique_list.append(PreAttckTechnique(preattck_obj=self.__preattck_obj, **item))
         return technique_list

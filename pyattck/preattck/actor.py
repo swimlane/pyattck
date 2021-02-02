@@ -217,5 +217,5 @@ class PreAttckActor(PreAttckObject):
                     item_dict[item['id']] = item
         for item in self._RELATIONSHIPS[self.stix]:
             if item in item_dict:
-                return_list.append(PreAttckTechnique(**item_dict[item]))
+                return_list.append(PreAttckTechnique(preattck_obj=self.__preattck_obj, **item_dict[item]))
         return return_list

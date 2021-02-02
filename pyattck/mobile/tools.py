@@ -246,7 +246,7 @@ class MobileAttckTools(MobileAttckObject):
                     item_dict[item['id']] = item
         for item in self._RELATIONSHIPS[self.stix]:
             if item in item_dict:
-                return_list.append(MobileAttckTechnique(**item_dict[item]))
+                return_list.append(MobileAttckTechnique(mobile_attck_obj=self.__mobile_attck_obj, **item_dict[item]))
         return return_list
 
     @property
@@ -267,5 +267,5 @@ class MobileAttckTools(MobileAttckObject):
                     item_dict[item['id']] = item
         for item in self._RELATIONSHIPS[self.stix]:
             if item in item_dict:
-                return_list.append(MobileAttckActor(**item_dict[item]))
+                return_list.append(MobileAttckActor(mobile_attck_obj=self.__mobile_attck_obj, **item_dict[item]))
         return return_list

@@ -89,5 +89,5 @@ class MobileAttckTactic(MobileAttckObject):
             if 'kill_chain_phases' in item:
                 for prop in item['kill_chain_phases']:
                     if str(prop['phase_name']).lower() == str(self.short_name).lower():
-                        technique_list.append(MobileAttckTechnique(**item))
+                        technique_list.append(MobileAttckTechnique(mobile_attck_obj=self.__mobile_attck_obj, **item))
         return technique_list

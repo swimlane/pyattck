@@ -98,5 +98,5 @@ class AttckTactic(AttckObject):
             if 'kill_chain_phases' in item:
                 for prop in item['kill_chain_phases']:
                     if str(prop['phase_name']).lower() == str(self.short_name).lower():
-                        technique_list.append(AttckTechnique(**item))
+                        technique_list.append(AttckTechnique(attck_obj=self.__attck_obj, **item))
         return technique_list

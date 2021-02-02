@@ -213,10 +213,9 @@ class MobileAttckActor(MobileAttckObject):
             if 'type' in item:
                 if item['type'] == 'malware':
                     item_dict[item['id']] = item
-        
         for item in self._RELATIONSHIPS[self.stix]:
             if item in item_dict:
-                return_list.append(MobileAttckMalware(**item_dict[item]))
+                return_list.append(MobileAttckMalware(mobile_attck_obj=self.__mobile_attck_obj, **item_dict[item]))
         return return_list
 
     @property
@@ -236,10 +235,9 @@ class MobileAttckActor(MobileAttckObject):
             if 'type' in item:
                 if item['type'] == 'tool':
                     item_dict[item['id']] = item
-        
         for item in self._RELATIONSHIPS[self.stix]:
             if item in item_dict:
-                return_list.append(MobileAttckTools(**item_dict[item]))
+                return_list.append(MobileAttckTools(mobile_attck_obj=self.__mobile_attck_obj, **item_dict[item]))
         return return_list
 
     @property
@@ -258,8 +256,7 @@ class MobileAttckActor(MobileAttckObject):
             if 'type' in item:
                 if item['type'] == 'attack-pattern':
                     item_dict[item['id']] = item
-        
         for item in self._RELATIONSHIPS[self.stix]:
             if item in item_dict:
-                return_list.append(MobileAttckTechnique(**item_dict[item]))
+                return_list.append(MobileAttckTechnique(mobile_attck_obj=self.__mobile_attck_obj, **item_dict[item]))
         return return_list
