@@ -4,31 +4,37 @@ from ..utils.exceptions import GeneratedDatasetException
 
 
 class AttckTechnique(AttckObject):
-    '''A child class of AttckObject
-    
+
+    """Enterprise MITRE ATT&CK Technique object.
+
+    A child class of AttckObject
+
     Creates objects which have been categorized as a technique used by attackers
-    
+
     Each technique enables you to access the following properties on the object:
 
         1. command_list - A list of commands associated with a technique
-        2. commands = A list of dictionary objects containing source, command, and provided name associated with a technique
-        3. queries = A list of dictionary objects containing product, query, and name associated with a technique
+        2. commands = A list of dictionary objects containing source, command,
+                      and provided name associated with a technique
+        3. queries = A list of dictionary objects containing product, query,
+                     and name associated with a technique
         4. datasets = A list of raw datasets associated with a technique
-        5. possible_detections = A list of raw datasets containing possible detection methods for a technique
-
+        5. possible_detections = A list of raw datasets containing possible
+                                 detection methods for a technique
 
     Example:
-        You can iterate over an `techniques` list and access specific properties and relationship properties.
+        You can iterate over an `techniques` list and access specific
+        properties and relationship properties.
 
         The following relationship properties are accessible:
                 1. tactics
                 2. mitigations
                 3. actors
-        
+
             1. To iterate over an `techniques` list, do the following:
 
             .. code-block:: python
-               
+
                from pyattck import Attck
 
                attck = Attck()
@@ -60,26 +66,45 @@ class AttckTechnique(AttckObject):
                        print(malware.description)
                        # etc.
 
+                   # to get a count of controls for a technique do the following
+                   print(len(technique.controls))
+
+                   # below will print each controls properties & values
+                   for control in technique.controls:
+                       print(control.__dict__)
+
+                   # below will print the id, name and description of a control
+                   for control in technique.controls:
+                       print(control.id)
+                       print(control.name)
+                       print(control.description)
+
     Arguments:
         attck_obj (json) -- Takes the raw MITRE ATT&CK Json object
         AttckObject (dict) -- Takes the MITRE ATT&CK Json object as a kwargs values
-    '''
+    """
 
     __LOCAL_FOLDER_PATH = None
     __ATTCK_DATASETS = None
+    __NIST_DATA_MAP = None
+    __NIST_DATASETS = None
 
     def __init__(self, attck_obj = None, **kwargs):
-        """This class represents a Technique as defined with the Enterprise MITRE ATT&CK framework.
+        """
+        This class represents a Technique as defined by the
+        Enterprise MITRE ATT&CK framework.
 
         Keyword Arguments:
-            attck_obj {json} -- A Enterprise MITRE ATT&CK Framework json object (default: {None})
+            attck_obj {json} -- A Enterprise MITRE ATT&CK Framework
+                                json object (default: {None})
 
         Raises:
-            GeneratedDatasetException: Raised an exception when unable to access or process the external generated dataset.
+            GeneratedDatasetException: Raised an exception when unable to
+                                       access or process the external
+                                       generated dataset.
         """
         super(AttckTechnique, self).__init__(**kwargs)
         self.__attck_obj = attck_obj
-
         self.created_by_reference = self._set_attribute(kwargs, 'created_by_ref')
         self.platforms = self._set_list_items(kwargs, 'x_mitre_platforms')
         self.permissions = self._set_list_items(kwargs, 'x_mitre_permissions_required')
@@ -89,7 +114,7 @@ class AttckTechnique(AttckObject):
         self.remote = self._set_attribute(kwargs, 'x_mitre_remote_support')
         self.system_requirements = self._set_attribute(kwargs, 'x_mitre_system_requirements')
         self.detection = self._set_attribute(kwargs, 'x_mitre_detection')
-        self.data_source = self._set_list_items(kwargs, 'x_mitre_data_sources')
+        self.data_sources = self._set_list_items(kwargs, 'x_mitre_data_sources')
         self.created = self._set_attribute(kwargs, 'created')
         self.modified = self._set_attribute(kwargs, 'modified')
         self.__subtechniques = []
@@ -99,14 +124,7 @@ class AttckTechnique(AttckObject):
         self.deprecated = self._set_attribute(kwargs, 'x_mitre_deprecated')
         self.subtechnique = self._set_attribute(kwargs, 'x_mitre_is_subtechnique')
         self.__subtechniques = []
-
-
-        if AttckTechnique.__ATTCK_DATASETS is None:
-            try:
-                AttckTechnique.__ATTCK_DATASETS = AttckDatasets().generated_attck_data()
-            except:
-                raise GeneratedDatasetException('Unable to retrieve generated attack data properties')
-
+        self.__retrieve_datasets()
         self.command_list = self.__get_filtered_dataset(self.id, 'command_list')
         self.commands = self.__get_filtered_dataset(self.id, 'commands')
         self.queries = self.__get_filtered_dataset(self.id, 'queries')
@@ -114,8 +132,24 @@ class AttckTechnique(AttckObject):
         self.possible_detections = self.__get_filtered_dataset(self.id, 'possible_detections')
         self.subtechnique = self._set_attribute(kwargs, 'x_mitre_is_subtechnique')
         self.tactics = kwargs
-
         self.set_relationships(self.__attck_obj)
+
+    def __retrieve_datasets(self):
+        if AttckTechnique.__ATTCK_DATASETS is None:
+            try:
+                AttckTechnique.__ATTCK_DATASETS = AttckDatasets().get_data(data_type='generated_data')
+            except:
+                raise GeneratedDatasetException('Unable to retrieve generated attack data properties')
+        if AttckTechnique.__NIST_DATA_MAP is None:
+            try:
+                AttckTechnique.__NIST_DATA_MAP = AttckDatasets().get_data(data_type='nist_data')
+            except:
+                raise GeneratedDatasetException('Unable to retrieve generated NIST Controls data map')
+        if AttckTechnique.__NIST_DATASETS is None:
+            try:
+                AttckTechnique.__NIST_DATASETS = AttckDatasets().get_data(data_type='nist_800_53_rev4_controls')['objects']
+            except:
+                raise GeneratedDatasetException('Unable to retrieve NIST 800-53 Control data')
 
     def __get_filtered_dataset(self, technique_id, attribute_name):
         for item in AttckTechnique.__ATTCK_DATASETS['techniques']:
@@ -127,6 +161,14 @@ class AttckTechnique(AttckObject):
 
     @property
     def subtechniques(self):
+        """
+        Subtechniques are by default nested under their parent technique.
+        To flatten all techniques onto the same level provide
+        nested_subtechniques=False when instantiating the Attck object.
+
+        Returns:
+            [type]: [description]
+        """
         return sorted(self.__subtechniques, key=self.__get_subtechnique_id)
 
     @subtechniques.setter
@@ -134,11 +176,30 @@ class AttckTechnique(AttckObject):
         self.__subtechniques.append(value)
 
     @property
-    def tactics(self):
-        """Returns all tactic object that a technique belongs to
+    def controls(self):
+        """
+        Returns all compliance control objects that are associated with a technique
 
         Returns:
-            [list] -- A list of tactic objects defined within the Enterprise MITRE ATT&CK Framework
+            [list] -- A list of control objects defined within the
+                      Enterprise MITRE ATT&CK Framework
+        """
+        from .control import AttckControl
+        control_list = []
+        if AttckTechnique.__NIST_DATA_MAP.get(self.stix):
+            for control in AttckTechnique.__NIST_DATASETS:
+                if control.get('id') in AttckTechnique.__NIST_DATA_MAP[self.stix]:
+                    control_list.append(AttckControl(**control))
+        return control_list
+
+    @property
+    def tactics(self):
+        """
+        Returns all tactic object that a technique belongs to
+
+        Returns:
+            [list] -- A list of tactic objects defined within the
+                      Enterprise MITRE ATT&CK Framework
         """
         from .tactic import AttckTactic
         tactic_list = []
@@ -146,22 +207,21 @@ class AttckTechnique(AttckObject):
             if 'x-mitre-tactic' in item['type']:
                 for tact in self._tactic:
                     if str(tact).lower() == str(item['x_mitre_shortname']).lower():
-                        tactic_list.append(AttckTactic(**item))
+                        tactic_list.append(AttckTactic(attck_obj=self.__attck_obj, **item))
         return tactic_list
-            
 
     @tactics.setter
     def tactics(self, obj):
-        """Sets the associated tactic/phase this technique is in
-        
+        """
+        Sets the associated tactic/phase this technique is in
+
         Arguments:
             obj (dict) -- A MITRE ATT&CK Framework json object
-        
+
         Returns:
             (string) -- Returns a string that sets the tactic/phase this technique is in. 
                         If there is no phase found, it will return 'no phase_name'
         """
-
         temp_list = []
         try:
             for phase in obj['kill_chain_phases']:
@@ -172,10 +232,12 @@ class AttckTechnique(AttckObject):
         
     @property
     def mitigations(self):
-        """Returns all mitigation objects that a technique is associated with
+        """
+        Returns all mitigation objects that a technique is associated with
 
         Returns:
-            [list] -- A list of mitigation objects defined within the Enterprise MITRE ATT&CK Framework
+            [list] -- A list of mitigation objects defined within the
+                      Enterprise MITRE ATT&CK Framework
         """
         from .mitigation import AttckMitigation
         return_list = []
@@ -184,20 +246,20 @@ class AttckTechnique(AttckObject):
             if 'type' in item:
                 if item['type'] == 'course-of-action':
                     item_dict[item['id']] = item
-        try:
+        if self._RELATIONSHIPS.get(self.stix):
             for item in self._RELATIONSHIPS[self.stix]:
                 if item in item_dict:
-                    return_list.append(AttckMitigation(**item_dict[item]))
-        except:
-            pass
+                    return_list.append(AttckMitigation(attck_obj=self.__attck_obj, **item_dict[item]))
         return return_list 
 
     @property
     def actors(self):
-        """Returns all actor objects that use a technique
+        """
+        Returns all actor objects that use a technique
 
         Returns:
-            [list] -- A list of actor objects defined within the Enterprise MITRE ATT&CK Framework
+            [list] -- A list of actor objects defined within the
+                      Enterprise MITRE ATT&CK Framework
         """
         from .actor import AttckActor
         return_list = []
@@ -206,10 +268,8 @@ class AttckTechnique(AttckObject):
             if 'type' in item:
                 if item['type'] == 'intrusion-set':
                     item_dict[item['id']] = item
-        try:
+        if self._RELATIONSHIPS.get(self.stix):
             for item in self._RELATIONSHIPS[self.stix]:
                 if item in item_dict:
-                    return_list.append(AttckActor(**item_dict[item]))
-        except:
-            pass
+                    return_list.append(AttckActor(attck_obj=self.__attck_obj, **item_dict[item]))
         return return_list

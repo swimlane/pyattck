@@ -6,11 +6,15 @@ from ..datasets import AttckDatasets
 
 class PreAttckActor(PreAttckObject):
 
-    '''A child class of PreAttckObject
-    
-    Creates objects that are categorized as MITRE PRE-ATT&CK Actors or Groups (e.g. APT1, APT32, etc.)
+    """MITRE PRE-ATT&CK Actor object.
 
-    You can also access external data properties. The following properties are generated using external data:
+    A child class of PreAttckObject
+
+    Creates objects that are categorized as MITRE PRE-ATT&CK Actors or
+    Groups (e.g. APT1, APT32, etc.)
+
+    You can also access external data properties. The following properties
+    are generated using external data:
 
         1. country
         2. operations
@@ -22,21 +26,23 @@ class PreAttckActor(PreAttckObject):
 
     You can retrieve the entire dataset using the `external_dataset` property.
 
-    pyattck also enables you to retrieve or generate logos for the actor or group using the following properties:
-        
+    pyattck also enables you to retrieve or generate logos for the actor or
+    group using the following properties:
+
         - ascii_logo - Generated ASCII logo based on the actor or groups name
-    
+
     Example:
-        You can iterate over an `actors` list and access specific properties and relationship properties.
+        You can iterate over an `actors` list and access specific properties and
+        relationship properties.
 
         The following relationship properties are accessible:
-                
+
                 1. techniques
-        
+
             1. To iterate over an `actors` list, do the following:
 
             .. code-block:: python
-               
+
                from pyattck import Attck
 
                attck = Attck()
@@ -66,23 +72,26 @@ class PreAttckActor(PreAttckObject):
                        print(technique.name)
                        print(technique.description)
                        # etc.
-    '''
+    """
 
     __PREATTCK_DATASETS = None
 
     def __init__(self, preattck_obj = None, **kwargs):
-        """Creates objects that are categorized as MITRE PRE-ATT&CK Actors or Groups (e.g. APT1, APT32, etc.)
+        """
+        Creates objects that are categorized as
+        MITRE PRE-ATT&CK Actors or Groups (e.g. APT1, APT32, etc.)
 
         Arguments:
             attck_obj (json) -- Takes the raw MITRE PRE-ATT&CK Json object
-            AttckObject (dict) -- Takes the MITRE PRE-ATT&CK Json object as a kwargs values
+            AttckObject (dict) -- Takes the MITRE PRE-ATT&CK Json object as
+                                  a kwargs values
 
         Raises:
-            GeneratedDatasetException: Error when accessing third-party generated datasets
+            GeneratedDatasetException: Error when accessing third-party
+                                       generated datasets
         """
         super(PreAttckActor, self).__init__(**kwargs)
         self.__preattck_obj = preattck_obj
-
         self.created_by_ref = self._set_attribute(kwargs, 'created_by_ref')
         self.version = self._set_attribute(kwargs, 'x_mitre_version')
         self.name = self._set_attribute(kwargs, 'name')
@@ -90,22 +99,20 @@ class PreAttckActor(PreAttckObject):
         self.stix = self._set_attribute(kwargs, 'id')
         self.contributor = self._set_list_items(kwargs, 'x_mitre_contributors')
         self.wiki = self._set_wiki(kwargs)
-        
         self.set_relationships(self.__preattck_obj)
-
         logo = Logo(self.name.strip().replace(' ','_').lower())
         self.ascii_logo = logo.get_ascii()
-        
+        self.__retrieve_datasets()
+        self.external_dataset = self.__get_actors_dataset()
+
+    def __retrieve_datasets(self):
         if PreAttckActor.__PREATTCK_DATASETS is None:
             try:
-                data = AttckDatasets().generated_attck_data()
+                data = AttckDatasets().get_data(data_type='generated_data')
                 if 'actors' in data:
                     PreAttckActor.__PREATTCK_DATASETS = data['actors']
             except:
                 raise GeneratedDatasetException('Unable to retrieve generated attack data properties')
-            
-        self.external_dataset = self.__get_actors_dataset()
-        
 
     def __get_actors_dataset(self):
         return_list = []
@@ -191,13 +198,15 @@ class PreAttckActor(PreAttckObject):
         else:
             return None
 
-
     @property
     def techniques(self):
-        """Accessing an actors known techniques as part of the MITRE PRE-ATT&CK Framework
+        """
+        Accessing an actors known techniques as part of the
+        MITRE PRE-ATT&CK Framework
 
         Returns:
-            list: Returns all technique objects as a list that are documented as being used by an Actor or Group
+            list: Returns all technique objects as a list that
+                  are documented as being used by an Actor or Group
         """
         from .technique import PreAttckTechnique
         return_list = []
@@ -206,8 +215,7 @@ class PreAttckActor(PreAttckObject):
             if 'type' in item:
                 if item['type'] == 'attack-pattern':
                     item_dict[item['id']] = item
-        
         for item in self._RELATIONSHIPS[self.stix]:
             if item in item_dict:
-                return_list.append(PreAttckTechnique(**item_dict[item]))
+                return_list.append(PreAttckTechnique(preattck_obj=self.__preattck_obj, **item_dict[item]))
         return return_list

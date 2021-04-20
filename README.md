@@ -32,6 +32,8 @@ The **pyattck** package allows you to:
   * Search the external dataset for external commands that are similar using `search_commands`.
   * Access data from the MITRE PRE-ATT&CK Framework
   * Access data from the MITRE Mobile ATT&CK Framework
+  * Access subtechniques as nested objects or you can turn it off and access as normal technique
+  * Access compliance controls (currently NIST 800-53) related to a MITRE ATT&CK Technique
 
 ## Installation
 
@@ -108,6 +110,7 @@ Once you specify the MITRE ATT&CK Framework, you can access additional propertie
 Here are the accessible objects under the [Enterprise](docs/enterprise/enterprise.md) property:
 
 * [actors](docs/enterprise/actor.md)
+* [controls](docs/enterprise/control.md)
 * [malwares](docs/enterprise/malware.md)
 * [mitigations](docs/enterprise/mitigation.md)
 * [tactics](docs/enterprise/tactic.md)

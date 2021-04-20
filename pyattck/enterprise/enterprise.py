@@ -8,127 +8,175 @@ from .tactic import AttckTactic
 
 class Enterprise(object):
 
-    '''
-        This class creates an interface to all data points in the MITRE ATT&CK Enterprise framework.
+    """An interface to the Enterprise MITRE ATT&CK Framework.
 
-        This interface enables you to retrieve all properties within each item in the MITRE ATT&CK Enterprise Framework.
+    This class creates an interface to all data points in the
+    MITRE ATT&CK Enterprise framework.
 
-        The following categorical items can be accessed using this class:
+    This interface enables you to retrieve all properties within
+    each item in the MITRE ATT&CK Enterprise Framework.
 
-            1. Tactics (Tactics are the phases defined by MITRE ATT&CK)
-            2. Techniques (Techniques are the individual actions which can accomplish a tactic)
-            3. Mitigations (Mitigations are recommendations to prevent or protect against a technique)
-            4. Actors (Actors or Groups are identified malicious actors/groups which have been identified and documented by MITRE & third-parties)
-            5. Tools (Tools are software used to perform techniques)
-            6. Malwares (Malwares are specific pieces of malware used by actors (or in general) to accomplish a technique)
-        
-        You can also search the external dataset for external commands that are similar using the `search_commands` method.
+    The following categorical items can be accessed using this class:
 
-           .. code-block:: python
-               
-               from pyattck import Attck
+        1. Tactics (Tactics are the phases defined by MITRE ATT&CK)
+        2. Techniques (Techniques are the individual actions which can
+           accomplish a tactic)
+        3. Mitigations (Mitigations are recommendations to prevent or
+           protect against a technique)
+        4. Actors (Actors or Groups are identified malicious actors/groups
+           which have been identified and documented by MITRE & third-parties)
+        5. Tools (Tools are software used to perform techniques)
+        6. Malwares (Malwares are specific pieces of malware used by actors
+           (or in general) to accomplish a technique)
 
-               attck = Attck()
-               
-               for search in attck.enterprise.search_commands('powershell'):
-                   print(search['technique'])
-                   print(search['reason_for_match'])
+    You can also search the external dataset for external commands that are
+    similar using the `search_commands` method.
 
-        Additionally, as of pyattck 2.0.0 you can now access additional datasets related to a technique.
-        These datasets are [documented here](https://github.com/swimlane/pyattck/blob/master/generateattcks/README.md).
+        .. code-block:: python
 
-        Each technique enables you to access the following properties on the object:
+            from pyattck import Attck
 
-            1. command_list - A list of commands associated with a technique
-            2. commands = A list of dictionary objects containing source, command, and provided name associated with a technique
-            3. queries = A list of dictionary objects containing product, query, and name associated with a technique
-            4. datasets = A list of raw datasets associated with a technique
-            5. possible_detections = A list of raw datasets containing possible detection methods for a technique
+            attck = Attck()
 
-        Each Actor object (if available) enables you to access the following properties on the object:
+            for search in attck.enterprise.search_commands('powershell'):
+                print(search['technique'])
+                print(search['reason_for_match'])
 
-            1. country
-            2. operations
-            3. attribution_links
-            4. known_tools
-            5. targets
-            6. additional_comments
-            7. external_description
+    Additionally, as of pyattck 2.0.0 you can now access additional datasets
+    related to a technique. These datasets are
+    [documented here](https://github.com/swimlane/pyattck/blob/master/generateattcks/README.md).
 
-        You can retrieve the entire dataset using the `external_dataset` property on a `actor` object.
+    Each technique enables you to access the following properties on the object:
 
-        pyattck also enables you to retrieve or generate logos for the actor or group using the following properties:
-        
-            - ascii_logo - Generated ASCII logo based on the actor or groups name
-            - image_logo - Generated ASCII logo based on a provided logo
+        1. command_list - A list of commands associated with a technique
+        2. commands = A list of dictionary objects containing source, command,
+                      and provided name associated with a technique
+        3. queries = A list of dictionary objects containing product, query, and
+                     name associated with a technique
+        4. datasets = A list of raw datasets associated with a technique
+        5. possible_detections = A list of raw datasets containing possible detection
+                                 methods for a technique
 
-        Each Tools object (if available) enables you to access the following properties on the object:
+    Each Actor object (if available) enables you to access the following properties
+    on the object:
 
-            1. additional_names
-            2. attribution_links
-            3. additional_comments
-            4. family
+        1. country
+        2. operations
+        3. attribution_links
+        4. known_tools
+        5. targets
+        6. additional_comments
+        7. external_description
 
-        You can retrieve the entire dataset using the `external_dataset` property on a `tool` object.
+    You can retrieve the entire dataset using the `external_dataset` property on
+    a `actor` object.
 
-        You can also access external data properties from the C2 Matrix project. The following properties are generated using C2 Matrix external data:
+    pyattck also enables you to retrieve or generate logos for the actor or group
+    using the following properties:
 
-            - HTTP
-            - Implementation
-            - Custom Profile
-            - DomainFront
-            - Multi-User
-            - SMB
-            - Kill Date
-            - macOS
-            - GitHub
-            - Key Exchange
-            - Chaining
-            - Price
-            - TCP
-            - Proxy Aware
-            - HTTP3
-            - HTTP2
-            - Date
-            - Evaluator
-            - Working Hours
-            - Slack
-            - FTP
-            - Version Reviewed
-            - Logging
-            - Name
-            - License
-            - Windows
-            - Stego
-            - Notes
-            - Server
-            - Actively Maint.
-            - Dashboard
-            - DNS
-            - Popular Site
-            - ICMP
-            - IMAP
-            - DoH
-            - Jitter
-            - How-To
-            - ATT&CK Mapping
-            - Kali
-            - Twitter
-            - MAPI
-            - Site
-            - Agent
-            - API
-            - UI
-            - Linux
+        - ascii_logo - Generated ASCII logo based on the actor or groups name
+        - image_logo - Generated ASCII logo based on a provided logo
 
-        You can retrieve the entire dataset using the `c2_data` property.
+    Each Tools object (if available) enables you to access the following properties
+    on the object:
 
-    
+        1. additional_names
+        2. attribution_links
+        3. additional_comments
+        4. family
+
+    You can retrieve the entire dataset using the `external_dataset` property
+    on a `tool` object.
+
+    You can also access external data properties from the C2 Matrix project.
+    The following properties are generated using C2 Matrix external data:
+
+        - HTTP
+        - Implementation
+        - Custom Profile
+        - DomainFront
+        - Multi-User
+        - SMB
+        - Kill Date
+        - macOS
+        - GitHub
+        - Key Exchange
+        - Chaining
+        - Price
+        - TCP
+        - Proxy Aware
+        - HTTP3
+        - HTTP2
+        - Date
+        - Evaluator
+        - Working Hours
+        - Slack
+        - FTP
+        - Version Reviewed
+        - Logging
+        - Name
+        - License
+        - Windows
+        - Stego
+        - Notes
+        - Server
+        - Actively Maint.
+        - Dashboard
+        - DNS
+        - Popular Site
+        - ICMP
+        - IMAP
+        - DoH
+        - Jitter
+        - How-To
+        - ATT&CK Mapping
+        - Kali
+        - Twitter
+        - MAPI
+        - Site
+        - Agent
+        - API
+        - UI
+        - Linux
+
+    You can retrieve the entire dataset using the `c2_data` property.
+
+    As of pyattck 3.0 you can now access defined Compliance Controls related
+    to a technique.
+
+    Here is an example of retrieving a list of compliance controls:
+
+        .. code-block:: python
+
+            from pyattck import Attck
+
+            attck = Attck()
+
+            for technique in attck.enterprise.techniques:
+                print(technique.id)
+                print(technique.name)
+                print(technique.description)
+
+                # to get a count of controls for a technique do the following
+                print(len(technique.controls))
+
+                # below will print each controls properties & values
+                for control in technique.controls:
+                    print(control.__dict__)
+
+                # below will print the id, name and description of a control
+                for control in technique.controls:
+                    print(control.id)
+                    print(control.name)
+                    print(control.description)
+
     Example:
-        Once an Attck object is instantiated, you can access each object type as a list of objects (e.g. techniques, tactics, actors, etc.)
+        Once an Attck object is instantiated, you can access each object type as
+        a list of objects (e.g. techniques, tactics, actors, etc.)
 
-        You can iterate over each object list and access specific properties and relationship properties of each.
-        
+        You can iterate over each object list and access specific properties and
+        relationship properties of each.
+
         The following relationship properties are accessible:
             1. Actors
                 1. Tools used by the Actor or Group
@@ -148,15 +196,15 @@ class Enterprise(object):
             6. Tools
                 1. Techniques that the specified tool is used within
                 2. Actor or Group(s) using a specified tool
-        
+
             1. To iterate over a list, do the following:
 
             .. code-block:: python
-               
+
                from pyattck import Attck
 
                attck = Attck()
-               
+
                for technique in attck.enterprise.techniques:
                    print(technique.id)
                    print(technique.name)
@@ -176,7 +224,7 @@ class Enterprise(object):
                from pyattck import Attck
 
                attck = Attck()
-               
+
                for technique in attck.enterprise.techniques:
                    print(technique.id)
                    print(technique.name)
@@ -201,14 +249,15 @@ class Enterprise(object):
                        # etc.
 
     Arguments:
-        attck_json (json) - The attck_json is supplied by the attck.py module when instantiated.
+        attck_json (json) - The attck_json is supplied by the attck.py module
+        when instantiated.
 
     Returns:
-        [Attck]: Returns a Attck object that contains all data from the MITRE ATT&CK Framework
-    '''
+        [Attck]: Returns a Attck object that contains all data from the
+                 MITRE ATT&CK Framework
+    """
 
     __ENTERPRISE_GENERATED_DATA_JSON = None
-    
     __tactics = None
     __techniques = None
     __mitigations = None
@@ -218,19 +267,22 @@ class Enterprise(object):
     
     def __init__(self, attck_json, nested_subtechniques=True):
         """
-        Sets standard properties that are found in all child classes as well as provides standard methods used by inherited classes
-        
+        Sets standard properties that are found in all child classes
+        as well as provides standard methods used by inherited classes
+
         Arguments:
             kwargs (dict) -- Takes the MITRE ATT&CK Json object as a kwargs values
-            nested_subtechniques (bool) -- Determines if nested subtechniques will be used or not. This is passed from attck class
+            nested_subtechniques (bool) -- Determines if nested subtechniques will
+            be used or not. This is passed from attck class
         """
         self.__attck = attck_json
         self.__nested_subtechniques = nested_subtechniques
 
     @property
     def actors(self):
-        """Creates AttckActor objects
-        
+        """
+        Creates AttckActor objects
+
         Returns:
             (AttckActor) -- (Returns a list of AttckActor objects)
         """
@@ -243,8 +295,9 @@ class Enterprise(object):
 
     @property
     def tactics(self):
-        """Creates AttckTactic objects
-        
+        """
+        Creates AttckTactic objects
+
         Returns:
             (AttckTactic) -- (Returns a list of AttckTactic objects)
         """
@@ -257,8 +310,9 @@ class Enterprise(object):
 
     @property
     def mitigations(self):
-        """Creates AttckMitigation objects
-        
+        """
+        Creates AttckMitigation objects
+
         Returns:
             (AttckMitigation) -- (Returns a list of AttckMitigation objects)
         """
@@ -271,8 +325,9 @@ class Enterprise(object):
 
     @property
     def tools(self):
-        """Creates AttckTools objects
-        
+        """
+        Creates AttckTools objects
+
         Returns:
             (AttckTools) -- Returns a list of AttckTools objects
         """
@@ -285,8 +340,9 @@ class Enterprise(object):
 
     @property
     def malwares(self):
-        """Creates AttckMalware objects
-        
+        """
+        Creates AttckMalware objects
+
         Returns:
             (AttckMalware) -- Returns a list of AttckMalware objects
         """
@@ -299,8 +355,9 @@ class Enterprise(object):
 
     @property
     def techniques(self):
-        """Creates AttckTechnique objects
-        
+        """
+        Creates AttckTechnique objects
+
         Returns:
             (AttckTechnique) -- Returns a list of AttckTechnique objects
         """
@@ -316,7 +373,6 @@ class Enterprise(object):
                             self.__techniques.append(AttckTechnique(attck_obj=self.__attck, **technique))
                     else:
                         self.__techniques.append(AttckTechnique(attck_obj=self.__attck, **technique))
-
             if subtechniques:
                 for item in subtechniques:
                     if item.get('external_references'):
@@ -327,23 +383,25 @@ class Enterprise(object):
                                         if p['external_id'].split('.')[0] == technique.id:
                                             technique.subtechniques = AttckTechnique(attck_obj=self.__attck, **item)
         return self.__techniques
-   
 
     def search_commands(self, search_term, json=False):
-        """Search external datasets for potential commands using a search term  
-        
+        """
+        Search external datasets for potential commands using a search term
+
         Args:
-            search_term (str): A command to search for close matches against all external datasets containing potential commands
-        
+            search_term (str): A command to search for close matches against
+                               all external datasets containing potential commands
+
         Returns:
-            list: A list of dictionaries containing the technique and the reason for a close match
+            list: A list of dictionaries containing the technique and the reason
+                  for a close match
         """
         if json:
             import json
         from ..datasets import AttckDatasets
         return_list = []
         if not Enterprise.__ENTERPRISE_GENERATED_DATA_JSON:
-            Enterprise.__ENTERPRISE_GENERATED_DATA_JSON = AttckDatasets().generated_attck_data()
+            Enterprise.__ENTERPRISE_GENERATED_DATA_JSON = AttckDatasets().get_data('generated_data')
         for item in Enterprise.__ENTERPRISE_GENERATED_DATA_JSON['techniques']:
             if 'command_list' in item:
                 if item['command_list']:
