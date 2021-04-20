@@ -15,8 +15,8 @@ class AttckDatasets(object):
             MITRE_ATTCK_JSON_URL = 'https://raw.githubusercontent.com/mitre/cti/master/enterprise-attack/enterprise-attack.json'
             MITRE_PREATTCK_ATTCK_JSON_URL  = 'https://raw.githubusercontent.com/mitre/cti/master/pre-attack/pre-attack.json'
             MITRE_MOBILE_ATTCK_JSON_URL = 'https://raw.githubusercontent.com/mitre/cti/master/mobile-attack/mobile-attack.json'
-            DATASETS_URL = 'https://raw.githubusercontent.com/swimlane/pyattck/master/generated_attck_data.json'
-            NIST_DATASETS_URL = 'https://raw.githubusercontent.com/swimlane/pyattck/master/attck_to_nist_controls.json'
+            DATASETS_URL = 'https://github.com/swimlane/pyattck/blob/master/generated_attck_data.json?raw=True'
+            NIST_DATASETS_URL = 'https://github.com/swimlane/pyattck/blob/master/attck_to_nist_controls.json?raw=True'
     """
 
     def __init__(self):

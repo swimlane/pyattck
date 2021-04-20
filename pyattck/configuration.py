@@ -35,11 +35,11 @@ class Configuration(object):
             'filename': 'enterprise_attck_nist_800_53_rev4_controls.json',
         },
         'generated_data': {
-            'url': 'https://raw.githubusercontent.com/swimlane/pyattck/master/generated_attck_data.json',
+            'url': 'https://github.com/swimlane/pyattck/blob/master/generated_attck_data.json?raw=True',
             'filename': 'enterprise_attck_dataset.json',
         },
         'nist_data': {
-            'url': 'https://raw.githubusercontent.com/swimlane/pyattck/master/attck_to_nist_controls.json',
+            'url': 'https://github.com/swimlane/pyattck/blob/master/attck_to_nist_controls.json?raw=True',
             'filename': 'enterprise_attck_nist_data.json',
         }
     }
