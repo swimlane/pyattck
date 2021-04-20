@@ -114,7 +114,7 @@ class AttckTechnique(AttckObject):
         self.remote = self._set_attribute(kwargs, 'x_mitre_remote_support')
         self.system_requirements = self._set_attribute(kwargs, 'x_mitre_system_requirements')
         self.detection = self._set_attribute(kwargs, 'x_mitre_detection')
-        self.data_source = self._set_list_items(kwargs, 'x_mitre_data_sources')
+        self.data_sources = self._set_list_items(kwargs, 'x_mitre_data_sources')
         self.created = self._set_attribute(kwargs, 'created')
         self.modified = self._set_attribute(kwargs, 'modified')
         self.__subtechniques = []
