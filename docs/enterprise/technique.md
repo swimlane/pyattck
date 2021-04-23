@@ -15,7 +15,7 @@ Each technique enables you to access the following properties on the object:
 * queries = A list of dictionary objects containing product, query, and name associated with a technique
 * datasets = A list of raw datasets associated with a technique
 * possible_detections = A list of raw datasets containing possible detection methods for a technique
-
+* data_sources = A list of raw datasets containing data sources listed for the technique
 
 ## AttckTechnique Class
 
