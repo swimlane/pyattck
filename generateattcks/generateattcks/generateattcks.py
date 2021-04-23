@@ -1,4 +1,5 @@
 import datetime, json, os
+import requests
 
 from .adversaryemulation import AdversaryEmulation
 from .atomicredteam import AtomicRedTeam
@@ -32,8 +33,11 @@ class GenerateAttcks(object):
 
     def __get_conversion_data(self):
         if not self.conversion_data:
-            with open(self.__conversion_file, 'r') as file:
-                self.conversion_data = json.load(file)
+            try:
+                with open(self.__conversion_file, 'r') as file:
+                    self.conversion_data = json.load(file)
+            except:
+                self.conversion_data = requests.get('https://github.com/swimlane/pyattck/blob/master/generateattcks/generateattcks/conversion.json?raw=true').json()
         return self.conversion_data
 
     def get(self):
