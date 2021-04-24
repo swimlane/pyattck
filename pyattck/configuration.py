@@ -85,7 +85,9 @@ class Configuration(object):
         mode = None
         if not os.path.exists(self.__CONFIG_FILE):
             mode = 'w+'
-            os.makedirs(os.path.dirname(self.__CONFIG_FILE))
+            path = os.path.dirname(self.__CONFIG_FILE)
+            if not os.path.exist(path):
+                os.makedirs(path)
         else:
             mode = 'w'
         with open(self.__CONFIG_FILE, mode) as outfile:
