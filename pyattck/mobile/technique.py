@@ -1,6 +1,4 @@
 from .mobileattckobject import MobileAttckObject
-from ..datasets import AttckDatasets
-from ..utils.exceptions import GeneratedDatasetException
 
 
 class MobileAttckTechnique(MobileAttckObject):
@@ -67,9 +65,6 @@ class MobileAttckTechnique(MobileAttckObject):
                        # etc.
     """
 
-    __LOCAL_FOLDER_PATH = None
-    __ATTCK_DATASETS = None
-
     def __init__(self, mobile_attck_obj = None, **kwargs):
         """
         Creates an MobileAttckTechnique object.  
@@ -94,25 +89,17 @@ class MobileAttckTechnique(MobileAttckObject):
         self.deprecated = self._set_attribute(kwargs, 'x_mitre_deprecated')
         self.wiki = self._set_wiki(kwargs)
         self.stix = self._set_attribute(kwargs, 'id')
-        self.__retrieve_datasets()
-        self.command_list = self.__get_filtered_dataset(self.id, 'command_list')
-        self.commands = self.__get_filtered_dataset(self.id, 'commands')
-        self.queries = self.__get_filtered_dataset(self.id, 'queries')
-        self.datasets = self.__get_filtered_dataset(self.id, 'parsed_datasets')
-        self.possible_detections = self.__get_filtered_dataset(self.id, 'possible_detections')
+        self.command_list = self.__get_filtered_dataset('command_list')
+        self.commands = self.__get_filtered_dataset('commands')
+        self.queries = self.__get_filtered_dataset('queries')
+        self.datasets = self.__get_filtered_dataset('parsed_datasets')
+        self.possible_detections = self.__get_filtered_dataset('possible_detections')
         self.tactics = kwargs
         self.set_relationships(self.__mobile_attck_obj)
 
-    def __retrieve_datasets(self):
-        if MobileAttckTechnique.__ATTCK_DATASETS is None:
-            try:
-                MobileAttckTechnique.__ATTCK_DATASETS = AttckDatasets().get_data(data_type='generated_data')
-            except:
-                raise GeneratedDatasetException('Unable to retrieve generated attack data properties')
-
-    def __get_filtered_dataset(self, technique_id, attribute_name):
-        for item in MobileAttckTechnique.__ATTCK_DATASETS['techniques']:
-            if item['technique_id'] == technique_id:
+    def __get_filtered_dataset(self, attribute_name):
+        for item in self.generated_attck_json['techniques']:
+            if item['technique_id'] == self.id:
                 return item[attribute_name]
 
     @property
