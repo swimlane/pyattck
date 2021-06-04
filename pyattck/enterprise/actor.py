@@ -1,8 +1,5 @@
-
 from .attckobject import AttckObject
 from ..utils.logo import Logo
-from ..utils.exceptions import GeneratedDatasetException
-from ..datasets import AttckDatasets
 
 
 class AttckActor(AttckObject):
