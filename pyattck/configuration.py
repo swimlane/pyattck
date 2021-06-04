@@ -49,7 +49,7 @@ class ConfigurationProperties(type):
                 raise Exception('Unable to save data to the provided location: {}'.format(cls.data_path))
         for json_data in ['enterprise_attck_json', 'pre_attck_json', 'mobile_attck_json', 'nist_controls_json', 'generated_attck_json', 'generated_nist_json']:
             if cls._check_if_url(getattr(cls, json_data)):
-                path = os.path.join(cls.data_path, f'{json_data}.json')
+                path = os.path.join(cls.data_path, "{json_data}.json".format(json_data=json_data))
                 data = cls.__download_url_data(getattr(cls, json_data))
                 cls.__write_to_disk(path, data)
 
