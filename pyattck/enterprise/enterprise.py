@@ -412,11 +412,11 @@ class Enterprise(object):
         """
         if json:
             import json
-        from ..datasets import AttckDatasets
+        from ..configuration import Configuration
         return_list = []
-        if not Enterprise.__ENTERPRISE_GENERATED_DATA_JSON:
-            Enterprise.__ENTERPRISE_GENERATED_DATA_JSON = AttckDatasets().get_data('generated_data')
-        for item in Enterprise.__ENTERPRISE_GENERATED_DATA_JSON['techniques']:
+        if not self.__ENTERPRISE_GENERATED_DATA_JSON:
+            self.__ENTERPRISE_GENERATED_DATA_JSON = Configuration.get_data(Configuration.config_data.get('generated_attck_json'))
+        for item in self.__ENTERPRISE_GENERATED_DATA_JSON['techniques']:
             if 'command_list' in item:
                 if item['command_list']:
                     for cmd in item['command_list']:
