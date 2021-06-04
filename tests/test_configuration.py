@@ -122,17 +122,11 @@ def test_configuration_settings_save_config(attck_configuration):
     attck_configuration.nist_controls_json = default_config_data['nist_controls_json']
     attck_configuration.generated_attck_json = default_config_data['generated_attck_json']
     attck_configuration.generated_nist_json = default_config_data['generated_nist_json']
-   # attck_configuration.use_config = True
     attck_configuration.save_config = False
-   # assert attck_configuration.save_config == True
     temp_value = tempfile.NamedTemporaryFile(suffix='.yml').name
     attck_configuration.config_file_path = temp_value
     assert attck_configuration.config_file_path == temp_value
-   # assert attck_configuration.enterprise_attck_json == default_config_data['enterprise_attck_json']
-   #å assert attck_configuration.config_data == default_config_data
     temp_dir = tempfile.TemporaryDirectory().name
     attck_configuration.data_path = temp_dir
     assert attck_configuration.data_path == temp_dir
-
-
 
