@@ -1,7 +1,5 @@
 from .preattckobject import PreAttckObject
 from ..utils.logo import Logo
-from ..utils.exceptions import GeneratedDatasetException
-from ..datasets import AttckDatasets
 
 
 class PreAttckActor(PreAttckObject):
@@ -73,8 +71,6 @@ class PreAttckActor(PreAttckObject):
                        print(technique.description)
                        # etc.
     """
-
-    __PREATTCK_DATASETS = None
 
     def __init__(self, preattck_obj = None, **kwargs):
         """

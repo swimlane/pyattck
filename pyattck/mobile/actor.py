@@ -1,8 +1,6 @@
 
 from .mobileattckobject import MobileAttckObject
 from ..utils.logo import Logo
-from ..utils.exceptions import GeneratedDatasetException
-from ..datasets import AttckDatasets
 
 
 class MobileAttckActor(MobileAttckObject):
@@ -73,8 +71,6 @@ class MobileAttckActor(MobileAttckObject):
                        print(malware.description)
                        # etc.
     """
-
-    __ATTCK_DATASETS = None
 
     def __init__(self, mobile_attck_obj = None, **kwargs):
         """
