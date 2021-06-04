@@ -4,6 +4,8 @@ from .malware import AttckMalware
 from .tools import AttckTools
 from .mitigation import AttckMitigation
 from .tactic import AttckTactic
+from .control import AttckControl
+from ..configuration import Configuration
 
 
 class Enterprise(object):
