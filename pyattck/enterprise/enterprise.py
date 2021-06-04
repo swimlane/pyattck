@@ -298,6 +298,21 @@ class Enterprise(object):
         return self.__actors
 
     @property
+    def controls(self):
+        """
+        Creates AttckControls objects
+
+        Returns:
+            (AttckControl) -- Returns a list of AttckControl objects
+        """
+        if not self.__controls:
+            for control in self.__nist_controls_json:
+                if control:
+                    print(control)
+                    self.__controls.append(AttckControl(attck_obj=self.__attck, **control))
+        return self.__controls
+
+    @property
     def tactics(self):
         """
         Creates AttckTactic objects
