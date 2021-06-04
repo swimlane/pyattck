@@ -1,4 +1,7 @@
-class AttckControl:
+from .attckobject import AttckObject
+
+
+class AttckControl(AttckObject):
 
     """An object that represents a compliance control type.
 
@@ -38,7 +41,7 @@ class AttckControl:
         kwargs (dict) -- Takes the raw control Json object
     """
 
-    def __init__(self, **kwargs):
+    def __init__(self, attck_obj = None, **kwargs):
         """
         This class represents a compliance Control as defined from
         external data sources.
@@ -46,51 +49,28 @@ class AttckControl:
         Keyword Arguments:
             kwargs (dict) -- A compliance control JSON object
         """
-        self.id = self._set_id(kwargs.pop('external_references'))
-        self.stix = kwargs.pop('id')
+        super(AttckControl, self).__init__(**kwargs)
+        self.__attck_obj = attck_obj
         for key,val in kwargs.items():
             prop_name = key.replace('x_mitre_','')
             if not hasattr(self, prop_name):
                 setattr(self, prop_name, val)
 
-    def __str__(self):
+    @property
+    def techniques(self):
         """
-        Returns dictionary string of all properties and
-        values for the instance
+        Returns all technique objects as a list that are
+        associated with a Tactic
 
         Returns:
-            (str): All properties and values of instance
+            [list] -- A list of related technique objects defined
+                      within the Enterprise MITRE ATT&CK Framework
         """
-        return_dict = {}
-        for key,val in self.__dict__.items():
-            if not key.startswith('_'):
-                return_dict[key] = val
-        return str(return_dict)
-
-    def __repr__(self):
-        """
-        Returns a printable representation of an object
-
-        Returns:
-            str: Returns a printable representation of an object
-        """
-        return "{class_name}('{name}', '{id}')".format(
-            class_name=self.__class__.__name__,
-            name=self.name,
-            id=self.id
-        )
-
-    def _set_id(self, external_references):
-        """
-        Returns the compliance control (external) ID
-
-        Arguments:
-            external_references (list) -- A list of external_references
-
-        Returns:
-            (str) -- Returns the compliance control (external) ID
-        """
-        for reference in external_references:
-            if 'NIST' in reference.get('source_name'):
-                return reference.get('external_id')
-        return 'No ID Defined'
+        from .technique import AttckTechnique
+        technique_list = []
+        for key,val in self.generated_nist_json.items():
+            if self.stix in val:
+                for item in self.__attck_obj['objects']:
+                    if 'type' in item and item['type'] == 'attack-pattern':
+                        technique_list.append(AttckTechnique(attck_obj=self.__attck_obj, **item))
+        return technique_list
