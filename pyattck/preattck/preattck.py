@@ -1,6 +1,7 @@
 from .technique import PreAttckTechnique
 from .actor import PreAttckActor
 from .tactic import PreAttckTactic
+from ..configuration import Configuration
 
 
 class PreAttck(object):
@@ -91,27 +92,10 @@ class PreAttck(object):
                        # etc.
     """
 
-    __tactics = None
-    __techniques = None
-    __mitigations = None
-    __actors = None
-    __tools = None
-    __malwares = None
-
-    def __init__(self, preattck_json):
-        """
-        Sets standard properties that are found in all child classes
-        as well as provides standard methods used by inherited classes
-
-        Arguments:
-            preattck_json (json) - Takes the MITRE PRE-ATT&CK Json
-                                   object as argument
-
-        Returns:
-            [PreAttck]: Returns a Attck object that contains all data
-                        from the MITRE PRE-ATT&CK Framework
-        """
-        self.__preattck = preattck_json
+    __tactics = []
+    __techniques = []
+    __actors = []
+    __preattck_json = Configuration.get_data(Configuration.config_data.get('pre_attck_json'))
 
     @property
     def actors(self):
@@ -122,10 +106,9 @@ class PreAttck(object):
             PreAttckActor: Returns a list of PreAttckActor objects
         """
         if self.__actors is None:
-            self.__actors = []
-            for group in self.__preattck['objects']:
+            for group in self.__preattck_json['objects']:
                 if group['type'] == 'intrusion-set':
-                    self.__actors.append(PreAttckActor(preattck_obj=self.__preattck, **group))
+                    self.__actors.append(PreAttckActor(preattck_obj=self.__preattck_json, **group))
         return self.__actors
 
     @property
@@ -137,10 +120,9 @@ class PreAttck(object):
             PreAttckTactic: Returns a list of PreAttckTactic objects
         """
         if self.__tactics is None:
-            self.__tactics = []
-            for tactic in self.__preattck['objects']:
+            for tactic in self.__preattck_json['objects']:
                 if tactic['type'] == 'x-mitre-tactic':
-                    self.__tactics.append(PreAttckTactic(preattck_obj=self.__preattck, **tactic))
+                    self.__tactics.append(PreAttckTactic(preattck_obj=self.__preattck_json, **tactic))
         return self.__tactics
 
     @property
@@ -152,8 +134,7 @@ class PreAttck(object):
             PreAttckTechnique: Returns a list of PreAttckTechnique objects
         """
         if self.__techniques is None:
-            self.__techniques = []
-            for technique in self.__preattck["objects"]:
+            for technique in self.__preattck_json["objects"]:
                 if (technique['type'] == 'attack-pattern'):
-                    self.__techniques.append(PreAttckTechnique(preattck_obj=self.__preattck, **technique))
+                    self.__techniques.append(PreAttckTechnique(preattck_obj=self.__preattck_json, **technique))
         return self.__techniques

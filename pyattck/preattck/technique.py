@@ -69,8 +69,6 @@ class PreAttckTechnique(PreAttckObject):
         AttckObject (dict) -- Takes the Mitre ATT&CK Json object as a kwargs values
     """
 
-    __LOCAL_FOLDER_PATH = None
-
     def __init__(self, preattck_obj = None, **kwargs):
         """
         This class represents a Techniques as defined by the
@@ -94,7 +92,17 @@ class PreAttckTechnique(PreAttckObject):
         self.deprecated = self._set_attribute(kwargs, 'x_mitre_deprecated')
         self.stix = self._set_attribute(kwargs, 'id')
         self.wiki = self._set_wiki(kwargs)
+        self.command_list = self.__get_filtered_dataset('command_list')
+        self.commands = self.__get_filtered_dataset('commands')
+        self.queries = self.__get_filtered_dataset('queries')
+        self.datasets = self.__get_filtered_dataset('parsed_datasets')
+        self.possible_detections = self.__get_filtered_dataset('possible_detections')
         self.set_relationships(self.__preattck_obj)
+
+    def __get_filtered_dataset(self, attribute_name):
+        for item in self.generated_attck_json['techniques']:
+            if item['technique_id'] == self.id:
+                return item[attribute_name]
 
     @property
     def tactics(self):
