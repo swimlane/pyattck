@@ -4,6 +4,7 @@ from .malware import MobileAttckMalware
 from .tools import MobileAttckTools
 from .mitigation import MobileAttckMitigation
 from .tactic import MobileAttckTactic
+from ..configuration import Configuration
 
 
 class MobileAttck(object):
@@ -203,27 +204,13 @@ class MobileAttck(object):
     """
 
     __ENTERPRISE_GENERATED_DATA_JSON = None
-    __tactics = None
-    __techniques = None
-    __mitigations = None
-    __actors = None
-    __tools = None
-    __malwares = None
-
-    def __init__(self, mobile_attck_json):
-        """
-        Sets standard properties that are found in all child classes as well as
-        provides standard methods used by inherited classes
-
-        Arguments:
-            mobile_attck_json (json) - Takes the MITRE Mobile ATT&CK Json object
-                                       as argument
-
-        Returns:
-            [MobileAttck]: Returns a Attck object that contains all data from the
-                           MITRE Mobile ATT&CK Framework
-        """
-        self.__mobile_attck = mobile_attck_json
+    __mobile_attck_json = Configuration.get_data(Configuration.config_data.get('enterprise_attck_json'))
+    __tactics = []
+    __techniques = []
+    __mitigations = []
+    __actors = []
+    __tools = []
+    __malwares = []
 
     @property
     def actors(self):
@@ -234,10 +221,9 @@ class MobileAttck(object):
             (MobileAttckActor) -- (Returns a list of MobileAttckActor objects)
         """
         if self.__actors is None:
-            self.__actors = []
-            for group in self.__mobile_attck['objects']:
+            for group in self.__mobile_attck_json['objects']:
                 if group['type'] == 'intrusion-set':
-                    self.__actors.append(MobileAttckActor(mobile_attck_obj=self.__mobile_attck, **group))
+                    self.__actors.append(MobileAttckActor(mobile_attck_obj=self.__mobile_attck_json, **group))
         return self.__actors
 
     @property
@@ -249,10 +235,9 @@ class MobileAttck(object):
             (MobileAttckTactic) -- (Returns a list of MobileAttckTactic objects)
         """
         if self.__tactics is None:
-            self.__tactics = []
-            for tactic in self.__mobile_attck['objects']:
+            for tactic in self.__mobile_attck_json['objects']:
                 if tactic['type'] == 'x-mitre-tactic':
-                    self.__tactics.append(MobileAttckTactic(mobile_attck_obj=self.__mobile_attck, **tactic))
+                    self.__tactics.append(MobileAttckTactic(mobile_attck_obj=self.__mobile_attck_json, **tactic))
         return self.__tactics
 
     @property
@@ -264,10 +249,9 @@ class MobileAttck(object):
             (MobileAttckMitigation) -- (Returns a list of MobileAttckMitigation objects)
         """
         if self.__mitigations is None:
-            self.__mitigations = []
-            for mitigation in self.__mobile_attck['objects']:
+            for mitigation in self.__mobile_attck_json['objects']:
                 if mitigation['type'] == 'course-of-action':
-                    self.__mitigations.append(MobileAttckMitigation(mobile_attck_obj=self.__mobile_attck, **mitigation))
+                    self.__mitigations.append(MobileAttckMitigation(mobile_attck_obj=self.__mobile_attck_json, **mitigation))
         return self.__mitigations
 
     @property
@@ -279,10 +263,9 @@ class MobileAttck(object):
             (MobileAttckTools) -- Returns a list of MobileAttckTools objects
         """
         if self.__tools is None:
-            self.__tools = []
-            for tools in self.__mobile_attck['objects']:
+            for tools in self.__mobile_attck_json['objects']:
                 if tools['type'] == 'tool':
-                    self.__tools.append(MobileAttckTools(mobile_attck_obj=self.__mobile_attck, **tools))
+                    self.__tools.append(MobileAttckTools(mobile_attck_obj=self.__mobile_attck_json, **tools))
         return self.__tools
 
     @property
@@ -294,10 +277,9 @@ class MobileAttck(object):
             (MobileAttckMalware) -- Returns a list of MobileAttckMalware objects
         """
         if self.__malwares is None:
-            self.__malwares = []
-            for malware in self.__mobile_attck['objects']:
+            for malware in self.__mobile_attck_json['objects']:
                 if malware['type'] == 'malware':
-                    self.__malwares.append(MobileAttckMalware(mobile_attck_obj=self.__mobile_attck, **malware))
+                    self.__malwares.append(MobileAttckMalware(mobile_attck_obj=self.__mobile_attck_json, **malware))
         return self.__malwares
 
     @property
@@ -309,8 +291,7 @@ class MobileAttck(object):
             (MobileAttckTechnique) -- Returns a list of MobileAttckTechnique objects
         """
         if self.__techniques is None:
-            self.__techniques = []
-            for technique in self.__mobile_attck["objects"]:
+            for technique in self.__mobile_attck_json["objects"]:
                 if technique['type'] == 'attack-pattern':
-                    self.__techniques.append(MobileAttckTechnique(mobile_attck_obj=self.__mobile_attck, **technique))
+                    self.__techniques.append(MobileAttckTechnique(mobile_attck_obj=self.__mobile_attck_json, **technique))
         return self.__techniques
