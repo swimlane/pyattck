@@ -1,3 +1,4 @@
+from ..configuration import Configuration
 
 
 class MobileAttckObject(object):
@@ -13,6 +14,11 @@ class MobileAttckObject(object):
     """
 
     _RELATIONSHIPS = None
+    generated_attck_json = Configuration.get_data(Configuration.config_data.get('generated_attck_json'))
+    generated_attck_c2_data = generated_attck_json['c2_data']
+    generated_attck_tools_data = generated_attck_json['tools']
+    nist_controls_json = Configuration.get_data(Configuration.config_data.get('nist_controls_json'))['objects']
+    generated_nist_json = Configuration.get_data(Configuration.config_data.get('generated_nist_json'))
 
     def __init__(self, **kwargs):
         """
