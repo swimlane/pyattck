@@ -42,7 +42,6 @@ class ConfigurationProperties(type):
             json.dump(json_data, f)
 
     def __save_data(cls):
-        print(cls.data_path)
         if not os.path.exists(os.path.dirname(cls.data_path)):
             try:
                 os.makedirs(os.path.dirname(cls.data_path))
@@ -67,7 +66,7 @@ class ConfigurationProperties(type):
             elif value.endswith('.yml'):
                 yaml.dump(cls.config_data, f)
 
-    def __get_config(cls, value):
+    def get_data(cls, value):
         data = None
         if os.path.isfile(value):
             with open(value) as f:
@@ -75,6 +74,8 @@ class ConfigurationProperties(type):
                     data = json.load(f)
                 elif value.endswith('.yml'):
                     data = yaml.load(f, Loader=yaml.FullLoader)
+        elif cls._check_if_url(value):
+            data = cls.__download_url_data(value)
         return data
 
     @property
@@ -121,7 +122,7 @@ class ConfigurationProperties(type):
     def config_data(cls):
         if not cls.__config_data:
             if cls.use_config:
-                cls.__config_data = cls.__get_config(cls.config_file_path)
+                cls.__config_data = cls.get_data(cls.config_file_path)
             if cls.save_config:
                 cls.__save_config(cls.config_file_path)
                 cls.__save_data()
