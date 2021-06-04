@@ -102,101 +102,44 @@ class PreAttckActor(PreAttckObject):
         self.set_relationships(self.__preattck_obj)
         logo = Logo(self.name.strip().replace(' ','_').lower())
         self.ascii_logo = logo.get_ascii()
-        self.__retrieve_datasets()
         self.external_dataset = self.__get_actors_dataset()
-
-    def __retrieve_datasets(self):
-        if PreAttckActor.__PREATTCK_DATASETS is None:
-            try:
-                data = AttckDatasets().get_data(data_type='generated_data')
-                if 'actors' in data:
-                    PreAttckActor.__PREATTCK_DATASETS = data['actors']
-            except:
-                raise GeneratedDatasetException('Unable to retrieve generated attack data properties')
 
     def __get_actors_dataset(self):
         return_list = []
-        self.country = []
-        self.operations = []
-        self.attribution_links = []
-        self.known_tools = []
-        self.targets = []
-        self.additional_comments = []
-        self.external_description = []
-        for country in PreAttckActor.__PREATTCK_DATASETS:
+        countries = set()
+        operations = set()
+        attribution_links = set()
+        known_tools = set()
+        targets = set()
+        additional_comments = set()
+        external_description = set()
+        for country in self.generated_attck_json.get('actors'):
             if country:
-                for k,v in country.items():
-                    for actor in v['actors']:
-                        if 'names' in actor:
-                            if actor['names']:
-                                if self.name in actor['names']:
-                                    if k not in self.country:
-                                        self.country.append(k)
-                                    return_list.append(actor)
-                                    if 'operations' in actor:
-                                        if actor['operations']:
-                                            for operation in actor['operations']:
-                                                if operation not in self.operations:
-                                                    self.operations.append(operation)
-                                    if 'links' in actor:
-                                        if actor['links']:
-                                            for link in actor['links']:
-                                                if link not in self.attribution_links:
-                                                    self.attribution_links.append(link)
-                                    if 'tools' in actor:
-                                        if actor['tools']:
-                                            for tool in actor['tools']:
-                                                if tool not in self.known_tools:
-                                                    self.known_tools.append(tool)
-                                    if 'targets' in actor:
-                                        if actor['targets']:
-                                            if actor['targets'] not in self.targets:
-                                                self.targets.append(actor['targets'])
-                                    if 'comment' in actor:
-                                        if actor['comment']:
-                                            if actor['comment'] not in self.additional_comments:
-                                                self.additional_comments.append(actor['comment'])
-                                    if 'description' in actor:
-                                        if actor['description']:
-                                            if actor['description'] not in self.external_description:
-                                                self.external_description.append(actor['description'])
-                            if self.alias:
-                                for alias in self.alias:
-                                    if alias in actor['names']:
-                                        if k not in self.country:
-                                            self.country.append(k)
-                                        return_list.append(actor)
-                                        if 'operations' in actor:
-                                            if actor['operations']:
-                                                for operation in actor['operations']:
-                                                    if operation not in self.operations:
-                                                        self.operations.append(operation)
-                                        if 'links' in actor:
-                                            if actor['links']:
-                                                for link in actor['links']:
-                                                    if link not in self.attribution_links:
-                                                        self.attribution_links.append(link)
-                                        if 'tools' in actor:
-                                            if actor['tools']:
-                                                for tool in actor['tools']:
-                                                    if tool not in self.known_tools:
-                                                        self.known_tools.append(tool)
-                                        if 'targets' in actor:
-                                            if actor['targets']:
-                                                if actor['targets'] not in self.targets:
-                                                    self.targets.append(actor['targets'])
-                                        if 'comment' in actor:
-                                            if actor['comment']:
-                                                if actor['comment'] not in self.additional_comments:
-                                                    self.additional_comments.append(actor['comment'])
-                                        if 'description' in actor:
-                                            if actor['description']:
-                                                if actor['description'] not in self.external_description:
-                                                    self.external_description.append(actor['description'])
-        if return_list:
-            return return_list
-        else:
-            return None
+                for key,val in country.items():
+                    for actor in val.get('actors'):
+                        if self.name in actor.get('names') or hasattr(self, 'alias') and self.alias and any(x in actor.get('names') for x in self.alias):
+                            countries.add(key)
+                            if actor.get('operations'):
+                                operations.update(actor.get('operations'))
+                            if actor.get('links'):
+                                attribution_links.update(actor.get('links'))
+                            if actor.get('tools'):
+                                known_tools.update(actor.get('tools'))
+                            if actor.get('targets'):
+                                targets.add(actor.get('targets'))
+                            if actor.get('comment'):
+                                additional_comments.update(actor.get('comment',[]))
+                            if actor.get('description'):
+                                external_description.update(actor.get('description'))
+                            return_list.append(actor)
+        self.country = list(countries)
+        self.operations = list(operations)
+        self.attribution_links = list(attribution_links)
+        self.known_tools = list(known_tools)
+        self.targets = list(targets)
+        self.additional_comments = list(additional_comments)
+        self.external_description = list(external_description)
+        return return_list
 
     @property
     def techniques(self):
