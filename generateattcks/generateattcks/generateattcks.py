@@ -18,6 +18,7 @@ from .aptthreattracking import APTThreatTracking
 from .elemental import ElementalAttack
 from .malwarearchaeology import MalwareArchaeology
 from .newbeeattackdata import NewBeeAttackDataset
+from .attckdatasources import AttckDatasources
 
 
 class GenerateAttcks(object):
@@ -58,6 +59,7 @@ class GenerateAttcks(object):
         self.add_elemental_attack()
         self.add_malware_archaeology()
         self.add_new_bee_attack_data()
+        self.add_attck_datasources()
         technique_list = []
         for technique in self._datasets['techniques']:
             if self.conversion_data.get(technique['technique_id']):
@@ -71,6 +73,10 @@ class GenerateAttcks(object):
                             
         self._datasets['techniques'] = technique_list
         return self._datasets
+
+    def add_attck_datasources(self):
+        for item in AttckDatasources().get():
+            self.__add_to_output(item)
 
     def add_new_bee_attack_data(self):
         for item in NewBeeAttackDataset().get():
@@ -112,7 +118,8 @@ class GenerateAttcks(object):
 
     def add_atomic_red_team(self):
         for item in AtomicRedTeam().get():
-            self.__add_to_output(item)
+            if item:
+                self.__add_to_output(item)
 
     def add_mitre_stockpile(self):
         stockpile = MitreStockpile()
