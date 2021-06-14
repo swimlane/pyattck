@@ -290,8 +290,7 @@ class Enterprise(object):
         Returns:
             (AttckActor) -- (Returns a list of AttckActor objects)
         """
-        if self.__actors is None:
-            self.__actors = []
+        if not self.__actors:
             for group in self.__attck['objects']:
                 if group['type'] == 'intrusion-set':
                     self.__actors.append(AttckActor(attck_obj=self.__attck, **group))
@@ -320,7 +319,7 @@ class Enterprise(object):
         Returns:
             (AttckTactic) -- (Returns a list of AttckTactic objects)
         """
-        if self.__tactics is None:
+        if not self.__tactics:
             for tactic in self.__attck['objects']:
                 if tactic['type'] == 'x-mitre-tactic':
                     self.__tactics.append(AttckTactic(attck_obj=self.__attck, **tactic))
@@ -334,7 +333,7 @@ class Enterprise(object):
         Returns:
             (AttckMitigation) -- (Returns a list of AttckMitigation objects)
         """
-        if self.__mitigations is None:
+        if not self.__mitigations:
             for mitigation in self.__attck['objects']:
                 if mitigation['type'] == 'course-of-action':
                     self.__mitigations.append(AttckMitigation(attck_obj=self.__attck, **mitigation))
@@ -348,7 +347,7 @@ class Enterprise(object):
         Returns:
             (AttckTools) -- Returns a list of AttckTools objects
         """
-        if self.__tools is None:
+        if not self.__tools:
             for tools in self.__attck['objects']:
                 if tools['type'] == 'tool':
                     self.__tools.append(AttckTools(attck_obj=self.__attck, **tools))
@@ -362,7 +361,7 @@ class Enterprise(object):
         Returns:
             (AttckMalware) -- Returns a list of AttckMalware objects
         """
-        if self.__malwares is None:
+        if not self.__malwares:
             for malware in self.__attck['objects']:
                 if malware['type'] == 'malware':
                     self.__malwares.append(AttckMalware(attck_obj=self.__attck, **malware))
@@ -376,7 +375,7 @@ class Enterprise(object):
         Returns:
             (AttckTechnique) -- Returns a list of AttckTechnique objects
         """
-        if self.__techniques is None:
+        if not self.__techniques:
             subtechniques = []
             for technique in self.__attck["objects"]:
                 if technique.get('type') == 'attack-pattern' and technique.get('revoked') is not True:

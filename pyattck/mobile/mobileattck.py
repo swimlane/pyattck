@@ -220,7 +220,7 @@ class MobileAttck(object):
         Returns:
             (MobileAttckActor) -- (Returns a list of MobileAttckActor objects)
         """
-        if self.__actors is None:
+        if not self.__actors:
             for group in self.__mobile_attck_json['objects']:
                 if group['type'] == 'intrusion-set':
                     self.__actors.append(MobileAttckActor(mobile_attck_obj=self.__mobile_attck_json, **group))
@@ -234,7 +234,7 @@ class MobileAttck(object):
         Returns:
             (MobileAttckTactic) -- (Returns a list of MobileAttckTactic objects)
         """
-        if self.__tactics is None:
+        if not self.__tactics:
             for tactic in self.__mobile_attck_json['objects']:
                 if tactic['type'] == 'x-mitre-tactic':
                     self.__tactics.append(MobileAttckTactic(mobile_attck_obj=self.__mobile_attck_json, **tactic))
@@ -248,7 +248,7 @@ class MobileAttck(object):
         Returns:
             (MobileAttckMitigation) -- (Returns a list of MobileAttckMitigation objects)
         """
-        if self.__mitigations is None:
+        if not self.__mitigations:
             for mitigation in self.__mobile_attck_json['objects']:
                 if mitigation['type'] == 'course-of-action':
                     self.__mitigations.append(MobileAttckMitigation(mobile_attck_obj=self.__mobile_attck_json, **mitigation))
@@ -262,7 +262,7 @@ class MobileAttck(object):
         Returns:
             (MobileAttckTools) -- Returns a list of MobileAttckTools objects
         """
-        if self.__tools is None:
+        if not self.__tools:
             for tools in self.__mobile_attck_json['objects']:
                 if tools['type'] == 'tool':
                     self.__tools.append(MobileAttckTools(mobile_attck_obj=self.__mobile_attck_json, **tools))
@@ -276,7 +276,7 @@ class MobileAttck(object):
         Returns:
             (MobileAttckMalware) -- Returns a list of MobileAttckMalware objects
         """
-        if self.__malwares is None:
+        if not self.__malwares:
             for malware in self.__mobile_attck_json['objects']:
                 if malware['type'] == 'malware':
                     self.__malwares.append(MobileAttckMalware(mobile_attck_obj=self.__mobile_attck_json, **malware))
@@ -290,7 +290,7 @@ class MobileAttck(object):
         Returns:
             (MobileAttckTechnique) -- Returns a list of MobileAttckTechnique objects
         """
-        if self.__techniques is None:
+        if not self.__techniques:
             for technique in self.__mobile_attck_json["objects"]:
                 if technique['type'] == 'attack-pattern':
                     self.__techniques.append(MobileAttckTechnique(mobile_attck_obj=self.__mobile_attck_json, **technique))

@@ -105,7 +105,7 @@ class PreAttck(object):
         Returns:
             PreAttckActor: Returns a list of PreAttckActor objects
         """
-        if self.__actors is None:
+        if not self.__actors:
             for group in self.__preattck_json['objects']:
                 if group['type'] == 'intrusion-set':
                     self.__actors.append(PreAttckActor(preattck_obj=self.__preattck_json, **group))
@@ -119,7 +119,7 @@ class PreAttck(object):
         Returns:
             PreAttckTactic: Returns a list of PreAttckTactic objects
         """
-        if self.__tactics is None:
+        if not self.__tactics:
             for tactic in self.__preattck_json['objects']:
                 if tactic['type'] == 'x-mitre-tactic':
                     self.__tactics.append(PreAttckTactic(preattck_obj=self.__preattck_json, **tactic))
@@ -133,7 +133,7 @@ class PreAttck(object):
         Returns:
             PreAttckTechnique: Returns a list of PreAttckTechnique objects
         """
-        if self.__techniques is None:
+        if not self.__techniques:
             for technique in self.__preattck_json["objects"]:
                 if (technique['type'] == 'attack-pattern'):
                     self.__techniques.append(PreAttckTechnique(preattck_obj=self.__preattck_json, **technique))
