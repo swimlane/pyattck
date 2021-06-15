@@ -130,3 +130,21 @@ def test_configuration_settings_save_config(attck_configuration):
     attck_configuration.data_path = temp_dir
     assert attck_configuration.data_path == temp_dir
 
+
+def test_configuration_request_kwargs(attck_configuration):
+    assert attck_configuration.requests_kwargs == {}
+    attck_configuration.requests_kwargs = {
+        'verify': False,
+        'proxies': {
+            'http': 'http://10.10.1.10:3128',
+            'https': 'http://10.10.1.10:1080',
+        }
+    }
+    assert isinstance(attck_configuration.requests_kwargs, dict)
+    assert attck_configuration.requests_kwargs == {
+        'verify': False,
+        'proxies': {
+            'http': 'http://10.10.1.10:3128',
+            'https': 'http://10.10.1.10:1080',
+        }
+    }
