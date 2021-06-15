@@ -26,3 +26,6 @@ jobs:
     - name: Run Tests
       run: |
         python -m pytest
+    - name: Code Coverage
+      run: |
+        python -m coverage report

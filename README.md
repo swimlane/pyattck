@@ -2,6 +2,7 @@
 ![](./images/ubuntu_support.svg)
 ![](./images/macos_support.svg)
 ![](./images/windows_support.svg)
+![](./images/code_coverage.svg)
 
 # Welcome to pyattck's Documentation
 

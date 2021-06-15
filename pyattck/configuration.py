@@ -1,8 +1,8 @@
-import yaml
 import os
 import json
 from urllib.parse import urlparse
 from pathlib import Path
+import yaml
 from requests.api import request
 
 
@@ -13,12 +13,12 @@ class ConfigurationProperties(type):
     def __download_url_data(cls, url):
         return request('GET', url, **cls.requests_kwargs).json()
 
-    def _check_if_path(self, value):
+    def _check_if_path(cls, value):
         if Path(value):
             return True
         return False
 
-    def _check_if_url(self, value):
+    def _check_if_url(cls, value):
         try:
             if urlparse(value).scheme in ['http', 'https']:
                 return True
@@ -26,8 +26,12 @@ class ConfigurationProperties(type):
         except:
             return False
 
-    def __get_absolute_path(self, path_string):
-        return os.path.abspath(os.path.expanduser(os.path.expandvars(path_string)))
+    def __get_absolute_path(cls, path_string):
+        return os.path.abspath(
+            os.path.expanduser(
+                os.path.expandvars(path_string)
+            )
+        )
 
     def __validate_value_string(cls, value):
         if cls._check_if_url(value):
@@ -35,19 +39,23 @@ class ConfigurationProperties(type):
         elif cls._check_if_path(value):
             return value
         else:
-            raise Exception('The provided value {} is neither a URL or file path'.format(value))
+            raise Exception('The provided value is neither a URL or file path')
 
     def __write_to_disk(cls, path, json_data):
-        with open(path, 'w+') as f:
-            json.dump(json_data, f)
+        with open(path, 'w+') as file_obj:
+            json.dump(json_data, file_obj)
 
     def __save_data(cls):
         if not os.path.exists(os.path.dirname(cls.data_path)):
             try:
                 os.makedirs(os.path.dirname(cls.data_path))
             except:
-                raise Exception('Unable to save data to the provided location: {}'.format(cls.data_path))
-        for json_data in ['enterprise_attck_json', 'pre_attck_json', 'mobile_attck_json', 'nist_controls_json', 'generated_attck_json', 'generated_nist_json']:
+                raise Exception(
+                    'Unable to save data to the provided location: {}'.format(cls.data_path)
+                )
+        for json_data in ['enterprise_attck_json', 'pre_attck_json', 
+                          'mobile_attck_json', 'nist_controls_json', 
+                          'generated_attck_json', 'generated_nist_json']:
             if cls._check_if_url(getattr(cls, json_data)):
                 path = os.path.join(cls.data_path, "{json_data}.json".format(json_data=json_data))
                 data = cls.__download_url_data(getattr(cls, json_data))

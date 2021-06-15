@@ -126,16 +126,25 @@ class Attck(object):
     Arguments:
         nested_subtechniques (bool, optional): Whether not to iterate over nested subtechniques. Defaults to True.
         use_config (bool, optional): Specifies if a configuration file should be used or not.  Defaults to False.
-        save_config (bool, optional): Specifies if pyattck should save a configuration file based on the provided values.  Defaults to False.
-        config_file_path (str, optional): Path to a yaml configuration file which contains two key value pairs. Defaults to '~/pyattck/config.yml'.
-        data_path (str, optional): Path to store the external data locally on your system.  Defaults to '~/pyattck/data'.
-        enterprise_attck_json (str, optional): A URL or local file path to the MITRE ATT&CK Json file. Defaults to https://raw.githubusercontent.com/mitre/cti/master/enterprise-attack/enterprise-attack.json.
-        pre_attck_json (str, optional): A URL or local file path to the MITRE Pre-ATT&CK Json file. Defaults to https://raw.githubusercontent.com/mitre/cti/master/pre-attack/pre-attack.json.
-        mobile_attck_json (str, optional): A URL or local file path to the MITRE Mobile ATT&CK Json file. Defaults to https://raw.githubusercontent.com/mitre/cti/master/mobile-attack/mobile-attack.json.
-        nist_controls_json (str, optional): A URL or local file path to the NIST Controls Json file. Defaults to https://raw.githubusercontent.com/center-for-threat-informed-defense/attack-control-framework-mappings/master/frameworks/nist800-53-r4/stix/nist800-53-r4-controls.json.
-        generated_attck_json (str, optional): A URL or local file path to the Generated MITRE ATT&CK Json file. Defaults to https://github.com/swimlane/pyattck/blob/master/generated_attck_data.json?raw=True.
-        generated_nist_json (str, optional): A URL or local file path to the Generated NIST Controls Mapping Json file. Defaults to https://github.com/swimlane/pyattck/blob/master/attck_to_nist_controls.json?raw=True.
-        kwargs (dict, optional): Provided kwargs will be passed to any HTTP requests using the Requests library. Defaults to None.
+        save_config (bool, optional): Specifies if pyattck should save a configuration file based on the provided 
+                                      values.  Defaults to False.
+        config_file_path (str, optional): Path to a yaml configuration file which contains two key value pairs. 
+                                          Defaults to '~/pyattck/config.yml'.
+        data_path (str, optional): Path to store the external data locally on your system. Defaults to '~/pyattck/data'.
+        enterprise_attck_json (str, optional): A URL or local file path to the MITRE ATT&CK Json file. 
+                                               Defaults to https://raw.githubusercontent.com/mitre/cti/master/enterprise-attack/enterprise-attack.json.
+        pre_attck_json (str, optional): A URL or local file path to the MITRE Pre-ATT&CK Json file. 
+                                        Defaults to https://raw.githubusercontent.com/mitre/cti/master/pre-attack/pre-attack.json.
+        mobile_attck_json (str, optional): A URL or local file path to the MITRE Mobile ATT&CK Json file. 
+                                           Defaults to https://raw.githubusercontent.com/mitre/cti/master/mobile-attack/mobile-attack.json.
+        nist_controls_json (str, optional): A URL or local file path to the NIST Controls Json file. 
+                                            Defaults to https://raw.githubusercontent.com/center-for-threat-informed-defense/attack-control-framework-mappings/master/frameworks/nist800-53-r4/stix/nist800-53-r4-controls.json.
+        generated_attck_json (str, optional): A URL or local file path to the Generated MITRE ATT&CK Json file. 
+                                              Defaults to https://github.com/swimlane/pyattck/blob/master/generated_attck_data.json?raw=True.
+        generated_nist_json (str, optional): A URL or local file path to the Generated NIST Controls Mapping Json file. 
+                                             Defaults to https://github.com/swimlane/pyattck/blob/master/attck_to_nist_controls.json?raw=True.
+        kwargs (dict, optional): Provided kwargs will be passed to any HTTP requests using the Requests library. 
+                                 Defaults to None.
 
     Returns:
         [Attck]: Returns a Attck object that contains all data from MITRE ATT&CK Frameworks
@@ -210,16 +219,27 @@ class Attck(object):
         Args:
             nested_subtechniques (bool, optional): Whether not to iterate over nested subtechniques. Defaults to True.
             use_config (bool, optional): Specifies if a configuration file should be used or not.  Defaults to False.
-            save_config (bool, optional): Specifies if pyattck should save a configuration file based on the provided values.  Defaults to False.
-            config_file_path (str, optional): Path to a yaml configuration file which contains two key value pairs. Defaults to '~/pyattck/config.yml'.
-            data_path (str, optional): Path to store the external data locally on your system.  Defaults to '~/pyattck/data'.
-            enterprise_attck_json (str, optional): A URL or local file path to the MITRE ATT&CK Json file. Defaults to https://raw.githubusercontent.com/mitre/cti/master/enterprise-attack/enterprise-attack.json.
-            pre_attck_json (str, optional): A URL or local file path to the MITRE Pre-ATT&CK Json file. Defaults to https://raw.githubusercontent.com/mitre/cti/master/pre-attack/pre-attack.json.
-            mobile_attck_json (str, optional): A URL or local file path to the MITRE Mobile ATT&CK Json file. Defaults to https://raw.githubusercontent.com/mitre/cti/master/mobile-attack/mobile-attack.json.
-            nist_controls_json (str, optional): A URL or local file path to the NIST Controls Json file. Defaults to https://raw.githubusercontent.com/center-for-threat-informed-defense/attack-control-framework-mappings/master/frameworks/nist800-53-r4/stix/nist800-53-r4-controls.json.
-            generated_attck_json (str, optional): A URL or local file path to the Generated MITRE ATT&CK Json file. Defaults to https://github.com/swimlane/pyattck/blob/master/generated_attck_data.json?raw=True.
-            generated_nist_json (str, optional): A URL or local file path to the Generated NIST Controls Mapping Json file. Defaults to https://github.com/swimlane/pyattck/blob/master/attck_to_nist_controls.json?raw=True.
-            kwargs (dict, optional): Provided kwargs will be passed to any HTTP requests using the Requests library. Defaults to None.
+            save_config (bool, optional): Specifies if pyattck should save a configuration file based on the 
+                                          provided values.  Defaults to False.
+            config_file_path (str, optional): Path to a yaml configuration file which contains two key value pairs. 
+                                              Defaults to '~/pyattck/config.yml'.
+            data_path (str, optional): Path to store the external data locally on your system.  
+                                       Defaults to '~/pyattck/data'.
+            enterprise_attck_json (str, optional): A URL or local file path to the MITRE ATT&CK Json file. 
+                                                   Defaults to https://raw.githubusercontent.com/mitre/cti/master/enterprise-attack/enterprise-attack.json.
+            pre_attck_json (str, optional): A URL or local file path to the MITRE Pre-ATT&CK Json file. 
+                                            Defaults to https://raw.githubusercontent.com/mitre/cti/master/pre-attack/pre-attack.json.
+            mobile_attck_json (str, optional): A URL or local file path to the MITRE Mobile ATT&CK Json file. 
+                                               Defaults to https://raw.githubusercontent.com/mitre/cti/master/mobile-attack/mobile-attack.json.
+            nist_controls_json (str, optional): A URL or local file path to the NIST Controls Json file. 
+                                                Defaults to https://raw.githubusercontent.com/center-for-threat-informed-defense/attack-control-framework-mappings/master/frameworks/nist800-53-r4/stix/nist800-53-r4-controls.json.
+            generated_attck_json (str, optional): A URL or local file path to the Generated MITRE ATT&CK Json file. 
+                                                  Defaults to https://github.com/swimlane/pyattck/blob/master/generated_attck_data.json?raw=True.
+            generated_nist_json (str, optional): A URL or local file path to the Generated NIST Controls Mapping 
+                                                 Json file. 
+                                                 Defaults to https://github.com/swimlane/pyattck/blob/master/attck_to_nist_controls.json?raw=True.
+            kwargs (dict, optional): Provided kwargs will be passed to any HTTP requests using the Requests library. 
+                                     Defaults to None.
         """
         self.__nested_subtechniques = nested_subtechniques
         Configuration.use_config = use_config
