@@ -28,6 +28,13 @@ def test_default_configuration_settings_set(attck_configuration):
     assert attck_configuration.config_file_path == os.path.abspath(os.path.expanduser(os.path.expandvars('~/pyattck/config.yml')))
     assert attck_configuration.data_path == os.path.abspath(os.path.expanduser(os.path.expandvars(default_config_data.get('data_path'))))
 
+def test_configuration_save_config(attck_configuration):
+    from pyattck import Attck
+    attck = Attck(save_config=True)
+    assert attck_configuration.save_config == True
+    assert isinstance(attck_configuration.config_data, dict)
+    assert attck_configuration.data_path == attck_configuration.config_data.get('data_path')
+
 @pytest.mark.parametrize(
     'target_attribute', 
     ['enterprise_attck_json', 'pre_attck_json', 'mobile_attck_json', 'nist_controls_json', 'generated_attck_json', 'generated_nist_json']
@@ -86,7 +93,7 @@ def test_configuration_data_can_be_file_path_location(attck_configuration):
 def test_configuration_settings_use_config_sets_config_values(attck_configuration):
     attck_configuration.use_config = True
     assert attck_configuration.use_config == True
-    with tempfile.NamedTemporaryFile('w+') as f:
+    with tempfile.NamedTemporaryFile('w+', suffix=random.choice(['.json', '.yml', '.yaml'])) as f:
         yaml.dump(default_config_data, f)
         attck_configuration.config_file_path = f.name
         assert attck_configuration.config_data
@@ -102,7 +109,7 @@ def test_configuration_settings_use_config_sets_config_values(attck_configuratio
 def test_use_config_defaults_to_set_config_data(attck_configuration):
     attck_configuration.use_config = True
     assert attck_configuration.use_config == True
-    with tempfile.NamedTemporaryFile() as f:
+    with tempfile.NamedTemporaryFile(suffix=random.choice(['.json', '.yml', '.yaml'])) as f:
         f.write(b'')
         attck_configuration.config_file_path = f.name
         assert attck_configuration.config_data

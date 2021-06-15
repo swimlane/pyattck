@@ -1,9 +1,11 @@
 import os
 import json
+import warnings
 from urllib.parse import urlparse
 from pathlib import Path
 import yaml
 from requests.api import request
+from .utils.exceptions import UknownFileError
 
 
 class ConfigurationProperties(type):
@@ -46,9 +48,9 @@ class ConfigurationProperties(type):
             json.dump(json_data, file_obj)
 
     def __save_data(cls):
-        if not os.path.exists(os.path.dirname(cls.data_path)):
+        if not os.path.exists(cls.data_path):
             try:
-                os.makedirs(os.path.dirname(cls.data_path))
+                os.makedirs(cls.data_path)
             except:
                 raise Exception(
                     'Unable to save data to the provided location: {}'.format(cls.data_path)
@@ -61,27 +63,47 @@ class ConfigurationProperties(type):
                 data = cls.__download_url_data(getattr(cls, json_data))
                 cls.__write_to_disk(path, data)
 
-    def __save_config(cls, value):
+    def __save_config(cls, path, data):
         # save configuration to disk
-        if not os.path.exists(os.path.dirname(value)):
+        if not os.path.exists(os.path.dirname(path)):
             try:
-                os.makedirs(os.path.dirname(value))
+                os.makedirs(os.path.dirname(path))
             except:
-                raise Exception('pyattck attempted to create the provided directories but was unable to: {}'.format(value))
-        with open(value, 'w+') as f:
-            if value.endswith('.json'):
-                json.dump(cls.cls.config_data, f)
-            elif value.endswith('.yml'):
-                yaml.dump(cls.config_data, f)
+                raise Exception('pyattck attempted to create the provided directories but was unable to: {}'.format(path))
+        with open(path, 'w+') as f:
+            if path.endswith('.json'):
+                json.dump(data, f)
+            elif path.endswith('.yml') or path.endswith('.yaml'):
+                yaml.dump(data, f)
+            else:
+                raise UknownFileError(provided_value=path, known_values=['.json', '.yml', '.yaml'])
+
+    def __update_config(cls):
+        cls.__config_data = {
+            'data_path': cls.data_path,
+            'enterprise_attck_json': cls._enterprise_attck_json,
+            'pre_attck_json': cls._pre_attck_json,
+            'mobile_attck_json': cls._mobile_attck_json,
+            'nist_controls_json': cls._nist_controls_json,
+            'generated_attck_json': cls._generated_attck_json,
+            'generated_nist_json': cls._generated_nist_json
+        }
 
     def get_data(cls, value):
         data = None
         if os.path.isfile(value):
-            with open(value) as f:
-                if value.endswith('.json'):
-                    data = json.load(f)
-                elif value.endswith('.yml'):
-                    data = yaml.load(f, Loader=yaml.FullLoader)
+            try:
+                with open(value) as f:
+                    if value.endswith('.json'):
+                        data = json.load(f)
+                    elif value.endswith('.yml') or value.endswith('.yaml'):
+                        data = yaml.load(f, Loader=yaml.FullLoader)
+                    else:
+                        raise UknownFileError(provided_value=value, known_values=['.json', '.yml', '.yaml'])
+            except:
+                warnings.warn("Unable to load data from specified location. Setting configuration data to defaults: '{}'".format(value))
+                cls.__update_config()
+                data = cls.__config_data
         elif cls._check_if_url(value):
             data = cls.__download_url_data(value)
         return data
@@ -117,6 +139,7 @@ class ConfigurationProperties(type):
     @config_file_path.setter
     def config_file_path(cls, value):
         cls._config_file_path = cls.__get_absolute_path(value)
+        cls.__update_config()
 
     @property
     def data_path(cls):
@@ -125,35 +148,19 @@ class ConfigurationProperties(type):
     @data_path.setter
     def data_path(cls, value):
         cls._data_path = cls.__get_absolute_path(value)
+        cls.__update_config()
 
     @property
     def config_data(cls):
-        if not cls.__config_data:
-            if cls.use_config:
-                cls.__config_data = cls.get_data(cls.config_file_path)
-            if cls.save_config:
-                cls.__save_config(cls.config_file_path)
-                cls.__save_data()
+        if cls.use_config:
+            cls.__config_data = cls.get_data(cls.config_file_path)
             if not cls.__config_data:
-                cls.__config_data = {
-                    'data_path': cls.data_path,
-                    'enterprise_attck_json': cls._enterprise_attck_json,
-                    'pre_attck_json': cls._pre_attck_json,
-                    'mobile_attck_json': cls._mobile_attck_json,
-                    'nist_controls_json': cls._nist_controls_json,
-                    'generated_attck_json': cls._generated_attck_json,
-                    'generated_nist_json': cls._generated_nist_json
-                }
-        if not cls.use_config and not cls.save_config:
-            return {
-                    'data_path': cls.data_path,
-                    'enterprise_attck_json': cls._enterprise_attck_json,
-                    'pre_attck_json': cls._pre_attck_json,
-                    'mobile_attck_json': cls._mobile_attck_json,
-                    'nist_controls_json': cls._nist_controls_json,
-                    'generated_attck_json': cls._generated_attck_json,
-                    'generated_nist_json': cls._generated_nist_json
-                }
+                cls.__update_config()
+        else:
+            cls.__update_config()
+        if cls.save_config:
+            cls.__save_config(cls.config_file_path, cls.__config_data)
+            cls.__save_data()
         return cls.__config_data
 
     @property
@@ -163,6 +170,7 @@ class ConfigurationProperties(type):
     @enterprise_attck_json.setter
     def enterprise_attck_json(cls, value):
         cls._enterprise_attck_json = cls.__validate_value_string(value)
+        cls.__update_config()
 
     @property
     def pre_attck_json(cls):
@@ -171,6 +179,7 @@ class ConfigurationProperties(type):
     @pre_attck_json.setter
     def pre_attck_json(cls, value):
         cls._pre_attck_json = cls.__validate_value_string(value)
+        cls.__update_config()
 
     @property
     def mobile_attck_json(cls):
@@ -179,6 +188,7 @@ class ConfigurationProperties(type):
     @mobile_attck_json.setter
     def mobile_attck_json(cls, value):
         cls._mobile_attck_json = cls.__validate_value_string(value)
+        cls.__update_config()
 
     @property
     def nist_controls_json(cls):
@@ -187,6 +197,7 @@ class ConfigurationProperties(type):
     @nist_controls_json.setter
     def nist_controls_json(cls, value):
         cls._nist_controls_json = cls.__validate_value_string(value)
+        cls.__update_config()
 
     @property
     def generated_attck_json(cls):
@@ -195,6 +206,7 @@ class ConfigurationProperties(type):
     @generated_attck_json.setter
     def generated_attck_json(cls, value):
         cls._generated_attck_json = cls.__validate_value_string(value)
+        cls.__update_config()
 
     @property
     def generated_nist_json(cls):
@@ -203,6 +215,7 @@ class ConfigurationProperties(type):
     @generated_nist_json.setter
     def generated_nist_json(cls, value):
         cls._generated_nist_json = cls.__validate_value_string(value)
+        cls.__update_config()
 
 
 class Configuration(object, metaclass=ConfigurationProperties):
