@@ -148,7 +148,7 @@ class MobileAttckTools(MobileAttckObject):
         self.attribution_links = set()
         self.additional_comments = set()
         self.family = set()
-        for tool in self.generated_attck_tools_data.get('tools'):
+        for tool in MobileAttckObject.generated_attck_json['tools'].get('tools'):
             if tool.get('names'):
                 if self.name.lower() in [x.lower() for x in tool.get('names')] or hasattr(self, 'alias') and any(x.lower() in tool.get('names') for x in self.alias):
                     self.additional_names.update(tool.get('names'))
@@ -167,7 +167,7 @@ class MobileAttckTools(MobileAttckObject):
 
     def __get_c2_dataset(self):
         return_dict = {}
-        for k,v in self.generated_attck_c2_data.items():
+        for k,v in MobileAttckObject.generated_attck_json['c2_data'].items():
             if self.name.lower() == k.lower():
                 return_dict[k] = v
                 for key,val in v.items():

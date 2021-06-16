@@ -98,7 +98,7 @@ class MobileAttckTechnique(MobileAttckObject):
         self.set_relationships(self.__mobile_attck_obj)
 
     def __get_filtered_dataset(self, attribute_name):
-        for item in self.generated_attck_json['techniques']:
+        for item in MobileAttckObject.generated_attck_json['techniques']:
             if item['technique_id'] == self.id:
                 return item[attribute_name]
 
