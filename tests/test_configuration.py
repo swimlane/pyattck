@@ -93,7 +93,7 @@ def test_configuration_data_can_be_file_path_location(attck_configuration):
 def test_configuration_settings_use_config_sets_config_values(attck_configuration):
     attck_configuration.use_config = True
     assert attck_configuration.use_config == True
-    with tempfile.NamedTemporaryFile('w+', suffix=random.choice(['.json', '.yml', '.yaml'])) as f:
+    with tempfile.NamedTemporaryFile('w+', dir=os.path.dirname(os.path.abspath(__file__)), suffix=random.choice(['.json', '.yml', '.yaml'])) as f:
         yaml.dump(default_config_data, f)
         attck_configuration.config_file_path = f.name
         assert attck_configuration.config_data
@@ -109,7 +109,7 @@ def test_configuration_settings_use_config_sets_config_values(attck_configuratio
 def test_use_config_defaults_to_set_config_data(attck_configuration):
     attck_configuration.use_config = True
     assert attck_configuration.use_config == True
-    with tempfile.NamedTemporaryFile(suffix=random.choice(['.json', '.yml', '.yaml'])) as f:
+    with tempfile.NamedTemporaryFile(dir=os.path.dirname(os.path.abspath(__file__)), suffix=random.choice(['.json', '.yml', '.yaml'])) as f:
         f.write(b'')
         attck_configuration.config_file_path = f.name
         assert attck_configuration.config_data
@@ -130,10 +130,10 @@ def test_configuration_settings_save_config(attck_configuration):
     attck_configuration.generated_attck_json = default_config_data['generated_attck_json']
     attck_configuration.generated_nist_json = default_config_data['generated_nist_json']
     attck_configuration.save_config = False
-    temp_value = tempfile.NamedTemporaryFile(suffix='.yml').name
+    temp_value = tempfile.NamedTemporaryFile(dir=os.path.dirname(os.path.abspath(__file__)), suffix='.yml').name
     attck_configuration.config_file_path = temp_value
     assert attck_configuration.config_file_path == temp_value
-    temp_dir = tempfile.TemporaryDirectory().name
+    temp_dir = tempfile.TemporaryDirectory(dir=os.path.dirname(os.path.abspath(__file__))).name
     attck_configuration.data_path = temp_dir
     assert attck_configuration.data_path == temp_dir
 
