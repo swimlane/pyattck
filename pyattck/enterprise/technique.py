@@ -127,7 +127,7 @@ class AttckTechnique(AttckObject):
         self.set_relationships(self.__attck_obj)
 
     def __get_filtered_dataset(self, attribute_name):
-        for item in self.generated_attck_json['techniques']:
+        for item in AttckObject.generated_attck_json['techniques']:
             if item['technique_id'] == self.id:
                 return item[attribute_name]
 
@@ -161,9 +161,9 @@ class AttckTechnique(AttckObject):
         """
         from .control import AttckControl
         control_list = []
-        if self.generated_nist_json.get(self.stix):
-            for control in self.nist_controls_json:
-                if control.get('id') in self.generated_nist_json[self.stix]:
+        if AttckObject.generated_nist_json.get(self.stix):
+            for control in AttckObject.nist_controls_json:
+                if control.get('id') in AttckObject.generated_nist_json[self.stix]:
                     control_list.append(AttckControl(**control))
         return control_list
 

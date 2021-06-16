@@ -68,7 +68,7 @@ class AttckControl(AttckObject):
         """
         from .technique import AttckTechnique
         technique_list = []
-        for key,val in self.generated_nist_json.items():
+        for key,val in AttckObject.generated_nist_json.items():
             if self.stix in val:
                 for item in self.__attck_obj['objects']:
                     if 'type' in item and item['type'] == 'attack-pattern':
