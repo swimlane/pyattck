@@ -109,7 +109,7 @@ class PreAttckActor(PreAttckObject):
         targets = set()
         additional_comments = set()
         external_description = set()
-        for country in self.generated_attck_json.get('actors'):
+        for country in PreAttckObject.generated_attck_json.get('actors'):
             if country:
                 for key,val in country.items():
                     for actor in val.get('actors'):

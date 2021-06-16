@@ -100,7 +100,7 @@ class PreAttckTechnique(PreAttckObject):
         self.set_relationships(self.__preattck_obj)
 
     def __get_filtered_dataset(self, attribute_name):
-        for item in self.generated_attck_json['techniques']:
+        for item in PreAttckObject.generated_attck_json['techniques']:
             if item['technique_id'] == self.id:
                 return item[attribute_name]
 
