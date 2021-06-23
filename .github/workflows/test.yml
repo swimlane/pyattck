@@ -25,8 +25,8 @@ jobs:
         pip install -U -r test-requirements.txt
     - name: Run Tests
       run: |
-        python -m pytest
+        sudo python -m pytest
     - name: Code Coverage
       run: |
-        python -m coverage run -m pytest
-        python -m coverage report
+        sudo python -m coverage run -m pytest
+        sudo python -m coverage report
