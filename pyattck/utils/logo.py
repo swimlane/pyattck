@@ -1,6 +1,9 @@
 import os
 
-from PIL import Image
+try:
+    from PIL import Image
+except:
+    import Image
 from pyfiglet import Figlet
 
 ASCII_CHARS = ['.',',',':',';','+','*','?','%','S','#','@']
