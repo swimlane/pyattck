@@ -17,25 +17,32 @@
 ```
 	A Python package to interact with MITRE ATT&CK Frameworks
 
-> Current Version is 3.1.0
+> Current Version is 4.0.0
 
 **pyattck** is a light-weight framework for MITRE ATT&CK Frameworks. This package extracts details from the MITRE Enterprise, PRE-ATT&CK, and Mobile Frameworks.
 
 ## Features
 
 The **pyattck** package retrieves all Tactics, Techniques, Actors, Malware, Tools, and Mitigations from the MITRE ATT&CK Frameworks as well as any defined relationships within the MITRE ATT&CK dataset.
+
 In addition, Techniques, Actors, and Tools (if applicable) now have collected data from third-party resources that are accessible via properties on a technique. For more detailed information about these features, see [External Datasets](docs/dataset/dataset.md).
 
 The **pyattck** package allows you to:
 
-  * Update or sync the external datasets by calling the `update()` method on an `Attck` object. By default it checks for updates every 30 days.
-  * Specify a local file path for the MITRE ATT&CK Enterprise Framework json, generated dataset, and/or a config.yml file.
+  * Specify a URL or local file path for the MITRE ATT&CK Enterprise Framework json, generated dataset, and/or a config.yml file.
   * Retrieve an image_logo of an actor (when available). If an image_logo isn't available, it generates an ascii_logo.
   * Search the external dataset for external commands that are similar using `search_commands`.
   * Access data from the MITRE PRE-ATT&CK Framework
   * Access data from the MITRE Mobile ATT&CK Framework
   * Access subtechniques as nested objects or you can turn it off and access as normal technique
   * Access compliance controls (currently NIST 800-53) related to a MITRE ATT&CK Technique
+
+# Table of Contents
+
+1. [Installation](#installation)
+2. [Usage Example](#usage-example)
+3. [Configuration](#configuration)
+4. [Notes](#note)
 
 ## Installation
 
@@ -49,18 +56,12 @@ The following libraries are required and installed by pyattck:
 requests
 pendulum>=1.2.3,<1.3
 pyfiglet==0.8.post1
-PyYaml>=5.0
-Pillow==7.1.2
+PyYaml>=5.4.1
+Pillow>=6.2.2
 fire==0.3.1
 ```
 
-### OS X & Linux:
-
-```bash
-pip install pyattck
-```
-
-### Windows:
+### macOS, Linux and Windows:
 
 ```bash
 pip install pyattck
@@ -69,7 +70,7 @@ pip install pyattck
 ### Installing from source
 
 ```bash
-git clone git@github.com:swimlane/pyattck.git
+git clone https://github.com/swimlane/pyattck.git
 cd pyattck
 python setup.py install
 ```
@@ -84,7 +85,7 @@ from pyattck import Attck
 attack = Attck()
 ```
 
-By default, `subtechniques` are accessible under each technique object.  You can turn this behavior off by passing `nested_subtechniques=False` when creating your `Attck` object.
+By default, `subtechniques` are accessible under each technique object. You can turn this behavior off by passing `nested_subtechniques=False` when creating your `Attck` object.
 
 As an example, the default behavior looks like the following example:
 
@@ -172,16 +173,18 @@ By default, `pyattck` will (now) pull the latest external data from their respec
 * generated_attck_json="https://github.com/swimlane/pyattck/blob/master/generated_attck_data.json?raw=True"
 * generated_nist_json="https://github.com/swimlane/pyattck/blob/master/attck_to_nist_controls.json?raw=True"
 
-You have several options when instantiating the `Attck` object. As of `3.1.0` you can now specify any of the following options:
+You have several options when instantiating the `Attck` object. As of `4.0.0` you can now specify any of the following options:
 
 * use_config - When you specify this argument as `True` pyattck will attempt to retrieve the configuration specified in the `config_file_path` location. If this file is corrupted or cannot be found, we will default to retrieving data from the specified `*_attck_json` locations.
 * save_config - When you specify this argument as `True` pyattck will save the configuration file to the specified location set by `config_file_path`. Additionally, we will save all downloaded files to the `data_path` location specified. If you have specified a local path location instead of a download URL for any of the `*_attck_json` parameters we will save this location in our configuration and reference this location going forward. 
 * config_file_path - The path to store a configuration file. Default is `~/pyattck/config.yml`
 * data_path - The path to store any data files downloaded to the local system. Default is `~/pyattck/data`
 
-### attck_json Locations
+### JSON Locations
 
-Additionally, you can specify the location for each individual `*_attck_json` files by passing in either a URI or a local file path. If you have passed in a local file path, we will simply read from this file. If you have used the default values or specified an alternative URI location to retrieve these JSON files from, you can additionally pass in `**kwargs` that will be passed along to the `Requests` python package when performing any HTTP requests.
+Additionally, you can specify the location for each individual `*_attck_json` files by passing in either a URI or a local file path. If you have passed in a local file path, we will simply read from this file. 
+
+If you have used the default values or specified an alternative URI location to retrieve these JSON files from, you can additionally pass in `**kwargs` that will be passed along to the `Requests` python package when performing any HTTP requests.
 
 ## Note
 
@@ -269,11 +272,11 @@ This data set is generated from many different sources. As we continue to add mo
 * [Attack-Technique-Dataset](https://github.com/NewBee119/Attack-Technique-Dataset)
 
 
-
 ```eval_rst
 .. toctree::
    :titlesonly:
 
+   configuration
    pyattck/attck
    dataset/dataset
    enterprise/enterprise
