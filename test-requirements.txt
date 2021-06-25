@@ -1,1 +1,4 @@
 pytest
+pylama==7.7.1
+coverage
+Pillow>=6.2.2

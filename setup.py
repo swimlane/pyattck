@@ -4,9 +4,14 @@ def parse_requirements(requirement_file):
     with open(requirement_file) as f:
         return f.readlines()
 
+version = dict()
+with open("./pyattck/utils/version.py") as fp:
+    exec(fp.read(), version)
+
+
 setup(
     name='pyattck',
-    version='3.0.1',
+    version=version['__version__'],
     packages=find_packages(exclude=['tests*']),
     license='MIT',
     description='A Python package to interact with the Mitre ATT&CK Frameworks',
@@ -17,7 +22,7 @@ setup(
     url='https://github.com/swimlane/pyattck',
     author='Swimlane',
     author_email='info@swimlane.com',
-    python_requires='>=2.7, !=3.0.*, !=3.1.*, !=3.2.*,!=3.3.*, !=3.4.*, !=3.5, <4',
+    python_requires='>=3.6, <4',
     package_data={
         'pyattck':  ['data/actors/*.png']
     },

@@ -1,3 +1,4 @@
+from ..configuration import Configuration
 
 
 class AttckObject(object):
@@ -12,7 +13,10 @@ class AttckObject(object):
     """
 
     _RELATIONSHIPS = None
-    
+    generated_attck_json = Configuration.get_data(Configuration.config_data.get('generated_attck_json'))
+    nist_controls_json = Configuration.get_data(Configuration.config_data.get('nist_controls_json'))['objects']
+    generated_nist_json = Configuration.get_data(Configuration.config_data.get('generated_nist_json'))
+
     def __init__(self, **kwargs):
         """
         Sets standard properties that are found in all child classes as well as
@@ -150,6 +154,8 @@ class AttckObject(object):
         if obj.get('external_references'):
             for p in obj['external_references']:
                 if p.get('source_name') == 'mitre-attack':
+                    return p.get('external_id')
+                elif 'NIST' in p.get('source_name'):
                     return p.get('external_id')
         return 'No ID Defined'
 

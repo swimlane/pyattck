@@ -4,6 +4,8 @@ from .malware import AttckMalware
 from .tools import AttckTools
 from .mitigation import AttckMitigation
 from .tactic import AttckTactic
+from .control import AttckControl
+from ..configuration import Configuration
 
 
 class Enterprise(object):
@@ -257,15 +259,15 @@ class Enterprise(object):
                  MITRE ATT&CK Framework
     """
 
-    __ENTERPRISE_GENERATED_DATA_JSON = None
-    __tactics = None
-    __techniques = None
-    __mitigations = None
-    __actors = None
-    __tools = None
-    __malwares = None
+    __tactics = []
+    __techniques = []
+    __mitigations = []
+    __actors = []
+    __tools = []
+    __malwares = []
+    __controls = []
     
-    def __init__(self, attck_json, nested_subtechniques=True):
+    def __init__(self, nested_subtechniques=True):
         """
         Sets standard properties that are found in all child classes
         as well as provides standard methods used by inherited classes
@@ -275,7 +277,9 @@ class Enterprise(object):
             nested_subtechniques (bool) -- Determines if nested subtechniques will
             be used or not. This is passed from attck class
         """
-        self.__attck = attck_json
+        self.__ENTERPRISE_GENERATED_DATA_JSON = None
+        self.__nist_controls_json = Configuration.get_data(Configuration.config_data.get('nist_controls_json'))['objects']
+        self.__attck = Configuration.get_data(Configuration.config_data.get('enterprise_attck_json'))
         self.__nested_subtechniques = nested_subtechniques
 
     @property
@@ -286,12 +290,26 @@ class Enterprise(object):
         Returns:
             (AttckActor) -- (Returns a list of AttckActor objects)
         """
-        if self.__actors is None:
-            self.__actors = []
+        if not self.__actors:
             for group in self.__attck['objects']:
                 if group['type'] == 'intrusion-set':
                     self.__actors.append(AttckActor(attck_obj=self.__attck, **group))
         return self.__actors
+
+    @property
+    def controls(self):
+        """
+        Creates AttckControls objects
+
+        Returns:
+            (AttckControl) -- Returns a list of AttckControl objects
+        """
+        if not self.__controls:
+            for control in self.__nist_controls_json:
+                if control:
+                    print(control)
+                    self.__controls.append(AttckControl(attck_obj=self.__attck, **control))
+        return self.__controls
 
     @property
     def tactics(self):
@@ -301,8 +319,7 @@ class Enterprise(object):
         Returns:
             (AttckTactic) -- (Returns a list of AttckTactic objects)
         """
-        if self.__tactics is None:
-            self.__tactics = []
+        if not self.__tactics:
             for tactic in self.__attck['objects']:
                 if tactic['type'] == 'x-mitre-tactic':
                     self.__tactics.append(AttckTactic(attck_obj=self.__attck, **tactic))
@@ -316,8 +333,7 @@ class Enterprise(object):
         Returns:
             (AttckMitigation) -- (Returns a list of AttckMitigation objects)
         """
-        if self.__mitigations is None:
-            self.__mitigations = []
+        if not self.__mitigations:
             for mitigation in self.__attck['objects']:
                 if mitigation['type'] == 'course-of-action':
                     self.__mitigations.append(AttckMitigation(attck_obj=self.__attck, **mitigation))
@@ -331,8 +347,7 @@ class Enterprise(object):
         Returns:
             (AttckTools) -- Returns a list of AttckTools objects
         """
-        if self.__tools is None:
-            self.__tools = []
+        if not self.__tools:
             for tools in self.__attck['objects']:
                 if tools['type'] == 'tool':
                     self.__tools.append(AttckTools(attck_obj=self.__attck, **tools))
@@ -346,8 +361,7 @@ class Enterprise(object):
         Returns:
             (AttckMalware) -- Returns a list of AttckMalware objects
         """
-        if self.__malwares is None:
-            self.__malwares = []
+        if not self.__malwares:
             for malware in self.__attck['objects']:
                 if malware['type'] == 'malware':
                     self.__malwares.append(AttckMalware(attck_obj=self.__attck, **malware))
@@ -361,9 +375,8 @@ class Enterprise(object):
         Returns:
             (AttckTechnique) -- Returns a list of AttckTechnique objects
         """
-        if self.__techniques is None:
+        if not self.__techniques:
             subtechniques = []
-            self.__techniques = []
             for technique in self.__attck["objects"]:
                 if technique.get('type') == 'attack-pattern' and technique.get('revoked') is not True:
                     if self.__nested_subtechniques:
@@ -398,11 +411,11 @@ class Enterprise(object):
         """
         if json:
             import json
-        from ..datasets import AttckDatasets
+        from ..configuration import Configuration
         return_list = []
-        if not Enterprise.__ENTERPRISE_GENERATED_DATA_JSON:
-            Enterprise.__ENTERPRISE_GENERATED_DATA_JSON = AttckDatasets().get_data('generated_data')
-        for item in Enterprise.__ENTERPRISE_GENERATED_DATA_JSON['techniques']:
+        if not self.__ENTERPRISE_GENERATED_DATA_JSON:
+            self.__ENTERPRISE_GENERATED_DATA_JSON = Configuration.get_data(Configuration.config_data.get('generated_attck_json'))
+        for item in self.__ENTERPRISE_GENERATED_DATA_JSON['techniques']:
             if 'command_list' in item:
                 if item['command_list']:
                     for cmd in item['command_list']:

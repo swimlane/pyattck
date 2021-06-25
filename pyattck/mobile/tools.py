@@ -1,6 +1,4 @@
 from .mobileattckobject import MobileAttckObject
-from ..datasets import AttckDatasets
-from ..utils.exceptions import GeneratedDatasetException
 
 
 class MobileAttckTools(MobileAttckObject):
@@ -117,9 +115,6 @@ class MobileAttckTools(MobileAttckObject):
                     # etc.
     """
 
-    __ATTCK_C2_DATASETS = None
-    __ATTCK_TOOLS_DATASETS = None
-
     def __init__(self, mobile_attck_obj = None, **kwargs):
         """
         Creates an MobileAttckTools object.  
@@ -144,67 +139,35 @@ class MobileAttckTools(MobileAttckObject):
         self.stix = self._set_attribute(kwargs, 'id')
         self.wiki = self._set_wiki(kwargs)
         self.set_relationships(self.__mobile_attck_obj)
-        self.__retrieve_datasets()
         self.c2_data = self.__get_c2_dataset()
         self.external_dataset =  self.__get_tools_dataset()
 
-    def __retrieve_datasets(self):
-        if MobileAttckTools.__ATTCK_C2_DATASETS is None or MobileAttckTools.__ATTCK_TOOLS_DATASETS is None:
-            try:
-                data = AttckDatasets().get_data(data_type='generated_data')
-            except:
-                raise GeneratedDatasetException('Unable to retrieve generated attack data properties')
-            if MobileAttckTools.__ATTCK_C2_DATASETS is None:
-                if 'c2_data' in data:
-                    MobileAttckTools.__ATTCK_C2_DATASETS = data['c2_data']
-            if MobileAttckTools.__ATTCK_TOOLS_DATASETS is None:
-                if 'tools' in data:
-                    MobileAttckTools.__ATTCK_TOOLS_DATASETS = data['tools']
-
     def __get_tools_dataset(self):
         return_list = []
-        self.additional_names = []
-        self.attribution_links = []
-        self.additional_comments = []
-        self.family = []
-        for tool in MobileAttckTools.__ATTCK_TOOLS_DATASETS['tools']:
-            if 'names' in tool:
-                if tool['names']:
-                    if self.name.lower() in [x.lower() for x in tool['names']]:
-                        return_list.append(tool)
-                        for name in tool['names']:
-                            self.additional_names.append(name)
-                        if 'links' in tool:
-                            for link in tool['links']:
-                                self.attribution_links.append(link)
-                        if 'family' in tool:
-                            for family in tool['family']:
-                                self.family.append(family)
-                        if 'comments' in tool:
-                            self.family.append(tool['comments'])
-                    if self.alias:
-                        for alias in self.alias:
-                            if alias:
-                                if alias.lower() in [x.lower() for x in tool['names']]:
-                                    return_list.append(tool)
-                                    for name in tool['names']:
-                                        self.additional_names.append(name)
-                                    if 'links' in tool:
-                                        for link in tool['links']:
-                                            self.attribution_links.append(link)
-                                    if 'family' in tool:
-                                        for family in tool['family']:
-                                            self.family.append(family)
-                                    if 'comments' in tool:
-                                        self.family.append(tool['family'])
-        if return_list:
-            return return_list
-        else:
-            return None
+        self.additional_names = set()
+        self.attribution_links = set()
+        self.additional_comments = set()
+        self.family = set()
+        for tool in MobileAttckObject.generated_attck_json['tools'].get('tools'):
+            if tool.get('names'):
+                if self.name.lower() in [x.lower() for x in tool.get('names')] or hasattr(self, 'alias') and any(x.lower() in tool.get('names') for x in self.alias):
+                    self.additional_names.update(tool.get('names'))
+                    if tool.get('links'):
+                        self.attribution_links.update(tool['links'])
+                    if tool.get('family'):
+                        self.family.update(tool['family'])
+                    if tool.get('comments'):
+                        self.additional_comments.update(tool['comments'])
+                    return_list.append(tool)
+        self.additional_names = list(self.additional_names)
+        self.attribution_links = list(self.attribution_links)
+        self.additional_comments = list(self.additional_comments)
+        self.family = list(self.family)
+        return return_list
 
     def __get_c2_dataset(self):
         return_dict = {}
-        for k,v in MobileAttckTools.__ATTCK_C2_DATASETS.items():
+        for k,v in MobileAttckObject.generated_attck_json['c2_data'].items():
             if self.name.lower() == k.lower():
                 return_dict[k] = v
                 for key,val in v.items():
@@ -214,18 +177,14 @@ class MobileAttckTools(MobileAttckObject):
                         setattr(self, 'c2_{}'.format(key), val)
             if self.alias:
                 for item in self.alias:
-                    if item:
-                        if item.lower() == k.lower():
-                            return_dict[k] = v
-                            for key,val in v.items():
-                                try:
-                                    setattr(self, key, val)
-                                except:
-                                    setattr(self, 'c2_{}_{}'.format(item.lower(), key), val)
-        if return_dict:
-            return return_dict
-        else:
-            return None
+                    if item and item.lower() == k.lower():
+                        return_dict[k] = v
+                        for key,val in v.items():
+                            try:
+                                setattr(self, key, val)
+                            except:
+                                setattr(self, 'c2_{}_{}'.format(item.lower(), key), val)
+        return return_dict if return_dict else None
 
     @property
     def techniques(self):

@@ -1,5 +1,4 @@
 from .configuration import Configuration
-from .datasets import AttckDatasets
 
 
 class Attck(object):
@@ -125,27 +124,47 @@ class Attck(object):
                        # etc.
 
     Arguments:
-        config_file_path (str, optional): Path to a yaml configuration file which contains two key value pairs. Defaults to None.
-        data_path (str, optional): Path to store the external data locally on your system.  Defaults to current user path.
-        force (bool, optional): Force reset configuration file and paths.  Defaults to False.
+        nested_subtechniques (bool, optional): Whether not to iterate over nested subtechniques. Defaults to True.
+        use_config (bool, optional): Specifies if a configuration file should be used or not.  Defaults to False.
+        save_config (bool, optional): Specifies if pyattck should save a configuration file based on the provided 
+                                      values.  Defaults to False.
+        config_file_path (str, optional): Path to a yaml configuration file which contains two key value pairs. 
+                                          Defaults to '~/pyattck/config.yml'.
+        data_path (str, optional): Path to store the external data locally on your system. Defaults to '~/pyattck/data'.
+        enterprise_attck_json (str, optional): A URL or local file path to the MITRE ATT&CK Json file. 
+                                               Defaults to https://raw.githubusercontent.com/mitre/cti/master/enterprise-attack/enterprise-attack.json.
+        pre_attck_json (str, optional): A URL or local file path to the MITRE Pre-ATT&CK Json file. 
+                                        Defaults to https://raw.githubusercontent.com/mitre/cti/master/pre-attack/pre-attack.json.
+        mobile_attck_json (str, optional): A URL or local file path to the MITRE Mobile ATT&CK Json file. 
+                                           Defaults to https://raw.githubusercontent.com/mitre/cti/master/mobile-attack/mobile-attack.json.
+        nist_controls_json (str, optional): A URL or local file path to the NIST Controls Json file. 
+                                            Defaults to https://raw.githubusercontent.com/center-for-threat-informed-defense/attack-control-framework-mappings/master/frameworks/nist800-53-r4/stix/nist800-53-r4-controls.json.
+        generated_attck_json (str, optional): A URL or local file path to the Generated MITRE ATT&CK Json file. 
+                                              Defaults to https://github.com/swimlane/pyattck/blob/master/generated_attck_data.json?raw=True.
+        generated_nist_json (str, optional): A URL or local file path to the Generated NIST Controls Mapping Json file. 
+                                             Defaults to https://github.com/swimlane/pyattck/blob/master/attck_to_nist_controls.json?raw=True.
+        kwargs (dict, optional): Provided kwargs will be passed to any HTTP requests using the Requests library. 
+                                 Defaults to None.
 
     Returns:
         [Attck]: Returns a Attck object that contains all data from MITRE ATT&CK Frameworks
     """
 
-    __ENTERPRISE_ATTCK_JSON = None
-    __MOBILE_ATTCK_JSON = None
-    __PRE_ATTCK_JSON = None
-    __ENTERPRISE_GENERATED_DATA_JSON = None
-    __ENTERPRISE_NIST_DATA_JSON = None
-    __tactics = None
-    __techniques = None
-    __mitigations = None
-    __actors = None
-    __tools = None
-    __malwares = None
-
-    def __init__(self, nested_subtechniques=True, config_file_path=None, data_path='~'):
+    def __init__(
+        self,
+        nested_subtechniques=True,
+        use_config=False,
+        save_config=False,
+        config_file_path='~/pyattck/config.yml',
+        data_path='~/pyattck/data',
+        enterprise_attck_json="https://raw.githubusercontent.com/mitre/cti/master/enterprise-attack/enterprise-attack.json",
+        pre_attck_json="https://raw.githubusercontent.com/mitre/cti/master/pre-attack/pre-attack.json",
+        mobile_attck_json="https://raw.githubusercontent.com/mitre/cti/master/mobile-attack/mobile-attack.json",
+        nist_controls_json="https://raw.githubusercontent.com/center-for-threat-informed-defense/attack-control-framework-mappings/master/frameworks/nist800-53-r4/stix/nist800-53-r4-controls.json",
+        generated_attck_json="https://github.com/swimlane/pyattck/blob/master/generated_attck_data.json?raw=True",
+        generated_nist_json="https://github.com/swimlane/pyattck/blob/master/attck_to_nist_controls.json?raw=True",
+        **kwargs
+        ):
         """
         The main entry point for pyattck.
 
@@ -198,19 +217,42 @@ class Attck(object):
                            The default is your user home path.
 
         Args:
-            config_file_path (str, optional): Path to a yaml configuration
-                                              file which contains two key value pairs.
-                                              Defaults to None.
-            data_path (str, optional): Path to store the external data locally on your
-                                       system.  Defaults to current user path.
-            force (bool, optional): Force reset configuration file and paths.
-                                    Defaults to False.
+            nested_subtechniques (bool, optional): Whether not to iterate over nested subtechniques. Defaults to True.
+            use_config (bool, optional): Specifies if a configuration file should be used or not.  Defaults to False.
+            save_config (bool, optional): Specifies if pyattck should save a configuration file based on the 
+                                          provided values.  Defaults to False.
+            config_file_path (str, optional): Path to a yaml configuration file which contains two key value pairs. 
+                                              Defaults to '~/pyattck/config.yml'.
+            data_path (str, optional): Path to store the external data locally on your system.  
+                                       Defaults to '~/pyattck/data'.
+            enterprise_attck_json (str, optional): A URL or local file path to the MITRE ATT&CK Json file. 
+                                                   Defaults to https://raw.githubusercontent.com/mitre/cti/master/enterprise-attack/enterprise-attack.json.
+            pre_attck_json (str, optional): A URL or local file path to the MITRE Pre-ATT&CK Json file. 
+                                            Defaults to https://raw.githubusercontent.com/mitre/cti/master/pre-attack/pre-attack.json.
+            mobile_attck_json (str, optional): A URL or local file path to the MITRE Mobile ATT&CK Json file. 
+                                               Defaults to https://raw.githubusercontent.com/mitre/cti/master/mobile-attack/mobile-attack.json.
+            nist_controls_json (str, optional): A URL or local file path to the NIST Controls Json file. 
+                                                Defaults to https://raw.githubusercontent.com/center-for-threat-informed-defense/attack-control-framework-mappings/master/frameworks/nist800-53-r4/stix/nist800-53-r4-controls.json.
+            generated_attck_json (str, optional): A URL or local file path to the Generated MITRE ATT&CK Json file. 
+                                                  Defaults to https://github.com/swimlane/pyattck/blob/master/generated_attck_data.json?raw=True.
+            generated_nist_json (str, optional): A URL or local file path to the Generated NIST Controls Mapping 
+                                                 Json file. 
+                                                 Defaults to https://github.com/swimlane/pyattck/blob/master/attck_to_nist_controls.json?raw=True.
+            kwargs (dict, optional): Provided kwargs will be passed to any HTTP requests using the Requests library. 
+                                     Defaults to None.
         """
         self.__nested_subtechniques = nested_subtechniques
-        if config_file_path:
-            Configuration.__CONFIG_FILE = config_file_path
-        Configuration().set(data_path=data_path)
-        self.__datasets = AttckDatasets()
+        Configuration.use_config = use_config
+        Configuration.save_config = save_config
+        Configuration.config_file_path = config_file_path
+        Configuration.enterprise_attck_json = enterprise_attck_json
+        Configuration.pre_attck_json = pre_attck_json
+        Configuration.mobile_attck_json = mobile_attck_json
+        Configuration.nist_controls_json = nist_controls_json
+        Configuration.generated_attck_json = generated_attck_json
+        Configuration.generated_nist_json = generated_nist_json
+        Configuration.data_path = data_path
+        Configuration.requests_kwargs = kwargs
 
     @property
     def enterprise(self):
@@ -221,9 +263,8 @@ class Attck(object):
         Returns:
             Enterprise: Returns an Enterprise object
         """
-        self.__load_data()
         from .enterprise.enterprise import Enterprise
-        return Enterprise(self.__ENTERPRISE_ATTCK_JSON, nested_subtechniques=self.__nested_subtechniques)
+        return Enterprise(nested_subtechniques=self.__nested_subtechniques)
 
     @property
     def preattack(self):
@@ -233,9 +274,8 @@ class Attck(object):
         Returns:
             PreAttack: Returns an PreAttack object
         """
-        self.__load_data(type='preattack')
         from .preattck.preattck import PreAttck
-        return PreAttck(self.__PRE_ATTCK_JSON)
+        return PreAttck()
 
     @property
     def mobile(self):
@@ -245,43 +285,5 @@ class Attck(object):
         Returns:
             PreAttack: Returns an MobileAttack object
         """
-        self.__load_data(type='mobile')
         from .mobile.mobileattck import MobileAttck
-        return MobileAttck(self.__MOBILE_ATTCK_JSON)
-
-    def update(self, enterprise=False, preattack=False, mobile=False):
-        """
-        Calling this method will force update / sync all datasets from
-        external sources
-        """
-        if preattack:
-            self.__load_data(type='preattack', force=True)
-        if mobile:
-            self.__load_data(type='mobile', force=True)
-        if enterprise:
-            self.__load_data(force=True)
-
-    def __load_data(self, type='enterprise', force=False):
-        if type == 'preattack':
-            if not Attck.__PRE_ATTCK_JSON:
-                Attck.__PRE_ATTCK_JSON = self.__datasets.get_data(
-                    data_type='preattck', force=force
-                )
-        elif type == 'mobile':
-            if not Attck.__MOBILE_ATTCK_JSON:
-                Attck.__MOBILE_ATTCK_JSON = self.__datasets.get_data(
-                    data_type='mobile', force=force
-                )
-        else:
-            if not Attck.__ENTERPRISE_ATTCK_JSON:
-                Attck.__ENTERPRISE_ATTCK_JSON = self.__datasets.get_data(
-                    data_type='enterprise', force=force
-                )
-            if not Attck.__ENTERPRISE_GENERATED_DATA_JSON:
-                Attck.__ENTERPRISE_GENERATED_DATA_JSON = self.__datasets.get_data(
-                    data_type='generated_data', force=force
-                )
-            if not Attck.__ENTERPRISE_NIST_DATA_JSON:
-                Attck.__ENTERPRISE_NIST_DATA_JSON = self.__datasets.get_data(
-                    data_type='nist_data', force=force
-                )
+        return MobileAttck()

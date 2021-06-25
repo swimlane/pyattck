@@ -1,6 +1,4 @@
 from .attckobject import AttckObject
-from ..datasets import AttckDatasets
-from ..utils.exceptions import GeneratedDatasetException
 
 
 class AttckTechnique(AttckObject):
@@ -84,11 +82,6 @@ class AttckTechnique(AttckObject):
         AttckObject (dict) -- Takes the MITRE ATT&CK Json object as a kwargs values
     """
 
-    __LOCAL_FOLDER_PATH = None
-    __ATTCK_DATASETS = None
-    __NIST_DATA_MAP = None
-    __NIST_DATASETS = None
-
     def __init__(self, attck_obj = None, **kwargs):
         """
         This class represents a Technique as defined by the
@@ -122,38 +115,19 @@ class AttckTechnique(AttckObject):
         self.contributors = self._set_list_items(kwargs, 'x_mitre_contributors')
         self.revoked = self._set_attribute(kwargs, 'revoked')
         self.deprecated = self._set_attribute(kwargs, 'x_mitre_deprecated')
-        self.subtechnique = self._set_attribute(kwargs, 'x_mitre_is_subtechnique')
+        self.subtechnique = False if self._set_attribute(kwargs, 'x_mitre_is_subtechnique') is None else True
         self.__subtechniques = []
-        self.__retrieve_datasets()
-        self.command_list = self.__get_filtered_dataset(self.id, 'command_list')
-        self.commands = self.__get_filtered_dataset(self.id, 'commands')
-        self.queries = self.__get_filtered_dataset(self.id, 'queries')
-        self.datasets = self.__get_filtered_dataset(self.id, 'parsed_datasets')
-        self.possible_detections = self.__get_filtered_dataset(self.id, 'possible_detections')
-        self.subtechnique = self._set_attribute(kwargs, 'x_mitre_is_subtechnique')
+        self.command_list = self.__get_filtered_dataset('command_list')
+        self.commands = self.__get_filtered_dataset('commands')
+        self.queries = self.__get_filtered_dataset('queries')
+        self.datasets = self.__get_filtered_dataset('parsed_datasets')
+        self.possible_detections = self.__get_filtered_dataset('possible_detections')
         self.tactics = kwargs
         self.set_relationships(self.__attck_obj)
 
-    def __retrieve_datasets(self):
-        if AttckTechnique.__ATTCK_DATASETS is None:
-            try:
-                AttckTechnique.__ATTCK_DATASETS = AttckDatasets().get_data(data_type='generated_data')
-            except:
-                raise GeneratedDatasetException('Unable to retrieve generated attack data properties')
-        if AttckTechnique.__NIST_DATA_MAP is None:
-            try:
-                AttckTechnique.__NIST_DATA_MAP = AttckDatasets().get_data(data_type='nist_data')
-            except:
-                raise GeneratedDatasetException('Unable to retrieve generated NIST Controls data map')
-        if AttckTechnique.__NIST_DATASETS is None:
-            try:
-                AttckTechnique.__NIST_DATASETS = AttckDatasets().get_data(data_type='nist_800_53_rev4_controls')['objects']
-            except:
-                raise GeneratedDatasetException('Unable to retrieve NIST 800-53 Control data')
-
-    def __get_filtered_dataset(self, technique_id, attribute_name):
-        for item in AttckTechnique.__ATTCK_DATASETS['techniques']:
-            if item['technique_id'] == technique_id:
+    def __get_filtered_dataset(self, attribute_name):
+        for item in AttckObject.generated_attck_json['techniques']:
+            if item['technique_id'] == self.id:
                 return item[attribute_name]
 
     def __get_subtechnique_id(self, obj):
@@ -186,9 +160,9 @@ class AttckTechnique(AttckObject):
         """
         from .control import AttckControl
         control_list = []
-        if AttckTechnique.__NIST_DATA_MAP.get(self.stix):
-            for control in AttckTechnique.__NIST_DATASETS:
-                if control.get('id') in AttckTechnique.__NIST_DATA_MAP[self.stix]:
+        if AttckObject.generated_nist_json.get(self.stix):
+            for control in AttckObject.nist_controls_json:
+                if control.get('id') in AttckObject.generated_nist_json[self.stix]:
                     control_list.append(AttckControl(**control))
         return control_list
 

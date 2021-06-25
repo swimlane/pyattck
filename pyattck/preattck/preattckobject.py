@@ -1,3 +1,6 @@
+from ..configuration import Configuration
+
+
 class PreAttckObject(object):
 
     """MITRE PRE-ATT&CK parent object.
@@ -8,6 +11,9 @@ class PreAttckObject(object):
     """
 
     _RELATIONSHIPS = None
+    generated_attck_json = Configuration.get_data(Configuration.config_data.get('generated_attck_json'))
+    nist_controls_json = Configuration.get_data(Configuration.config_data.get('nist_controls_json'))['objects']
+    generated_nist_json = Configuration.get_data(Configuration.config_data.get('generated_nist_json'))
 
     def __init__(self, **kwargs):
         """

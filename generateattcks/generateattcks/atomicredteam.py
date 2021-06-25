@@ -1,5 +1,4 @@
-import requests, yaml, base64
-from github import Github
+import requests, yaml
 
 from .githubcontroller import GitHubController
 from .attacktemplate import AttackTemplate
@@ -39,33 +38,32 @@ class AtomicRedTeam(GitHubController, Base):
         return return_list
                         
     def __parse_yaml_content(self, content, url):
-        template = AttackTemplate()
-       # print(content)
-        for test in content['atomic_tests']:
-            if 'executor' in test:
-                if 'command' in test['executor']:
-                    if 'input_arguments' in test:
-                        self.temp_command_string = None
-                        for key,val in test['input_arguments'].items():
-                            replacement_string = '#{{{0}}}'.format(key)
-                            if self.temp_command_string is None:
-                                try:
-                                    self.temp_command_string = test['executor']['command'].replace(replacement_string, test['input_arguments'][key]['default'])
-                                except:
-                                    pass
-                            else:
-                                try:
-                                    self.temp_command_string = self.temp_command_string.replace(replacement_string, test['input_arguments'][key]['default'])
-                                except:
-                                    pass
-                            template.add_command(url,self.temp_command_string)
+        if 'atomic_tests' in content:
+            template = AttackTemplate()
+            for test in content['atomic_tests']:
+                if 'executor' in test:
+                    if 'command' in test['executor']:
+                        if 'input_arguments' in test:
                             self.temp_command_string = None
-                    else:
-                        template.add_command(url,test['executor']['command'])
-        template.id = content['attack_technique']
-        template.add_dataset('Atomic Red Team Test - {name}'.format(name=content['display_name']), content)
-        return template.get()      
-        
+                            for key,val in test['input_arguments'].items():
+                                replacement_string = '#{{{0}}}'.format(key)
+                                if self.temp_command_string is None:
+                                    try:
+                                        self.temp_command_string = test['executor']['command'].replace(replacement_string, test['input_arguments'][key]['default'])
+                                    except:
+                                        pass
+                                else:
+                                    try:
+                                        self.temp_command_string = self.temp_command_string.replace(replacement_string, test['input_arguments'][key]['default'])
+                                    except:
+                                        pass
+                                template.add_command(url,self.temp_command_string)
+                                self.temp_command_string = None
+                        else:
+                            template.add_command(url,test['executor']['command'])
+            template.id = content['attack_technique']
+            template.add_dataset('Atomic Red Team Test - {name}'.format(name=content['display_name']), content)
+            return template.get()
 
     def __download_raw_content(self, url):
         response = self.session.get(url)
