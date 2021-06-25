@@ -24,10 +24,11 @@ jobs:
       shell: pwsh
     - name: Run Tests on Windows
       run: |
+        start-process pwsh -verb runas 
         pip install -r requirements.txt
         python -m pip install -r test-requirements.txt
         python -m pytest
-    - name: Code Coverage on Windows
-      run: |
         python -m coverage run -m pytest
         python -m coverage report
+      shell: cmd
+
