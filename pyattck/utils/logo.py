@@ -1,9 +1,5 @@
 import os
 
-try:
-    from PIL import Image
-except:
-    import Image
 from pyfiglet import Figlet
 
 ASCII_CHARS = ['.',',',':',';','+','*','?','%','S','#','@']
@@ -60,8 +56,20 @@ class Logo(object):
 
     def convert_image(self, path):
         image = None
-        image = Image.open(path)
-        self.__image = self.__process(image)
+        try:
+            from PIL import Image
+            image = Image.open(path)
+        except:
+            try:
+                import Image
+                image = Image.open(path)
+            except:
+                pass
+            pass
+        if image:
+            self.__image = self.__process(image)
+        else:
+            self.__image = None
 
     def __resize(self, image, new_width=100):
         """
