@@ -71,6 +71,6 @@ class AttckControl(AttckObject):
         for key,val in AttckObject.generated_nist_json.items():
             if self.stix in val:
                 for item in self.__attck_obj['objects']:
-                    if 'type' in item and item['type'] == 'attack-pattern':
+                    if 'type' in item and item['type'] == 'attack-pattern' and key == item['id']:
                         technique_list.append(AttckTechnique(attck_obj=self.__attck_obj, **item))
         return technique_list
