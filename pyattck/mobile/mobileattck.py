@@ -204,7 +204,7 @@ class MobileAttck(object):
     """
 
     __ENTERPRISE_GENERATED_DATA_JSON = None
-    __mobile_attck_json = Configuration.get_data(Configuration.config_data.get('enterprise_attck_json'))
+    __mobile_attck_json = Configuration.get_data(Configuration.config_data.get('mobile_attck_json'))
     __tactics = []
     __techniques = []
     __mitigations = []

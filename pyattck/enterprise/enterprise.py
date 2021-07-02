@@ -307,7 +307,6 @@ class Enterprise(object):
         if not self.__controls:
             for control in self.__nist_controls_json:
                 if control:
-                    print(control)
                     self.__controls.append(AttckControl(attck_obj=self.__attck, **control))
         return self.__controls
 
