@@ -81,7 +81,8 @@ class Configuration:
             else:
                 raise UknownFileError(provided_value=path, known_values=['.json', '.yml', '.yaml'])
 
-    def __save_data(cls):
+
+    def _save_json_data(cls, force: bool=False) -> None:
         if not os.path.exists(cls.data_path):
             try:
                 os.makedirs(cls.data_path)
@@ -94,7 +95,8 @@ class Configuration:
                           'generated_attck_json', 'generated_nist_json']:
             if cls._check_if_url(getattr(cls, json_data)):
                 path = os.path.join(cls.data_path, "{json_data}.json".format(json_data=json_data))
-                data = cls.__download_url_data(getattr(cls, json_data))
-                cls.__write_to_disk(path, data)
+                if not os.path.exists(path) or force:
+                    data = cls.__download_url_data(getattr(cls, json_data))
+                    cls.__write_to_disk(path, data)
                 setattr(cls, '_' + json_data, path)
         cls.__update_config()

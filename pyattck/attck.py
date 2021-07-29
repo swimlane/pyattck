@@ -287,3 +287,6 @@ class Attck(object):
         """
         from .mobile.mobileattck import MobileAttck
         return MobileAttck()
+
+    def update(self) -> bool:
+        return True if Configuration._save_json_data(force=True) else False
