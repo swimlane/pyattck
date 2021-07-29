@@ -95,7 +95,7 @@ class PreAttck(object):
     __tactics = []
     __techniques = []
     __actors = []
-    __preattck_json = Configuration.get_data(Configuration.config_data.get('pre_attck_json'))
+    __preattck_json = Configuration.get_data('pre_attck_json')
 
     @property
     def actors(self):
