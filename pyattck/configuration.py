@@ -83,11 +83,14 @@ class ConfigurationProperties(type):
                           'mobile_attck_json', 'nist_controls_json', 
                           'generated_attck_json', 'generated_nist_json']:
             if cls._check_if_url(getattr(cls, json_data)):
-                path = os.path.join(cls.data_path, "{json_data}.json".format(json_data=json_data))
-                if not os.path.exists(path) or force:
-                    data = cls.__download_url_data(getattr(cls, json_data))
-                    cls.__write_to_disk(path, data)
-                setattr(cls, '_' + json_data, path)
+                try:
+                    path = os.path.join(cls.data_path, "{json_data}.json".format(json_data=json_data))
+                    if not os.path.exists(path) or force:
+                        data = cls.__download_url_data(getattr(cls, json_data))
+                        cls.__write_to_disk(path, data)
+                    setattr(cls, '_' + json_data, path)
+                except:
+                    raise Warning(f"Unable to download data from {json_data}")
         cls.__update_config()
 
     def __update_config(cls):
