@@ -1,5 +1,7 @@
 import os
+from pyattck.configuration import Configuration
 import tempfile
+import attr
 import yaml
 import pytest
 import random
@@ -15,9 +17,14 @@ default_config_data = {
     'enterprise_attck_json': "https://raw.githubusercontent.com/mitre/cti/master/enterprise-attack/enterprise-attack.json",
     'pre_attck_json': "https://raw.githubusercontent.com/mitre/cti/master/pre-attack/pre-attack.json",
     'mobile_attck_json': "https://raw.githubusercontent.com/mitre/cti/master/mobile-attack/mobile-attack.json",
-    'nist_controls_json': "https://raw.githubusercontent.com/center-for-threat-informed-defense/attack-control-framework-mappings/master/frameworks/nist800-53-r4/stix/nist800-53-r4-controls.json",
+    'nist_controls_json': "https://raw.githubusercontent.com/center-for-threat-informed-defense/attack-control-framework-mappings/master/frameworks/ATT%26CK-v9.0/nist800-53-r5/stix/nist800-53-r5-controls.json",
     'generated_attck_json': "https://github.com/swimlane/pyattck/blob/master/generated_attck_data.json?raw=True",
-    'generated_nist_json': "https://github.com/swimlane/pyattck/blob/master/attck_to_nist_controls.json?raw=True"
+    'generated_nist_json': "https://github.com/swimlane/pyattck/blob/master/attck_to_nist_controls.json?raw=True",
+    'config_file_path': os.path.abspath(os.path.expanduser(os.path.expandvars('~/pyattck/config.yml'))),
+    'save_config': False,
+    'use_config': False,
+    'requests_kwargs': {},
+    'config_data': {}
 }
 
 ### Testing Default Configuration Settings
@@ -25,27 +32,30 @@ default_config_data = {
 def test_default_configuration_settings_set(attck_configuration):
     assert attck_configuration.use_config == False
     assert attck_configuration.save_config == False
-    assert attck_configuration.config_file_path == os.path.abspath(os.path.expanduser(os.path.expandvars('~/pyattck/config.yml')))
-    assert attck_configuration.data_path == os.path.abspath(os.path.expanduser(os.path.expandvars(default_config_data.get('data_path'))))
+    assert os.path.abspath(os.path.expanduser(os.path.expandvars(attck_configuration.config_file_path))) == os.path.abspath(os.path.expanduser(os.path.expandvars('~/pyattck/config.yml')))
+    assert os.path.abspath(os.path.expanduser(os.path.expandvars(attck_configuration.data_path))) == os.path.abspath(os.path.expanduser(os.path.expandvars(default_config_data.get('data_path'))))
 
 def test_configuration_save_config(attck_configuration):
     from pyattck import Attck
     attck = Attck(save_config=True)
     assert attck_configuration.save_config == True
     assert isinstance(attck_configuration.config_data, dict)
-    assert attck_configuration.data_path == attck_configuration.config_data.get('data_path')
+    assert os.path.abspath(os.path.expanduser(os.path.expandvars(attck_configuration.data_path))) == attck_configuration.config_data.get('data_path')
 
 @pytest.mark.parametrize(
     'target_attribute', 
     ['enterprise_attck_json', 'pre_attck_json', 'mobile_attck_json', 'nist_controls_json', 'generated_attck_json', 'generated_nist_json']
 )
 def test_default_configuration_settings_jsons(attck_configuration, target_attribute):
-    assert getattr(attck_configuration, target_attribute) == default_config_data[target_attribute]
+    from pyattck import Attck, Configuration
+    attck = Attck()
+    assert getattr(Configuration, target_attribute) == default_config_data[target_attribute]
 
 
-def test_configuration_data_can_be_file_path_location(attck_configuration):
-    attck_configuration.use_config = False
-    attck_configuration.save_config = False
+def test_configuration_data_can_be_file_path_location():
+    from pyattck import Configuration
+    Configuration.use_config = False
+    Configuration.save_config = False
 
     enterprise_temp_value = get_random_file_or_url()
     pre_attck_temp_value = get_random_file_or_url()
@@ -53,52 +63,60 @@ def test_configuration_data_can_be_file_path_location(attck_configuration):
     nist_controls_temp_value = get_random_file_or_url()
     generated_attck_temp_value = get_random_file_or_url()
     generated_nist_temp_value = get_random_file_or_url()
-    attck_configuration.enterprise_attck_json = enterprise_temp_value
-    attck_configuration.pre_attck_json = pre_attck_temp_value
-    attck_configuration.mobile_attck_json = mobile_temp_value
-    attck_configuration.nist_controls_json = nist_controls_temp_value
-    attck_configuration.generated_nist_json = generated_nist_temp_value
-    attck_configuration.generated_attck_json = generated_attck_temp_value
+    Configuration.enterprise_attck_json = enterprise_temp_value
+    Configuration.enterprise_attck_json = enterprise_temp_value
+    Configuration.pre_attck_json = pre_attck_temp_value
+    Configuration.mobile_attck_json = mobile_temp_value
+    Configuration.nist_controls_json = nist_controls_temp_value
+    Configuration.generated_nist_json = generated_nist_temp_value
+    Configuration.generated_attck_json = generated_attck_temp_value
 
-    config_data = attck_configuration.config_data
+    config_data = Configuration.config_data
 
-    assert attck_configuration.enterprise_attck_json == enterprise_temp_value
+    assert Configuration.enterprise_attck_json == enterprise_temp_value
     assert config_data['enterprise_attck_json'] == enterprise_temp_value
-    attck_configuration.enterprise_attck_json = default_config_data['enterprise_attck_json']
+    Configuration.enterprise_attck_json = default_config_data['enterprise_attck_json']
 
-    assert attck_configuration.pre_attck_json == pre_attck_temp_value
+    assert Configuration.pre_attck_json == pre_attck_temp_value
     assert config_data['pre_attck_json'] == pre_attck_temp_value
-    attck_configuration.pre_attck_json = default_config_data['pre_attck_json']
+    Configuration.pre_attck_json = default_config_data['pre_attck_json']
 
-    assert attck_configuration.mobile_attck_json == mobile_temp_value
+    assert Configuration.mobile_attck_json == mobile_temp_value
     assert config_data['mobile_attck_json'] == mobile_temp_value
-    attck_configuration.mobile_attck_json = default_config_data['mobile_attck_json']
+    Configuration.mobile_attck_json = default_config_data['mobile_attck_json']
 
-    assert attck_configuration.nist_controls_json == nist_controls_temp_value
+    assert Configuration.nist_controls_json == nist_controls_temp_value
     assert config_data['nist_controls_json'] == nist_controls_temp_value
-    attck_configuration.nist_controls_json = default_config_data['nist_controls_json']
+    Configuration.nist_controls_json = default_config_data['nist_controls_json']
 
-    assert attck_configuration.generated_attck_json == generated_attck_temp_value
+    assert Configuration.generated_attck_json == generated_attck_temp_value
     assert config_data['generated_attck_json'] == generated_attck_temp_value
-    attck_configuration.generated_attck_json = default_config_data['generated_attck_json']
+    Configuration.generated_attck_json = default_config_data['generated_attck_json']
 
-    assert attck_configuration.generated_nist_json == generated_nist_temp_value
+    assert Configuration.generated_nist_json == generated_nist_temp_value
     assert config_data['generated_nist_json'] == generated_nist_temp_value
-    attck_configuration.generated_nist_json = default_config_data['generated_nist_json']
+    Configuration.generated_nist_json = default_config_data['generated_nist_json']
 
-    attck_configuration.save_config = True
-    attck_configuration.config_data
+    Configuration.save_config = True
+    Configuration.config_data
 
 
 def test_configuration_settings_use_config_sets_config_values(attck_configuration):
+    attck_configuration.save_config = False
     attck_configuration.use_config = True
     assert attck_configuration.use_config == True
     with tempfile.NamedTemporaryFile('w+', dir=os.path.dirname(os.path.abspath(__file__)), suffix=random.choice(['.json', '.yml', '.yaml'])) as f:
         yaml.dump(default_config_data, f)
         attck_configuration.config_file_path = f.name
+        attck_configuration.enterprise_attck_json = default_config_data['enterprise_attck_json']
+        attck_configuration.pre_attck_json = default_config_data['pre_attck_json']
+        attck_configuration.mobile_attck_json = default_config_data['mobile_attck_json']
+        attck_configuration.nist_controls_json = default_config_data['nist_controls_json']
+        attck_configuration.generated_attck_json = default_config_data['generated_attck_json']
+        attck_configuration.generated_nist_json  = default_config_data['generated_nist_json']
         assert attck_configuration.config_data
         assert isinstance(attck_configuration.config_data, dict)
-        assert attck_configuration.data_path == os.path.abspath(os.path.expanduser(os.path.expandvars(default_config_data.get('data_path'))))
+        assert os.path.abspath(os.path.expanduser(os.path.expandvars(attck_configuration.data_path))) == os.path.abspath(os.path.expanduser(os.path.expandvars(default_config_data.get('data_path'))))
         assert attck_configuration.enterprise_attck_json == default_config_data['enterprise_attck_json']
         assert attck_configuration.pre_attck_json == default_config_data['pre_attck_json']
         assert attck_configuration.mobile_attck_json == default_config_data['mobile_attck_json']

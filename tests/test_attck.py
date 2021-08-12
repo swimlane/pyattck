@@ -9,9 +9,10 @@ default_config_data = {
     'enterprise_attck_json': "https://raw.githubusercontent.com/mitre/cti/master/enterprise-attack/enterprise-attack.json",
     'pre_attck_json': "https://raw.githubusercontent.com/mitre/cti/master/pre-attack/pre-attack.json",
     'mobile_attck_json': "https://raw.githubusercontent.com/mitre/cti/master/mobile-attack/mobile-attack.json",
-    'nist_controls_json': "https://raw.githubusercontent.com/center-for-threat-informed-defense/attack-control-framework-mappings/master/frameworks/nist800-53-r4/stix/nist800-53-r4-controls.json",
+    'nist_controls_json': "https://raw.githubusercontent.com/center-for-threat-informed-defense/attack-control-framework-mappings/master/frameworks/ATT%26CK-v9.0/nist800-53-r5/stix/nist800-53-r5-controls.json",
     'generated_attck_json': "https://github.com/swimlane/pyattck/blob/master/generated_attck_data.json?raw=True",
-    'generated_nist_json': "https://github.com/swimlane/pyattck/blob/master/attck_to_nist_controls.json?raw=True"
+    'generated_nist_json': "https://github.com/swimlane/pyattck/blob/master/attck_to_nist_controls.json?raw=True",
+    'config_file_path': os.path.abspath(os.path.expanduser(os.path.expandvars('~/pyattck/config.yml'))),
 }
 
 
@@ -22,10 +23,13 @@ def get_random_file_or_url():
         return random.choice(['https://letsautomate.it/article/index.xml', 'https://google.com', 'https://github.com/swimlane/pyattck'])
 
 
-def test_default_config():
+def test_default_config(attck_configuration):
       from pyattck import Attck, Configuration
       attck = Attck()
-      assert Configuration.config_data == default_config_data
+      for key,val in default_config_data.items():
+          if hasattr(Configuration, key):
+              setattr(Configuration, key, val)
+      assert attck_configuration.config_data == default_config_data
 
 @pytest.mark.parametrize(
     'target_attribute', 
@@ -78,6 +82,7 @@ def test_nested_subtechniques():
       for technique in attck.enterprise.techniques:
           if technique.subtechnique:
               count += 1
+      print(count)
       assert count >= 360
 
 def test_passed_kwargs():

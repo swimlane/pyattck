@@ -266,7 +266,11 @@ class Enterprise(object):
     __tools = []
     __malwares = []
     __controls = []
-    
+    __ENTERPRISE_GENERATED_DATA_JSON = None
+    __nist_controls_json = Configuration.get_data('nist_controls_json')['objects']
+    __attck = Configuration.get_data('enterprise_attck_json')
+
+
     def __init__(self, nested_subtechniques=True):
         """
         Sets standard properties that are found in all child classes
@@ -277,9 +281,6 @@ class Enterprise(object):
             nested_subtechniques (bool) -- Determines if nested subtechniques will
             be used or not. This is passed from attck class
         """
-        self.__ENTERPRISE_GENERATED_DATA_JSON = None
-        self.__nist_controls_json = Configuration.get_data(Configuration.config_data.get('nist_controls_json'))['objects']
-        self.__attck = Configuration.get_data(Configuration.config_data.get('enterprise_attck_json'))
         self.__nested_subtechniques = nested_subtechniques
 
     @property
@@ -410,10 +411,9 @@ class Enterprise(object):
         """
         if json:
             import json
-        from ..configuration import Configuration
         return_list = []
         if not self.__ENTERPRISE_GENERATED_DATA_JSON:
-            self.__ENTERPRISE_GENERATED_DATA_JSON = Configuration.get_data(Configuration.config_data.get('generated_attck_json'))
+            self.__ENTERPRISE_GENERATED_DATA_JSON = Configuration.get_data('generated_attck_json')
         for item in self.__ENTERPRISE_GENERATED_DATA_JSON['techniques']:
             if 'command_list' in item:
                 if item['command_list']:

@@ -43,28 +43,7 @@ class ConfigurationProperties(type):
         else:
             raise Exception('The provided value is neither a URL or file path')
 
-    def __write_to_disk(cls, path, json_data):
-        with open(path, 'w+') as file_obj:
-            json.dump(json_data, file_obj)
-
-    def __save_data(cls):
-        if not os.path.exists(cls.data_path):
-            try:
-                os.makedirs(cls.data_path)
-            except:
-                raise Exception(
-                    'Unable to save data to the provided location: {}'.format(cls.data_path)
-                )
-        for json_data in ['enterprise_attck_json', 'pre_attck_json', 
-                          'mobile_attck_json', 'nist_controls_json', 
-                          'generated_attck_json', 'generated_nist_json']:
-            if cls._check_if_url(getattr(cls, json_data)):
-                path = os.path.join(cls.data_path, "{json_data}.json".format(json_data=json_data))
-                data = cls.__download_url_data(getattr(cls, json_data))
-                cls.__write_to_disk(path, data)
-
-    def __save_config(cls, path, data):
-        # save configuration to disk
+    def __write_to_disk(cls, path, data):
         if not os.path.exists(os.path.dirname(path)):
             try:
                 os.makedirs(os.path.dirname(path))
@@ -78,6 +57,42 @@ class ConfigurationProperties(type):
             else:
                 raise UknownFileError(provided_value=path, known_values=['.json', '.yml', '.yaml'])
 
+    def __read_from_disk(cls, path):
+        if os.path.exists(path) and os.path.isfile(path):
+            try:
+                with open(path) as f:
+                    if path.endswith('.json'):
+                        return json.load(f)
+                    elif path.endswith('.yml') or path.endswith('.yaml'):
+                        return yaml.load(f, Loader=yaml.FullLoader)
+                    else:
+                        raise UknownFileError(provided_value=path, known_values=['.json', '.yml', '.yaml'])
+            except:
+                pass
+        return None
+
+    def _save_json_data(cls, force: bool=False) -> None:
+        if not os.path.exists(cls.data_path):
+            try:
+                os.makedirs(cls.data_path)
+            except:
+                raise Exception(
+                    'Unable to save data to the provided location: {}'.format(cls.data_path)
+                )
+        for json_data in ['enterprise_attck_json', 'pre_attck_json', 
+                          'mobile_attck_json', 'nist_controls_json', 
+                          'generated_attck_json', 'generated_nist_json']:
+            if cls._check_if_url(getattr(cls, json_data)):
+                try:
+                    path = os.path.join(cls.data_path, "{json_data}.json".format(json_data=json_data))
+                    if not os.path.exists(path) or force:
+                        data = cls.__download_url_data(getattr(cls, json_data))
+                        cls.__write_to_disk(path, data)
+                    setattr(cls, '_' + json_data, path)
+                except:
+                    raise Warning(f"Unable to download data from {json_data}")
+        cls.__update_config()
+
     def __update_config(cls):
         cls.__config_data = {
             'data_path': cls.data_path,
@@ -86,27 +101,15 @@ class ConfigurationProperties(type):
             'mobile_attck_json': cls._mobile_attck_json,
             'nist_controls_json': cls._nist_controls_json,
             'generated_attck_json': cls._generated_attck_json,
-            'generated_nist_json': cls._generated_nist_json
+            'generated_nist_json': cls._generated_nist_json,
+            'config_file_path': cls._config_file_path
         }
 
-    def get_data(cls, value):
-        data = None
-        if os.path.isfile(value):
-            try:
-                with open(value) as f:
-                    if value.endswith('.json'):
-                        data = json.load(f)
-                    elif value.endswith('.yml') or value.endswith('.yaml'):
-                        data = yaml.load(f, Loader=yaml.FullLoader)
-                    else:
-                        raise UknownFileError(provided_value=value, known_values=['.json', '.yml', '.yaml'])
-            except:
-                warnings.warn("Unable to load data from specified location. Setting configuration data to defaults: '{}'".format(value))
-                cls.__update_config()
-                data = cls.__config_data
-        elif cls._check_if_url(value):
-            data = cls.__download_url_data(value)
-        return data
+    def get_data(cls, value: str) -> dict:
+        if cls._check_if_url(cls.config_data.get(value)):
+            return cls.__download_url_data(cls.config_data.get(value))
+        else:
+            return cls.__read_from_disk(cls.config_data.get(value))
 
     @property
     def requests_kwargs(cls):
@@ -153,14 +156,15 @@ class ConfigurationProperties(type):
     @property
     def config_data(cls):
         if cls.use_config:
-            cls.__config_data = cls.get_data(cls.config_file_path)
+            cls.__config_data = cls.__read_from_disk(cls.config_file_path)
             if not cls.__config_data:
                 cls.__update_config()
         else:
             cls.__update_config()
         if cls.save_config:
-            cls.__save_config(cls.config_file_path, cls.__config_data)
-            cls.__save_data()
+            cls.__update_config()
+            cls.__write_to_disk(cls.config_file_path, cls.__config_data)
+            cls._save_json_data()
         return cls.__config_data
 
     @property

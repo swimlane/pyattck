@@ -138,7 +138,7 @@ class Attck(object):
         mobile_attck_json (str, optional): A URL or local file path to the MITRE Mobile ATT&CK Json file. 
                                            Defaults to https://raw.githubusercontent.com/mitre/cti/master/mobile-attack/mobile-attack.json.
         nist_controls_json (str, optional): A URL or local file path to the NIST Controls Json file. 
-                                            Defaults to https://raw.githubusercontent.com/center-for-threat-informed-defense/attack-control-framework-mappings/master/frameworks/nist800-53-r4/stix/nist800-53-r4-controls.json.
+                                            Defaults to https://raw.githubusercontent.com/center-for-threat-informed-defense/attack-control-framework-mappings/master/frameworks/ATT%26CK-v9.0/nist800-53-r5/stix/nist800-53-r5-controls.json.
         generated_attck_json (str, optional): A URL or local file path to the Generated MITRE ATT&CK Json file. 
                                               Defaults to https://github.com/swimlane/pyattck/blob/master/generated_attck_data.json?raw=True.
         generated_nist_json (str, optional): A URL or local file path to the Generated NIST Controls Mapping Json file. 
@@ -160,7 +160,7 @@ class Attck(object):
         enterprise_attck_json="https://raw.githubusercontent.com/mitre/cti/master/enterprise-attack/enterprise-attack.json",
         pre_attck_json="https://raw.githubusercontent.com/mitre/cti/master/pre-attack/pre-attack.json",
         mobile_attck_json="https://raw.githubusercontent.com/mitre/cti/master/mobile-attack/mobile-attack.json",
-        nist_controls_json="https://raw.githubusercontent.com/center-for-threat-informed-defense/attack-control-framework-mappings/master/frameworks/nist800-53-r4/stix/nist800-53-r4-controls.json",
+        nist_controls_json="https://raw.githubusercontent.com/center-for-threat-informed-defense/attack-control-framework-mappings/master/frameworks/ATT%26CK-v9.0/nist800-53-r5/stix/nist800-53-r5-controls.json",
         generated_attck_json="https://github.com/swimlane/pyattck/blob/master/generated_attck_data.json?raw=True",
         generated_nist_json="https://github.com/swimlane/pyattck/blob/master/attck_to_nist_controls.json?raw=True",
         **kwargs
@@ -205,7 +205,7 @@ class Attck(object):
                         url: https://raw.githubusercontent.com/mitre/cti/master/mobile-attack/mobile-attack.json
                     nist_800_53_rev4_controls:
                         filename: enterprise_attck_nist_800_53_rev4_controls.json
-                        url: https://raw.githubusercontent.com/center-for-threat-informed-defense/attack-control-framework-mappings/master/frameworks/nist800-53-r4/stix/nist800-53-r4-controls.json
+                        url: https://raw.githubusercontent.com/center-for-threat-informed-defense/attack-control-framework-mappings/master/frameworks/ATT%26CK-v9.0/nist800-53-r5/stix/nist800-53-r5-controls.json
                     nist_data:
                         filename: enterprise_attck_nist_data.json
                         url: https://raw.githubusercontent.com/swimlane/pyattck/master/attck_to_nist_controls_data.json
@@ -232,7 +232,7 @@ class Attck(object):
             mobile_attck_json (str, optional): A URL or local file path to the MITRE Mobile ATT&CK Json file. 
                                                Defaults to https://raw.githubusercontent.com/mitre/cti/master/mobile-attack/mobile-attack.json.
             nist_controls_json (str, optional): A URL or local file path to the NIST Controls Json file. 
-                                                Defaults to https://raw.githubusercontent.com/center-for-threat-informed-defense/attack-control-framework-mappings/master/frameworks/nist800-53-r4/stix/nist800-53-r4-controls.json.
+                                                Defaults to https://raw.githubusercontent.com/center-for-threat-informed-defense/attack-control-framework-mappings/master/frameworks/ATT%26CK-v9.0/nist800-53-r5/stix/nist800-53-r5-controls.json
             generated_attck_json (str, optional): A URL or local file path to the Generated MITRE ATT&CK Json file. 
                                                   Defaults to https://github.com/swimlane/pyattck/blob/master/generated_attck_data.json?raw=True.
             generated_nist_json (str, optional): A URL or local file path to the Generated NIST Controls Mapping 
@@ -287,3 +287,6 @@ class Attck(object):
         """
         from .mobile.mobileattck import MobileAttck
         return MobileAttck()
+
+    def update(self) -> bool:
+        return True if Configuration._save_json_data(force=True) else False
