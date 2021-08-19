@@ -1,7 +1,5 @@
 import os
-from pyattck.configuration import Configuration
 import tempfile
-import attr
 import yaml
 import pytest
 import random

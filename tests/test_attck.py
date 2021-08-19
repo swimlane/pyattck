@@ -82,7 +82,6 @@ def test_nested_subtechniques():
       for technique in attck.enterprise.techniques:
           if technique.subtechnique:
               count += 1
-      print(count)
       assert count >= 360
 
 def test_passed_kwargs():
