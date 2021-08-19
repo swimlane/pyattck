@@ -17,9 +17,23 @@
 ```
 	A Python package to interact with MITRE ATT&CK Frameworks
 
-> Current Version is 4.0.0
+> Current Version is 4.1.1
 
 **pyattck** is a light-weight framework for MITRE ATT&CK Frameworks. This package extracts details from the MITRE Enterprise, PRE-ATT&CK, and Mobile Frameworks.
+
+## Why?
+
+`pyattck` assist organizations and individuals with accessing MITRE ATT&CK Framework(s) in a programmatic way. Meaning, you can access all defined actors, malwares, mitigations, tactics, techniques, and tools defined by the Enterprise, Mobile, and Pre-Attck frameworks via a command-line utility or embedding into your own code base.
+
+There are many reasons why you would want to access this data in an automated (scripted/coded) way but a few examples are:
+
+* Generate reports with additional details about a technique (or any object defined in the framework) 
+* A build pipeline of detection rules with additional MITRE ATT&CK details for categorization
+* Quickly searching for specific details about a technique without navigating a web page
+
+There are other benefits that `pyattck` provide as well which includes the ability to provide additional contextual data. You can find more information about this data [here](https://github.com/swimlane/pyattck-data) but the basics are that `pyattck` utilizes multiple open-source repositorties to gather additional contextual data like commands used to execute a technique, country and other details about a malicious actor, other variants of malware similar to a defined tool/malware, etc. 
+
+This additional context is what makes `pyattck` truly powerful and enables people to build more robust testing and validation of their detection rules, validates testing assumptions, etc. Truly there are countless ways that `pyattck` could be utilized to help blue, red, and purple teams defend organizations (and themselves).
 
 ## Features
 
@@ -35,7 +49,7 @@ The **pyattck** package allows you to:
   * Access data from the MITRE PRE-ATT&CK Framework
   * Access data from the MITRE Mobile ATT&CK Framework
   * Access subtechniques as nested objects or you can turn it off and access as normal technique
-  * Access compliance controls (currently NIST 800-53) related to a MITRE ATT&CK Technique
+  * Access compliance controls (currently NIST 800-53 v5) related to a MITRE ATT&CK Technique
 
 # Table of Contents
 
@@ -157,9 +171,9 @@ attck = Attck(
     enterprise_attck_json="https://raw.githubusercontent.com/mitre/cti/master/enterprise-attack/enterprise-attack.json",
     pre_attck_json="https://raw.githubusercontent.com/mitre/cti/master/pre-attack/pre-attack.json",
     mobile_attck_json="https://raw.githubusercontent.com/mitre/cti/master/mobile-attack/mobile-attack.json",
-    nist_controls_json="https://raw.githubusercontent.com/center-for-threat-informed-defense/attack-control-framework-mappings/master/frameworks/nist800-53-r4/stix/nist800-53-r4-controls.json",
-    generated_attck_json="https://github.com/swimlane/pyattck/blob/master/generated_attck_data.json?raw=True",
-    generated_nist_json="https://github.com/swimlane/pyattck/blob/master/attck_to_nist_controls.json?raw=True",
+    nist_controls_json="https://raw.githubusercontent.com/center-for-threat-informed-defense/attack-control-framework-mappings/master/frameworks/ATT%26CK-v9.0/nist800-53-r5/stix/nist800-53-r5-controls.json",
+    generated_attck_json="https://swimlane-pyattck.s3.us-west-2.amazonaws.com/generated_attck_data.json",
+    generated_nist_json="https://swimlane-pyattck.s3.us-west-2.amazonaws.com/attck_to_nist_controls.json",
     **kwargs
 )
 ```
@@ -169,9 +183,9 @@ By default, `pyattck` will (now) pull the latest external data from their respec
 * enterprise_attck_json="https://raw.githubusercontent.com/mitre/cti/master/enterprise-attack/enterprise-attack.json"
 * pre_attck_json="https://raw.githubusercontent.com/mitre/cti/master/pre-attack/pre-attack.json"
 * mobile_attck_json="https://raw.githubusercontent.com/mitre/cti/master/mobile-attack/mobile-attack.json"
-* nist_controls_json="https://raw.githubusercontent.com/center-for-threat-informed-defense/attack-control-framework-mappings/master/frameworks/nist800-53-r4/stix/nist800-53-r4-controls.json"
-* generated_attck_json="https://github.com/swimlane/pyattck/blob/master/generated_attck_data.json?raw=True"
-* generated_nist_json="https://github.com/swimlane/pyattck/blob/master/attck_to_nist_controls.json?raw=True"
+* nist_controls_json="https://raw.githubusercontent.com/center-for-threat-informed-defense/attack-control-framework-mappings/master/frameworks/ATT%26CK-v9.0/nist800-53-r5/stix/nist800-53-r5-controls.json"
+* generated_attck_json="https://swimlane-pyattck.s3.us-west-2.amazonaws.com/generated_attck_data.json"
+* generated_nist_json="https://swimlane-pyattck.s3.us-west-2.amazonaws.com/attck_to_nist_controls.json"
 
 You have several options when instantiating the `Attck` object. As of `4.0.0` you can now specify any of the following options:
 
@@ -278,7 +292,7 @@ This data set is generated from many different sources. As we continue to add mo
 
    configuration
    pyattck/attck
-   dataset/dataset
+   Dataset <https://github.com/swimlane/pyattck-data>
    enterprise/enterprise
    preattck/preattck
    mobile/mobileattck

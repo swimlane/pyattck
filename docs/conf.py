@@ -22,7 +22,7 @@ import pyattck
 # -- Project information -----------------------------------------------------
 
 project = u'pyattck'
-copyright = u'2020, Swimlane'
+copyright = u'2021, Swimlane'
 author = u'Swimlane, Josh Rickard (MSAdministrator)'
 
 # The short X.Y version

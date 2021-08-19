@@ -4,7 +4,7 @@ This page outlines and provides detailed information regarding the data generate
 
 ## Data Categories
 
-At this time, a shareable JSON file is generated on a daily basis and pushed to the `pyattck` repository.  You can view this raw file here: [generated_attck_data.json](https://raw.githubusercontent.com/swimlane/pyattck/master/generated_attck_data.json)
+At this time, a shareable JSON file is generated on a daily basis and pushed to the `pyattck` repository.  You can view this raw file here: [generated_attck_data.json](https://swimlane-pyattck.s3.us-west-2.amazonaws.com/generated_attck_data.json)
 
 This generated JSON file has the following main keys:
 
@@ -94,7 +94,7 @@ This generated JSON file has the following main keys:
 
 ## Generated Attck Data Structure
 
-The [generated_attck_data.json](https://raw.githubusercontent.com/swimlane/pyattck/master/generated_attck_data.json) has the following base structure. This is purely an example and contains modified/fake data.
+The [generated_attck_data.json](https://swimlane-pyattck.s3.us-west-2.amazonaws.com/generated_attck_data.json) has the following base structure. This is purely an example and contains modified/fake data.
 
 ```json
    {

@@ -42,9 +42,8 @@ class Attck(object):
                 print(search['technique'])
                 print(search['reason_for_match'])
 
-    Additionally, as of pyattck 2.0.0 you can now access additional
-    datasets related to a technique. These datasets are
-    [documented here](https://github.com/swimlane/pyattck/blob/master/generateattcks/README.md).
+    You can access additional datasets related to a technique. 
+    These datasets are [documented here](https://github.com/swimlane/pyattck-data).
 
     Example:
         Once an Attck object is instantiated, you can access each object
@@ -140,9 +139,9 @@ class Attck(object):
         nist_controls_json (str, optional): A URL or local file path to the NIST Controls Json file. 
                                             Defaults to https://raw.githubusercontent.com/center-for-threat-informed-defense/attack-control-framework-mappings/master/frameworks/ATT%26CK-v9.0/nist800-53-r5/stix/nist800-53-r5-controls.json.
         generated_attck_json (str, optional): A URL or local file path to the Generated MITRE ATT&CK Json file. 
-                                              Defaults to https://github.com/swimlane/pyattck/blob/master/generated_attck_data.json?raw=True.
+                                              Defaults to https://swimlane-pyattck.s3.us-west-2.amazonaws.com/generated_attck_data.json.
         generated_nist_json (str, optional): A URL or local file path to the Generated NIST Controls Mapping Json file. 
-                                             Defaults to https://github.com/swimlane/pyattck/blob/master/attck_to_nist_controls.json?raw=True.
+                                             Defaults to https://swimlane-pyattck.s3.us-west-2.amazonaws.com/attck_to_nist_controls.json.
         kwargs (dict, optional): Provided kwargs will be passed to any HTTP requests using the Requests library. 
                                  Defaults to None.
 
@@ -161,8 +160,8 @@ class Attck(object):
         pre_attck_json="https://raw.githubusercontent.com/mitre/cti/master/pre-attack/pre-attack.json",
         mobile_attck_json="https://raw.githubusercontent.com/mitre/cti/master/mobile-attack/mobile-attack.json",
         nist_controls_json="https://raw.githubusercontent.com/center-for-threat-informed-defense/attack-control-framework-mappings/master/frameworks/ATT%26CK-v9.0/nist800-53-r5/stix/nist800-53-r5-controls.json",
-        generated_attck_json="https://github.com/swimlane/pyattck/blob/master/generated_attck_data.json?raw=True",
-        generated_nist_json="https://github.com/swimlane/pyattck/blob/master/attck_to_nist_controls.json?raw=True",
+        generated_attck_json="https://swimlane-pyattck.s3.us-west-2.amazonaws.com/generated_attck_data.json",
+        generated_nist_json="https://swimlane-pyattck.s3.us-west-2.amazonaws.com/attck_to_nist_controls.json",
         **kwargs
         ):
         """
@@ -193,25 +192,15 @@ class Attck(object):
                                   which contains two key value pairs
                 Example content:
 
-                    data_path: /Users/username/pyattck
-                    enterprise:
-                        filename: enterprise_attck.json
-                        url: https://raw.githubusercontent.com/mitre/cti/master/enterprise-attack/enterprise-attack.json
-                    generated_data:
-                        filename: enterprise_attck_dataset.json
-                        url: https://raw.githubusercontent.com/swimlane/pyattck/master/generated_attck_data.json
-                    mobile:
-                        filename: mobile_attck.json
-                        url: https://raw.githubusercontent.com/mitre/cti/master/mobile-attack/mobile-attack.json
-                    nist_800_53_rev4_controls:
-                        filename: enterprise_attck_nist_800_53_rev4_controls.json
-                        url: https://raw.githubusercontent.com/center-for-threat-informed-defense/attack-control-framework-mappings/master/frameworks/ATT%26CK-v9.0/nist800-53-r5/stix/nist800-53-r5-controls.json
-                    nist_data:
-                        filename: enterprise_attck_nist_data.json
-                        url: https://raw.githubusercontent.com/swimlane/pyattck/master/attck_to_nist_controls_data.json
-                    preattck:
-                        filename: preattack.json
-                        url: https://raw.githubusercontent.com/mitre/cti/master/pre-attack/pre-attack.json
+                    config_file_path: /Users/user.name/pyattck/config.yml
+                    data_path: /Users/user.name/pyattck/data
+                    enterprise_attck_json: https://raw.githubusercontent.com/mitre/cti/master/enterprise-attack/enterprise-attack.json
+                    generated_attck_json: https://swimlane-pyattck.s3.us-west-2.amazonaws.com/generated_attck_data.json
+                    generated_nist_json: https://swimlane-pyattck.s3.us-west-2.amazonaws.com/attck_to_nist_controls.json
+                    mobile_attck_json: https://raw.githubusercontent.com/mitre/cti/master/mobile-attack/mobile-attack.json
+                    nist_controls_json: https://raw.githubusercontent.com/center-for-threat-informed-defense/attack-control-framework-mappings/master/frameworks/ATT%26CK-v9.0/nist800-53-r5/stix/nist800-53-r5-controls.json
+                    pre_attck_json: https://raw.githubusercontent.com/mitre/cti/master/pre-attack/pre-attack.json
+
 
             2. data_path = The path to hold the external data locally on your system.
                            The default is your user home path.
@@ -234,10 +223,10 @@ class Attck(object):
             nist_controls_json (str, optional): A URL or local file path to the NIST Controls Json file. 
                                                 Defaults to https://raw.githubusercontent.com/center-for-threat-informed-defense/attack-control-framework-mappings/master/frameworks/ATT%26CK-v9.0/nist800-53-r5/stix/nist800-53-r5-controls.json
             generated_attck_json (str, optional): A URL or local file path to the Generated MITRE ATT&CK Json file. 
-                                                  Defaults to https://github.com/swimlane/pyattck/blob/master/generated_attck_data.json?raw=True.
+                                                  Defaults to https://swimlane-pyattck.s3.us-west-2.amazonaws.com/generated_attck_data.json.
             generated_nist_json (str, optional): A URL or local file path to the Generated NIST Controls Mapping 
                                                  Json file. 
-                                                 Defaults to https://github.com/swimlane/pyattck/blob/master/attck_to_nist_controls.json?raw=True.
+                                                 Defaults to https://swimlane-pyattck.s3.us-west-2.amazonaws.com/attck_to_nist_controls.json.
             kwargs (dict, optional): Provided kwargs will be passed to any HTTP requests using the Requests library. 
                                      Defaults to None.
         """
