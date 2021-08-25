@@ -1,3 +1,7 @@
+> # Please upgrade to pyattck 4.1.1 or greater. We have moved external data to S3 to reduce associated costs. 
+
+> pip install pyattck --upgrade
+
 ![pyattck](https://github.com/swimlane/pyattck/workflows/Testing%20pyattck/badge.svg)
 ![](./images/ubuntu_support.svg)
 ![](./images/macos_support.svg)
