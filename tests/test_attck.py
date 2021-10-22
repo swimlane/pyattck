@@ -9,6 +9,7 @@ default_config_data = {
     'enterprise_attck_json': "https://raw.githubusercontent.com/mitre/cti/master/enterprise-attack/enterprise-attack.json",
     'pre_attck_json': "https://raw.githubusercontent.com/mitre/cti/master/pre-attack/pre-attack.json",
     'mobile_attck_json': "https://raw.githubusercontent.com/mitre/cti/master/mobile-attack/mobile-attack.json",
+    'ics_attck_json': "https://raw.githubusercontent.com/mitre/cti/master/ics-attack/ics-attack.json",
     'nist_controls_json': "https://raw.githubusercontent.com/center-for-threat-informed-defense/attack-control-framework-mappings/master/frameworks/ATT%26CK-v9.0/nist800-53-r5/stix/nist800-53-r5-controls.json",
     'generated_attck_json': "https://swimlane-pyattck.s3.us-west-2.amazonaws.com/generated_attck_data.json",
     'generated_nist_json': "https://swimlane-pyattck.s3.us-west-2.amazonaws.com/attck_to_nist_controls.json",
@@ -33,7 +34,7 @@ def test_default_config(attck_configuration):
 
 @pytest.mark.parametrize(
     'target_attribute', 
-    ['enterprise_attck_json', 'pre_attck_json', 'mobile_attck_json', 'nist_controls_json', 'generated_attck_json', 'generated_nist_json']
+    ['enterprise_attck_json', 'pre_attck_json', 'mobile_attck_json', 'ics_attck_json', 'nist_controls_json', 'generated_attck_json', 'generated_nist_json']
 )
 def test_setting_json_locations(target_attribute):
       from pyattck import Attck, Configuration
@@ -41,6 +42,7 @@ def test_setting_json_locations(target_attribute):
       enterprise_temp_value = get_random_file_or_url()
       pre_attck_temp_value = get_random_file_or_url()
       mobile_temp_value = get_random_file_or_url()
+      ics_temp_value = get_random_file_or_url()
       nist_controls_temp_value = get_random_file_or_url()
       generated_attck_temp_value = get_random_file_or_url()
       generated_nist_temp_value = get_random_file_or_url()
@@ -59,6 +61,11 @@ def test_setting_json_locations(target_attribute):
         mobile_attck_json=mobile_temp_value
       )
       assert Configuration.mobile_attck_json == mobile_temp_value
+
+      attck = Attck(
+        ics_attck_json=ics_temp_value
+      )
+      assert Configuration.ics_attck_json == ics_temp_value
 
       attck = Attck(
         nist_controls_json=nist_controls_temp_value
