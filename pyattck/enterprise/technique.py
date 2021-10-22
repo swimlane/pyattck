@@ -107,7 +107,7 @@ class AttckTechnique(AttckObject):
         self.remote = self._set_attribute(kwargs, 'x_mitre_remote_support')
         self.system_requirements = self._set_attribute(kwargs, 'x_mitre_system_requirements')
         self.detection = self._set_attribute(kwargs, 'x_mitre_detection')
-        self.data_sources = self._set_list_items(kwargs, 'x_mitre_data_sources')
+        self.__data_sources = self._create_data_sources_dict(kwargs.get('x_mitre_data_sources'))
         self.created = self._set_attribute(kwargs, 'created')
         self.modified = self._set_attribute(kwargs, 'modified')
         self.__subtechniques = []
@@ -165,6 +165,41 @@ class AttckTechnique(AttckObject):
                 if control.get('id') in AttckObject.generated_nist_json[self.stix]:
                     control_list.append(AttckControl(**control))
         return control_list
+
+    @property
+    def data_components(self):
+        from .datasource import AttckDataComponent
+        return_list = []
+        item_dict = {}
+        for item in self.__attck_obj['objects']:
+            if 'type' in item:
+                if item['type'] == 'x-mitre-data-component':
+                    item_dict[item['id']] = item
+        if self._RELATIONSHIPS.get(self.stix):
+            for item in self._RELATIONSHIPS[self.stix]:
+                if item in item_dict:
+                    return_list.append(AttckDataComponent(**item_dict[item]))
+        return return_list 
+
+    @property
+    def data_sources(self):
+        """
+        Returns all data source objects that a technique belongs to
+
+        Returns:
+            [list] -- A list of data source objects defined within the
+                      Enterprise MITRE ATT&CK Framework
+        """
+        from .datasource import AttckDataSource
+        data_source_list = []
+        for item in self.__attck_obj['objects']:
+            if 'x-mitre-data-source' in item['type'] and self.__data_sources.get(item['name']):
+                data_source_list.append(AttckDataSource(
+                    attck_obj=self.__attck_obj, 
+                    _data_component_filter=self.__data_sources[item['name']],
+                    **item)
+                )
+        return data_source_list
 
     @property
     def tactics(self):
