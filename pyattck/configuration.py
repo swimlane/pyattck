@@ -13,7 +13,10 @@ class ConfigurationProperties(type):
     __config_data = None
 
     def __download_url_data(cls, url):
-        return request('GET', url, **cls.requests_kwargs).json()
+        response = request('GET', url, **cls.requests_kwargs)
+        if response.status_code == 200:
+            return response.json()
+        return {}
 
     def _check_if_path(cls, value):
         if Path(value):
@@ -80,7 +83,7 @@ class ConfigurationProperties(type):
                     'Unable to save data to the provided location: {}'.format(cls.data_path)
                 )
         for json_data in ['enterprise_attck_json', 'pre_attck_json', 
-                          'mobile_attck_json', 'nist_controls_json', 
+                          'mobile_attck_json', 'ics_attck_json', 'nist_controls_json', 
                           'generated_attck_json', 'generated_nist_json']:
             if cls._check_if_url(getattr(cls, json_data)):
                 try:
@@ -99,6 +102,7 @@ class ConfigurationProperties(type):
             'enterprise_attck_json': cls._enterprise_attck_json,
             'pre_attck_json': cls._pre_attck_json,
             'mobile_attck_json': cls._mobile_attck_json,
+            'ics_attck_json': cls._ics_attck_json,
             'nist_controls_json': cls._nist_controls_json,
             'generated_attck_json': cls._generated_attck_json,
             'generated_nist_json': cls._generated_nist_json,
@@ -195,6 +199,15 @@ class ConfigurationProperties(type):
         cls.__update_config()
 
     @property
+    def ics_attck_json(cls):
+        return cls._ics_attck_json
+
+    @ics_attck_json.setter
+    def ics_attck_json(cls, value):
+        cls._ics_attck_json = cls.__validate_value_string(value)
+        cls.__update_config()
+
+    @property
     def nist_controls_json(cls):
         return cls._nist_controls_json
 
@@ -230,6 +243,7 @@ class Configuration(object, metaclass=ConfigurationProperties):
     _enterprise_attck_json = "https://raw.githubusercontent.com/mitre/cti/master/enterprise-attack/enterprise-attack.json"
     _pre_attck_json="https://raw.githubusercontent.com/mitre/cti/master/pre-attack/pre-attack.json"
     _mobile_attck_json="https://raw.githubusercontent.com/mitre/cti/master/mobile-attack/mobile-attack.json"
+    _ics_attck_json="https://raw.githubusercontent.com/mitre/cti/master/ics-attack/ics-attack.json"
     _nist_controls_json="https://raw.githubusercontent.com/center-for-threat-informed-defense/attack-control-framework-mappings/master/frameworks/nist800-53-r4/stix/nist800-53-r4-controls.json"
     _generated_attck_json="https://github.com/swimlane/pyattck/blob/master/generated_attck_data.json?raw=True"
     _generated_nist_json="https://github.com/swimlane/pyattck/blob/master/attck_to_nist_controls.json?raw=True"
