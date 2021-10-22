@@ -5,7 +5,9 @@ from .tools import AttckTools
 from .mitigation import AttckMitigation
 from .tactic import AttckTactic
 from .control import AttckControl
+from .datasource import AttckDataSource
 from ..configuration import Configuration
+
 
 
 class Enterprise(object):
@@ -266,6 +268,7 @@ class Enterprise(object):
     __tools = []
     __malwares = []
     __controls = []
+    __data_sources = []
     __ENTERPRISE_GENERATED_DATA_JSON = None
     __nist_controls_json = Configuration.get_data('nist_controls_json')['objects']
     __attck = Configuration.get_data('enterprise_attck_json')
@@ -310,6 +313,20 @@ class Enterprise(object):
                 if control.get('type') == 'course-of-action':
                     self.__controls.append(AttckControl(attck_obj=self.__attck, **control))
         return self.__controls
+
+    @property
+    def data_sources(self):
+        """
+        Creates AttckDataSource objects
+
+        Returns:
+            (AttckDataSource) -- Returns a list of AttckDataSource objects
+        """
+        if not self.__data_sources:
+            for source in self.__attck['objects']:
+                if source['type'] == 'x-mitre-data-source':
+                    self.__data_sources.append(AttckDataSource(attck_obj=self.__attck, **source))
+        return self.__data_sources
 
     @property
     def tactics(self):
