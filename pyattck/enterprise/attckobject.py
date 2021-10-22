@@ -124,6 +124,17 @@ class AttckObject(object):
         except:
             return None
 
+    def _create_data_sources_dict(self, obj):
+        return_dict = {}
+        if isinstance(obj, list):
+            for item in obj:
+                if ':' in item:
+                    data_source, data_component = item.split(':')
+                    if data_source not in return_dict:
+                        return_dict[data_source] = []
+                    return_dict[data_source].append(data_component.strip())
+        return return_dict
+
     def _set_list_items(self, obj, list_name):
         """
         Private method used by child classes and normalizes list items
