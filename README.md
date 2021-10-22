@@ -21,13 +21,13 @@
 ```
 	A Python package to interact with MITRE ATT&CK Frameworks
 
-> Current Version is 4.1.1
+> Current Version is 5.0.0
 
-**pyattck** is a light-weight framework for MITRE ATT&CK Frameworks. This package extracts details from the MITRE Enterprise, PRE-ATT&CK, and Mobile Frameworks.
+**pyattck** is a light-weight framework for MITRE ATT&CK Frameworks. This package extracts details from the MITRE Enterprise, PRE-ATT&CK, Mobile, and ICS Frameworks.
 
 ## Why?
 
-`pyattck` assist organizations and individuals with accessing MITRE ATT&CK Framework(s) in a programmatic way. Meaning, you can access all defined actors, malwares, mitigations, tactics, techniques, and tools defined by the Enterprise, Mobile, and Pre-Attck frameworks via a command-line utility or embedding into your own code base.
+`pyattck` assist organizations and individuals with accessing MITRE ATT&CK Framework(s) in a programmatic way. Meaning, you can access all defined actors, malwares, mitigations, tactics, techniques, and tools defined by the Enterprise, Mobile, Pre-Attck, and ICS frameworks via a command-line utility or embedding into your own code base.
 
 There are many reasons why you would want to access this data in an automated (scripted/coded) way but a few examples are:
 
@@ -52,6 +52,7 @@ The **pyattck** package allows you to:
   * Search the external dataset for external commands that are similar using `search_commands`.
   * Access data from the MITRE PRE-ATT&CK Framework
   * Access data from the MITRE Mobile ATT&CK Framework
+  * Access data from the MITRE ICS ATT&CK Framework
   * Access subtechniques as nested objects or you can turn it off and access as normal technique
   * Access compliance controls (currently NIST 800-53) related to a MITRE ATT&CK Technique
 
@@ -125,6 +126,7 @@ You can access the following `main` properties on your **Attck** object:
 * enterprise
 * preattack
 * mobile
+* ics
 
 Once you specify the MITRE ATT&CK Framework, you can access additional properties.
 
@@ -159,6 +161,16 @@ Here are the accessible objects under the [Mobile](docs/mobile/mobileattck.md) p
 
 For more information on object types under the `mobile` property, see [Mobile](docs/mobile/mobileattck.md).
 
+Here are the accessible objects under the [ICS](docs/ics/icsattck.md) property:
+
+* [controls](docs/ics/control.md)
+* [malwares](docs/ics/malware.md)
+* [mitigations](docs/ics/mitigation.md)
+* [tactics](docs/ics/tactic.md)
+* [techniques](docs/ics/technique.md)
+
+For more information on object types under the `ics` property, see [ICS](docs/ics/icsattck.md).
+
 ## Configuration
 
 `pyattck` allows you to configure if you store external data and where it is stored. 
@@ -175,6 +187,7 @@ attck = Attck(
     enterprise_attck_json="https://raw.githubusercontent.com/mitre/cti/master/enterprise-attack/enterprise-attack.json",
     pre_attck_json="https://raw.githubusercontent.com/mitre/cti/master/pre-attack/pre-attack.json",
     mobile_attck_json="https://raw.githubusercontent.com/mitre/cti/master/mobile-attack/mobile-attack.json",
+    ics_attck_json="https://raw.githubusercontent.com/mitre/cti/master/ics-attack/ics-attack.json",
     nist_controls_json="https://raw.githubusercontent.com/center-for-threat-informed-defense/attack-control-framework-mappings/master/frameworks/ATT%26CK-v9.0/nist800-53-r5/stix/nist800-53-r5-controls.json",
     generated_attck_json="https://swimlane-pyattck.s3.us-west-2.amazonaws.com/generated_attck_data.json",
     generated_nist_json="https://swimlane-pyattck.s3.us-west-2.amazonaws.com/attck_to_nist_controls.json",
@@ -187,6 +200,7 @@ By default, `pyattck` will (now) pull the latest external data from their respec
 * enterprise_attck_json="https://raw.githubusercontent.com/mitre/cti/master/enterprise-attack/enterprise-attack.json"
 * pre_attck_json="https://raw.githubusercontent.com/mitre/cti/master/pre-attack/pre-attack.json"
 * mobile_attck_json="https://raw.githubusercontent.com/mitre/cti/master/mobile-attack/mobile-attack.json"
+* ics_attck_json="https://raw.githubusercontent.com/mitre/cti/master/ics-attack/ics-attack.json"
 * nist_controls_json="https://raw.githubusercontent.com/center-for-threat-informed-defense/attack-control-framework-mappings/master/frameworks/ATT%26CK-v9.0/nist800-53-r5/stix/nist800-53-r5-controls.json"
 * generated_attck_json="https://swimlane-pyattck.s3.us-west-2.amazonaws.com/generated_attck_data.json"
 * generated_nist_json="https://swimlane-pyattck.s3.us-west-2.amazonaws.com/attck_to_nist_controls.json"
@@ -300,4 +314,5 @@ This data set is generated from many different sources. As we continue to add mo
    enterprise/enterprise
    preattck/preattck
    mobile/mobileattck
+   ics/icsattck
 ```

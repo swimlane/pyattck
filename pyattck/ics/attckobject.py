@@ -12,7 +12,7 @@ class AttckObject(object):
                               a kwargs values
     """
 
-    _RELATIONSHIPS = None
+    _RELATIONSHIPS = {}
     generated_attck_json = Configuration.get_data('generated_attck_json')
     nist_controls_json = Configuration.get_data('nist_controls_json')['objects']
     generated_nist_json = Configuration.get_data('generated_nist_json')
@@ -63,7 +63,7 @@ class AttckObject(object):
             id=self.id
         )
 
-    def set_relationships(self, attck_obj):
+    def set_relationships(self, attck_obj, update=False):
         """
         Generates relationships within attck_obj based on a defined relationship
         from Mitre ATT&CK
@@ -71,20 +71,29 @@ class AttckObject(object):
         Args:
             attck_obj (dict): MITRE ATT&CK Json object
         """
-        if not AttckObject._RELATIONSHIPS:
-            relationship_obj = {}
+        if not AttckObject._RELATIONSHIPS or update:
             for item in attck_obj['objects']:
                 if 'type' in item:
                     if item['type'] == 'relationship':
                         source_id = item['source_ref']
                         target_id = item['target_ref']
-                        if source_id not in relationship_obj:
-                            relationship_obj[source_id] = []
-                        relationship_obj[source_id].append(target_id)
-                        if target_id not in relationship_obj:
-                            relationship_obj[target_id] = []
-                        relationship_obj[target_id].append(source_id)
-            AttckObject._RELATIONSHIPS = relationship_obj
+                        if source_id not in AttckObject._RELATIONSHIPS:
+                            AttckObject._RELATIONSHIPS[source_id] = []
+                        AttckObject._RELATIONSHIPS[source_id].append(target_id)
+                        if target_id not in AttckObject._RELATIONSHIPS:
+                            AttckObject._RELATIONSHIPS[target_id] = []
+                        AttckObject._RELATIONSHIPS[target_id].append(source_id)
+
+    def _create_data_sources_dict(self, obj):
+        return_dict = {}
+        if isinstance(obj, list):
+            for item in obj:
+                if ':' in item:
+                    data_source, data_component = item.split(':')
+                    if data_source not in return_dict:
+                        return_dict[data_source] = []
+                    return_dict[data_source].append(data_component.strip())
+        return return_dict
 
     def __set_alias(self, obj):
         """
@@ -124,17 +133,6 @@ class AttckObject(object):
         except:
             return None
 
-    def _create_data_sources_dict(self, obj):
-        return_dict = {}
-        if isinstance(obj, list):
-            for item in obj:
-                if ':' in item:
-                    data_source, data_component = item.split(':')
-                    if data_source not in return_dict:
-                        return_dict[data_source] = []
-                    return_dict[data_source].append(data_component.strip())
-        return return_dict
-
     def _set_list_items(self, obj, list_name):
         """
         Private method used by child classes and normalizes list items
@@ -165,7 +163,7 @@ class AttckObject(object):
         """
         if obj.get('external_references'):
             for p in obj['external_references']:
-                if p.get('source_name') == 'mitre-attack':
+                if p.get('source_name') == 'mitre-ics-attack':
                     return p.get('external_id')
                 elif 'NIST' in p.get('source_name'):
                     return p.get('external_id')

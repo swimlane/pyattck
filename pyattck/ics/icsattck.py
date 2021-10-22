@@ -1,7 +1,5 @@
 from .technique import AttckTechnique
-from .actor import AttckActor
 from .malware import AttckMalware
-from .tools import AttckTools
 from .mitigation import AttckMitigation
 from .tactic import AttckTactic
 from .control import AttckControl
@@ -9,16 +7,15 @@ from .datasource import AttckDataSource
 from ..configuration import Configuration
 
 
+class ICSAttck(object):
 
-class Enterprise(object):
-
-    """An interface to the Enterprise MITRE ATT&CK Framework.
+    """An interface to the ICS MITRE ATT&CK Framework.
 
     This class creates an interface to all data points in the
-    MITRE ATT&CK Enterprise framework.
+    MITRE ATT&CK ICS framework.
 
     This interface enables you to retrieve all properties within
-    each item in the MITRE ATT&CK Enterprise Framework.
+    each item in the MITRE ATT&CK ICS Framework.
 
     The following categorical items can be accessed using this class:
 
@@ -27,10 +24,7 @@ class Enterprise(object):
            accomplish a tactic)
         3. Mitigations (Mitigations are recommendations to prevent or
            protect against a technique)
-        4. Actors (Actors or Groups are identified malicious actors/groups
-           which have been identified and documented by MITRE & third-parties)
-        5. Tools (Tools are software used to perform techniques)
-        6. Malwares (Malwares are specific pieces of malware used by actors
+        4. Malwares (Malwares are specific pieces of malware used by actors
            (or in general) to accomplish a technique)
 
     You can also search the external dataset for external commands that are
@@ -61,90 +55,6 @@ class Enterprise(object):
         5. possible_detections = A list of raw datasets containing possible detection
                                  methods for a technique
 
-    Each Actor object (if available) enables you to access the following properties
-    on the object:
-
-        1. country
-        2. operations
-        3. attribution_links
-        4. known_tools
-        5. targets
-        6. additional_comments
-        7. external_description
-
-    You can retrieve the entire dataset using the `external_dataset` property on
-    a `actor` object.
-
-    pyattck also enables you to retrieve or generate logos for the actor or group
-    using the following properties:
-
-        - ascii_logo - Generated ASCII logo based on the actor or groups name
-        - image_logo - Generated ASCII logo based on a provided logo
-
-    Each Tools object (if available) enables you to access the following properties
-    on the object:
-
-        1. additional_names
-        2. attribution_links
-        3. additional_comments
-        4. family
-
-    You can retrieve the entire dataset using the `external_dataset` property
-    on a `tool` object.
-
-    You can also access external data properties from the C2 Matrix project.
-    The following properties are generated using C2 Matrix external data:
-
-        - HTTP
-        - Implementation
-        - Custom Profile
-        - DomainFront
-        - Multi-User
-        - SMB
-        - Kill Date
-        - macOS
-        - GitHub
-        - Key Exchange
-        - Chaining
-        - Price
-        - TCP
-        - Proxy Aware
-        - HTTP3
-        - HTTP2
-        - Date
-        - Evaluator
-        - Working Hours
-        - Slack
-        - FTP
-        - Version Reviewed
-        - Logging
-        - Name
-        - License
-        - Windows
-        - Stego
-        - Notes
-        - Server
-        - Actively Maint.
-        - Dashboard
-        - DNS
-        - Popular Site
-        - ICMP
-        - IMAP
-        - DoH
-        - Jitter
-        - How-To
-        - ATT&CK Mapping
-        - Kali
-        - Twitter
-        - MAPI
-        - Site
-        - Agent
-        - API
-        - UI
-        - Linux
-
-    You can retrieve the entire dataset using the `c2_data` property.
-
     As of pyattck 3.0 you can now access defined Compliance Controls related
     to a technique.
 
@@ -156,7 +66,7 @@ class Enterprise(object):
 
             attck = Attck()
 
-            for technique in attck.enterprise.techniques:
+            for technique in attck.ics.techniques:
                 print(technique.id)
                 print(technique.name)
                 print(technique.description)
@@ -182,24 +92,17 @@ class Enterprise(object):
         relationship properties of each.
 
         The following relationship properties are accessible:
-            1. Actors
-                1. Tools used by the Actor or Group
-                2. Malware used by the Actor or Group
-                3. Techniques this Actor or Group uses
-            2. Malwares
+            1. Malwares
                 1. Actor or Group(s) using this malware
                 2. Techniques this malware is used with
-            3. Mitigations
+            2. Mitigations
                 1. Techniques related to a specific set of mitigation suggestions
-            4. Tactics
+            3. Tactics
                 1. Techniques found in a specific Tactic (phase)
-            5. Techniques
+            4. Techniques
                 1. Tactics a technique is found in
                 2. Mitigation suggestions for a given technique
                 3. Actor or Group(s) identified as using this technique
-            6. Tools
-                1. Techniques that the specified tool is used within
-                2. Actor or Group(s) using a specified tool
 
             1. To iterate over a list, do the following:
 
@@ -209,13 +112,13 @@ class Enterprise(object):
 
                attck = Attck()
 
-               for technique in attck.enterprise.techniques:
+               for technique in attck.ics.techniques:
                    print(technique.id)
                    print(technique.name)
                    print(technique.description)
                    # etc.
 
-               for mitigation in attck.enterprise.mitigations:
+               for mitigation in attck.ics.mitigations:
                    print(mitigation.id)
                    print(mitigation.name)
                    print(mitigation.description)
@@ -229,7 +132,7 @@ class Enterprise(object):
 
                attck = Attck()
 
-               for technique in attck.enterprise.techniques:
+               for technique in attck.ics.techniques:
                    print(technique.id)
                    print(technique.name)
                    print(technique.description)
@@ -241,7 +144,7 @@ class Enterprise(object):
                        print(actor.description)
                        # etc.
 
-               for mitigation in attck.enterprise.mitigations:
+               for mitigation in attck.ics.mitigations:
                    print(mitigation.id)
                    print(mitigation.name)
                    print(mitigation.description)
@@ -264,41 +167,13 @@ class Enterprise(object):
     __tactics = []
     __techniques = []
     __mitigations = []
-    __actors = []
-    __tools = []
     __malwares = []
     __controls = []
     __data_sources = []
     __ENTERPRISE_GENERATED_DATA_JSON = None
     __nist_controls_json = Configuration.get_data('nist_controls_json')['objects']
-    __attck = Configuration.get_data('enterprise_attck_json')
-
-
-    def __init__(self, nested_subtechniques=True):
-        """
-        Sets standard properties that are found in all child classes
-        as well as provides standard methods used by inherited classes
-
-        Arguments:
-            kwargs (dict) -- Takes the MITRE ATT&CK Json object as a kwargs values
-            nested_subtechniques (bool) -- Determines if nested subtechniques will
-            be used or not. This is passed from attck class
-        """
-        self.__nested_subtechniques = nested_subtechniques
-
-    @property
-    def actors(self):
-        """
-        Creates AttckActor objects
-
-        Returns:
-            (AttckActor) -- (Returns a list of AttckActor objects)
-        """
-        if not self.__actors:
-            for group in self.__attck['objects']:
-                if group['type'] == 'intrusion-set':
-                    self.__actors.append(AttckActor(attck_obj=self.__attck, **group))
-        return self.__actors
+    __attck = Configuration.get_data('ics_attck_json')
+    __enterprise_attck = Configuration.get_data('enterprise_attck_json')
 
     @property
     def controls(self):
@@ -323,9 +198,9 @@ class Enterprise(object):
             (AttckDataSource) -- Returns a list of AttckDataSource objects
         """
         if not self.__data_sources:
-            for source in self.__attck['objects']:
+            for source in self.__enterprise_attck['objects']:
                 if source['type'] == 'x-mitre-data-source':
-                    self.__data_sources.append(AttckDataSource(attck_obj=self.__attck, **source))
+                    self.__data_sources.append(AttckDataSource(attck_obj=self.__enterprise_attck, _ics_attck_obj=self.__attck, **source))
         return self.__data_sources
 
     @property
@@ -357,20 +232,6 @@ class Enterprise(object):
         return self.__mitigations
 
     @property
-    def tools(self):
-        """
-        Creates AttckTools objects
-
-        Returns:
-            (AttckTools) -- Returns a list of AttckTools objects
-        """
-        if not self.__tools:
-            for tools in self.__attck['objects']:
-                if tools['type'] == 'tool':
-                    self.__tools.append(AttckTools(attck_obj=self.__attck, **tools))
-        return self.__tools
-
-    @property
     def malwares(self):
         """
         Creates AttckMalware objects
@@ -393,25 +254,9 @@ class Enterprise(object):
             (AttckTechnique) -- Returns a list of AttckTechnique objects
         """
         if not self.__techniques:
-            subtechniques = []
             for technique in self.__attck["objects"]:
-                if technique.get('type') == 'attack-pattern' and technique.get('revoked') is not True:
-                    if self.__nested_subtechniques:
-                        if technique.get('x_mitre_is_subtechnique'):
-                            subtechniques.append(technique)
-                        else:
-                            self.__techniques.append(AttckTechnique(attck_obj=self.__attck, **technique))
-                    else:
-                        self.__techniques.append(AttckTechnique(attck_obj=self.__attck, **technique))
-            if subtechniques:
-                for item in subtechniques:
-                    if item.get('external_references'):
-                        for p in item.get('external_references'):
-                            for s in p:
-                                if p[s] == 'mitre-attack':
-                                    for technique in self.__techniques:
-                                        if p['external_id'].split('.')[0] == technique.id:
-                                            technique.subtechniques = AttckTechnique(attck_obj=self.__attck, **item)
+                if technique.get('type') == 'attack-pattern':
+                    self.__techniques.append(AttckTechnique(attck_obj=self.__attck, _enterprise_attck_obj=self.__enterprise_attck, **technique))
         return self.__techniques
 
     def search_commands(self, search_term, json=False):
