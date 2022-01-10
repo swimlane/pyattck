@@ -414,6 +414,18 @@ class Enterprise(object):
                                             technique.subtechniques = AttckTechnique(attck_obj=self.__attck, **item)
         return self.__techniques
 
+    @property
+    def search(self):
+        from .search import Search
+        return Search(
+            actors=self.actors,
+            malwares=self.malwares,
+            mitigations=self.mitigations,
+            tactics=self.tactics,
+            techniques=self.techniques,
+            tools=self.tools
+        )
+
     def search_commands(self, search_term, json=False):
         """
         Search external datasets for potential commands using a search term
