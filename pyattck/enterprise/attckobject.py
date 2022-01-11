@@ -14,7 +14,7 @@ class AttckObject(object):
 
     _RELATIONSHIPS = None
     generated_attck_json = Configuration.get_data('generated_attck_json')
-    nist_controls_json = Configuration.get_data('nist_controls_json')['objects']
+    nist_controls_json = Configuration.get_data('nist_controls_json')
     generated_nist_json = Configuration.get_data('generated_nist_json')
 
     def __init__(self, **kwargs):
