@@ -270,7 +270,7 @@ class Enterprise(object):
     __controls = []
     __data_sources = []
     __ENTERPRISE_GENERATED_DATA_JSON = None
-    __nist_controls_json = Configuration.get_data('nist_controls_json')['objects']
+    __nist_controls_json = Configuration.get_data('nist_controls_json')
     __attck = Configuration.get_data('enterprise_attck_json')
 
 
@@ -309,9 +309,10 @@ class Enterprise(object):
             (AttckControl) -- Returns a list of AttckControl objects
         """
         if not self.__controls:
-            for control in self.__nist_controls_json:
-                if control.get('type') == 'course-of-action':
-                    self.__controls.append(AttckControl(attck_obj=self.__attck, **control))
+            if self.__nist_controls_json.get('objects'):
+                for control in self.__nist_controls_json['objects']:
+                    if control.get('type') == 'course-of-action':
+                        self.__controls.append(AttckControl(attck_obj=self.__attck, **control))
         return self.__controls
 
     @property

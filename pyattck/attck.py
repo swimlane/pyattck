@@ -139,7 +139,7 @@ class Attck(object):
         ics_attck_json (str, optional): A URL or local file path to the MITRE ICS ATT&CK JSON file.
                                            Defaults to https://raw.githubusercontent.com/mitre/cti/master/ics-attack/ics-attack.json.
         nist_controls_json (str, optional): A URL or local file path to the NIST Controls Json file. 
-                                            Defaults to https://raw.githubusercontent.com/center-for-threat-informed-defense/attack-control-framework-mappings/master/frameworks/ATT%26CK-v9.0/nist800-53-r5/stix/nist800-53-r5-controls.json.
+                                            Defaults to https://raw.githubusercontent.com/center-for-threat-informed-defense/attack-control-framework-mappings/main/frameworks/attack_10_1/nist800_53_r4/stix/nist800-53-r4-controls.json.
         generated_attck_json (str, optional): A URL or local file path to the Generated MITRE ATT&CK Json file. 
                                               Defaults to https://swimlane-pyattck.s3.us-west-2.amazonaws.com/generated_attck_data.json.
         generated_nist_json (str, optional): A URL or local file path to the Generated NIST Controls Mapping Json file. 
@@ -162,7 +162,7 @@ class Attck(object):
         pre_attck_json="https://raw.githubusercontent.com/mitre/cti/master/pre-attack/pre-attack.json",
         mobile_attck_json="https://raw.githubusercontent.com/mitre/cti/master/mobile-attack/mobile-attack.json",
         ics_attck_json="https://raw.githubusercontent.com/mitre/cti/master/ics-attack/ics-attack.json",
-        nist_controls_json="https://raw.githubusercontent.com/center-for-threat-informed-defense/attack-control-framework-mappings/master/frameworks/ATT%26CK-v9.0/nist800-53-r5/stix/nist800-53-r5-controls.json",
+        nist_controls_json="https://raw.githubusercontent.com/center-for-threat-informed-defense/attack-control-framework-mappings/main/frameworks/attack_10_1/nist800_53_r4/stix/nist800-53-r4-controls.json",
         generated_attck_json="https://swimlane-pyattck.s3.us-west-2.amazonaws.com/generated_attck_data.json",
         generated_nist_json="https://swimlane-pyattck.s3.us-west-2.amazonaws.com/attck_to_nist_controls.json",
         **kwargs
@@ -203,7 +203,7 @@ class Attck(object):
                     generated_nist_json: https://swimlane-pyattck.s3.us-west-2.amazonaws.com/attck_to_nist_controls.json
                     mobile_attck_json: https://raw.githubusercontent.com/mitre/cti/master/mobile-attack/mobile-attack.json
                     ics_attck_json: https://raw.githubusercontent.com/mitre/cti/master/ics-attack/ics-attack.json
-                    nist_controls_json: https://raw.githubusercontent.com/center-for-threat-informed-defense/attack-control-framework-mappings/master/frameworks/ATT%26CK-v9.0/nist800-53-r5/stix/nist800-53-r5-controls.json
+                    nist_controls_json: https://raw.githubusercontent.com/center-for-threat-informed-defense/attack-control-framework-mappings/main/frameworks/attack_10_1/nist800_53_r4/stix/nist800-53-r4-controls.json
                     pre_attck_json: https://raw.githubusercontent.com/mitre/cti/master/pre-attack/pre-attack.json
 
 
@@ -228,7 +228,7 @@ class Attck(object):
             ics_attck_json (str, optional): A URL or local file path to the MITRE ICS ATT&CK JSON file.
                                            Defaults to https://raw.githubusercontent.com/mitre/cti/master/ics-attack/ics-attack.json.
             nist_controls_json (str, optional): A URL or local file path to the NIST Controls Json file. 
-                                                Defaults to https://raw.githubusercontent.com/center-for-threat-informed-defense/attack-control-framework-mappings/master/frameworks/ATT%26CK-v9.0/nist800-53-r5/stix/nist800-53-r5-controls.json
+                                                Defaults to https://raw.githubusercontent.com/center-for-threat-informed-defense/attack-control-framework-mappings/main/frameworks/attack_10_1/nist800_53_r4/stix/nist800-53-r4-controls.json
             generated_attck_json (str, optional): A URL or local file path to the Generated MITRE ATT&CK Json file. 
                                                   Defaults to https://swimlane-pyattck.s3.us-west-2.amazonaws.com/generated_attck_data.json.
             generated_nist_json (str, optional): A URL or local file path to the Generated NIST Controls Mapping 

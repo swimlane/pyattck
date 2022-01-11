@@ -161,9 +161,10 @@ class AttckTechnique(AttckObject):
         from .control import AttckControl
         control_list = []
         if AttckObject.generated_nist_json.get(self.stix):
-            for control in AttckObject.nist_controls_json:
-                if control.get('id') in AttckObject.generated_nist_json[self.stix]:
-                    control_list.append(AttckControl(**control))
+            if AttckObject.nist_controls_json.get('objects'):
+                for control in AttckObject.nist_controls_json['objects']:
+                    if control.get('id') in AttckObject.generated_nist_json[self.stix]:
+                        control_list.append(AttckControl(**control))
         return control_list
 
     @property
