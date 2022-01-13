@@ -47,7 +47,6 @@ The following is only a small sample of the available properties on each object 
             * Malware used by the Actor or Group
             * Techniques this Actor or Group uses
         * External Data
-            * Retrieve a logo for an actor using either image_logo or ascii_logo properties
             * country which this actor or group may be associated with (attribution is hard)
             * operations 
             * attribution_links

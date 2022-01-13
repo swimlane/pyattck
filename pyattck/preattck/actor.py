@@ -24,11 +24,6 @@ class PreAttckActor(PreAttckObject):
 
     You can retrieve the entire dataset using the `external_dataset` property.
 
-    pyattck also enables you to retrieve or generate logos for the actor or
-    group using the following properties:
-
-        - ascii_logo - Generated ASCII logo based on the actor or groups name
-
     Example:
         You can iterate over an `actors` list and access specific properties and
         relationship properties.
