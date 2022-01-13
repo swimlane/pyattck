@@ -1,5 +1,4 @@
 from .attckobject import AttckObject
-from ..utils.logo import Logo
 
 
 class AttckActor(AttckObject):
@@ -104,9 +103,6 @@ class AttckActor(AttckObject):
         self.wiki = self._set_wiki(kwargs)
         self.contributor = self._set_list_items(kwargs, 'x_mitre_contributors')
         self.set_relationships(self.__attck_obj)
-        logo = Logo(self.name.strip().replace(' ','_').lower())
-        self.ascii_logo = logo.get_ascii()
-        self.image_logo = logo.get_image()
         self.external_dataset = self.__get_actors_dataset()
 
     def __get_actors_dataset(self):

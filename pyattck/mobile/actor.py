@@ -1,6 +1,4 @@
-
 from .mobileattckobject import MobileAttckObject
-from ..utils.logo import Logo
 
 
 class MobileAttckActor(MobileAttckObject):
@@ -90,8 +88,6 @@ class MobileAttckActor(MobileAttckObject):
         self.contributor = self._set_list_items(kwargs, 'x_mitre_contributors')
         self.wiki = self._set_wiki(kwargs)
         self.set_relationships(self.__mobile_attck_obj)
-        logo = Logo(self.name.strip().replace(' ','_').lower())
-        self.ascii_logo = logo.get_ascii()
         self.external_dataset = self.__get_actors_dataset()
 
     def __get_actors_dataset(self):
