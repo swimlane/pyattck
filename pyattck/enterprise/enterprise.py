@@ -75,12 +75,6 @@ class Enterprise(object):
     You can retrieve the entire dataset using the `external_dataset` property on
     a `actor` object.
 
-    pyattck also enables you to retrieve or generate logos for the actor or group
-    using the following properties:
-
-        - ascii_logo - Generated ASCII logo based on the actor or groups name
-        - image_logo - Generated ASCII logo based on a provided logo
-
     Each Tools object (if available) enables you to access the following properties
     on the object:
 

@@ -55,20 +55,3 @@ def test_some_mobile_attck_actors_have_generated_datasets_properties(attck_fixtu
 
     if country_count >= 1 and operations_count >= 1 and attribution_links_count >= 1 and known_tools_count >= 1 and targets_count >= 1 and additional_comments_count >= 1 and external_description_count >= 1:
         assert True
-
-def test_mobile_attck_actors_has_ascii_logo(attck_fixture):
-    """
-    All MITRE Mobile ATT&CK Techniques should have techniques
-
-    Args:
-        attck_fixture ([type]): our default MITRE Mobile ATT&CK JSON fixture
-    """
-    count = 0
-    logo_count = 0
-    for actor in attck_fixture.mobile.actors:
-        count += 1
-        if hasattr(actor, 'ascii_logo'):
-            logo_count += 1
-        
-    if count == logo_count:
-        assert True

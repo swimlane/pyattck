@@ -57,10 +57,7 @@ class MobileAttck(object):
         7. external_description
 
     You can retrieve the entire dataset using the `external_dataset` property on
-    a `actor` object. pyattck also enables you to retrieve or generate logos for
-    the actor or group using the following properties:
-
-        - ascii_logo - Generated ASCII logo based on the actor or groups name
+    a `actor` object.
 
     Each Tools object (if available) enables you to access the following properties on the object:
 

@@ -20,13 +20,6 @@ You can also access external data properties. The following properties are gener
 
 You can retrieve the entire dataset using the `external_dataset` property.
 
-An additional fun feature is that you can now retrieve a logo for a actor.  Currently, a limited set of logos are provided.
-If a logo is not provided, then `pyattck` will generate one using ascii art.
-
-You can access these logos using the following properties:
-
-* ascii_logo
-
 ## MobileAttckActor Class
 
 ```eval_rst

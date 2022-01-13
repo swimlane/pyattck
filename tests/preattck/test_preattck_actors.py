@@ -54,20 +54,3 @@ def test_some_preattck_actors_have_generated_datasets_properties(attck_fixture):
             external_description_count += 1
     if country_count >= 1 and operations_count >= 1 and attribution_links_count >= 1 and known_tools_count >= 1 and targets_count >= 1 and additional_comments_count >= 1 and external_description_count >= 1:
         assert True
-   
-def test_preattck_actors_has_ascii_logo(attck_fixture):
-    """
-    All MITRE PRE-ATT&CK Actors should have ascii logo
-
-    Args:
-        attck_fixture ([type]): our default MITRE PRE-ATT&CK JSON fixture
-    """
-    count = 0
-    logo_count = 0
-    for actor in attck_fixture.preattack.actors:
-        count += 1
-        if hasattr(actor, 'ascii_logo'):
-            logo_count += 1
-        
-    if count == logo_count:
-        assert True

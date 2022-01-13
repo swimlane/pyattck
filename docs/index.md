@@ -44,7 +44,6 @@ In addition, Techniques, Actors, and Tools (if applicable) now have collected da
 The **pyattck** package allows you to:
 
   * Specify a URL or local file path for the MITRE ATT&CK Enterprise Framework json, generated dataset, and/or a config.yml file.
-  * Retrieve an image_logo of an actor (when available). If an image_logo isn't available, it generates an ascii_logo.
   * Search the external dataset for external commands that are similar using `search_commands`.
   * Access data from the MITRE PRE-ATT&CK Framework
   * Access data from the MITRE Mobile ATT&CK Framework
@@ -70,10 +69,9 @@ The following libraries are required and installed by pyattck:
 ```
 requests
 pendulum>=1.2.3,<1.3
-pyfiglet==0.8.post1
 PyYaml>=5.4.1
-Pillow==8.2.0
 fire==0.3.1
+attrs==21.2.0
 ```
 
 ### macOS, Linux and Windows:

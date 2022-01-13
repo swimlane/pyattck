@@ -1,5 +1,4 @@
 from .preattckobject import PreAttckObject
-from ..utils.logo import Logo
 
 
 class PreAttckActor(PreAttckObject):
@@ -23,11 +22,6 @@ class PreAttckActor(PreAttckObject):
         7. external_description
 
     You can retrieve the entire dataset using the `external_dataset` property.
-
-    pyattck also enables you to retrieve or generate logos for the actor or
-    group using the following properties:
-
-        - ascii_logo - Generated ASCII logo based on the actor or groups name
 
     Example:
         You can iterate over an `actors` list and access specific properties and
@@ -96,8 +90,6 @@ class PreAttckActor(PreAttckObject):
         self.contributor = self._set_list_items(kwargs, 'x_mitre_contributors')
         self.wiki = self._set_wiki(kwargs)
         self.set_relationships(self.__preattck_obj)
-        logo = Logo(self.name.strip().replace(' ','_').lower())
-        self.ascii_logo = logo.get_ascii()
         self.external_dataset = self.__get_actors_dataset()
 
     def __get_actors_dataset(self):
