@@ -23,9 +23,7 @@ setup(
     author='Swimlane',
     author_email='info@swimlane.com',
     python_requires='>=3.6, <4',
-    package_data={
-        'pyattck':  ['data/actors/*.png']
-    },
+    package_data={},
     entry_points={
           'console_scripts': [
               'pyattck = pyattck.__main__:main'
