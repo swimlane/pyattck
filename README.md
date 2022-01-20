@@ -72,7 +72,6 @@ The following libraries are required and installed by pyattck:
 
 ```
 requests
-pendulum>=1.2.3,<1.3
 PyYaml>=5.4.1
 fire==0.3.1
 attrs==21.2.0
