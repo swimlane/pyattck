@@ -61,18 +61,13 @@ class ConfigurationProperties(type):
                 raise UknownFileError(provided_value=path, known_values=['.json', '.yml', '.yaml'])
 
     def __read_from_disk(cls, path):
-        if os.path.exists(path) and os.path.isfile(path):
-            try:
-                with open(path) as f:
-                    if path.endswith('.json'):
-                        return json.load(f)
-                    elif path.endswith('.yml') or path.endswith('.yaml'):
-                        return yaml.load(f, Loader=yaml.FullLoader)
-                    else:
-                        raise UknownFileError(provided_value=path, known_values=['.json', '.yml', '.yaml'])
-            except:
-                pass
-        return None
+        with open(path) as f:
+            if path.endswith('.json'):
+                return json.load(f)
+            elif path.endswith('.yml') or path.endswith('.yaml'):
+                return yaml.load(f, Loader=yaml.FullLoader)
+            else:
+                raise UknownFileError(provided_value=path, known_values=['.json', '.yml', '.yaml'])
 
     def _save_json_data(cls, force: bool=False) -> None:
         if not os.path.exists(cls.data_path):
