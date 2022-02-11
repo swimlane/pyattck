@@ -283,3 +283,25 @@ class AttckTechnique(AttckObject):
                 if item in item_dict:
                     return_list.append(AttckActor(attck_obj=self.__attck_obj, **item_dict[item]))
         return return_list
+
+    @property
+    def tools(self):
+        """
+        Returns all tool objects that are used in a technique
+
+        Returns:
+            [list] -- A list of tool objects defined within the
+                      Enterprise MITRE ATT&CK Framework
+        """
+        from .tools import AttckTools
+        return_list = []
+        item_dict = {}
+        for item in self.__attck_obj['objects']:
+            if 'type' in item:
+                if item['type'] == 'tool':
+                    item_dict[item['id']] = item
+        if self._RELATIONSHIPS.get(self.stix):
+            for item in self._RELATIONSHIPS.get(self.stix):
+                if item in item_dict:
+                    return_list.append(AttckTools(attck_obj=self.__attck_obj, **item_dict[item]))
+        return return_list
