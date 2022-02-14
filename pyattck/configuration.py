@@ -5,7 +5,7 @@ from urllib.parse import urlparse
 from pathlib import Path
 import yaml
 from requests.api import request
-from .utils.exceptions import UknownFileError
+from .utils.exceptions import UnknownFileError
 
 
 class ConfigurationProperties(type):
@@ -58,7 +58,7 @@ class ConfigurationProperties(type):
             elif path.endswith('.yml') or path.endswith('.yaml'):
                 yaml.dump(data, f)
             else:
-                raise UknownFileError(provided_value=path, known_values=['.json', '.yml', '.yaml'])
+                raise UnknownFileError(provided_value=path, known_values=['.json', '.yml', '.yaml'])
 
     def __read_from_disk(cls, path):
         if os.path.exists(path) and os.path.isfile(path):
@@ -69,8 +69,9 @@ class ConfigurationProperties(type):
                     elif path.endswith('.yml') or path.endswith('.yaml'):
                         return yaml.load(f, Loader=yaml.FullLoader)
                     else:
-                        raise UknownFileError(provided_value=path, known_values=['.json', '.yml', '.yaml'])
+                        raise UnknownFileError(provided_value=path, known_values=['.json', '.yml', '.yaml'])
             except:
+                warnings.warn(message=f"The provided config file {path} is not in the correct format. Using default values instead.")
                 pass
         return None
 
