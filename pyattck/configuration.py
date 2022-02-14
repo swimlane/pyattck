@@ -71,7 +71,7 @@ class ConfigurationProperties(type):
                     else:
                         raise UnknownFileError(provided_value=path, known_values=['.json', '.yml', '.yaml'])
             except:
-                warnings.WarningMessage(message=f"The provided config file {path} is not in the correct format. Using default values instead.")
+                warnings.warn(message=f"The provided config file {path} is not in the correct format. Using default values instead.")
                 pass
         return None
 
