@@ -11,7 +11,7 @@ class ConfigurationException(Exception):
     """
     pass
 
-class UknownFileError(ValueError):
+class UnknownFileError(ValueError):
     """Raised when the provided file extension is unkown or is not json, yml or yaml
     """
     def __init__(self, provided_value=None, known_values=None):
