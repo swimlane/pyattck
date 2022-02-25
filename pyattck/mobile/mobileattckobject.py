@@ -35,6 +35,7 @@ class MobileAttckObject(object):
         self.modified = self._set_attribute(kwargs, 'modified')
         self.stix = self._set_attribute(kwargs, 'id')
         self.type = self._set_attribute(kwargs, 'type')
+        self.deprecated = self._set_attribute(kwargs, 'x_mitre_deprecated')
 
     def __str__(self):
         return_dict = {}
