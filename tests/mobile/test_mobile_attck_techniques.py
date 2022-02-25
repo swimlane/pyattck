@@ -26,3 +26,18 @@ def test_mobile_attck_techniques_have_actors(attck_fixture):
                 count += 1
     if count >= 1:
         assert True
+
+def test_mobile_attck_techniques_have_malwares(attck_fixture):
+    """
+    All MITRE Mobile ATT&CK Techniques should have malwares
+
+    Args:
+        attck_fixture ([type]): our default MITRE Mobile ATT&CK JSON fixture
+    """
+    count = 0
+    for technique in attck_fixture.mobile.techniques:
+        if not hasattr(technique, 'malwares'):
+            if technique.malwares:
+                count += 1
+    if count >= 1:
+        assert True

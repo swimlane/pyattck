@@ -70,3 +70,18 @@ def test_some_techniques_have_compliance_controls(attck_fixture):
                     count += 1
     if count >= 1:
         assert True
+
+def test_techniques_have_malwares(attck_fixture):
+    """
+    Some MITRE ICS ATT&CK Techniques should have malwares
+
+    Args:
+        attck_fixture ([type]): our default MITRE ICS ATT&CK JSON fixture
+    """
+    count = 0
+    for technique in attck_fixture.ics.techniques:
+        if not hasattr(technique, 'malwares'):
+            if technique.malwares:
+                count += 1
+    if count >= 1:
+        assert True
