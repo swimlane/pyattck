@@ -211,3 +211,27 @@ class MobileAttckTechnique(MobileAttckObject):
                 if item in item_dict:
                     return_list.append(MobileAttckTools(attck_obj=self.__attck_obj, **item_dict[item]))
         return return_list
+
+    @property
+    def malwares(self):
+        """
+        Returns all malware objects that are used in a technique
+
+        Returns:
+            [list] -- A list of malware objects defined within the
+                      Mobile MITRE ATT&CK Framework
+        """
+        from .malware import MobileAttckMalware
+        return_list = []
+        item_dict = {}
+        for item in self.__mobile_attck_obj['objects']:
+            if 'type' in item:
+                if item['type'] == 'malware':
+                    item_dict[item['id']] = item
+        try:
+            for item in self._RELATIONSHIPS[self.stix]:
+                if item in item_dict:
+                    return_list.append(MobileAttckMalware(mobile_attck_obj=self.__mobile_attck_obj, **item_dict[item]))
+        except:
+            pass
+        return return_list
