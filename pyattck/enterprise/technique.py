@@ -28,6 +28,11 @@ class AttckTechnique(AttckObject):
                 1. tactics
                 2. mitigations
                 3. actors
+                4. tools
+                5. malwares
+                6. controls
+                7. data_components
+                8. data_sources
 
             1. To iterate over an `techniques` list, do the following:
 

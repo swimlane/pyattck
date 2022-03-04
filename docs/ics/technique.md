@@ -6,6 +6,10 @@ This class provides information about the techniques found under each tactic (co
 
 * Tactics a technique is found in
 * Mitigation suggestions for a given technique
+* Malware used with a given technique
+* NIST 800-53 Controls related to a technique
+* Data Components of a technique
+* Data Sources of a technique
 
 Each technique enables you to access the following properties on the object:
 
