@@ -2,7 +2,6 @@ from .attckobject import AttckObject
 
 
 class AttckTechnique(AttckObject):
-
     """ICS MITRE ATT&CK Technique object.
 
     A child class of AttckObject
@@ -82,7 +81,7 @@ class AttckTechnique(AttckObject):
         AttckObject (dict) -- Takes the MITRE ATT&CK Json object as a kwargs values
     """
 
-    def __init__(self, attck_obj = None, _enterprise_attck_obj=None, **kwargs):
+    def __init__(self, attck_obj=None, _enterprise_attck_obj=None, **kwargs):
         """
         This class represents a Technique as defined by the
         ICS MITRE ATT&CK framework.
@@ -170,17 +169,19 @@ class AttckTechnique(AttckObject):
             if 'x-mitre-data-source' in item['type']:
                 if temp_data_source_dict.get(item['name']):
                     data_source_list.append(AttckDataSource(
-                        attck_obj=self.__enterprise_attck_obj, 
+                        attck_obj=self.__enterprise_attck_obj,
                         _data_component_filter=temp_data_source_dict[item['name']],
+                        _ics_attck_obj=self.__attck_obj,
                         **item)
                     )
                     del temp_data_source_dict[item['name']]
         if temp_data_source_dict:
-            for key,val in temp_data_source_dict.items():
+            for key, val in temp_data_source_dict.items():
                 data_source_list.append(
                     AttckDataSource(
                         attck_obj=self.__enterprise_attck_obj,
                         _data_component_filter=val,
+                        _ics_attck_obj=self.__attck_obj,
                         **{
                             'name': key,
                             'data_components': val
@@ -204,7 +205,9 @@ class AttckTechnique(AttckObject):
             if 'x-mitre-tactic' in item['type']:
                 for tact in self._tactic:
                     if str(tact).lower() == str(item['x_mitre_shortname']).lower():
-                        tactic_list.append(AttckTactic(attck_obj=self.__attck_obj, **item))
+                        tactic_list.append(
+                            AttckTactic(attck_obj=self.__attck_obj, _enterprise_attck_obj=self.__enterprise_attck_obj,
+                                        **item))
         return tactic_list
 
     @tactics.setter
@@ -226,7 +229,7 @@ class AttckTechnique(AttckObject):
             self._tactic = temp_list
         except:
             self._tactic = ['no phase_name']
-        
+
     @property
     def mitigations(self):
         """
@@ -246,5 +249,7 @@ class AttckTechnique(AttckObject):
         if self._RELATIONSHIPS.get(self.stix):
             for item in self._RELATIONSHIPS[self.stix]:
                 if item in item_dict:
-                    return_list.append(AttckMitigation(attck_obj=self.__attck_obj, **item_dict[item]))
-        return return_list 
+                    return_list.append(
+                        AttckMitigation(attck_obj=self.__attck_obj, _enterprise_attck_obj=self.__enterprise_attck_obj,
+                                        **item_dict[item]))
+        return return_list
