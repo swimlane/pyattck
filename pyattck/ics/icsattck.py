@@ -187,7 +187,7 @@ class ICSAttck(object):
             if self.__nist_controls_json.get('objects'):
                 for control in self.__nist_controls_json['objects']:
                     if control.get('type') == 'course-of-action':
-                        self.__controls.append(AttckControl(attck_obj=self.__attck, **control))
+                        self.__controls.append(AttckControl(attck_obj=self.__attck, _enterprise_attck_obj=self.__enterprise_attck, **control))
         return self.__controls
 
     @property
@@ -215,7 +215,7 @@ class ICSAttck(object):
         if not self.__tactics:
             for tactic in self.__attck['objects']:
                 if tactic['type'] == 'x-mitre-tactic':
-                    self.__tactics.append(AttckTactic(attck_obj=self.__attck, **tactic))
+                    self.__tactics.append(AttckTactic(attck_obj=self.__attck, _enterprise_attck_obj=self.__enterprise_attck, **tactic))
         return self.__tactics
 
     @property
@@ -229,7 +229,7 @@ class ICSAttck(object):
         if not self.__mitigations:
             for mitigation in self.__attck['objects']:
                 if mitigation['type'] == 'course-of-action':
-                    self.__mitigations.append(AttckMitigation(attck_obj=self.__attck, **mitigation))
+                    self.__mitigations.append(AttckMitigation(attck_obj=self.__attck, _enterprise_attck_obj=self.__enterprise_attck, **mitigation))
         return self.__mitigations
 
     @property
@@ -243,7 +243,7 @@ class ICSAttck(object):
         if not self.__malwares:
             for malware in self.__attck['objects']:
                 if malware['type'] == 'malware':
-                    self.__malwares.append(AttckMalware(attck_obj=self.__attck, **malware))
+                    self.__malwares.append(AttckMalware(attck_obj=self.__attck, _enterprise_attck_obj=self.__enterprise_attck, **malware))
         return self.__malwares
 
     @property

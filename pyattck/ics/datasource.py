@@ -103,5 +103,5 @@ class AttckDataSource(AttckObject):
                     if data_sources.get(self.name):
                         for component in self.data_components:
                             if component.name in data_sources[self.name]:
-                                return_list.append(AttckTechnique(attck_obj=self.__ics_attck_obj, **item))
+                                return_list.append(AttckTechnique(attck_obj=self.__ics_attck_obj, _enterprise_attck_obj=self.__attck_obj, **item))
         return return_list
