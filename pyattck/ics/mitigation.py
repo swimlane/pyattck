@@ -54,7 +54,7 @@ class AttckMitigation(AttckObject):
         AttckObject (dict) -- Takes the Mitre ATT&CK Json object as a kwargs values
     """
 
-    def __init__(self, attck_obj = None, **kwargs):
+    def __init__(self, attck_obj = None, _enterprise_attck_obj=None, **kwargs):
         """
         This class represents mitigation guidance as defined by the
         ICS MITRE ATT&CK framework.
@@ -64,6 +64,7 @@ class AttckMitigation(AttckObject):
         """
         super(AttckMitigation, self).__init__(**kwargs)
         self.__attck_obj = attck_obj
+        self.__enterprise_attck_obj = _enterprise_attck_obj
         self.created_by_ref = self._set_attribute(kwargs, 'created_by_ref')
         self.id = self._set_id(kwargs)
         self.name = self._set_attribute(kwargs, 'name')
@@ -97,5 +98,5 @@ class AttckMitigation(AttckObject):
         if self._RELATIONSHIPS.get(self.stix):
             for item in self._RELATIONSHIPS[self.stix]:
                 if item in item_dict:
-                    return_list.append(AttckTechnique(attck_obj=self.__attck_obj, **item_dict[item]))
+                    return_list.append(AttckTechnique(attck_obj=self.__attck_obj, _enterprise_attck_obj=self.__enterprise_attck_obj, **item_dict[item]))
         return return_list

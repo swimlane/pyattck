@@ -17,7 +17,7 @@
 ```
 	A Python package to interact with MITRE ATT&CK Frameworks
 
-> Current Version is 5.0.0
+> Current Version is 5.4.0
 
 **pyattck** is a light-weight framework for MITRE ATT&CK Frameworks. This package extracts details from the MITRE Enterprise, PRE-ATT&CK, Mobile, and ICS Frameworks.
 

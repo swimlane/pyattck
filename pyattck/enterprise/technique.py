@@ -28,6 +28,11 @@ class AttckTechnique(AttckObject):
                 1. tactics
                 2. mitigations
                 3. actors
+                4. tools
+                5. malwares
+                6. controls
+                7. data_components
+                8. data_sources
 
             1. To iterate over an `techniques` list, do the following:
 
@@ -114,7 +119,6 @@ class AttckTechnique(AttckObject):
         self.wiki = self._set_wiki(kwargs)
         self.contributors = self._set_list_items(kwargs, 'x_mitre_contributors')
         self.revoked = self._set_attribute(kwargs, 'revoked')
-        self.deprecated = self._set_attribute(kwargs, 'x_mitre_deprecated')
         self.subtechnique = False if self._set_attribute(kwargs, 'x_mitre_is_subtechnique') is None else True
         self.__subtechniques = []
         self.command_list = self.__get_filtered_dataset('command_list')
@@ -304,4 +308,26 @@ class AttckTechnique(AttckObject):
             for item in self._RELATIONSHIPS.get(self.stix):
                 if item in item_dict:
                     return_list.append(AttckTools(attck_obj=self.__attck_obj, **item_dict[item]))
+        return return_list
+
+    @property
+    def malwares(self):
+        """
+        Returns all malware objects that are used in a technique
+
+        Returns:
+            [list] -- A list of malware objects defined within the
+                      Enterprise MITRE ATT&CK Framework
+        """
+        from .malware import AttckMalware
+        return_list = []
+        item_dict = {}
+        for item in self.__attck_obj['objects']:
+            if 'type' in item:
+                if item['type'] == 'malware':
+                    item_dict[item['id']] = item
+        if self._RELATIONSHIPS.get(self.stix):
+            for item in self._RELATIONSHIPS.get(self.stix):
+                if item in item_dict:
+                    return_list.append(AttckMalware(attck_obj=self.__attck_obj, **item_dict[item]))
         return return_list

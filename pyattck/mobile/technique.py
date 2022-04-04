@@ -79,14 +79,12 @@ class MobileAttckTechnique(MobileAttckObject):
         self.old_attack_id = self._set_attribute(kwargs, 'x_mitre_old_attack_id')
         self.platforms = self._set_list_items(kwargs, 'x_mitre_platforms')
         self.version = self._set_attribute(kwargs, 'x_mitre_version')
-        self.depricated = self._set_attribute(kwargs, 'x_mitre_deprecated')
         self.created_by_ref = self._set_attribute(kwargs, 'created_by_ref')
         self.contributor = self._set_list_items(kwargs, 'x_mitre_contributors')
         self.tactic_type = self._set_list_items(kwargs, 'x_mitre_tactic_type')
         self.external_reference = self._set_reference(kwargs)
         self.possible_detections = self._set_attribute(kwargs, 'x_mitre_detection')
         self.revoked = self._set_attribute(kwargs, 'revoked')
-        self.deprecated = self._set_attribute(kwargs, 'x_mitre_deprecated')
         self.wiki = self._set_wiki(kwargs)
         self.stix = self._set_attribute(kwargs, 'id')
         self.command_list = self.__get_filtered_dataset('command_list')
@@ -212,4 +210,28 @@ class MobileAttckTechnique(MobileAttckObject):
             for item in self._RELATIONSHIPS.get(self.stix):
                 if item in item_dict:
                     return_list.append(MobileAttckTools(attck_obj=self.__attck_obj, **item_dict[item]))
+        return return_list
+
+    @property
+    def malwares(self):
+        """
+        Returns all malware objects that are used in a technique
+
+        Returns:
+            [list] -- A list of malware objects defined within the
+                      Mobile MITRE ATT&CK Framework
+        """
+        from .malware import MobileAttckMalware
+        return_list = []
+        item_dict = {}
+        for item in self.__mobile_attck_obj['objects']:
+            if 'type' in item:
+                if item['type'] == 'malware':
+                    item_dict[item['id']] = item
+        try:
+            for item in self._RELATIONSHIPS[self.stix]:
+                if item in item_dict:
+                    return_list.append(MobileAttckMalware(mobile_attck_obj=self.__mobile_attck_obj, **item_dict[item]))
+        except:
+            pass
         return return_list

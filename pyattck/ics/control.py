@@ -41,7 +41,7 @@ class AttckControl(AttckObject):
         kwargs (dict) -- Takes the raw control Json object
     """
 
-    def __init__(self, attck_obj = None, **kwargs):
+    def __init__(self, attck_obj = None, _enterprise_attck_obj=None, **kwargs):
         """
         This class represents a compliance Control as defined from
         external data sources.
@@ -51,6 +51,7 @@ class AttckControl(AttckObject):
         """
         super(AttckControl, self).__init__(**kwargs)
         self.__attck_obj = attck_obj
+        self.__enterprise_attck_obj = _enterprise_attck_obj
         for key,val in kwargs.items():
             prop_name = key.replace('x_mitre_','')
             if not hasattr(self, prop_name):
@@ -72,5 +73,5 @@ class AttckControl(AttckObject):
             if self.stix in val:
                 for item in self.__attck_obj['objects']:
                     if 'type' in item and item['type'] == 'attack-pattern' and key == item['id']:
-                        technique_list.append(AttckTechnique(attck_obj=self.__attck_obj, **item))
+                        technique_list.append(AttckTechnique(attck_obj=self.__attck_obj, _enterprise_attck_obj=self.__enterprise_attck_obj, **item))
         return technique_list
