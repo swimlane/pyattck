@@ -14,6 +14,11 @@ class AttckDataComponent:
     x_mitre_version = attr.ib()
     x_mitre_data_source_ref = attr.ib()
     object_marking_refs = attr.ib()
+    x_mitre_domains = attr.ib()
+    external_references = attr.ib()
+    x_mitre_attack_spec_version = attr.ib()
+    x_mitre_modified_by_ref = attr.ib()
+    
 
 
 class AttckDataSource(AttckObject):
@@ -66,6 +71,10 @@ class AttckDataSource(AttckObject):
         self.platforms = self._set_list_items(kwargs, 'x_mitre_platforms')
         self.collection_layers = self._set_list_items(kwargs, 'x_mitre_collection_layers')
         self.data_components = []
+        self.domains = self._set_list_items(kwargs, 'x_mitre_domains')
+        self.external_references = self._set_list_items(kwargs, 'external_references')
+        self.x_mitre_attack_spec_version = self._set_list_items(kwargs, 'x_mitre_attack_spec_version')
+        self.x_mitre_modified_by_ref = self._set_list_items(kwargs, 'x_mitre_modified_by_ref')
         self.__set_data_component_relationship()
 
     def __set_data_component_relationship(self):
