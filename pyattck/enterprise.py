@@ -41,7 +41,7 @@ class EnterpriseAttck(Base):
 
     @property
     def actors(self):
-        """Creates Actor objects
+        """Retrieves Actor objects.
 
         Returns:
             (Actor) -- (Returns a list of Actor objects)
@@ -54,7 +54,7 @@ class EnterpriseAttck(Base):
 
     @property
     def controls(self):
-        """Creates Control objects
+        """Retrieves Control objects.
 
         Returns:
             (Control) -- Returns a list of Control objects
@@ -68,7 +68,7 @@ class EnterpriseAttck(Base):
 
     @property
     def data_components(self):
-        """Creates DataComponent objects
+        """Retrieves DataComponent objects.
 
         Returns:
             (DataComponent) -- Returns a list of DataComponent objects
@@ -81,7 +81,7 @@ class EnterpriseAttck(Base):
 
     @property
     def data_sources(self):
-        """Creates DataSource objects
+        """Retrieves DataSource objects.
 
         Returns:
             (DataSource) -- Returns a list of DataSource objects
@@ -94,7 +94,7 @@ class EnterpriseAttck(Base):
 
     @property
     def malwares(self):
-        """Creates Malware objects
+        """Retrieves Malware objects.
 
         Returns:
             (Malware) -- Returns a list of Malware objects
@@ -107,7 +107,7 @@ class EnterpriseAttck(Base):
 
     @property
     def mitigations(self):
-        """Creates Mitigation objects
+        """Retrieves Mitigation objects.
 
         Returns:
             (Mitigation) -- (Returns a list of Mitigation objects)
@@ -120,7 +120,7 @@ class EnterpriseAttck(Base):
 
     @property
     def tactics(self):
-        """Creates Tactic objects
+        """Retrieves Tactic objects.
 
         Returns:
             (Tactic) -- (Returns a list of Tactic objects)
@@ -133,7 +133,7 @@ class EnterpriseAttck(Base):
 
     @property
     def techniques(self):
-        """Creates Technique objects
+        """Retrieves Technique objects.
 
         Returns:
             (Technique) -- Returns a list of Technique objects
@@ -149,7 +149,7 @@ class EnterpriseAttck(Base):
 
     @property
     def tools(self):
-        """Creates Tool objects
+        """Retrieves Tool objects.
 
         Returns:
             (Tool) -- Returns a list of Tool objects

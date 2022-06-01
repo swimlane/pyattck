@@ -239,9 +239,8 @@ class Attck(Base):
 
     @property
     def enterprise(self):
-        """
-        Retrieve objects from the Enterprise MITRE ATT&CK Framework and
-        additional generated data which provides additional context
+        """Retrieve objects from the Enterprise MITRE ATT&CK Framework and
+        additional generated data which provides additional context.
 
         Returns:
             Enterprise: Returns an Enterprise object
@@ -253,8 +252,7 @@ class Attck(Base):
 
     @property
     def preattack(self):
-        """
-        Retrieve objects from the MITRE PRE-ATT&CK Framework
+        """Retrieve objects from the MITRE PRE-ATT&CK Framework.
 
         Returns:
             PreAttack: Returns an PreAttack object
@@ -266,8 +264,7 @@ class Attck(Base):
 
     @property
     def mobile(self):
-        """
-        Retrieve objects from the MITRE Mobile ATT&CK Framework
+        """Retrieve objects from the MITRE Mobile ATT&CK Framework.
 
         Returns:
             PreAttack: Returns an MobileAttack object
@@ -279,8 +276,7 @@ class Attck(Base):
 
     @property
     def ics(self):
-        """
-        Retrieve objects from the MITRE ICS ATT&CK Framework
+        """Retrieve objects from the MITRE ICS ATT&CK Framework.
 
         Returns:
             PreAttack: Returns an ICSAttck object
@@ -291,4 +287,5 @@ class Attck(Base):
         return ICSAttck()
 
     def update(self) -> bool:
+        """Updates the local cached JSON files."""
         return True if Base.config._save_json_data(force=True) else False

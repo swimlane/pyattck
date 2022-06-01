@@ -34,7 +34,7 @@ class MobileAttck(Base):
 
     @property
     def actors(self):
-        """Creates Actor objects
+        """Retrieves Actor objects.
 
         Returns:
             (Actor) -- (Returns a list of Actor objects)
@@ -47,7 +47,7 @@ class MobileAttck(Base):
 
     @property
     def malwares(self):
-        """Creates Malware objects
+        """Retrieves Malware objects.
 
         Returns:
             (Malware) -- Returns a list of Malware objects
@@ -60,7 +60,7 @@ class MobileAttck(Base):
 
     @property
     def mitigations(self):
-        """Creates Mitigation objects
+        """Retrieves Mitigation objects.
 
         Returns:
             (Mitigation) -- (Returns a list of Mitigation objects)
@@ -73,7 +73,7 @@ class MobileAttck(Base):
 
     @property
     def tactics(self):
-        """Creates Tactic objects
+        """Retrieves Tactic objects.
 
         Returns:
             (Tactic) -- (Returns a list of Tactic objects)
@@ -86,7 +86,7 @@ class MobileAttck(Base):
 
     @property
     def techniques(self):
-        """Creates Technique objects
+        """Retrieves Technique objects.
 
         Returns:
             (Technique) -- Returns a list of Technique objects
@@ -102,7 +102,7 @@ class MobileAttck(Base):
 
     @property
     def tools(self):
-        """Creates Tool objects
+        """Retrieves Tool objects.
 
         Returns:
             (Tool) -- Returns a list of Tool objects

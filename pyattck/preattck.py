@@ -29,7 +29,7 @@ class PreAttck(Base):
 
     @property
     def actors(self):
-        """Creates Actor objects
+        """Retrieves Actor objects.
 
         Returns:
             (Actor) -- (Returns a list of Actor objects)
@@ -42,7 +42,7 @@ class PreAttck(Base):
 
     @property
     def tactics(self):
-        """Creates Tactic objects
+        """Retrieves Tactic objects.
 
         Returns:
             (Tactic) -- (Returns a list of Tactic objects)
@@ -55,7 +55,7 @@ class PreAttck(Base):
 
     @property
     def techniques(self):
-        """Creates Technique objects
+        """Retrieves Technique objects.
 
         Returns:
             (Technique) -- Returns a list of Technique objects

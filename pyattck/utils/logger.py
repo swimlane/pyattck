@@ -33,7 +33,7 @@ class LoggingBase(type):
         setattr(cls, logger_attribute_name, logging.getLogger(logger_name))
 
     def setup_logging(cls, default_path="./pyattck/data/logging.yml", default_level=logging.INFO, env_key="LOG_CFG"):
-        """Setup logging configuration"""
+        """Setup logging configuration."""
         path = os.path.abspath(os.path.expanduser(os.path.expandvars(default_path)))
         value = os.getenv(env_key, None)
         if value:
