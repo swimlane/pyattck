@@ -1,7 +1,3 @@
-> # Please upgrade to pyattck 4.1.1 or greater. We have moved external data to S3 to reduce associated costs. 
-
-> pip install pyattck --upgrade
-
 ![pyattck](https://github.com/swimlane/pyattck/workflows/Testing%20pyattck/badge.svg)
 ![](./images/ubuntu_support.svg)
 ![](./images/macos_support.svg)
@@ -21,7 +17,7 @@
 ```
 	A Python package to interact with MITRE ATT&CK Frameworks
 
-> Current Version is 5.4.0
+> Current Version is 6.0.0
 
 **pyattck** is a light-weight framework for MITRE ATT&CK Frameworks. This package extracts details from the MITRE Enterprise, PRE-ATT&CK, Mobile, and ICS Frameworks.
 
@@ -35,25 +31,25 @@ There are many reasons why you would want to access this data in an automated (s
 * A build pipeline of detection rules with additional MITRE ATT&CK details for categorization
 * Quickly searching for specific details about a technique without navigating a web page
 
-There are other benefits that `pyattck` provide as well which includes the ability to provide additional contextual data. You can find more information about this data [here](https://github.com/swimlane/pyattck-data) but the basics are that `pyattck` utilizes multiple open-source repositorties to gather additional contextual data like commands used to execute a technique, country and other details about a malicious actor, other variants of malware similar to a defined tool/malware, etc. 
+There are other benefits that `pyattck` provide as well which includes the ability to provide additional contextual data. You can find more information about this data [here](https://github.com/swimlane/pyattck-data) but the basics are that `pyattck` utilizes multiple open-source repositories to gather additional contextual data like commands used to execute a technique, country and other details about a malicious actor, other variants of malware similar to a defined tool/malware, etc. 
 
 This additional context is what makes `pyattck` truly powerful and enables people to build more robust testing and validation of their detection rules, validates testing assumptions, etc. Truly there are countless ways that `pyattck` could be utilized to help blue, red, and purple teams defend organizations (and themselves).
 
 ## Features
 
-The **pyattck** package retrieves all Tactics, Techniques, Actors, Malware, Tools, and Mitigations from the MITRE ATT&CK Frameworks as well as any defined relationships within the MITRE ATT&CK dataset.
+The **pyattck** package retrieves all Tactics, Techniques, Actors, Malware, Tools, and Mitigations from the MITRE ATT&CK Frameworks as well as any defined relationships within the MITRE ATT&CK dataset (including sub-techniques).
 
-In addition, Techniques, Actors, and Tools (if applicable) now have collected data from third-party resources that are accessible via properties on a technique. For more detailed information about these features, see [External Datasets](docs/dataset/dataset.md).
+In addition, Techniques, Actors, and Tools (if applicable) now have collected data from third-party resources that are accessible via different properties. For more detailed information about these features, see [External Datasets](https://github.com/swimlane/pyattck-data).
 
 The **pyattck** package allows you to:
 
   * Specify a URL or local file path for the MITRE ATT&CK Enterprise Framework json, generated dataset, and/or a config.yml file.
-  * Search the external dataset for external commands that are similar using `search_commands`.
   * Access data from the MITRE PRE-ATT&CK Framework
   * Access data from the MITRE Mobile ATT&CK Framework
   * Access data from the MITRE ICS ATT&CK Framework
-  * Access subtechniques as nested objects or you can turn it off and access as normal technique
-  * Access compliance controls (currently NIST 800-53) related to a MITRE ATT&CK Technique
+  * Access sub-techniques as nested objects or you can turn it off and access as normal technique
+  * Access compliance controls (currently NIST 800-53 v5) related to a MITRE ATT&CK Technique
+  * pyattck now utilizes structured data models. More information can be found at [pyattck-data-models](https://github.com/swimlane/pyattck-data-models)
 
 # Table of Contents
 
@@ -64,18 +60,7 @@ The **pyattck** package allows you to:
 
 ## Installation
 
-You can install **pyattack** on OS X, Linux, or Windows. You can also install it directly from the source. To install, see the commands under the relevant operating system heading, below.
-
-### Prerequisites
-
-The following libraries are required and installed by pyattck:
-
-```
-requests
-PyYaml>=5.4.1
-fire==0.3.1
-attrs==21.2.0
-```
+You can install **pyattck** on OS X, Linux, or Windows. You can also install it directly from the source. To install, see the commands under the relevant operating system heading, below.
 
 ### macOS, Linux and Windows:
 
@@ -101,7 +86,7 @@ from pyattck import Attck
 attack = Attck()
 ```
 
-By default, `subtechniques` are accessible under each technique object. You can turn this behavior off by passing `nested_subtechniques=False` when creating your `Attck` object.
+By default, `sub-techniques` are accessible under each technique object. You can turn this behavior off by passing `nested_subtechniques=False` when creating your `Attck` object.
 
 As an example, the default behavior looks like the following example:
 
@@ -127,46 +112,46 @@ You can access the following `main` properties on your **Attck** object:
 
 Once you specify the MITRE ATT&CK Framework, you can access additional properties.
 
-Here are the accessible objects under the [Enterprise](docs/enterprise/enterprise.md) property:
+Here are the accessible objects under the [Enterprise](docs/enterprise.md) property:
 
-* [actors](docs/enterprise/actor.md)
-* [controls](docs/enterprise/control.md)
-* [malwares](docs/enterprise/malware.md)
-* [mitigations](docs/enterprise/mitigation.md)
-* [tactics](docs/enterprise/tactic.md)
-* [techniques](docs/enterprise/technique.md)
-* [tools](docs/enterprise/tools.md)
+* [actors](docs/actor.md)
+* [controls](docs/control.md)
+* [malwares](docs/malware.md)
+* [mitigations](docs/mitigation.md)
+* [tactics](docs/tactic.md)
+* [techniques](docs/technique.md)
+* [tools](docs/tools.md)
 
-For more information on object types under the `enterprise` property, see [Enterprise](docs/enterprise/enterprise.md).
+For more information on object types under the `enterprise` property, see [Enterprise](docs/enterprise.md).
 
-Here are the accessible objects under the [PreAttck](docs/preattck/preattck.md) property:
+Here are the accessible objects under the [PreAttck](docs/preattck.md) property:
 
-* [actors](docs/preattck/actor.md)
-* [tactics](docs/preattck/tactic.md)
-* [techniques](docs/preattck/technique.md)
+* [actors](docs/actor.md)
+* [tactics](docs/tactic.md)
+* [techniques](docs/technique.md)
 
-For more information on object types under the `preattck` property, see [PreAttck](docs/preattck/preattck.md).
+For more information on object types under the `preattck` property, see [PreAttck](docs/preattck.md).
 
-Here are the accessible objects under the [Mobile](docs/mobile/mobileattck.md) property:
+Here are the accessible objects under the [Mobile](docs/mobile.md) property:
 
-* [actors](docs/mobile/actor.md)
-* [malwares](docs/mobile/malware.md)
-* [mitigations](docs/mobile/mitigation.md)
-* [tactics](docs/mobile/tactic.md)
-* [techniques](docs/mobile/technique.md)
-* [tools](docs/mobile/tools.md)
+* [actors](docs/actor.md)
+* [malwares](docs/malware.md)
+* [mitigations](docs/mitigation.md)
+* [tactics](docs/tactic.md)
+* [techniques](docs/technique.md)
+* [tools](docs/tools.md)
 
-For more information on object types under the `mobile` property, see [Mobile](docs/mobile/mobileattck.md).
+For more information on object types under the `mobile` property, see [Mobile](docs/mobile.md).
 
-Here are the accessible objects under the [ICS](docs/ics/icsattck.md) property:
+Here are the accessible objects under the [ICS](docs/ics.md) property:
 
-* [controls](docs/ics/control.md)
-* [malwares](docs/ics/malware.md)
-* [mitigations](docs/ics/mitigation.md)
-* [tactics](docs/ics/tactic.md)
-* [techniques](docs/ics/technique.md)
+* [controls](docs/control.md)
+* [malwares](docs/malware.md)
+* [mitigations](docs/mitigation.md)
+* [tactics](docs/tactic.md)
+* [techniques](docs/technique.md)
 
-For more information on object types under the `ics` property, see [ICS](docs/ics/icsattck.md).
+For more information on object types under the `ics` property, see [ICS](docs/ics.md).
 
 ## Configuration
 
@@ -181,12 +166,11 @@ attck = Attck(
     save_config=False,
     config_file_path='~/pyattck/config.yml',
     data_path='~/pyattck/data',
-    enterprise_attck_json="https://raw.githubusercontent.com/mitre/cti/master/enterprise-attack/enterprise-attack.json",
-    pre_attck_json="https://raw.githubusercontent.com/mitre/cti/master/pre-attack/pre-attack.json",
-    mobile_attck_json="https://raw.githubusercontent.com/mitre/cti/master/mobile-attack/mobile-attack.json",
-    ics_attck_json="https://raw.githubusercontent.com/mitre/cti/master/ics-attack/ics-attack.json",
+    enterprise_attck_json="https://swimlane-pyattck.s3.us-west-2.amazonaws.com/merged_enterprise_attck_v1.json",
+    pre_attck_json="https://swimlane-pyattck.s3.us-west-2.amazonaws.com/merged_pre_attck_v1.json",
+    mobile_attck_json="https://swimlane-pyattck.s3.us-west-2.amazonaws.com/merged_mobile_attck_v1.json,
+    ics_attck_json="https://swimlane-pyattck.s3.us-west-2.amazonaws.com/merged_ics_attck_v1.json",
     nist_controls_json="https://raw.githubusercontent.com/center-for-threat-informed-defense/attack-control-framework-mappings/main/frameworks/attack_10_1/nist800_53_r4/stix/nist800-53-r4-controls.json",
-    generated_attck_json="https://swimlane-pyattck.s3.us-west-2.amazonaws.com/generated_attck_data.json",
     generated_nist_json="https://swimlane-pyattck.s3.us-west-2.amazonaws.com/attck_to_nist_controls.json",
     **kwargs
 )
@@ -194,12 +178,11 @@ attck = Attck(
 
 By default, `pyattck` will (now) pull the latest external data from their respective locations using HTTP GET requests. `pyattck` currently pulls from the following locations:
 
-* enterprise_attck_json="https://raw.githubusercontent.com/mitre/cti/master/enterprise-attack/enterprise-attack.json"
-* pre_attck_json="https://raw.githubusercontent.com/mitre/cti/master/pre-attack/pre-attack.json"
-* mobile_attck_json="https://raw.githubusercontent.com/mitre/cti/master/mobile-attack/mobile-attack.json"
-* ics_attck_json="https://raw.githubusercontent.com/mitre/cti/master/ics-attack/ics-attack.json"
+* enterprise_attck_json="https://swimlane-pyattck.s3.us-west-2.amazonaws.com/merged_enterprise_attck_v1.json"
+* pre_attck_json="https://swimlane-pyattck.s3.us-west-2.amazonaws.com/merged_pre_attck_v1.json"
+* mobile_attck_json="https://swimlane-pyattck.s3.us-west-2.amazonaws.com/merged_mobile_attck_v1.json"
+* ics_attck_json="https://swimlane-pyattck.s3.us-west-2.amazonaws.com/merged_ics_attck_v1.json"
 * nist_controls_json="https://raw.githubusercontent.com/center-for-threat-informed-defense/attack-control-framework-mappings/main/frameworks/attack_10_1/nist800_53_r4/stix/nist800-53-r4-controls.json"
-* generated_attck_json="https://swimlane-pyattck.s3.us-west-2.amazonaws.com/generated_attck_data.json"
 * generated_nist_json="https://swimlane-pyattck.s3.us-west-2.amazonaws.com/attck_to_nist_controls.json"
 
 You have several options when instantiating the `Attck` object. As of `4.0.0` you can now specify any of the following options:
@@ -281,7 +264,6 @@ First of all, I would like to thank everyone who contributes to open-source proj
 
 This data set is generated from many different sources. As we continue to add more sources, we will continue to add them here. Again thank you to all of these projects. In no particular order, `pyattck` utilizes data from the following projects:
 
-
 * [Mitre ATT&CK APT3 Adversary Emulation Field Manual](https://attack.mitre.org/docs/APT3_Adversary_Emulation_Field_Manual.xlsx)
 * [Atomic Red Team (by Red Canary)](https://github.com/redcanaryco/atomic-red-team)
 * [Atomic Threat Coverage](https://github.com/atc-project/atomic-threat-coverage)
@@ -308,6 +290,7 @@ This data set is generated from many different sources. As we continue to add mo
    configuration
    pyattck/attck
    Dataset <https://github.com/swimlane/pyattck-data>
+   Data Models <https://github.com/swimlane/pyattck-data-models>
    enterprise/enterprise
    preattck/preattck
    mobile/mobileattck
