@@ -1,51 +1,56 @@
-def test_actors_have_tools(attck_fixture):
+import pytest
+
+
+@pytest.mark.parametrize(
+    'target_attribute', 
+    ['enterprise', 'mobile', 'preattack']
+)
+def test_actors_have_tools(attck_fixture, target_attribute):
     """
-    All MITRE Enterprise ATT&CK Actors should have tools
+    All MITRE ATT&CK Frameworks Actors should have tools
 
     Args:
-        attck_fixture ([type]): our default MITRE Enterprise ATT&CK JSON fixture
+        attck_fixture ([type]): our default MITRE ATT&CK JSON fixture
     """
-    for actor in attck_fixture.enterprise.actors:
+    for actor in getattr(attck_fixture, target_attribute).actors:
         if actor.tools:
             assert getattr(actor,'tools')
 
-def test_actors_have_malwares(attck_fixture):
+@pytest.mark.parametrize(
+    'target_attribute', 
+    ['enterprise', 'mobile']
+)
+def test_actors_have_malwares(attck_fixture, target_attribute):
     """
-    All MITRE Enterprise ATT&CK Actors should have malwares
+    All MITRE ATT&CK Framework Actors should have malwares
 
     Args:
-        attck_fixture ([type]): our default MITRE Enterprise ATT&CK JSON fixture
+        attck_fixture ([type]): our default MITRE ATT&CK JSON fixture
     """
-    for actor in attck_fixture.enterprise.actors:
+    for actor in getattr(attck_fixture, target_attribute).actors:
         if actor.malwares:
             assert getattr(actor,'malwares')
 
-def test_actors_have_techniques(attck_fixture):
+@pytest.mark.parametrize(
+    'target_attribute', 
+    ['enterprise', 'mobile', 'preattack']
+)
+def test_actors_have_techniques(attck_fixture, target_attribute):
     """
-    All MITRE Enterprise ATT&CK Actors should have techniques
+    All MITRE ATT&CK Actors should have techniques
 
     Args:
-        attck_fixture ([type]): our default MITRE Enterprise ATT&CK JSON fixture
+        attck_fixture ([type]): our default MITRE ATT&CK JSON fixture
     """
-    for actor in attck_fixture.enterprise.actors:
+    for actor in getattr(attck_fixture, target_attribute).actors:
         if actor.techniques:
             assert getattr(actor,'techniques')
 
-def test_some_actors_have_generated_datasets(attck_fixture):
-    """
-    Some MITRE Enterprise ATT&CK Actors should have generated datasets
-
-    Args:
-        attck_fixture ([type]): our default MITRE Enterprise ATT&CK JSON fixture
-    """
-    count = 0
-    for actor in attck_fixture.enterprise.actors:
-        if hasattr(actor, 'external_dataset'):
-            count += 1
-    if count >= 1:
-        assert True
-
-def test_some_actors_have_generated_datasets_properties(attck_fixture):
+@pytest.mark.parametrize(
+    'target_attribute', 
+    ['enterprise', 'mobile', 'preattack']
+)
+def test_some_actors_have_generated_datasets_properties(attck_fixture, target_attribute):
     """
     Some MITRE Enterprise ATT&CK Actors should have generated datasets properties
 
@@ -59,7 +64,7 @@ def test_some_actors_have_generated_datasets_properties(attck_fixture):
     targets_count = 0
     additional_comments_count = 0
     external_description_count = 0
-    for actor in attck_fixture.enterprise.actors:
+    for actor in getattr(attck_fixture, target_attribute).actors:
         if hasattr(actor, 'country'):
             country_count += 1
         if hasattr(actor, 'operations'):
