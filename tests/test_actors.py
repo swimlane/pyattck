@@ -1,10 +1,7 @@
 import pytest
 
 
-@pytest.mark.parametrize(
-    'target_attribute', 
-    ['enterprise', 'mobile', 'preattack']
-)
+@pytest.mark.parametrize("target_attribute", ["enterprise", "mobile", "preattack"])
 def test_actors_have_tools(attck_fixture, target_attribute):
     """
     All MITRE ATT&CK Frameworks Actors should have tools
@@ -14,12 +11,10 @@ def test_actors_have_tools(attck_fixture, target_attribute):
     """
     for actor in getattr(attck_fixture, target_attribute).actors:
         if actor.tools:
-            assert getattr(actor,'tools')
+            assert getattr(actor, "tools")
 
-@pytest.mark.parametrize(
-    'target_attribute', 
-    ['enterprise', 'mobile']
-)
+
+@pytest.mark.parametrize("target_attribute", ["enterprise", "mobile"])
 def test_actors_have_malwares(attck_fixture, target_attribute):
     """
     All MITRE ATT&CK Framework Actors should have malwares
@@ -29,12 +24,10 @@ def test_actors_have_malwares(attck_fixture, target_attribute):
     """
     for actor in getattr(attck_fixture, target_attribute).actors:
         if actor.malwares:
-            assert getattr(actor,'malwares')
+            assert getattr(actor, "malwares")
 
-@pytest.mark.parametrize(
-    'target_attribute', 
-    ['enterprise', 'mobile', 'preattack']
-)
+
+@pytest.mark.parametrize("target_attribute", ["enterprise", "mobile", "preattack"])
 def test_actors_have_techniques(attck_fixture, target_attribute):
     """
     All MITRE ATT&CK Actors should have techniques
@@ -44,12 +37,10 @@ def test_actors_have_techniques(attck_fixture, target_attribute):
     """
     for actor in getattr(attck_fixture, target_attribute).actors:
         if actor.techniques:
-            assert getattr(actor,'techniques')
+            assert getattr(actor, "techniques")
 
-@pytest.mark.parametrize(
-    'target_attribute', 
-    ['enterprise', 'mobile', 'preattack']
-)
+
+@pytest.mark.parametrize("target_attribute", ["enterprise", "mobile", "preattack"])
 def test_some_actors_have_generated_datasets_properties(attck_fixture, target_attribute):
     """
     Some MITRE Enterprise ATT&CK Actors should have generated datasets properties
@@ -65,20 +56,28 @@ def test_some_actors_have_generated_datasets_properties(attck_fixture, target_at
     additional_comments_count = 0
     external_description_count = 0
     for actor in getattr(attck_fixture, target_attribute).actors:
-        if hasattr(actor, 'country'):
+        if hasattr(actor, "country"):
             country_count += 1
-        if hasattr(actor, 'operations'):
+        if hasattr(actor, "operations"):
             operations_count += 1
-        if hasattr(actor, 'attribution_links'):
+        if hasattr(actor, "attribution_links"):
             attribution_links_count += 1
-        if hasattr(actor, 'known_tools'):
+        if hasattr(actor, "known_tools"):
             known_tools_count += 1
-        if hasattr(actor, 'targets'):
+        if hasattr(actor, "targets"):
             targets_count += 1
-        if hasattr(actor, 'additional_comments'):
+        if hasattr(actor, "additional_comments"):
             additional_comments_count += 1
-        if hasattr(actor, 'external_description'):
+        if hasattr(actor, "external_description"):
             external_description_count += 1
 
-    if country_count >= 1 and operations_count >= 1 and attribution_links_count >= 1 and known_tools_count >= 1 and targets_count >= 1 and additional_comments_count >= 1 and external_description_count >= 1:
+    if (
+        country_count >= 1
+        and operations_count >= 1
+        and attribution_links_count >= 1
+        and known_tools_count >= 1
+        and targets_count >= 1
+        and additional_comments_count >= 1
+        and external_description_count >= 1
+    ):
         assert True

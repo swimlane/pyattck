@@ -1,8 +1,10 @@
 import pytest
 
+
 @pytest.fixture
 def attck_fixture():
     from pyattck import Attck
+
     yield Attck(
         use_config=False,
         save_config=False,
@@ -14,17 +16,23 @@ def attck_fixture():
         generated_nist_json="https://swimlane-pyattck.s3.us-west-2.amazonaws.com/attck_to_nist_controls.json",
     )
 
+
 @pytest.fixture
 def attck_fixture_nested_subtechniques_false():
     from pyattck import Attck
+
     yield Attck(nested_subtechniques=False)
+
 
 @pytest.fixture
 def attck_configuration():
     from pyattck.configuration import Options
+
     yield Options
+
 
 @pytest.fixture
 def attck_datasets():
     from pyattck import Attck
+
     yield Attck

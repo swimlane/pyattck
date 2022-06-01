@@ -1,8 +1,5 @@
 from .base import Base
-from pyattck_data_models import (
-    MitreAttck,
-    NistControls
-)
+from pyattck_data_models import MitreAttck
 
 
 class MobileAttck(Base):
@@ -23,7 +20,7 @@ class MobileAttck(Base):
         4. Tactics
         5. Techniques
         6. Tools
-    
+
     As of pyattck 6.0.0, MITRE ATT&CK Frameworks are merged with generated datasets.
     These can be found [here](https://github.com/swimlane/pyattck-data)
     """
@@ -34,7 +31,7 @@ class MobileAttck(Base):
     __actors = []
     __tools = []
     __malwares = []
-    __attck = MitreAttck(**Base.config.get_data('mobile_attck_json'))
+    __attck = MitreAttck(**Base.config.get_data("mobile_attck_json"))
 
     @property
     def actors(self):
@@ -46,7 +43,7 @@ class MobileAttck(Base):
         """
         if not self.__actors:
             for actor in self.__attck.objects:
-                if actor.type == 'intrusion-set':
+                if actor.type == "intrusion-set":
                     self.__actors.append(actor)
         return self.__actors
 
@@ -60,7 +57,7 @@ class MobileAttck(Base):
         """
         if not self.__malwares:
             for item in self.__attck.objects:
-                if item.type == 'malware':
+                if item.type == "malware":
                     self.__malwares.append(item)
         return self.__malwares
 
@@ -74,7 +71,7 @@ class MobileAttck(Base):
         """
         if not self.__mitigations:
             for item in self.__attck.objects:
-                if item.type == 'course-of-action':
+                if item.type == "course-of-action":
                     self.__mitigations.append(item)
         return self.__mitigations
 
@@ -88,7 +85,7 @@ class MobileAttck(Base):
         """
         if not self.__tactics:
             for item in self.__attck.objects:
-                if item.type == 'x-mitre-tactic':
+                if item.type == "x-mitre-tactic":
                     self.__tactics.append(item)
         return self.__tactics
 
@@ -102,7 +99,7 @@ class MobileAttck(Base):
         """
         if not self.__techniques:
             for item in self.__attck.objects:
-                if item.type == 'attack-pattern':
+                if item.type == "attack-pattern":
                     if item.techniques and not Base.config.nested_subtechniques:
                         for i in item.techniques:
                             self.__techniques.append(i)
@@ -119,6 +116,6 @@ class MobileAttck(Base):
         """
         if not self.__tools:
             for item in self.__attck.objects:
-                if item.type == 'tool':
+                if item.type == "tool":
                     self.__tools.append(item)
         return self.__tools

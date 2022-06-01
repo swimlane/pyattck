@@ -18,7 +18,7 @@ class PreAttck(Base):
         1. Actors
         2. Tactics
         3. Techniques
-    
+
     As of pyattck 6.0.0, MITRE ATT&CK Frameworks are merged with generated datasets.
     These can be found [here](https://github.com/swimlane/pyattck-data)
     """
@@ -26,7 +26,7 @@ class PreAttck(Base):
     __tactics = []
     __techniques = []
     __actors = []
-    __attck = MitreAttck(**Base.config.get_data('pre_attck_json'))
+    __attck = MitreAttck(**Base.config.get_data("pre_attck_json"))
 
     @property
     def actors(self):
@@ -38,7 +38,7 @@ class PreAttck(Base):
         """
         if not self.__actors:
             for actor in self.__attck.objects:
-                if actor.type == 'intrusion-set':
+                if actor.type == "intrusion-set":
                     self.__actors.append(actor)
         return self.__actors
 
@@ -52,7 +52,7 @@ class PreAttck(Base):
         """
         if not self.__tactics:
             for item in self.__attck.objects:
-                if item.type == 'x-mitre-tactic':
+                if item.type == "x-mitre-tactic":
                     self.__tactics.append(item)
         return self.__tactics
 
@@ -66,7 +66,7 @@ class PreAttck(Base):
         """
         if not self.__techniques:
             for item in self.__attck.objects:
-                if item.type == 'attack-pattern':
+                if item.type == "attack-pattern":
                     if item.techniques and not Base.config.nested_subtechniques:
                         for i in item.techniques:
                             self.__techniques.append(i)

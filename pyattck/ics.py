@@ -1,8 +1,5 @@
 from .base import Base
-from pyattck_data_models import (
-    MitreAttck,
-    NistControls
-)
+from pyattck_data_models import MitreAttck, NistControls
 
 
 class ICSAttck(Base):
@@ -40,8 +37,8 @@ class ICSAttck(Base):
     __controls = []
     __data_sources = []
     __data_components = []
-    __nist_controls_json = NistControls(**Base.config.get_data('nist_controls_json'))
-    __attck = MitreAttck(**Base.config.get_data('ics_attck_json'))
+    __nist_controls_json = NistControls(**Base.config.get_data("nist_controls_json"))
+    __attck = MitreAttck(**Base.config.get_data("ics_attck_json"))
 
     @property
     def controls(self):
@@ -54,7 +51,7 @@ class ICSAttck(Base):
         if not self.__controls:
             if self.__nist_controls_json.objects:
                 for control in self.__nist_controls_json.objects:
-                    if control.type == 'course-of-action':
+                    if control.type == "course-of-action":
                         self.__controls.append(control)
         return self.__controls
 
@@ -68,7 +65,7 @@ class ICSAttck(Base):
         """
         if not self.__data_components:
             for item in self.__attck.objects:
-                if item.type == 'x-mitre-data-component':
+                if item.type == "x-mitre-data-component":
                     self.__data_components.append(item)
         return self.__data_components
 
@@ -82,7 +79,7 @@ class ICSAttck(Base):
         """
         if not self.__data_sources:
             for item in self.__attck.objects:
-                if item.type == 'x-mitre-data-source':
+                if item.type == "x-mitre-data-source":
                     self.__data_sources.append(item)
         return self.__data_sources
 
@@ -96,7 +93,7 @@ class ICSAttck(Base):
         """
         if not self.__malwares:
             for item in self.__attck.objects:
-                if item.type == 'malware':
+                if item.type == "malware":
                     self.__malwares.append(item)
         return self.__malwares
 
@@ -110,7 +107,7 @@ class ICSAttck(Base):
         """
         if not self.__mitigations:
             for item in self.__attck.objects:
-                if item.type == 'course-of-action':
+                if item.type == "course-of-action":
                     self.__mitigations.append(item)
         return self.__mitigations
 
@@ -124,7 +121,7 @@ class ICSAttck(Base):
         """
         if not self.__tactics:
             for item in self.__attck.objects:
-                if item.type == 'x-mitre-tactic':
+                if item.type == "x-mitre-tactic":
                     self.__tactics.append(item)
         return self.__tactics
 
@@ -138,7 +135,7 @@ class ICSAttck(Base):
         """
         if not self.__techniques:
             for item in self.__attck.objects:
-                if item.type == 'attack-pattern':
+                if item.type == "attack-pattern":
                     if item.techniques and not Base.config.nested_subtechniques:
                         for i in item.techniques:
                             self.__techniques.append(i)
