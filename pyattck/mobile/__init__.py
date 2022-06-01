@@ -1,1 +1,0 @@
-from .mobileattck import MobileAttck
