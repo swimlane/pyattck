@@ -75,7 +75,7 @@ class Options:
                     if path.endswith(".json"):
                         return Configuration(**json.load(f))
                     elif path.endswith(".yml") or path.endswith(".yaml"):
-                        return Configuration(**yaml.load(f, Loader=yaml.FullLoader))
+                        return Configuration(**yaml.load(f, Loader=yaml.SafeLoader))
                     else:
                         raise UnknownFileError(provided_value=path, known_values=[".json", ".yml", ".yaml"])
             except:
@@ -132,6 +132,8 @@ class Options:
             return self._read_from_disk(getattr(self.config, value))
 
     def __attrs_post_init__(self):
+        """Contains options and configuration for pyattck
+        """
         if self.save_config:
             self._save_to_disk(self.config_file_path, asdict(self.config))
             self._save_json_data()
