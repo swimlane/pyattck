@@ -1,19 +1,25 @@
-from .configuration import Configuration
+from .base import Base
+from .configuration import(
+    Configuration,
+    Options
+)
 
 
-class Attck(object):
+class Attck(Base):
 
     """Interface to all MITRE ATT&CK frameworks.
 
     Currently, this class enables access to the Enterprise & PRE-ATT&CK
-    frameworks with others coming soon.  To acccess each framework, use
+    frameworks with others coming soon.  To access each framework, use
     the following properties
 
         * enterprise
         * preattack
+        * ics
+        * mobile
 
     This interface enables you to retrieve all properties within each
-    item in the MITRE ATT&CK Enterprise Framework.
+    item in the MITRE ATT&CK Frameworks (as applicable).
 
     The following categorical items can be accessed using this class:
 
@@ -29,24 +35,11 @@ class Attck(object):
         6. Malwares (Malwares are specific pieces of malware used by
             actors (or in general) to accomplish a technique)
 
-    You can also search the external dataset for external commands that
-    are similar using the `search_commands` method.
-
-        .. code-block:: python
-
-            from pyattck import Attck
-
-            attck = Attck()
-
-            for search in attck.enterprise.search_commands('powershell'):
-                print(search['technique'])
-                print(search['reason_for_match'])
-
     You can access additional datasets related to a technique. 
     These datasets are [documented here](https://github.com/swimlane/pyattck-data).
 
     Example:
-        Once an Attck object is instantiated, you can access each object
+        Once an `Attck` object is instantiated, you can access each object
         type as a list of objects (e.g. techniques, tactics, actors, etc.)
 
         You can iterate over each object list and access specific properties
@@ -117,10 +110,10 @@ class Attck(object):
                    print(mitigation.description)
                    # etc.
 
-                   for technique in mitigation.enterprise.techniques:
-                       print(technique.name)
-                       print(technique.description)
-                       # etc.
+                for technique in mitigation.techniques:
+                    print(technique.name)
+                    print(technique.description)
+                    # etc.
 
     Arguments:
         nested_subtechniques (bool, optional): Whether not to iterate over nested subtechniques. Defaults to True.
@@ -230,19 +223,22 @@ class Attck(object):
             kwargs (dict, optional): Provided kwargs will be passed to any HTTP requests using the Requests library. 
                                      Defaults to None.
         """
-        self.__nested_subtechniques = nested_subtechniques
-        Configuration.use_config = use_config
-        Configuration.save_config = save_config
-        Configuration.config_file_path = config_file_path
-        Configuration.enterprise_attck_json = enterprise_attck_json
-        Configuration.pre_attck_json = pre_attck_json
-        Configuration.mobile_attck_json = mobile_attck_json
-        Configuration.ics_attck_json = ics_attck_json
-        Configuration.nist_controls_json = nist_controls_json
-        Configuration.generated_attck_json = generated_attck_json
-        Configuration.generated_nist_json = generated_nist_json
-        Configuration.data_path = data_path
-        Configuration.requests_kwargs = kwargs
+        Base.config = Options(
+            nested_subtechniques=nested_subtechniques,
+            use_config=use_config,
+            save_config=save_config,
+            config_file_path=config_file_path,
+            kwargs=kwargs,
+            config=Configuration(
+                data_path=data_path,
+                enterprise_attck_json=enterprise_attck_json,
+                pre_attck_json=pre_attck_json,
+                mobile_attck_json=mobile_attck_json,
+                ics_attck_json=ics_attck_json,
+                nist_controls_json=nist_controls_json,
+                generated_nist_json=generated_nist_json
+            )
+        )
 
     @property
     def enterprise(self):
@@ -253,8 +249,9 @@ class Attck(object):
         Returns:
             Enterprise: Returns an Enterprise object
         """
-        from .enterprise.enterprise import Enterprise
-        return Enterprise(nested_subtechniques=self.__nested_subtechniques)
+        from .enterprise import EnterpriseAttck
+        self.__logger.debug('Calling MITRE Enterprise ATT&CK Framework')
+        return EnterpriseAttck()
 
     @property
     def preattack(self):
@@ -264,7 +261,8 @@ class Attck(object):
         Returns:
             PreAttack: Returns an PreAttack object
         """
-        from .preattck.preattck import PreAttck
+        from .preattck import PreAttck
+        self.__logger.debug('Calling MITRE Pre-ATT&CK Framework')
         return PreAttck()
 
     @property
@@ -275,7 +273,8 @@ class Attck(object):
         Returns:
             PreAttack: Returns an MobileAttack object
         """
-        from .mobile.mobileattck import MobileAttck
+        from .mobile import MobileAttck
+        self.__logger.debug('Calling MITRE Mobile ATT&CK Framework')
         return MobileAttck()
 
     @property
@@ -286,8 +285,9 @@ class Attck(object):
         Returns:
             PreAttack: Returns an ICSAttck object
         """
-        from .ics.icsattck import ICSAttck
+        from .ics import ICSAttck
+        self.__logger.debug('Calling MITRE ICS ATT&CK Framework')
         return ICSAttck()
 
     def update(self) -> bool:
-        return True if Configuration._save_json_data(force=True) else False
+        return True if Base.config._save_json_data(force=True) else False
