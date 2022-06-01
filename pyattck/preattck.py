@@ -4,7 +4,6 @@ from .base import Base
 
 
 class PreAttck(Base):
-
     """An interface to the MITRE ATT&CK Pre-Attck Framework.
 
     This class creates an interface to all data points in the

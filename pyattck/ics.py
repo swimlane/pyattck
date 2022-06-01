@@ -3,7 +3,6 @@ from pyattck_data_models import MitreAttck, NistControls
 
 
 class ICSAttck(Base):
-
     """An interface to the MITRE ATT&CK ICS (Industrial Control Systems) Framework.
 
     This class creates an interface to all data points in the

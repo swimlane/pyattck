@@ -3,7 +3,6 @@ from pyattck_data_models import MitreAttck, NistControls
 
 
 class EnterpriseAttck(Base):
-
     """An interface to the MITRE ATT&CK Enterprise Framework.
 
     This class creates an interface to all data points in the
