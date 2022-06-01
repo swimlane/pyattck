@@ -1,0 +1,12 @@
+[flake8]
+max-line-length = 120
+exclude = 
+    __init__.py
+extend-ignore =
+    F841 #local variable 'e' is assigned to but never used
+per-file-ignores =
+    # F401: Module imported by unused (non-implicit modules)
+    # TC002: Move third-party import '...' into a type-checking block
+    __init__.py:F401,TC002,
+    aqueduct.py:E501,
+    logger.py:F841,
