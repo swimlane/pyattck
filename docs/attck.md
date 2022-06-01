@@ -2,6 +2,8 @@
 
 This documentation provides details about the main entry point called `Attck` within the `pyattck` package.
 
+> The `MitreAttck` object is based on the following [data model](https://github.com/swimlane/pyattck-data-models/blob/main/src/pyattck_data_models/attack.py)
+
 This class provides access to the MITRE Enterprise, PRE-ATT&CK, Mobile, and ICS Frameworks.
 
 * MITRE Enterprise ATT&CK Framework

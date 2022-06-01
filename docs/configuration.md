@@ -11,12 +11,11 @@ attck = Attck(
     save_config=False,
     config_file_path='~/pyattck/config.yml',
     data_path='~/pyattck/data',
-    enterprise_attck_json="https://raw.githubusercontent.com/mitre/cti/master/enterprise-attack/enterprise-attack.json",
-    pre_attck_json="https://raw.githubusercontent.com/mitre/cti/master/pre-attack/pre-attack.json",
-    mobile_attck_json="https://raw.githubusercontent.com/mitre/cti/master/mobile-attack/mobile-attack.json",
-    ics_attck_json="https://raw.githubusercontent.com/mitre/cti/master/ics-attack/ics-attack.json",
+    enterprise_attck_json="https://swimlane-pyattck.s3.us-west-2.amazonaws.com/merged_enterprise_attck_v1.json",
+    pre_attck_json="https://swimlane-pyattck.s3.us-west-2.amazonaws.com/merged_pre_attck_v1.json",
+    mobile_attck_json="https://swimlane-pyattck.s3.us-west-2.amazonaws.com/merged_mobile_attck_v1.json",
+    ics_attck_json="https://swimlane-pyattck.s3.us-west-2.amazonaws.com/merged_ics_attck_v1.json",
     nist_controls_json="https://raw.githubusercontent.com/center-for-threat-informed-defense/attack-control-framework-mappings/master/frameworks/ATT%26CK-v9.0/nist800-53-r5/stix/nist800-53-r5-controls.json",
-    generated_attck_json="https://swimlane-pyattck.s3.us-west-2.amazonaws.com/generated_attck_data.json",
     generated_nist_json="https://swimlane-pyattck.s3.us-west-2.amazonaws.com/attck_to_nist_controls.json",
     **kwargs
 )
@@ -24,12 +23,11 @@ attck = Attck(
 
 By default, `pyattck` will pull the latest external data from their respective locations using HTTP GET requests. `pyattck` currently pulls from the following locations:
 
-* enterprise_attck_json="https://raw.githubusercontent.com/mitre/cti/master/enterprise-attack/enterprise-attack.json"
-* pre_attck_json="https://raw.githubusercontent.com/mitre/cti/master/pre-attack/pre-attack.json"
-* mobile_attck_json="https://raw.githubusercontent.com/mitre/cti/master/mobile-attack/mobile-attack.json"
-* ics_attck_json="https://raw.githubusercontent.com/mitre/cti/master/ics-attack/ics-attack.json"
+* enterprise_attck_json="https://swimlane-pyattck.s3.us-west-2.amazonaws.com/merged_enterprise_attck_v1.json"
+* pre_attck_json="https://swimlane-pyattck.s3.us-west-2.amazonaws.com/merged_pre_attck_v1.json"
+* mobile_attck_json="https://swimlane-pyattck.s3.us-west-2.amazonaws.com/merged_mobile_attck_v1.json"
+* ics_attck_json="https://swimlane-pyattck.s3.us-west-2.amazonaws.com/merged_ics_attck_v1.json"
 * nist_controls_json="https://raw.githubusercontent.com/center-for-threat-informed-defense/attack-control-framework-mappings/main/frameworks/attack_10_1/nist800_53_r4/stix/nist800-53-r4-controls.json"
-* generated_attck_json="https://swimlane-pyattck.s3.us-west-2.amazonaws.com/generated_attck_data.json"
 * generated_nist_json="https://swimlane-pyattck.s3.us-west-2.amazonaws.com/attck_to_nist_controls.json"
 
 You have several options when instantiating the `Attck` object. As of `4.0.0` you can now specify any of the following options:
@@ -45,10 +43,10 @@ Additionally, you can specify the location for each individual `*_attck_json` fi
 
 If you have used the default values or specified an alternative URI location to retrieve these JSON files from, you can additionally pass in `**kwargs` that will be passed along to the `Requests` python package when performing any HTTP requests.
 
-## Configuration Class
+## Config Class
 
 ```eval_rst
-.. autoclass:: pyattck.configuration.Configuration
+.. autoclass:: pyattck.config.Config
    :members:
    :undoc-members:
    :show-inheritance:

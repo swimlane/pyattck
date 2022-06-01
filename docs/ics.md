@@ -1,20 +1,10 @@
-# Enterprise
+# ICS (Industrial Control Systems)
 
-This documentation provides details about the Enterprise class within the `pyattck` package.
+This documentation provides details about the ICSAttck class within the `pyattck` package.
 
-The Enterprise class provides detailed information about data within the Enterprise MITRE ATT&CK framework
+> The `MitreAttck` object is based on the following [data model](https://github.com/swimlane/pyattck-data-models/blob/main/src/pyattck_data_models/attack.py)
 
-You can also search the external dataset for external commands that are similar using the `search_commands` method.
-
-```python
-from pyattck import Attck
-
-attack = Attck()
-
-for search in attack.enterprise.search_commands('powershell'):
-    print(search['technique'])
-    print(search['reason_for_match'])
-```
+The `ICSAttck` class provides detailed information about data within the ICS MITRE ATT&CK framework
 
 Each of the `main` properties (above) can return a json object of the entire object or you can access each property individually.  An example of this is here:
 
@@ -24,7 +14,7 @@ from pyattck import Attck
 attack = Attck()
 
 # accessing techniques and their properties
-for technique in attack.enterprise.techniques:
+for technique in attack.ics.techniques:
 	# if you want to return individual properties of this object you call them directly
 	print(technique.id)
 	print(technique.name)
@@ -37,25 +27,10 @@ for technique in attack.enterprise.techniques:
 	.....
 ```
 
-The following is only a small sample of the available properties on each object and each object type (actors, malware, mitigations, tactics, techniques, and tools) will have different properties that you can access.
-
+The following is only a small sample of the available properties on each object and each object type (malware, mitigations, tactics, and techniques) will have different properties that you can access.
 
 * Every data point has exposed properties that allow the user to retrieve additional data based on relationships:
-    * [Actor](actor.md)
-        * Relationship Objects
-            * Tools used by the Actor or Group
-            * Malware used by the Actor or Group
-            * Techniques this Actor or Group uses
-        * External Data
-            * country which this actor or group may be associated with (attribution is hard)
-            * operations 
-            * attribution_links
-            * known_tools
-            * targets
-            * additional_comments
-            * external_description
     * [Malware](malware.md)
-        * Actor or Group(s) using this malware
         * Techniques this malware is used with
     * [Mitigation](mitigation.md)
         * Techniques related to a specific set of mitigation suggestions
@@ -65,24 +40,13 @@ The following is only a small sample of the available properties on each object 
         * Relationship Objects
             * Tactics a technique is found in
             * Mitigation suggestions for a given technique
-            * Actor or Group(s) identified as using this technique
         * External Data
             * command_list - A list of commands from multiple open-source tools and repositories that contain potential commands used by a technique
             * commands - A list of property objects that contain the `Name`, `Source, and `Command` dataset
             * queries - A list of potential queries for different products to identify threats within your environment by technique
             * datasets - A list of the datasets as it relates to a technique
             * possible_detections -  A list of potential detections for different products (e.g. NSM rules) as it relates to a technique
-            * For more detailed information about these features, please view the following  [External Datasets](../dataset/dataset.md)
-    * [Tools](tools.md)
-        * Relationship Objects
-            * Techniques that the specified tool is used within
-            * Actor or Group(s) using a specified tool
-        * External Data
-            * additional_names for the specified tool
-            * attribution_links associated with the specified tool
-            * additional_comments about the specified tool
-            * family of the specified tool
-
+            * For more detailed information about these features, please view the following  [External Datasets](https://github.com/swimlane/pyattck-data)
 
 
 Below shows you how you can access each of object types and their properties.  Additionally, you can access related object types associated with this selected object type:
@@ -92,40 +56,10 @@ from pyattck import Attck
 
 attack = Attck()
 
-for actor in attack.enterprise.actors:
-    print(actor.id)
-    print(actor.name)
-
-    # accessing malware used by an actor or group
-    for malware in actor.malwares:
-        print(malware.id)
-        print(malware.name)
-
-    # accessing tools used by an actor or group
-    for tool in actor.tools:
-        print(tool.id)
-        print(tool.name)
-
-    # accessing techniques used by an actor or group
-    for technique in actor.techniques:
-        print(technique.id)
-        print(technique.name)
-        # you can also access generated data sets on aa technique
-        print(technique.command_list)
-        print(technique.commands)
-        print(technique.queries)
-        print(technique.datasets)
-        print(technique.possible_detections)
-
 # accessing malware
-for malware in attack.enterprise.malwares:
+for malware in attack.ics.malwares:
     print(malware.id)
     print(malware.name)
-
-    # accessing actor or groups using this malware
-    for actor in malware.actors:
-        print(actor.id)
-        print(actor.name)
 
     # accessing techniques that this malware is used in
     for technique in malware.techniques:
@@ -133,7 +67,7 @@ for malware in attack.enterprise.malwares:
         print(technique.name)
 
 # accessing mitigation
-for mitigation in attack.enterprise.mitigations:
+for mitigation in attack.ics.mitigations:
     print(mitigation.id)
     print(mitigation.name)
 
@@ -149,7 +83,7 @@ for mitigation in attack.enterprise.mitigations:
         print(technique.possible_detections)
 
 # accessing tactics
-for tactic in attack.enterprise.tactics:
+for tactic in attack.ics.tactics:
     print(tactic.id)
     print(tactic.name)
 
@@ -165,7 +99,7 @@ for tactic in attack.enterprise.tactics:
         print(technique.possible_detections)
 
 # accessing techniques
-for technique in attack.enterprise.techniques:
+for technique in attack.ics.techniques:
     print(technique.id)
     print(technique.name)
     # you can also access generated data sets on aa technique
@@ -184,38 +118,12 @@ for technique in attack.enterprise.techniques:
     for mitigation in technique.mitigations:
         print(mitigation.id)
         print(mitigation.name)
-
-    # accessing actors using this technique
-    for actor in technique.actors:
-        print(actor.id)
-        print(actor.name)
-
-# accessing tools
-for tool in attack.enterprise.tools:
-    print(tool.id)
-    print(tool.name)
-
-    # accessing techniques this tool is used in
-    for technique in tool.techniques:
-        print(technique.id)
-        print(technique.name)
-        # you can also access generated data sets on aa technique
-        print(technique.command_list)
-        print(technique.commands)
-        print(technique.queries)
-        print(technique.datasets)
-        print(technique.possible_detections)
-
-    # accessing actor or groups using this tool
-    for actor in tool.actors:
-        print(actor.id)
-        print(actor.name)
 ```
 
-## Enterprise Class
+## ICSAttck Class
 
 ```eval_rst
-.. autoclass:: pyattck.enterprise.enterprise.Enterprise
+.. autoclass:: pyattck.ics.ICSAttck
    :members:
    :undoc-members:
    :show-inheritance:
@@ -225,11 +133,9 @@ for tool in attack.enterprise.tools:
 ```eval_rst
 .. toctree::
    
-   actor
    control
    malware
    mitigation
    tactic
    technique
-   tools
 ```

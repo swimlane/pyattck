@@ -1,10 +1,12 @@
 # PreAttck
 
-This documentation provides details about the PreAttck class within the `pyattck` package.
+This documentation provides details about the `PreAttck` class within the `pyattck` package.
 
-The PreAttck class provides detailed information about data within the MITRE PRE-ATT&CK framework
+> The `MitreAttck` object is based on the following [data model](https://github.com/swimlane/pyattck-data-models/blob/main/src/pyattck_data_models/attack.py)
 
-Each of the `main` properties (above) can return a json object of the entire object or you can access each property individually.  An example of this is here:
+The `PreAttck` class provides detailed information about data within the MITRE PRE-ATT&CK framework
+
+Each of the main properties can return a json object of the entire object or you can access each property individually.  An example of this is here:
 
 ```python
 from pyattck import Attck
@@ -93,7 +95,7 @@ for technique in attack.preattack.techniques:
 ## PreAttck Class
 
 ```eval_rst
-.. autoclass:: pyattck.preattck.preattck.PreAttck
+.. autoclass:: pyattck.preattck.PreAttck
    :members:
    :undoc-members:
    :show-inheritance:

@@ -1,10 +1,12 @@
-# MobileAttck
+# Enterprise
 
-This documentation provides details about the MobileAttck class within the `pyattck` package.
+This documentation provides details about the Enterprise class within the `pyattck` package.
 
-The MobileAttck class provides detailed information about data within the MITRE Mobile ATT&CK framework
+> The `MitreAttck` object is based on the following [data model](https://github.com/swimlane/pyattck-data-models/blob/main/src/pyattck_data_models/attack.py)
 
-Each of the `main` properties can return a json object of the entire object or you can access each property individually.  An example of this is here:
+The `Enterprise` class provides detailed information about data within the Enterprise MITRE ATT&CK framework
+
+Each of the main properties can return a json object of the entire object or you can access each property individually.  An example of this is here:
 
 ```python
 from pyattck import Attck
@@ -12,7 +14,7 @@ from pyattck import Attck
 attack = Attck()
 
 # accessing techniques and their properties
-for technique in attack.mobile.techniques:
+for technique in attack.enterprise.techniques:
 	# if you want to return individual properties of this object you call them directly
 	print(technique.id)
 	print(technique.name)
@@ -20,6 +22,8 @@ for technique in attack.mobile.techniques:
 	print(technique.description)
 	print(technique.stix)
 	print(technique.platforms)
+	print(technique.permissions)
+	print(technique.wiki)
 	.....
 ```
 
@@ -58,7 +62,7 @@ The following is only a small sample of the available properties on each object 
             * queries - A list of potential queries for different products to identify threats within your environment by technique
             * datasets - A list of the datasets as it relates to a technique
             * possible_detections -  A list of potential detections for different products (e.g. NSM rules) as it relates to a technique
-            * For more detailed information about these features, please view the following  [External Datasets](../dataset/dataset.md)
+            * For more detailed information about these features, please view the following  [External Datasets](https://github.com/swimlane/pyattck-data)
     * [Tools](tools.md)
         * Relationship Objects
             * Techniques that the specified tool is used within
@@ -69,8 +73,6 @@ The following is only a small sample of the available properties on each object 
             * additional_comments about the specified tool
             * family of the specified tool
 
-
-
 Below shows you how you can access each of object types and their properties.  Additionally, you can access related object types associated with this selected object type:
 
 ```python
@@ -78,7 +80,7 @@ from pyattck import Attck
 
 attack = Attck()
 
-for actor in attack.mobile.actors:
+for actor in attack.enterprise.actors:
     print(actor.id)
     print(actor.name)
 
@@ -104,7 +106,7 @@ for actor in attack.mobile.actors:
         print(technique.possible_detections)
 
 # accessing malware
-for malware in attack.mobile.malwares:
+for malware in attack.enterprise.malwares:
     print(malware.id)
     print(malware.name)
 
@@ -119,7 +121,7 @@ for malware in attack.mobile.malwares:
         print(technique.name)
 
 # accessing mitigation
-for mitigation in attack.mobile.mitigations:
+for mitigation in attack.enterprise.mitigations:
     print(mitigation.id)
     print(mitigation.name)
 
@@ -135,7 +137,7 @@ for mitigation in attack.mobile.mitigations:
         print(technique.possible_detections)
 
 # accessing tactics
-for tactic in attack.mobile.tactics:
+for tactic in attack.enterprise.tactics:
     print(tactic.id)
     print(tactic.name)
 
@@ -151,7 +153,7 @@ for tactic in attack.mobile.tactics:
         print(technique.possible_detections)
 
 # accessing techniques
-for technique in attack.mobile.techniques:
+for technique in attack.enterprise.techniques:
     print(technique.id)
     print(technique.name)
     # you can also access generated data sets on aa technique
@@ -177,7 +179,7 @@ for technique in attack.mobile.techniques:
         print(actor.name)
 
 # accessing tools
-for tool in attack.mobile.tools:
+for tool in attack.enterprise.tools:
     print(tool.id)
     print(tool.name)
 
@@ -198,10 +200,10 @@ for tool in attack.mobile.tools:
         print(actor.name)
 ```
 
-## MobileAttck Class
+## Enterprise Class
 
 ```eval_rst
-.. autoclass:: pyattck.mobile.mobileattck.MobileAttck
+.. autoclass:: pyattck.enterprise.Enterprise
    :members:
    :undoc-members:
    :show-inheritance:
@@ -210,8 +212,9 @@ for tool in attack.mobile.tools:
 
 ```eval_rst
 .. toctree::
-   
+
    actor
+   control
    malware
    mitigation
    tactic

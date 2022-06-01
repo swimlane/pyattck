@@ -1,6 +1,8 @@
-# MobileAttckTools
+# Tools
 
-This documentation provides details about the `MobileAttckTools` class within the `pyattck` package.
+This documentation provides details about the `Tool` class within the `pyattck` package.
+
+> The `Tool` object is based on the following [data model](https://github.com/swimlane/pyattck-data-models/blob/main/src/pyattck_data_models/tool.py)
 
 You can also access external data properties. The following properties are generated using external data:
 
@@ -63,15 +65,16 @@ You can also access external data properties from the C2 Matrix project. The fol
 
 You can retrieve the entire dataset using the `c2_data` property.
 
-This class provides information about the tools used by actors or groups within the MITRE Mobile ATT&CK Framework.  Additionally, a `MobileAttckTools` object allows the user to access additional relationships within the MITRE Mobile ATT&CK Framework:
+This class provides information about the tools used by actors or groups within the MITRE ATT&CK Frameworks.
+Additionally, a `Tool` object allows the user to access additional relationships within the MITRE ATT&CK Frameworks:
 
 * Techniques that the specified tool is used within
 * Actor or Group(s) using a specified tool
 
-## MobileAttckTools Class
+## Tool Class
 
 ```eval_rst
-.. autoclass:: pyattck.mobile.tools.MobileAttckTools
+.. autoclass:: pyattck_data_models.tool.Tool
    :members:
    :undoc-members:
    :show-inheritance:
