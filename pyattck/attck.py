@@ -239,8 +239,7 @@ class Attck(Base):
 
     @property
     def enterprise(self):
-        """Retrieve objects from the Enterprise MITRE ATT&CK Framework and
-        additional generated data which provides additional context.
+        """Retrieve objects from the Enterprise MITRE ATT&CK Framework.
 
         Returns:
             Enterprise: Returns an Enterprise object

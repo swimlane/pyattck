@@ -125,6 +125,14 @@ class Options:
         return True
 
     def get_data(self, value: str) -> dict:
+        """Retrieves saved data based on key value in config.
+
+        Args:
+            value (str): A key value in our configuration file.
+
+        Returns:
+            dict: The dictionary object which was retrieved.
+        """
         data = getattr(self.config, value)
         if is_url(data):
             return self._download_url_data(data)
@@ -132,8 +140,7 @@ class Options:
             return self._read_from_disk(getattr(self.config, value))
 
     def __attrs_post_init__(self):
-        """Contains options and configuration for pyattck
-        """
+        """Contains options and configuration for pyattck."""
         if self.save_config:
             self._save_to_disk(self.config_file_path, asdict(self.config))
             self._save_json_data()
