@@ -1,19 +1,22 @@
-from .configuration import Configuration
+from .base import Base
+from .configuration import Configuration, Options
 
 
-class Attck(object):
+class Attck(Base):
 
     """Interface to all MITRE ATT&CK frameworks.
 
     Currently, this class enables access to the Enterprise & PRE-ATT&CK
-    frameworks with others coming soon.  To acccess each framework, use
+    frameworks with others coming soon.  To access each framework, use
     the following properties
 
         * enterprise
         * preattack
+        * ics
+        * mobile
 
     This interface enables you to retrieve all properties within each
-    item in the MITRE ATT&CK Enterprise Framework.
+    item in the MITRE ATT&CK Frameworks (as applicable).
 
     The following categorical items can be accessed using this class:
 
@@ -29,24 +32,11 @@ class Attck(object):
         6. Malwares (Malwares are specific pieces of malware used by
             actors (or in general) to accomplish a technique)
 
-    You can also search the external dataset for external commands that
-    are similar using the `search_commands` method.
-
-        .. code-block:: python
-
-            from pyattck import Attck
-
-            attck = Attck()
-
-            for search in attck.enterprise.search_commands('powershell'):
-                print(search['technique'])
-                print(search['reason_for_match'])
-
-    You can access additional datasets related to a technique. 
+    You can access additional datasets related to a technique.
     These datasets are [documented here](https://github.com/swimlane/pyattck-data).
 
     Example:
-        Once an Attck object is instantiated, you can access each object
+        Once an `Attck` object is instantiated, you can access each object
         type as a list of objects (e.g. techniques, tactics, actors, etc.)
 
         You can iterate over each object list and access specific properties
@@ -117,34 +107,32 @@ class Attck(object):
                    print(mitigation.description)
                    # etc.
 
-                   for technique in mitigation.enterprise.techniques:
-                       print(technique.name)
-                       print(technique.description)
-                       # etc.
+                for technique in mitigation.techniques:
+                    print(technique.name)
+                    print(technique.description)
+                    # etc.
 
     Arguments:
         nested_subtechniques (bool, optional): Whether not to iterate over nested subtechniques. Defaults to True.
         use_config (bool, optional): Specifies if a configuration file should be used or not.  Defaults to False.
-        save_config (bool, optional): Specifies if pyattck should save a configuration file based on the provided 
+        save_config (bool, optional): Specifies if pyattck should save a configuration file based on the provided
                                       values.  Defaults to False.
-        config_file_path (str, optional): Path to a yaml configuration file which contains two key value pairs. 
+        config_file_path (str, optional): Path to a yaml configuration file which contains two key value pairs.
                                           Defaults to '~/pyattck/config.yml'.
         data_path (str, optional): Path to store the external data locally on your system. Defaults to '~/pyattck/data'.
-        enterprise_attck_json (str, optional): A URL or local file path to the MITRE ATT&CK Json file. 
-                                               Defaults to https://raw.githubusercontent.com/mitre/cti/master/enterprise-attack/enterprise-attack.json.
-        pre_attck_json (str, optional): A URL or local file path to the MITRE Pre-ATT&CK Json file. 
-                                        Defaults to https://raw.githubusercontent.com/mitre/cti/master/pre-attack/pre-attack.json.
-        mobile_attck_json (str, optional): A URL or local file path to the MITRE Mobile ATT&CK Json file. 
-                                           Defaults to https://raw.githubusercontent.com/mitre/cti/master/mobile-attack/mobile-attack.json.
+        enterprise_attck_json (str, optional): A URL or local file path to the MITRE ATT&CK Json file.
+                                               Defaults to https://swimlane-pyattck.s3.us-west-2.amazonaws.com/merged_enterprise_attck_v1.json.
+        pre_attck_json (str, optional): A URL or local file path to the MITRE Pre-ATT&CK Json file.
+                                        Defaults to https://swimlane-pyattck.s3.us-west-2.amazonaws.com/merged_pre_attck_v1.json.
+        mobile_attck_json (str, optional): A URL or local file path to the MITRE Mobile ATT&CK Json file.
+                                           Defaults to https://swimlane-pyattck.s3.us-west-2.amazonaws.com/merged_mobile_attck_v1.json.
         ics_attck_json (str, optional): A URL or local file path to the MITRE ICS ATT&CK JSON file.
-                                           Defaults to https://raw.githubusercontent.com/mitre/cti/master/ics-attack/ics-attack.json.
-        nist_controls_json (str, optional): A URL or local file path to the NIST Controls Json file. 
+                                           Defaults to https://swimlane-pyattck.s3.us-west-2.amazonaws.com/merged_ics_attck_v1.json.
+        nist_controls_json (str, optional): A URL or local file path to the NIST Controls Json file.
                                             Defaults to https://raw.githubusercontent.com/center-for-threat-informed-defense/attack-control-framework-mappings/main/frameworks/attack_10_1/nist800_53_r4/stix/nist800-53-r4-controls.json.
-        generated_attck_json (str, optional): A URL or local file path to the Generated MITRE ATT&CK Json file. 
-                                              Defaults to https://swimlane-pyattck.s3.us-west-2.amazonaws.com/generated_attck_data.json.
-        generated_nist_json (str, optional): A URL or local file path to the Generated NIST Controls Mapping Json file. 
+        generated_nist_json (str, optional): A URL or local file path to the Generated NIST Controls Mapping Json file.
                                              Defaults to https://swimlane-pyattck.s3.us-west-2.amazonaws.com/attck_to_nist_controls.json.
-        kwargs (dict, optional): Provided kwargs will be passed to any HTTP requests using the Requests library. 
+        kwargs (dict, optional): Provided kwargs will be passed to any HTTP requests using the Requests library.
                                  Defaults to None.
 
     Returns:
@@ -156,17 +144,16 @@ class Attck(object):
         nested_subtechniques=True,
         use_config=False,
         save_config=False,
-        config_file_path='~/pyattck/config.yml',
-        data_path='~/pyattck/data',
-        enterprise_attck_json="https://raw.githubusercontent.com/mitre/cti/master/enterprise-attack/enterprise-attack.json",
-        pre_attck_json="https://raw.githubusercontent.com/mitre/cti/master/pre-attack/pre-attack.json",
-        mobile_attck_json="https://raw.githubusercontent.com/mitre/cti/master/mobile-attack/mobile-attack.json",
-        ics_attck_json="https://raw.githubusercontent.com/mitre/cti/master/ics-attack/ics-attack.json",
+        config_file_path="~/pyattck/config.yml",
+        data_path="~/pyattck/data",
+        enterprise_attck_json="https://swimlane-pyattck.s3.us-west-2.amazonaws.com/merged_enterprise_attck_v1.json",
+        pre_attck_json="https://swimlane-pyattck.s3.us-west-2.amazonaws.com/merged_pre_attck_v1.json",
+        mobile_attck_json="https://swimlane-pyattck.s3.us-west-2.amazonaws.com/merged_mobile_attck_v1.json",
+        ics_attck_json="https://swimlane-pyattck.s3.us-west-2.amazonaws.com/merged_ics_attck_v1.json",
         nist_controls_json="https://raw.githubusercontent.com/center-for-threat-informed-defense/attack-control-framework-mappings/main/frameworks/attack_10_1/nist800_53_r4/stix/nist800-53-r4-controls.json",
-        generated_attck_json="https://swimlane-pyattck.s3.us-west-2.amazonaws.com/generated_attck_data.json",
         generated_nist_json="https://swimlane-pyattck.s3.us-west-2.amazonaws.com/attck_to_nist_controls.json",
         **kwargs
-        ):
+    ):
         """
         The main entry point for pyattck.
 
@@ -198,14 +185,12 @@ class Attck(object):
 
                     config_file_path: /Users/user.name/pyattck/config.yml
                     data_path: /Users/user.name/pyattck/data
-                    enterprise_attck_json: https://raw.githubusercontent.com/mitre/cti/master/enterprise-attack/enterprise-attack.json
-                    generated_attck_json: https://swimlane-pyattck.s3.us-west-2.amazonaws.com/generated_attck_data.json
+                    enterprise_attck_json: https://swimlane-pyattck.s3.us-west-2.amazonaws.com/merged_enterprise_attck_v1.json
                     generated_nist_json: https://swimlane-pyattck.s3.us-west-2.amazonaws.com/attck_to_nist_controls.json
-                    mobile_attck_json: https://raw.githubusercontent.com/mitre/cti/master/mobile-attack/mobile-attack.json
-                    ics_attck_json: https://raw.githubusercontent.com/mitre/cti/master/ics-attack/ics-attack.json
+                    mobile_attck_json: https://swimlane-pyattck.s3.us-west-2.amazonaws.com/merged_mobile_attck_v1.json
+                    ics_attck_json: https://swimlane-pyattck.s3.us-west-2.amazonaws.com/merged_ics_attck_v1.json
                     nist_controls_json: https://raw.githubusercontent.com/center-for-threat-informed-defense/attack-control-framework-mappings/main/frameworks/attack_10_1/nist800_53_r4/stix/nist800-53-r4-controls.json
-                    pre_attck_json: https://raw.githubusercontent.com/mitre/cti/master/pre-attack/pre-attack.json
-
+                    pre_attck_json: https://swimlane-pyattck.s3.us-west-2.amazonaws.com/merged_pre_attck_v1.json
 
             2. data_path = The path to hold the external data locally on your system.
                            The default is your user home path.
@@ -213,88 +198,93 @@ class Attck(object):
         Args:
             nested_subtechniques (bool, optional): Whether not to iterate over nested subtechniques. Defaults to True.
             use_config (bool, optional): Specifies if a configuration file should be used or not.  Defaults to False.
-            save_config (bool, optional): Specifies if pyattck should save a configuration file based on the 
+            save_config (bool, optional): Specifies if pyattck should save a configuration file based on the
                                           provided values.  Defaults to False.
-            config_file_path (str, optional): Path to a yaml configuration file which contains two key value pairs. 
+            config_file_path (str, optional): Path to a yaml configuration file which contains two key value pairs.
                                               Defaults to '~/pyattck/config.yml'.
-            data_path (str, optional): Path to store the external data locally on your system.  
+            data_path (str, optional): Path to store the external data locally on your system.
                                        Defaults to '~/pyattck/data'.
-            enterprise_attck_json (str, optional): A URL or local file path to the MITRE ATT&CK Json file. 
-                                                   Defaults to https://raw.githubusercontent.com/mitre/cti/master/enterprise-attack/enterprise-attack.json.
-            pre_attck_json (str, optional): A URL or local file path to the MITRE Pre-ATT&CK Json file. 
-                                            Defaults to https://raw.githubusercontent.com/mitre/cti/master/pre-attack/pre-attack.json.
-            mobile_attck_json (str, optional): A URL or local file path to the MITRE Mobile ATT&CK Json file. 
-                                               Defaults to https://raw.githubusercontent.com/mitre/cti/master/mobile-attack/mobile-attack.json.
+            enterprise_attck_json (str, optional): A URL or local file path to the MITRE ATT&CK Json file.
+                                                   Defaults to https://swimlane-pyattck.s3.us-west-2.amazonaws.com/merged_enterprise_attck_v1.json.
+            pre_attck_json (str, optional): A URL or local file path to the MITRE Pre-ATT&CK Json file.
+                                            Defaults to https://swimlane-pyattck.s3.us-west-2.amazonaws.com/merged_pre_attck_v1.json.
+            mobile_attck_json (str, optional): A URL or local file path to the MITRE Mobile ATT&CK Json file.
+                                               Defaults to https://swimlane-pyattck.s3.us-west-2.amazonaws.com/merged_mobile_attck_v1.json.
             ics_attck_json (str, optional): A URL or local file path to the MITRE ICS ATT&CK JSON file.
-                                           Defaults to https://raw.githubusercontent.com/mitre/cti/master/ics-attack/ics-attack.json.
-            nist_controls_json (str, optional): A URL or local file path to the NIST Controls Json file. 
+                                           Defaults to https://swimlane-pyattck.s3.us-west-2.amazonaws.com/merged_ics_attck_v1.json.
+            nist_controls_json (str, optional): A URL or local file path to the NIST Controls Json file.
                                                 Defaults to https://raw.githubusercontent.com/center-for-threat-informed-defense/attack-control-framework-mappings/main/frameworks/attack_10_1/nist800_53_r4/stix/nist800-53-r4-controls.json
-            generated_attck_json (str, optional): A URL or local file path to the Generated MITRE ATT&CK Json file. 
-                                                  Defaults to https://swimlane-pyattck.s3.us-west-2.amazonaws.com/generated_attck_data.json.
-            generated_nist_json (str, optional): A URL or local file path to the Generated NIST Controls Mapping 
-                                                 Json file. 
+            generated_nist_json (str, optional): A URL or local file path to the Generated NIST Controls Mapping
+                                                 Json file.
                                                  Defaults to https://swimlane-pyattck.s3.us-west-2.amazonaws.com/attck_to_nist_controls.json.
-            kwargs (dict, optional): Provided kwargs will be passed to any HTTP requests using the Requests library. 
+            kwargs (dict, optional): Provided kwargs will be passed to any HTTP requests using the Requests library.
                                      Defaults to None.
         """
-        self.__nested_subtechniques = nested_subtechniques
-        Configuration.use_config = use_config
-        Configuration.save_config = save_config
-        Configuration.config_file_path = config_file_path
-        Configuration.enterprise_attck_json = enterprise_attck_json
-        Configuration.pre_attck_json = pre_attck_json
-        Configuration.mobile_attck_json = mobile_attck_json
-        Configuration.ics_attck_json = ics_attck_json
-        Configuration.nist_controls_json = nist_controls_json
-        Configuration.generated_attck_json = generated_attck_json
-        Configuration.generated_nist_json = generated_nist_json
-        Configuration.data_path = data_path
-        Configuration.requests_kwargs = kwargs
+        Base.config = Options(
+            nested_subtechniques=nested_subtechniques,
+            use_config=use_config,
+            save_config=save_config,
+            config_file_path=config_file_path,
+            kwargs=kwargs,
+            config=Configuration(
+                data_path=data_path,
+                enterprise_attck_json=enterprise_attck_json,
+                pre_attck_json=pre_attck_json,
+                mobile_attck_json=mobile_attck_json,
+                ics_attck_json=ics_attck_json,
+                nist_controls_json=nist_controls_json,
+                generated_nist_json=generated_nist_json,
+            ),
+        )
 
     @property
     def enterprise(self):
-        """
-        Retrieve objects from the Enterprise MITRE ATT&CK Framework and
-        additional generated data which provides additional context
+        """Retrieve objects from the Enterprise MITRE ATT&CK Framework.
 
         Returns:
             Enterprise: Returns an Enterprise object
         """
-        from .enterprise.enterprise import Enterprise
-        return Enterprise(nested_subtechniques=self.__nested_subtechniques)
+        from .enterprise import EnterpriseAttck
+
+        self.__logger.debug("Calling MITRE Enterprise ATT&CK Framework")
+        return EnterpriseAttck()
 
     @property
     def preattack(self):
-        """
-        Retrieve objects from the MITRE PRE-ATT&CK Framework
+        """Retrieve objects from the MITRE PRE-ATT&CK Framework.
 
         Returns:
             PreAttack: Returns an PreAttack object
         """
-        from .preattck.preattck import PreAttck
+        from .preattck import PreAttck
+
+        self.__logger.debug("Calling MITRE Pre-ATT&CK Framework")
         return PreAttck()
 
     @property
     def mobile(self):
-        """
-        Retrieve objects from the MITRE Mobile ATT&CK Framework
+        """Retrieve objects from the MITRE Mobile ATT&CK Framework.
 
         Returns:
             PreAttack: Returns an MobileAttack object
         """
-        from .mobile.mobileattck import MobileAttck
+        from .mobile import MobileAttck
+
+        self.__logger.debug("Calling MITRE Mobile ATT&CK Framework")
         return MobileAttck()
 
     @property
     def ics(self):
-        """
-        Retrieve objects from the MITRE ICS ATT&CK Framework
+        """Retrieve objects from the MITRE ICS ATT&CK Framework.
 
         Returns:
             PreAttack: Returns an ICSAttck object
         """
-        from .ics.icsattck import ICSAttck
+        from .ics import ICSAttck
+
+        self.__logger.debug("Calling MITRE ICS ATT&CK Framework")
         return ICSAttck()
 
     def update(self) -> bool:
-        return True if Configuration._save_json_data(force=True) else False
+        """Updates the local cached JSON files."""
+        return True if Base.config._save_json_data(force=True) else False

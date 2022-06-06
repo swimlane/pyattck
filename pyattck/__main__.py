@@ -6,5 +6,6 @@ def main(args=None):
     attck = Attck()
     fire.Fire(attck)
 
+
 if __name__ == "__main__":
     main()
