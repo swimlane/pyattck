@@ -1,11 +1,11 @@
-import os
 import json
+import os
 import warnings
 
 import yaml
+from attrs import asdict, define, field
+from pydantic import DirectoryPath, FilePath, HttpUrl
 from requests.api import request
-from attrs import define, field, asdict
-from pydantic import HttpUrl, FilePath, DirectoryPath
 
 from .utils.exceptions import UnknownFileError
 from .utils.utils import get_absolute_path, is_path, is_url
@@ -78,33 +78,41 @@ class Options:
                         return Configuration(**yaml.load(f, Loader=yaml.SafeLoader))
                     else:
                         raise UnknownFileError(provided_value=path, known_values=[".json", ".yml", ".yaml"])
-            except:
+            except Exception as e:
                 warnings.warn(
-                    message=f"The provided config file {path} is not in the correct format. Using default values instead."
+                    message=f"The provided config file {path} is not in the correct format. "
+                            "Using default values instead."
                 )
                 pass
+        elif os.path.isdir(path):
+            raise Exception(
+                f"The provided path is a directory and must be a file: {path}"
+            )
 
     def _save_to_disk(self, path, data):
-        if not os.path.exists(os.path.dirname(path)):
-            try:
-                os.makedirs(os.path.dirname(path))
-            except:
-                raise Exception(
-                    "pyattck attempted to create the provided directories but was unable to: {}".format(path)
-                )
-        with open(path, "w+") as f:
-            if path.endswith(".json"):
-                json.dump(data, f)
-            elif path.endswith(".yml") or path.endswith(".yaml"):
-                yaml.dump(data, f)
-            else:
-                raise UnknownFileError(provided_value=path, known_values=[".json", ".yml", ".yaml"])
+        try:
+            if not os.path.exists(os.path.dirname(path)):
+                try:
+                    os.makedirs(os.path.dirname(path))
+                except Exception as e:
+                    raise Exception(
+                        "pyattck attempted to create the provided directories but was unable to: {}".format(path)
+                    )
+            with open(path, "w+") as f:
+                if path.endswith(".json"):
+                    json.dump(data, f)
+                elif path.endswith(".yml") or path.endswith(".yaml"):
+                    yaml.dump(data, f)
+                else:
+                    raise UnknownFileError(provided_value=path, known_values=[".json", ".yml", ".yaml"])
+        except IsADirectoryError as ie:
+            raise Exception(f"The provided path is a directory: {path}")
 
     def _save_json_data(self, force: bool = False) -> None:
         if not os.path.exists(self.config.data_path):
             try:
                 os.makedirs(self.config.data_path)
-            except:
+            except Exception as e:
                 raise Exception("Unable to save data to the provided location: {}".format(self.config.data_path))
         for json_data in [
             "enterprise_attck_json",
@@ -120,7 +128,7 @@ class Options:
                     if not os.path.exists(path) or force:
                         data = self._download_url_data(getattr(self.config, json_data))
                         self._save_to_disk(path, data)
-                except:
+                except Exception as e:
                     raise Warning(f"Unable to download data from {json_data}")
         return True
 

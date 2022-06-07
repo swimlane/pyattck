@@ -1,5 +1,6 @@
-from .base import Base
 from pyattck_data_models import MitreAttck
+
+from .base import Base
 
 
 class MobileAttck(Base):

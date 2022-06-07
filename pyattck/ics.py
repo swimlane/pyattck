@@ -1,5 +1,6 @@
-from .base import Base
 from pyattck_data_models import MitreAttck, NistControls
+
+from .base import Base
 
 
 class ICSAttck(Base):

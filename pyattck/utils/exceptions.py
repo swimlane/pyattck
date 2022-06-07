@@ -17,9 +17,8 @@ class UnknownFileError(ValueError):
         if provided_value and known_values:
             if isinstance(known_values, list):
                 super().__init__(
-                    "The provided value {} is unknown. Please provide a file path with one of these '{}' extensions.".format(
-                        provided_value, ",".join([x for x in known_values])
-                    )
+                    f"The provided value {provided_value} is unknown. "
+                    f"Please provide a file path with one of these '{[x for x in known_values]}' extensions."
                 )
         else:
             pass

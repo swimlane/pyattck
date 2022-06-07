@@ -1,8 +1,8 @@
 import os
 import random
 import tempfile
-import pytest
 
+import pytest
 
 default_config_data = {
     "data_path": os.path.abspath(os.path.expanduser(os.path.expandvars("~/pyattck/data"))),

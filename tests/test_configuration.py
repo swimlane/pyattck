@@ -1,7 +1,8 @@
 import os
-import tempfile
-import pytest
 import random
+import tempfile
+
+import pytest
 
 
 def get_random_file_or_url():
