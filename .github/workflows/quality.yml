@@ -45,7 +45,7 @@ jobs:
       - name: Install dependencies
         run: poetry install
       - name: Run black
-        run: poetry run black . --check --extend-exclude "^/bin" --line-length 120
+        run: poetry run black ./pyattck --line-length 120
       - name: Run isort
         run: poetry run isort . --check-only --profile "black"
       - name: Run flake8
