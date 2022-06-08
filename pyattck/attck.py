@@ -129,7 +129,7 @@ class Attck(Base):
         ics_attck_json (str, optional): A URL or local file path to the MITRE ICS ATT&CK JSON file.
                         Defaults to https://swimlane-pyattck.s3.us-west-2.amazonaws.com/merged_ics_attck_v1.json.
         nist_controls_json (str, optional): A URL or local file path to the NIST Controls Json file.
-                        Defaults to https://raw.githubusercontent.com/center-for-threat-informed-defense/attack-control-framework-mappings/main/frameworks/attack_10_1/nist800_53_r4/stix/nist800-53-r4-controls.json.
+                        Defaults to https://swimlane-pyattck.s3.us-west-2.amazonaws.com/merged_nist_controls_v1.json.
         generated_nist_json (str, optional): A URL or local file path to the Generated NIST Controls Mapping Json file.
                         Defaults to https://swimlane-pyattck.s3.us-west-2.amazonaws.com/attck_to_nist_controls.json.
         kwargs (dict, optional): Provided kwargs will be passed to any HTTP requests using the Requests library.
@@ -150,7 +150,7 @@ class Attck(Base):
         pre_attck_json="https://swimlane-pyattck.s3.us-west-2.amazonaws.com/merged_pre_attck_v1.json",
         mobile_attck_json="https://swimlane-pyattck.s3.us-west-2.amazonaws.com/merged_mobile_attck_v1.json",
         ics_attck_json="https://swimlane-pyattck.s3.us-west-2.amazonaws.com/merged_ics_attck_v1.json",
-        nist_controls_json="https://raw.githubusercontent.com/center-for-threat-informed-defense/attack-control-framework-mappings/main/frameworks/attack_10_1/nist800_53_r4/stix/nist800-53-r4-controls.json",
+        nist_controls_json="https://swimlane-pyattck.s3.us-west-2.amazonaws.com/merged_nist_controls_v1.json",
         generated_nist_json="https://swimlane-pyattck.s3.us-west-2.amazonaws.com/attck_to_nist_controls.json",
         **kwargs
     ):
@@ -189,7 +189,7 @@ class Attck(Base):
                 generated_nist_json: https://swimlane-pyattck.s3.us-west-2.amazonaws.com/attck_to_nist_controls.json
                 mobile_attck_json: https://swimlane-pyattck.s3.us-west-2.amazonaws.com/merged_mobile_attck_v1.json
                 ics_attck_json: https://swimlane-pyattck.s3.us-west-2.amazonaws.com/merged_ics_attck_v1.json
-                nist_controls_json: https://raw.githubusercontent.com/center-for-threat-informed-defense/attack-control-framework-mappings/main/frameworks/attack_10_1/nist800_53_r4/stix/nist800-53-r4-controls.json
+                nist_controls_json: https://swimlane-pyattck.s3.us-west-2.amazonaws.com/merged_nist_controls_v1.json
                 pre_attck_json: https://swimlane-pyattck.s3.us-west-2.amazonaws.com/merged_pre_attck_v1.json
 
             2. data_path = The path to hold the external data locally on your system.
@@ -213,7 +213,7 @@ class Attck(Base):
             ics_attck_json (str, optional): A URL or local file path to the MITRE ICS ATT&CK JSON file.
                         Defaults to https://swimlane-pyattck.s3.us-west-2.amazonaws.com/merged_ics_attck_v1.json.
             nist_controls_json (str, optional): A URL or local file path to the NIST Controls Json file.
-                        Defaults to https://raw.githubusercontent.com/center-for-threat-informed-defense/attack-control-framework-mappings/main/frameworks/attack_10_1/nist800_53_r4/stix/nist800-53-r4-controls.json
+                        Defaults to https://swimlane-pyattck.s3.us-west-2.amazonaws.com/merged_nist_controls_v1.json
             generated_nist_json (str, optional): A URL or local file path to the Generated NIST Controls Mapping Json
                         file. Defaults to https://swimlane-pyattck.s3.us-west-2.amazonaws.com/attck_to_nist_controls.json.
             kwargs (dict, optional): Provided kwargs will be passed to any HTTP requests using the Requests library.

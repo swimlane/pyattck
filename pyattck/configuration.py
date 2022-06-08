@@ -31,7 +31,7 @@ class Configuration:
         converter=get_absolute_path,
     )
     nist_controls_json: HttpUrl or FilePath = field(
-        default="https://raw.githubusercontent.com/center-for-threat-informed-defense/attack-control-framework-mappings/main/frameworks/attack_10_1/nist800_53_r4/stix/nist800-53-r4-controls.json",
+        default="https://swimlane-pyattck.s3.us-west-2.amazonaws.com/merged_nist_controls_v1.json",
         converter=get_absolute_path,
     )
     generated_nist_json: HttpUrl or FilePath = field(
