@@ -81,13 +81,11 @@ class Options:
             except Exception as e:
                 warnings.warn(
                     message=f"The provided config file {path} is not in the correct format. "
-                            "Using default values instead."
+                    "Using default values instead."
                 )
                 pass
         elif os.path.isdir(path):
-            raise Exception(
-                f"The provided path is a directory and must be a file: {path}"
-            )
+            raise Exception(f"The provided path is a directory and must be a file: {path}")
 
     def _save_to_disk(self, path, data):
         try:
