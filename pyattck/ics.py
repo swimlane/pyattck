@@ -49,9 +49,7 @@ class ICSAttck(Base):
         """
         if not self.__controls:
             if self.__nist_controls_json.objects:
-                for control in self.__nist_controls_json.objects:
-                    if control.type == "course-of-action":
-                        self.__controls.append(control)
+                self.__controls = [x for x in self.__nist_controls_json.objects if x.type == "course-of-action"]
         return self.__controls
 
     @property
@@ -62,9 +60,7 @@ class ICSAttck(Base):
             (DataComponent) -- Returns a list of DataComponent objects
         """
         if not self.__data_components:
-            for item in self.__attck.objects:
-                if item.type == "x-mitre-data-component":
-                    self.__data_components.append(item)
+            self.__data_components = [x for x in self.__attck.objects if x.type == "x-mitre-data-component"]
         return self.__data_components
 
     @property
@@ -75,9 +71,7 @@ class ICSAttck(Base):
             (DataSource) -- Returns a list of DataSource objects
         """
         if not self.__data_sources:
-            for item in self.__attck.objects:
-                if item.type == "x-mitre-data-source":
-                    self.__data_sources.append(item)
+            self.__data_sources = [x for x in self.__attck.objects if x.type == "x-mitre-data-source"]
         return self.__data_sources
 
     @property
@@ -88,9 +82,7 @@ class ICSAttck(Base):
             (Malware) -- Returns a list of Malware objects
         """
         if not self.__malwares:
-            for item in self.__attck.objects:
-                if item.type == "malware":
-                    self.__malwares.append(item)
+            self.__malwares = [x for x in self.__attck.objects if x.type == "malware"]
         return self.__malwares
 
     @property
@@ -101,9 +93,7 @@ class ICSAttck(Base):
             (Mitigation) -- (Returns a list of Mitigation objects)
         """
         if not self.__mitigations:
-            for item in self.__attck.objects:
-                if item.type == "course-of-action":
-                    self.__mitigations.append(item)
+            self.__mitigations = [x for x in self.__attck.objects if x.type == "course-of-action"]
         return self.__mitigations
 
     @property
@@ -114,9 +104,7 @@ class ICSAttck(Base):
             (Tactic) -- (Returns a list of Tactic objects)
         """
         if not self.__tactics:
-            for item in self.__attck.objects:
-                if item.type == "x-mitre-tactic":
-                    self.__tactics.append(item)
+            self.__tactics = [x for x in self.__attck.objects if x.type == "x-mitre-tactic"]
         return self.__tactics
 
     @property
