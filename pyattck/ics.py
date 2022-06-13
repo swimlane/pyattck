@@ -1,4 +1,5 @@
-from pyattck_data.models import MitreAttck, NistControls
+from pyattck_data.models.attack import MitreAttck
+from pyattck_data.models.nist import NistControls
 
 from .base import Base
 
