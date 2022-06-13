@@ -1,4 +1,4 @@
-from pyattck_data_models import MitreAttck
+from pyattck_data.models import MitreAttck
 
 from .base import Base
 
