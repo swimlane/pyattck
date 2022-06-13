@@ -17,7 +17,7 @@
 ```
 	A Python package to interact with MITRE ATT&CK Frameworks
 
-> Current Version is 6.0.0
+> Current Version is 6.1.0
 
 **pyattck** is a light-weight framework for MITRE ATT&CK Frameworks. This package extracts details from the MITRE Enterprise, PRE-ATT&CK, Mobile, and ICS Frameworks.
 
@@ -49,7 +49,7 @@ The **pyattck** package allows you to:
   * Access data from the MITRE ICS ATT&CK Framework
   * Access sub-techniques as nested objects or you can turn it off and access as normal technique
   * Access compliance controls (currently NIST 800-53 v5) related to a MITRE ATT&CK Technique
-  * pyattck now utilizes structured data models. More information can be found at [pyattck-data-models](https://github.com/swimlane/pyattck-data-models)
+  * pyattck now utilizes structured data models. More information can be found at [pyattck-data](https://github.com/swimlane/pyattck-data)
 
 # Table of Contents
 
@@ -290,7 +290,7 @@ This data set is generated from many different sources. As we continue to add mo
    configuration
    pyattck/attck
    Dataset <https://github.com/swimlane/pyattck-data>
-   Data Models <https://github.com/swimlane/pyattck-data-models>
+   Data Models <https://github.com/swimlane/pyattck-data>
    enterprise/enterprise
    preattck/preattck
    mobile/mobileattck
