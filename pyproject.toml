@@ -4,6 +4,9 @@ version = "6.1.0"
 description = "A Python package to interact with the Mitre ATT&CK Frameworks"
 authors = ["Swimlane <info@swimlane.com>"]
 license = "MIT"
+readme = "README.md"
+homepage = "https://github.com/swimlane/pyattck"
+repository = "https://github.com/swimlane/pyattck"
 
 [tool.poetry.dependencies]
 python = "^3.7"
