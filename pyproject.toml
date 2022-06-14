@@ -1,0 +1,29 @@
+[tool.poetry]
+name = "pyattck"
+version = "6.1.0"
+description = "A Python package to interact with the Mitre ATT&CK Frameworks"
+authors = ["Swimlane <info@swimlane.com>"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.7"
+requests = "^2.27.1"
+fire = "^0.4.0"
+attrs = "^21.4.0"
+pyattck-data = "^2.3.0"
+
+[tool.poetry.dev-dependencies]
+pytest = "^7.1.2"
+pylama = "^8.3.8"
+coverage = "^6.4.1"
+recommonmark = "^0.7.1"
+black = "^22.3.0"
+isort = "^5.10.1"
+flake8 = "^4.0.1"
+bandit = "^1.7.4"
+safety = "^1.10.3"
+Sphinx = "<4.4.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

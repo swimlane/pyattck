@@ -1,1 +1,0 @@
-from .generatedocs import GenerateDocs

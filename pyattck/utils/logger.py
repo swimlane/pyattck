@@ -1,12 +1,12 @@
 # Copyright: (c) 2022, Swimlane <info@swimlane.com>
 # MIT License (see LICENSE or https://opensource.org/licenses/MIT)
 
-import os
-import logging.config
-import yaml
-
-from logging import FileHandler, DEBUG
 import logging
+import logging.config
+import os
+from logging import DEBUG, FileHandler
+
+import yaml
 
 
 class DebugFileHandler(FileHandler):

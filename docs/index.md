@@ -17,7 +17,7 @@
 ```
 	A Python package to interact with MITRE ATT&CK Frameworks
 
-> Current Version is 6.0.0
+> Current Version is 6.1.0
 
 **pyattck** is a light-weight framework for MITRE ATT&CK Frameworks. This package extracts details from the MITRE Enterprise, PRE-ATT&CK, Mobile, and ICS Frameworks.
 
@@ -49,7 +49,7 @@ The **pyattck** package allows you to:
   * Access data from the MITRE ICS ATT&CK Framework
   * Access sub-techniques as nested objects or you can turn it off and access as normal technique
   * Access compliance controls (currently NIST 800-53 v5) related to a MITRE ATT&CK Technique
-  * pyattck now utilizes structured data models. More information can be found at [pyattck-data-models](https://github.com/swimlane/pyattck-data-models)
+  * pyattck now utilizes structured data models. More information can be found at [pyattck-data-models](https://github.com/swimlane/pyattck-data)
 
 # Table of Contents
 
@@ -170,7 +170,7 @@ attck = Attck(
     pre_attck_json="https://swimlane-pyattck.s3.us-west-2.amazonaws.com/merged_pre_attck_v1.json",
     mobile_attck_json="https://swimlane-pyattck.s3.us-west-2.amazonaws.com/merged_mobile_attck_v1.json,
     ics_attck_json="https://swimlane-pyattck.s3.us-west-2.amazonaws.com/merged_ics_attck_v1.json",
-    nist_controls_json="https://raw.githubusercontent.com/center-for-threat-informed-defense/attack-control-framework-mappings/main/frameworks/attack_10_1/nist800_53_r4/stix/nist800-53-r4-controls.json",
+    nist_controls_json="https://swimlane-pyattck.s3.us-west-2.amazonaws.com/merged_nist_controls_v1.json",
     generated_nist_json="https://swimlane-pyattck.s3.us-west-2.amazonaws.com/attck_to_nist_controls.json",
     **kwargs
 )
@@ -182,7 +182,7 @@ By default, `pyattck` will (now) pull the latest external data from their respec
 * pre_attck_json="https://swimlane-pyattck.s3.us-west-2.amazonaws.com/merged_pre_attck_v1.json"
 * mobile_attck_json="https://swimlane-pyattck.s3.us-west-2.amazonaws.com/merged_mobile_attck_v1.json"
 * ics_attck_json="https://swimlane-pyattck.s3.us-west-2.amazonaws.com/merged_ics_attck_v1.json"
-* nist_controls_json="https://raw.githubusercontent.com/center-for-threat-informed-defense/attack-control-framework-mappings/main/frameworks/attack_10_1/nist800_53_r4/stix/nist800-53-r4-controls.json"
+* nist_controls_json="https://swimlane-pyattck.s3.us-west-2.amazonaws.com/merged_nist_controls_v1.json"
 * generated_nist_json="https://swimlane-pyattck.s3.us-west-2.amazonaws.com/attck_to_nist_controls.json"
 
 You have several options when instantiating the `Attck` object. As of `4.0.0` you can now specify any of the following options:
@@ -290,7 +290,7 @@ This data set is generated from many different sources. As we continue to add mo
    configuration
    attck
    Dataset <https://github.com/swimlane/pyattck-data>
-   Data Models <https://github.com/swimlane/pyattck-data-models>
+   Data Models <https://github.com/swimlane/pyattck-data>
    enterprise
    preattck
    mobile

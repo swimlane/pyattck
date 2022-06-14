@@ -1,5 +1,6 @@
+from pyattck_data.attack import MitreAttck
+
 from .base import Base
-from pyattck_data_models import MitreAttck
 
 
 class MobileAttck(Base):
@@ -40,9 +41,7 @@ class MobileAttck(Base):
             (Actor) -- (Returns a list of Actor objects)
         """
         if not self.__actors:
-            for actor in self.__attck.objects:
-                if actor.type == "intrusion-set":
-                    self.__actors.append(actor)
+            self.__actors = [x for x in self.__attck.objects if x.type == "intrusion-set"]
         return self.__actors
 
     @property
@@ -53,9 +52,7 @@ class MobileAttck(Base):
             (Malware) -- Returns a list of Malware objects
         """
         if not self.__malwares:
-            for item in self.__attck.objects:
-                if item.type == "malware":
-                    self.__malwares.append(item)
+            self.__malwares = [x for x in self.__attck.objects if x.type == "malware"]
         return self.__malwares
 
     @property
@@ -66,9 +63,7 @@ class MobileAttck(Base):
             (Mitigation) -- (Returns a list of Mitigation objects)
         """
         if not self.__mitigations:
-            for item in self.__attck.objects:
-                if item.type == "course-of-action":
-                    self.__mitigations.append(item)
+            self.__mitigations = [x for x in self.__attck.objects if x.type == "course-of-action"]
         return self.__mitigations
 
     @property
@@ -79,9 +74,7 @@ class MobileAttck(Base):
             (Tactic) -- (Returns a list of Tactic objects)
         """
         if not self.__tactics:
-            for item in self.__attck.objects:
-                if item.type == "x-mitre-tactic":
-                    self.__tactics.append(item)
+            self.__tactics = [x for x in self.__attck.objects if x.type == "x-mitre-tactic"]
         return self.__tactics
 
     @property
@@ -108,7 +101,5 @@ class MobileAttck(Base):
             (Tool) -- Returns a list of Tool objects
         """
         if not self.__tools:
-            for item in self.__attck.objects:
-                if item.type == "tool":
-                    self.__tools.append(item)
+            self.__tools = [x for x in self.__attck.objects if x.type == "tool"]
         return self.__tools

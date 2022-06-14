@@ -1,4 +1,4 @@
-from pyattck_data_models import MitreAttck
+from pyattck_data.attack import MitreAttck
 
 from .base import Base
 
@@ -35,9 +35,7 @@ class PreAttck(Base):
             (Actor) -- (Returns a list of Actor objects)
         """
         if not self.__actors:
-            for actor in self.__attck.objects:
-                if actor.type == "intrusion-set":
-                    self.__actors.append(actor)
+            self.__actors = [x for x in self.__attck.objects if x.type == "intrusion-set"]
         return self.__actors
 
     @property
@@ -48,9 +46,7 @@ class PreAttck(Base):
             (Tactic) -- (Returns a list of Tactic objects)
         """
         if not self.__tactics:
-            for item in self.__attck.objects:
-                if item.type == "x-mitre-tactic":
-                    self.__tactics.append(item)
+            self.__tactics = [x for x in self.__attck.objects if x.type == "x-mitre-tactic"]
         return self.__tactics
 
     @property

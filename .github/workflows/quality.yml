@@ -1,0 +1,56 @@
+name: Push
+on: [push]
+
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.7", "3.8"]
+        poetry-version: [1.1.13]
+        os: [ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Run image
+        uses: abatilo/actions-poetry@v2.0.0
+        with:
+          poetry-version: ${{ matrix.poetry-version }}
+      - name: Install dependencies
+        run: poetry install
+      - name: Run tests
+        run: poetry run coverage run -m pytest && poetry run coverage report
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v1
+  code-quality:
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: [3.9]
+        poetry-version: [1.1.2]
+        os: [ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Run image
+        uses: abatilo/actions-poetry@v2.0.0
+        with:
+          poetry-version: ${{ matrix.poetry-version }}
+      - name: Install dependencies
+        run: poetry install
+      - name: Run black
+        run: poetry run black ./pyattck --line-length 120
+      - name: Run isort
+        run: poetry run isort ./pyattck --check-only --profile "black"
+      - name: Run flake8
+        run: poetry run flake8 ./pyattck
+      - name: Run bandit
+        run: poetry run bandit ./pyattck
+      - name: Run saftey
+        run: poetry run safety check --ignore=47794
