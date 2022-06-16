@@ -62,6 +62,7 @@ jobs:
       - name: Install dependencies
         run: |
           poetry run pip install --upgrade pip
+          poetry run pip install --upgrade setuptools
           poetry install
       - name: Run tests
         run: poetry run coverage run -m pytest && poetry run coverage report
