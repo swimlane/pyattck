@@ -26,6 +26,7 @@ flake8 = "^4.0.1"
 bandit = "^1.7.4"
 safety = "^1.10.3"
 Sphinx = "<4.4.0"
+importlib-metadata = "<3.4"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
