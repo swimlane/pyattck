@@ -25,6 +25,7 @@ jobs:
           poetry-version: ${{ matrix.poetry-version }}
       - name: Install dependencies
         run: |
+          poetry run pip install --upgrade pip
           poetry install
       - name: Run black
         run: poetry run black ./pyattck --line-length 120
