@@ -53,7 +53,9 @@ jobs:
         with:
           poetry-version: ${{ matrix.poetry-version }}
       - name: Install dependencies
-        run: poetry install
+        run: |
+          pip install poetry
+          poetry install
       - name: Run black
         run: poetry run black ./pyattck --line-length 120
       - name: Run isort
