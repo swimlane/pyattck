@@ -19,15 +19,16 @@ jobs:
         run: |
           pip install --constraint=.github/workflows/constraints.txt pip
           pip --version
-      # - name: Run image
-      #   uses: abatilo/actions-poetry@v2.0.0
-      #   with:
-      #     poetry-version: ${{ matrix.poetry-version }}
+      - name: Run image
+        uses: abatilo/actions-poetry@v2.0.0
+        with:
+          poetry-version: ${{ matrix.poetry-version }}
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install pipenv --upgrade
-          pip install poetry
+          deactivate
+          poetry shell
           poetry install
       - name: Run tests
         run: poetry run coverage run -m pytest && poetry run coverage report
@@ -58,7 +59,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install pipenv --upgrade
-          pip install poetry
+          pip install poetry 
           poetry install
       - name: Run black
         run: poetry run black ./pyattck --line-length 120
