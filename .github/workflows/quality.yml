@@ -37,6 +37,7 @@ jobs:
       - name: Run saftey
         run: poetry run safety check --ignore=47794
   test:
+    needs: code-quality
     strategy:
       fail-fast: false
       matrix:
