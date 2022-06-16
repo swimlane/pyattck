@@ -43,7 +43,7 @@ jobs:
       fail-fast: false
       matrix:
         python-version: ['3.7', '3.8', '3.9', '3.10']
-        poetry-version: [1.1.13]
+        poetry-version: [1.1.12]
         os: [ubuntu-latest,macos-latest,windows-latest]
     runs-on: ${{ matrix.os }}
     steps:
@@ -61,6 +61,7 @@ jobs:
           poetry-version: ${{ matrix.poetry-version }}
       - name: Install dependencies
         run: |
+          poetry run pip install --upgrade pip
           poetry install
       - name: Run tests
         run: poetry run coverage run -m pytest && poetry run coverage report
