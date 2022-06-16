@@ -534,7 +534,7 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
 
 [[package]]
 name = "pyattck-data"
-version = "2.4.1"
+version = "2.4.2"
 description = "Pyattck Data"
 category = "main"
 optional = false
@@ -1356,8 +1356,8 @@ py = [
     {file = "py-1.11.0.tar.gz", hash = "sha256:51c75c4126074b472f746a24399ad32f6053d1b34b68d2fa41e558e6f4a98719"},
 ]
 pyattck-data = [
-    {file = "pyattck-data-2.4.1.tar.gz", hash = "sha256:3a32f3b3a10b76c3aac6f177ea485a39ae60293531c345706cd73d2395b942bf"},
-    {file = "pyattck_data-2.4.1-py3-none-any.whl", hash = "sha256:38e6a71908caa6d9506b4bfba8e28ad5505d8b5e35a9ab79ba3d4ed3aa1cadb7"},
+    {file = "pyattck-data-2.4.2.tar.gz", hash = "sha256:33d385239e78745cb16bb8cd33d67095c8a7bb1bf698f78175be116754f03bb4"},
+    {file = "pyattck_data-2.4.2-py3-none-any.whl", hash = "sha256:bb5ddd32dc92578bc2b1ac7ab7d0b73b5725a72cd69780e5988eee8d32d25b9e"},
 ]
 pycodestyle = [
     {file = "pycodestyle-2.8.0-py2.py3-none-any.whl", hash = "sha256:720f8b39dde8b293825e7ff02c475f3077124006db4f440dcbc9a20b76548a20"},
