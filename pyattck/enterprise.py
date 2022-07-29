@@ -129,7 +129,7 @@ class EnterpriseAttck(Base):
         if not self.__techniques:
             for item in self.__attck.objects:
                 if item.type == "attack-pattern":
-                    if item.techniques and not Base.config.nested_subtechniques:
+                    if item.techniques and not Base.config.nested_techniques:
                         for i in item.techniques:
                             self.__techniques.append(i)
                     self.__techniques.append(item)

@@ -18,10 +18,10 @@ def attck_fixture():
 
 
 @pytest.fixture
-def attck_fixture_nested_subtechniques_false():
+def attck_fixture_nested_techniques_false():
     from pyattck import Attck
 
-    yield Attck(nested_subtechniques=False)
+    yield Attck(nested_techniques=False)
 
 
 @pytest.fixture
