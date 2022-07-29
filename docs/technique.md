@@ -12,7 +12,7 @@ Additionally, a `Technique` object allows the user to access additional relation
 * Actor or Group(s) identified as using this technique
 * Tools used with a given technique
 * Malware used with a given technique
-* Subtechniques of a technique if `nested_subtechniques` is set to `True`
+* Subtechniques of a technique if `nested_techniques` is set to `True`
 * NIST 800-53 Controls related to a technique
 * Data Components of a technique
 * Data Sources of a technique

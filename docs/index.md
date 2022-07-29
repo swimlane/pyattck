@@ -86,7 +86,7 @@ from pyattck import Attck
 attack = Attck()
 ```
 
-By default, `sub-techniques` are accessible under each technique object. You can turn this behavior off by passing `nested_subtechniques=False` when creating your `Attck` object.
+By default, `sub-techniques` are accessible under each technique object. You can turn this behavior off by passing `nested_techniques=False` when creating your `Attck` object.
 
 As an example, the default behavior looks like the following example:
 
@@ -161,7 +161,7 @@ For more information on object types under the `ics` property, see [ICS](ics.md)
 from pyattck import Attck
 
 attck = Attck(
-    nested_subtechniques=True,
+    nested_techniques=True,
     use_config=False,
     save_config=False,
     config_file_path='~/pyattck/config.yml',

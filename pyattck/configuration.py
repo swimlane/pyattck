@@ -55,7 +55,7 @@ class Configuration:
 
 @define(frozen=True)
 class Options:
-    nested_subtechniques: bool = field(default=False)
+    nested_techniques: bool = field(default=False)
     use_config: bool = field(default=False)
     save_config: bool = field(default=False)
     config_file_path: FilePath = field(default="~/pyattck/config.yml", converter=get_absolute_path)

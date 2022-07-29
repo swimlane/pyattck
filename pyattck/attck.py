@@ -113,7 +113,7 @@ class Attck(Base):
                     # etc.
 
     Arguments:
-        nested_subtechniques (bool, optional): Whether not to iterate over nested subtechniques. Defaults to True.
+        nested_techniques (bool, optional): Whether not to iterate over nested subtechniques. Defaults to True.
         use_config (bool, optional): Specifies if a configuration file should be used or not.  Defaults to False.
         save_config (bool, optional): Specifies if pyattck should save a configuration file based on the provided
                                       values.  Defaults to False.
@@ -141,7 +141,7 @@ class Attck(Base):
 
     def __init__(
         self,
-        nested_subtechniques=True,
+        nested_techniques=True,
         use_config=False,
         save_config=False,
         config_file_path="~/pyattck/config.yml",
@@ -161,10 +161,10 @@ class Attck(Base):
         new subtechniques to be nested underneath their parent techniques
         or not.
 
-        Setting nested_subtechniques to False will result in all techniques
+        Setting nested_techniques to False will result in all techniques
         accessible under the techniques property. If using the default value
         of True, subtechniques will be accessible underneath
-        technique.subtechniques.
+        technique.techniques.
 
         When instantiating an Attck object you can access either the
         Enterprise, PRE-ATT&CK, or Mobile MITRE Frameworks.  Specify
@@ -196,7 +196,7 @@ class Attck(Base):
                            The default is your user home path.
 
         Args:
-            nested_subtechniques (bool, optional): Whether not to iterate over nested subtechniques. Defaults to True.
+            nested_techniques (bool, optional): Whether not to iterate over nested subtechniques. Defaults to True.
             use_config (bool, optional): Specifies if a configuration file should be used or not.  Defaults to False.
             save_config (bool, optional): Specifies if pyattck should save a configuration file based on the
                                           provided values.  Defaults to False.
@@ -220,7 +220,7 @@ class Attck(Base):
                                      Defaults to None.
         """
         Base.config = Options(
-            nested_subtechniques=nested_subtechniques,
+            nested_techniques=nested_techniques,
             use_config=use_config,
             save_config=save_config,
             config_file_path=config_file_path,
