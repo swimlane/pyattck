@@ -6,7 +6,7 @@
 from pyattck import Attck
 
 attck = Attck(
-    nested_subtechniques=True,
+    nested_techniques=True,
     use_config=False,
     save_config=False,
     config_file_path='~/pyattck/config.yml',

@@ -23,12 +23,12 @@ attack = Attck()
 for technique in attack.enterprise.techniques:
     print(technique.id)
     print(technique.name)
-    for subtechnique in technique.subtechniques:
+    for subtechnique in technique.techniques:
         print(subtechnique.id)
         print(subtechnique.name)
 ```
 
-You can turn this behavior off by passing `nested_subtechniques=False` when creating your `Attck` object. When turning this feature off you can access subtechniques on the same level as all other techniques.  Here's an example:
+You can turn this behavior off by passing `nested_techniques=False` when creating your `Attck` object. When turning this feature off you can access subtechniques on the same level as all other techniques.  Here's an example:
 
 ```python
 from pyattck import Attck
@@ -38,7 +38,7 @@ attack = Attck()
 for technique in attack.enterprise.techniques:
     print(technique.id)
     print(technique.name)
-    print(f"checking if technique is subtechnique: {technique.subtechnique}")
+    print(f"checking if technique is subtechnique: {technique.techniques}")
 ```
 
 ## Attck Class
