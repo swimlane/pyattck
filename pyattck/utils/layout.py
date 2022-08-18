@@ -6,10 +6,10 @@ from rich import box
 from rich.align import Align
 from rich.console import Group
 from rich.layout import Layout
+from rich.live import Live
 from rich.panel import Panel
 from rich.table import Table
 from rich.text import Text
-from rich.live import Live
 
 from ..base import Base
 
@@ -21,7 +21,7 @@ class Footer(Base):
         """Provided the object type item we generate references and display them on the footer.
 
         The following attack types are expected:
-        
+
         "actors","controls","data_components","data_sources","malwares","mitigations","tactics","techniques","tools"
 
         Args:
@@ -47,10 +47,10 @@ class Footer(Base):
                         name_list.add(getattr(i, "name"))
                     panel_list.append(
                         Panel(
-                            ', '.join([x for x in list(name_list)]), 
-                            title=f"[b]{item}", 
-                            border_style="red", 
-                            padding=(1, 2)
+                            ", ".join([x for x in list(name_list)]),
+                            title=f"[b]{item}",
+                            border_style="red",
+                            padding=(1, 2),
                         ),
                     )
         grid.add_row(*panel_list)
@@ -64,7 +64,7 @@ class Header:
         """Provided the object type item we generate references and display them on the footer.
 
         The following attack types are expected:
-        
+
         "actors","controls","data_components","data_sources","malwares","mitigations","tactics","techniques","tools"
 
         Args:
@@ -100,7 +100,7 @@ class CustomLayout(Base):
         """Provided the object type item we generate references and display them on the footer.
 
         The following attack types are expected:
-        
+
         "actors","controls","data_components","data_sources","malwares","mitigations","tactics","techniques","tools"
 
         Args:
@@ -118,7 +118,7 @@ class CustomLayout(Base):
         """Main callable for the CustomLayout class.
 
         This method gets called within the Menu class when a wrapped object is passed to display this
-        custom layout within the console.      
+        custom layout within the console.
         """
         with Live(self.layout, refresh_per_second=10, screen=True, redirect_stderr=False) as live:
             try:
@@ -153,7 +153,11 @@ class CustomLayout(Base):
         """
         if hasattr(object, "external_references"):
             for item in getattr(object, "external_references"):
-                if hasattr(item, "external_id") and getattr(item, "external_id") and not getattr(item, "external_id").startswith("CAPEC"):
+                if (
+                    hasattr(item, "external_id")
+                    and getattr(item, "external_id")
+                    and not getattr(item, "external_id").startswith("CAPEC")
+                ):
                     return getattr(item, "external_id")
 
     def make_top_left_box(self):
@@ -181,10 +185,8 @@ class CustomLayout(Base):
                 )
 
         if self.item.description:
-            intro_message = Text.from_markup(
-                self.item.description.replace("[","")
-            )
-        else: 
+            intro_message = Text.from_markup(self.item.description.replace("[", ""))
+        else:
             intro_message = Text.from_markup("UNKNOWN")
 
         message = Table.grid(padding=1)

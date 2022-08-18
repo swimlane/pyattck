@@ -2,6 +2,7 @@
 import base64
 import os
 from typing import List
+
 from ..base import Base
 
 
@@ -51,7 +52,7 @@ class Menu(Base):
 
     def cls(self) -> None:
         """Clears the current screen."""
-        os.system('cls' if os.name=='nt' else 'clear')
+        os.system("cls" if os.name == "nt" else "clear")
 
     def display_error(self) -> None:
         """Displays the defined error message with padding as needed."""
@@ -89,7 +90,7 @@ class Menu(Base):
                         self.selected_option = user_input
                         self.options[user_input][1]()
                         if self.options[user_input][2]:
-                            return 
+                            return
                         else:
                             self.display_menu()
                     elif self.options[user_input][1]:
