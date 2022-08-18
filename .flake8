@@ -11,3 +11,4 @@ per-file-ignores =
     logger.py:F841,
     configuration.py:E501,
     attck.py:E501
+    base.py:E501
