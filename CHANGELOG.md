@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 7.0.0 - 2022-08-18
+
+    - Added an interactive console menu system. You can access it by using the --interactive flag.
+
 ## 6.1.0 - 2022-06-13
 
     - Updated to pyattck-data 2.1.0
@@ -33,7 +37,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
     - Fixed issue with mitigations not being accessible in enterprise techniques
     - Added ability to access nested subtechniques (or not) using 
-      nested_subtechniques paramater when instantiating Attck object
+      nested_techniques parameter when instantiating Attck object
 
 ## 2.0.5 - 2020-05-19
 
