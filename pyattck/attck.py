@@ -132,6 +132,7 @@ class Attck(Base):
                         Defaults to https://swimlane-pyattck.s3.us-west-2.amazonaws.com/merged_nist_controls_v1.json.
         generated_nist_json (str, optional): A URL or local file path to the Generated NIST Controls Mapping Json file.
                         Defaults to https://swimlane-pyattck.s3.us-west-2.amazonaws.com/attck_to_nist_controls.json.
+        interactive (bool, optional): If True, runs the interactive menu within pyattck. Default is False.
         kwargs (dict, optional): Provided kwargs will be passed to any HTTP requests using the Requests library.
                                  Defaults to None.
 
@@ -152,6 +153,7 @@ class Attck(Base):
         ics_attck_json="https://swimlane-pyattck.s3.us-west-2.amazonaws.com/merged_ics_attck_v1.json",
         nist_controls_json="https://swimlane-pyattck.s3.us-west-2.amazonaws.com/merged_nist_controls_v1.json",
         generated_nist_json="https://swimlane-pyattck.s3.us-west-2.amazonaws.com/attck_to_nist_controls.json",
+        interactive=False,
         **kwargs
     ):
         """
@@ -216,6 +218,7 @@ class Attck(Base):
                         Defaults to https://swimlane-pyattck.s3.us-west-2.amazonaws.com/merged_nist_controls_v1.json
             generated_nist_json (str, optional): A URL or local file path to the Generated NIST Controls Mapping Json
                         file. Defaults to https://swimlane-pyattck.s3.us-west-2.amazonaws.com/attck_to_nist_controls.json.
+            interactive (bool, optional): If True, runs the interactive menu within pyattck. Default is False.
             kwargs (dict, optional): Provided kwargs will be passed to any HTTP requests using the Requests library.
                                      Defaults to None.
         """
@@ -235,6 +238,10 @@ class Attck(Base):
                 generated_nist_json=generated_nist_json,
             ),
         )
+        if interactive:
+            from .utils.interactive import Interactive
+
+            Interactive(self).generate()
 
     @property
     def enterprise(self):
