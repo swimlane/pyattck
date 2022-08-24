@@ -46,10 +46,11 @@ class Configuration:
     @nist_controls_json.validator
     @generated_nist_json.validator
     def _validate_json_value(self, attribute, value):
-        valid = False
-        valid = is_path(value)
-        valid = is_url(value)
-        if not valid:
+        path_valid = False
+        url_valid = False
+        path_valid = is_path(value)
+        url_valid = is_url(value)
+        if not path_valid and not url_valid:
             raise Exception("The provided value is neither a URL or file path")
 
 
