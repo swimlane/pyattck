@@ -25,8 +25,7 @@ def is_path(value: str) -> bool:
 
 def is_url(value: str) -> bool:
     try:
-        urlparse(value).scheme in ["http", "https"]
-        return True
+        return urlparse(value).scheme in ["http", "https"]
     except Exception as e:
         pass
     return False

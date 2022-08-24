@@ -155,4 +155,5 @@ class Options:
         if self.save_config:
             self._save_config(config_file_path=self.config_file_path, config_dict=asdict(self.config))
         if self.use_config:
-            self.config = self._read_from_disk(self.config_file_path)
+            self._save_config(config_file_path=self.config_file_path, config_dict=asdict(self.config))
+            object.__setattr__(self, "config", self._read_from_disk(self.config_file_path))
