@@ -4,8 +4,7 @@ from pyattck import Attck
 
 
 def main(args=None):
-    attck = Attck()
-    fire.Fire(attck)
+    fire.Fire(Attck)
 
 
 if __name__ == "__main__":

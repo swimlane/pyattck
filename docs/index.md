@@ -153,6 +153,28 @@ Here are the accessible objects under the [ICS](ics.md) property:
 
 For more information on object types under the `ics` property, see [ICS](ics.md).
 
+## Interactive Menu Usage
+
+To utilize the new interactive menu system within pyattck, you must set `interactive` to `True`. By doing so, it will launch the interactive console menu system.
+
+Using a script your can launch this by running:
+
+```python
+from pyattck import Attck
+
+Attck(interactive=True)
+```
+
+Or you can also run interactive mode on the command line:
+
+```bash
+pyattck --interactive
+```
+
+Checkout a gif example below:
+
+![](images/pyattck_interactive_menu.gif)
+
 ## Configuration
 
 `pyattck` allows you to configure if you store external data and where it is stored. 

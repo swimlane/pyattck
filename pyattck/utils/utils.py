@@ -17,16 +17,14 @@ def get_absolute_path(path: str):
 def is_path(value: str) -> bool:
     try:
         Path(value)
-        return True
     except Exception as e:
-        pass
-    return False
+        return False
+    return True
 
 
 def is_url(value: str) -> bool:
     try:
-        urlparse(value).scheme in ["http", "https"]
-        return True
+        return urlparse(value).scheme in ["http", "https"]
     except Exception as e:
         pass
     return False

@@ -46,10 +46,11 @@ class Configuration:
     @nist_controls_json.validator
     @generated_nist_json.validator
     def _validate_json_value(self, attribute, value):
-        valid = False
-        valid = is_path(value)
-        valid = is_url(value)
-        if not valid:
+        path_valid = False
+        url_valid = False
+        path_valid = is_path(value)
+        url_valid = is_url(value)
+        if not path_valid and not url_valid:
             raise Exception("The provided value is neither a URL or file path")
 
 
@@ -145,10 +146,15 @@ class Options:
         else:
             return self._read_from_disk(getattr(self.config, value))
 
+    def _save_config(self, config_file_path: str, config_dict: dict) -> None:
+        """Saves the config to the provided path."""
+        self._save_to_disk(config_file_path, config_dict)
+        self._save_json_data()
+
     def __attrs_post_init__(self):
         """Contains options and configuration for pyattck."""
         if self.save_config:
-            self._save_to_disk(self.config_file_path, asdict(self.config))
-            self._save_json_data()
+            self._save_config(config_file_path=self.config_file_path, config_dict=asdict(self.config))
         if self.use_config:
-            self.config = self._read_from_disk(self.config_file_path)
+            self._save_config(config_file_path=self.config_file_path, config_dict=asdict(self.config))
+            object.__setattr__(self, "config", self._read_from_disk(self.config_file_path))

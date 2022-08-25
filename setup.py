@@ -26,5 +26,5 @@ setup(
     author_email="info@swimlane.com",
     python_requires=">=3.6, <4",
     package_data={"pyattck": ["data/logging.yml"]},
-    entry_points={"console_scripts": ["pyattck = pyattck.__main__:main"]},
+    entry_points={"console_scripts": ["pyattck = pyattck.cli:main"]},
 )

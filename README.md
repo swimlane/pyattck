@@ -17,7 +17,7 @@
 ```
 	A Python package to interact with MITRE ATT&CK Frameworks
 
-> Current Version is 6.1.0
+> Current Version is 7.0.0
 
 **pyattck** is a light-weight framework for MITRE ATT&CK Frameworks. This package extracts details from the MITRE Enterprise, PRE-ATT&CK, Mobile, and ICS Frameworks.
 
@@ -50,6 +50,7 @@ The **pyattck** package allows you to:
   * Access sub-techniques as nested objects or you can turn it off and access as normal technique
   * Access compliance controls (currently NIST 800-53 v5) related to a MITRE ATT&CK Technique
   * pyattck now utilizes structured data models. More information can be found at [pyattck-data](https://github.com/swimlane/pyattck-data)
+  * Run an interactive console menu system to access pyattck data
 
 # Table of Contents
 
@@ -152,6 +153,28 @@ Here are the accessible objects under the [ICS](docs/ics.md) property:
 * [techniques](docs/technique.md)
 
 For more information on object types under the `ics` property, see [ICS](docs/ics.md).
+
+## Interactive Menu Usage
+
+To utilize the new interactive menu system within pyattck, you must set `interactive` to `True`. By doing so, it will launch the interactive console menu system.
+
+Using a script your can launch this by running:
+
+```python
+from pyattck import Attck
+
+Attck(interactive=True)
+```
+
+Or you can also run interactive mode on the command line:
+
+```bash
+pyattck --interactive
+```
+
+Checkout a gif example below:
+
+![](images/pyattck_interactive_menu.gif)
 
 ## Configuration
 
