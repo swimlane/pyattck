@@ -142,17 +142,17 @@ class CustomLayout(Base):
         )
         return layout
 
-    def _get_external_id(self, object) -> str:
+    def _get_external_id(self, attck_object) -> str:
         """Retrieves the official MITRE ID from an objects external references.
 
         Args:
-            object (Any): A MITRE ATTCK object type.
+            attck_object (Any): A MITRE ATTCK object type.
 
         Returns:
             str: The official designated MITRE ATT&CK ID.
         """
-        if hasattr(object, "external_references"):
-            for item in getattr(object, "external_references"):
+        if hasattr(attck_object, "external_references"):
+            for item in getattr(attck_object, "external_references"):
                 if (
                     hasattr(item, "external_id")
                     and getattr(item, "external_id")
