@@ -74,7 +74,7 @@ class Options:
             try:
                 with open(path) as f:
                     if path.endswith(".json"):
-                        return Configuration(**json.load(f))
+                        return json.load(f)
                     elif path.endswith(".yml") or path.endswith(".yaml"):
                         return Configuration(**yaml.load(f, Loader=yaml.SafeLoader))
                     else:
