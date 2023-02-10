@@ -28,9 +28,11 @@ black = "^22.3.0"
 isort = "^5.10.1"
 flake8 = "^4.0.1"
 bandit = "^1.7.4"
-safety = "^1.10.3"
 Sphinx = "<4.4.0"
 importlib-metadata = "<3.4"
+
+[tool.poetry.group.dev.dependencies]
+safety = "^2.3.5"
 
 [build-system]
 requires = ["poetry-core>=1.4.0"]
