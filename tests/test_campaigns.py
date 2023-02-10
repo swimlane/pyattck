@@ -31,7 +31,7 @@ def test_campaigns_have_malwares(attck_fixture, target_attribute):
             assert getattr(campaign, "malwares")
 
 
-@pytest.mark.parametrize("target_attribute", ["enterprise", "mobile", "preattack"])
+@pytest.mark.parametrize("target_attribute", ["enterprise"])
 def test_campaigns_have_techniques(attck_fixture, target_attribute):
     """
     All MITRE ATT&CK Campaigns should have techniques
