@@ -714,14 +714,14 @@ testing = ["pytest", "pytest-benchmark"]
 
 [[package]]
 name = "pyattck-data"
-version = "2.6.1"
+version = "2.6.2"
 description = "Pyattck Data"
 category = "main"
 optional = false
 python-versions = ">=3.7,<4.0"
 files = [
-    {file = "pyattck_data-2.6.1-py3-none-any.whl", hash = "sha256:6f82211d471a2bedafa32a4568b8ef39298c7cd7c46c89e03625f8169708a205"},
-    {file = "pyattck_data-2.6.1.tar.gz", hash = "sha256:8d69defdbac961cf742755be6d226a1757eeb1e012c1a0333ada1a34507fd12e"},
+    {file = "pyattck_data-2.6.2-py3-none-any.whl", hash = "sha256:484ee86ab201db39580e39af85ee8103cbbac8f846ea9212a353e5f2f0b330e4"},
+    {file = "pyattck_data-2.6.2.tar.gz", hash = "sha256:606c14268cba4039b53a5742471182aa91b11821a8b158fdfbdc58d41ee14c93"},
 ]
 
 [package.dependencies]
