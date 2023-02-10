@@ -16,14 +16,15 @@ class EnterpriseAttck(Base):
     The following categorical items can be accessed using this class:
 
         1. Actors
-        2. Controls
-        3. Data Sources
-        4. Data Components
-        5. Malware
-        6. Mitigations
-        7. Tactics
-        8. Techniques
-        9. Tools
+        2. Campaigns
+        3. Controls
+        4. Data Sources
+        5. Data Components
+        6. Malware
+        7. Mitigations
+        8. Tactics
+        9. Techniques
+        10. Tools
 
     As of pyattck 6.0.0, MITRE ATT&CK Frameworks are merged with generated datasets.
     These can be found [here](https://github.com/swimlane/pyattck-data)
@@ -33,6 +34,7 @@ class EnterpriseAttck(Base):
     __techniques = []
     __mitigations = []
     __actors = []
+    __campaigns = []
     __tools = []
     __malwares = []
     __controls = []
@@ -51,6 +53,17 @@ class EnterpriseAttck(Base):
         if not self.__actors:
             self.__actors = [x for x in self.__attck.objects if x.type == "intrusion-set"]
         return self.__actors
+
+    @property
+    def campaigns(self):
+        """Retrieves Campaign objects.
+
+        Returns:
+            (Campaign) -- (Returns a list of Campaign objects)
+        """
+        if not self.__campaigns:
+            self.__campaigns = [x for x in self.__attck.objects if x.type == "campaign"]
+        return self.__campaigns
 
     @property
     def controls(self):

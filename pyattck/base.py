@@ -10,6 +10,7 @@ class Base(metaclass=LoggingBase):
     FRAMEWORKS = ["enterprise", "ics", "mobile", "preattack"]
     ATTCK_TYPES = [
         "actors",
+        "campaigns",
         "controls",
         "data_components",
         "data_sources",
