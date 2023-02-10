@@ -1,3 +1,5 @@
+import warnings
+
 from .base import Base
 from .configuration import Configuration, Options
 
@@ -265,6 +267,10 @@ class Attck(Base):
         from .preattck import PreAttck
 
         self.__logger.debug("Calling MITRE Pre-ATT&CK Framework")
+        warnings.warn(
+            "MITRE has deprecated the Pre-ATT&CK Framework. "
+            "Please use the Enterprise Framework instead and the PreAttack framework will no longer be supported."
+        )
         return PreAttck()
 
     @property
