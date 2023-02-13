@@ -7,7 +7,7 @@ jobs:
       fail-fast: false
       matrix:
         python-version: ["3.7"]
-        poetry-version: ["1.2.0b2"]
+        poetry-version: ["1.3.2"]
         os: [ubuntu-latest]
     runs-on: ${{ matrix.os }}
     steps:
@@ -20,7 +20,7 @@ jobs:
           pip install --constraint=.github/workflows/constraints.txt pip
           pip --version
       - name: Run image
-        uses: abatilo/actions-poetry@v2.0.0
+        uses: abatilo/actions-poetry@v2.2.0
         with:
           poetry-version: ${{ matrix.poetry-version }}
       - name: Install dependencies
@@ -43,7 +43,7 @@ jobs:
       fail-fast: false
       matrix:
         python-version: ['3.7', '3.8', '3.9', '3.10']
-        poetry-version: ["1.2.0b2"]
+        poetry-version: ["1.3.2"]
         os: [ubuntu-latest,macos-latest,windows-latest]
     runs-on: ${{ matrix.os }}
     steps:
@@ -56,7 +56,7 @@ jobs:
           pip install --constraint=.github/workflows/constraints.txt pip
           pip --version
       - name: Run image
-        uses: abatilo/actions-poetry@v2.0.0
+        uses: abatilo/actions-poetry@v2.2.0
         with:
           poetry-version: ${{ matrix.poetry-version }}
       - name: Install dependencies
