@@ -5,6 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [7.1.0](https://github.com/swimlane/pyattck/compare/7.0.0...7.1.0) (2023-03-06)
+
+
+### Features
+
+* Adding campaigns attribute to Enterprise attack and related entities ([ecf5eba](https://github.com/swimlane/pyattck/commit/ecf5ebad4bd3f6e5639dc796051a582ef7aa7381))
+
+
+### Bug Fixes
+
+* Adding tests for campaigns ([40809bc](https://github.com/swimlane/pyattck/commit/40809bca9985a44101c558ef84ba4f926909a02c))
+* Adding warning of deprecation of PreAttack framework since it is no longer officially supported by MITRE. Fixes [#126](https://github.com/swimlane/pyattck/issues/126) ([085828e](https://github.com/swimlane/pyattck/commit/085828e1ffd1a9ebc1f81b1c7cd26b1c145fc4af))
+* Bumping minor version ([2d89017](https://github.com/swimlane/pyattck/commit/2d8901717e7edc26d6aecef7789b9ade1973e661))
+* Incorporating fix [#129](https://github.com/swimlane/pyattck/issues/129) ([59ed9db](https://github.com/swimlane/pyattck/commit/59ed9dba5fd72ab64e4b3b7ed85d8dcbbb1b0586))
+* Updated readme ([48528e1](https://github.com/swimlane/pyattck/commit/48528e18f3a37a9d863586bd779bcfe906b158d7))
+* Updating campaigns tests ([58a2c3d](https://github.com/swimlane/pyattck/commit/58a2c3da2863a6628c6490f75a4cd31861adbb1a))
+
 ## 7.0.0 - 2022-08-18
 
     - Added an interactive console menu system. You can access it by using the --interactive flag.
