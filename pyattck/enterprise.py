@@ -33,6 +33,7 @@ class EnterpriseAttck(Base):
     __tactics = []
     __techniques = []
     __mitigations = []
+    __relationships = []
     __actors = []
     __campaigns = []
     __tools = []
@@ -120,6 +121,17 @@ class EnterpriseAttck(Base):
         if not self.__mitigations:
             self.__mitigations = [x for x in self.__attck.objects if x.type == "course-of-action"]
         return self.__mitigations
+    
+    @property
+    def relationships(self):
+        """Retrieves Relationship objects.
+
+        Returns:
+            (Relationship) -- (Returns a list of Relationship objects)
+        """
+        if not self.__relationships:
+            self.__relationships = [x for x in self.__attck.objects if x.type == "relationship" and hasattr(x, 'relationship_type') and x.relationship_type == 'uses']
+        return self.__relationships
 
     @property
     def tactics(self):
