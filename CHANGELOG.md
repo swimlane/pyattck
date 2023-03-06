@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [7.1.1](https://github.com/swimlane/pyattck/compare/7.1.0...7.1.1) (2023-03-06)
+
+
+### Bug Fixes
+
+* Added relationship property to the enterprise framework. Fixes [#131](https://github.com/swimlane/pyattck/issues/131) ([09c8c02](https://github.com/swimlane/pyattck/commit/09c8c02916540fc2d02e8e032214a9b5c1615bab))
+
 ## [7.1.0](https://github.com/swimlane/pyattck/compare/7.0.0...7.1.0) (2023-03-06)
 
 
