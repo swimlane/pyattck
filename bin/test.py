@@ -1,9 +1,12 @@
 from pyattck import Attck
 
-attack = Attck(nested_subtechniques=False)
+attack = Attck(nested_techniques=False, save_config=True)
 
 # Examples of MITRE Enterprise ATT&CK using nested subtechniques
 
+for relationship in attack.enterprise.relationships:
+    print(relationship.id)
+    print(relationship.description)
 
 for actor in attack.enterprise.actors:
     print(actor.id)
