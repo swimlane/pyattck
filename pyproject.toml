@@ -16,7 +16,7 @@ python = "^3.7"
 requests = "^2.27.1"
 fire = "^0.4.0"
 attrs = "^21.4.0"
-pyattck-data = "^2.5.0"
+pyattck-data = "^2.6.3"
 rich = "^12.5.1"
 
 [tool.poetry.dev-dependencies]
