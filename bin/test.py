@@ -2,7 +2,7 @@ from pyattck import Attck
 
 attack = Attck(nested_techniques=False, save_config=True)
 
-# Examples of MITRE Enterprise ATT&CK using nested subtechniques
+# Examples of MITRE Enterprise ATT&CK using nested techniques
 
 for relationship in attack.enterprise.relationships:
     print(relationship.id)
@@ -31,15 +31,15 @@ for actor in attack.enterprise.actors:
         print(technique.command_list)
         print(technique.commands)
         print(technique.queries)
-        print(technique.datasets)
+        print(technique.parsed_datasets)
         print(technique.possible_detections)
-        # You can access subtechniques nested under techniques by default
-        for subtechnique in technique.subtechniques:
+        # You can access techniques nested under techniques by default
+        for subtechnique in technique.techniques:
             print(subtechnique.id)
             print(subtechnique.name)
             # etc.
         # To access all techniques under a single technique object set
-        # Attck(nested_subtechniques=False)
+        # Attck(nested_techniques=False)
 
         # to get a count of controls for a technique do the following
         print(len(technique.controls))
@@ -106,7 +106,7 @@ for mitigation in attack.enterprise.mitigations:
         print(technique.command_list)
         print(technique.commands)
         print(technique.queries)
-        print(technique.datasets)
+        print(technique.parsed_datasets)
         print(technique.possible_detections)
     
         # to get a count of controls for a technique do the following
@@ -135,7 +135,7 @@ for tactic in attack.enterprise.tactics:
         print(technique.command_list)
         print(technique.commands)
         print(technique.queries)
-        print(technique.datasets)
+        print(technique.parsed_datasets)
         print(technique.possible_detections)
     
         # to get a count of controls for a technique do the following
@@ -173,14 +173,14 @@ for technique in attack.enterprise.techniques:
     print(technique.command_list)
     print(technique.commands)
     print(technique.queries)
-    print(technique.datasets)
+    print(technique.parsed_datasets)
     print(technique.possible_detections)
 
     # Access all subtechnique objects
-    print(technique.subtechniques)
+    print(technique.techniques)
 
-    # iterate through subtechniques
-    for subtechnique in technique.subtechniques:
+    # iterate through techniques
+    for subtechnique in technique.techniques:
         print(subtechnique.name)
         print(subtechnique.id)
 
@@ -217,7 +217,7 @@ for tool in attack.enterprise.tools:
         print(technique.command_list)
         print(technique.commands)
         print(technique.queries)
-        print(technique.datasets)
+        print(technique.parsed_datasets)
         print(technique.possible_detections)
 
     # accessing actor or groups using this tool
@@ -286,7 +286,7 @@ for actor in attack.mobile.actors:
         print(technique.command_list)
         print(technique.commands)
         print(technique.queries)
-        print(technique.datasets)
+        print(technique.parsed_datasets)
         print(technique.possible_detections)
 
 # accessing malware
@@ -317,7 +317,7 @@ for mitigation in attack.mobile.mitigations:
         print(technique.command_list)
         print(technique.commands)
         print(technique.queries)
-        print(technique.datasets)
+        print(technique.parsed_datasets)
         print(technique.possible_detections)
 
 # accessing tactics
@@ -333,7 +333,7 @@ for tactic in attack.mobile.tactics:
         print(technique.command_list)
         print(technique.commands)
         print(technique.queries)
-        print(technique.datasets)
+        print(technique.parsed_datasets)
         print(technique.possible_detections)
 
 # accessing techniques
@@ -344,7 +344,7 @@ for technique in attack.mobile.techniques:
     print(technique.command_list)
     print(technique.commands)
     print(technique.queries)
-    print(technique.datasets)
+    print(technique.parsed_datasets)
     print(technique.possible_detections)
 
     # accessing tactics that this technique belongs to
@@ -375,7 +375,7 @@ for tool in attack.mobile.tools:
         print(technique.command_list)
         print(technique.commands)
         print(technique.queries)
-        print(technique.datasets)
+        print(technique.parsed_datasets)
         print(technique.possible_detections)
 
     # accessing actor or groups using this tool
@@ -433,7 +433,7 @@ for mitigation in attack.ics.mitigations:
         print(technique.command_list)
         print(technique.commands)
         print(technique.queries)
-        print(technique.datasets)
+        print(technique.parsed_datasets)
         print(technique.possible_detections)
     
         # to get a count of controls for a technique do the following
@@ -462,7 +462,7 @@ for tactic in attack.ics.tactics:
         print(technique.command_list)
         print(technique.commands)
         print(technique.queries)
-        print(technique.datasets)
+        print(technique.parsed_datasets)
         print(technique.possible_detections)
     
         # to get a count of controls for a technique do the following
@@ -500,7 +500,7 @@ for technique in attack.ics.techniques:
     print(technique.command_list)
     print(technique.commands)
     print(technique.queries)
-    print(technique.datasets)
+    print(technique.parsed_datasets)
     print(technique.possible_detections)
 
     # accessing data_sources that this technique has
