@@ -3,3 +3,4 @@ PyYaml>=5.4.1
 fire==0.3.1
 attrs==21.4.0
 pyattck-data>=2.5.0
+orjson
