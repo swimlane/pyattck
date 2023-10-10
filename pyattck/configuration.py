@@ -1,4 +1,4 @@
-import orjson
+import orjson  # Import orjson library
 import os
 import warnings
 
@@ -7,6 +7,7 @@ from attrs import asdict, define, field
 from pydantic import DirectoryPath, FilePath, HttpUrl
 from requests.api import request
 
+# Assuming the utils are correctly imported
 from .utils.exceptions import UnknownFileError
 from .utils.utils import get_absolute_path, is_path, is_url
 
@@ -46,8 +47,6 @@ class Configuration:
     @nist_controls_json.validator
     @generated_nist_json.validator
     def _validate_json_value(self, attribute, value):
-        path_valid = False
-        url_valid = False
         path_valid = is_path(value)
         url_valid = is_url(value)
         if not path_valid and not url_valid:
@@ -66,15 +65,15 @@ class Options:
     def _download_url_data(self, url):
         response = request("GET", url, **self.kwargs)
         if response.status_code == 200:
-            return response.json()
+            return orjson.loads(response.content)  # Use orjson
         return {}
 
     def _read_from_disk(self, path):
         if os.path.exists(path) and os.path.isfile(path):
             try:
-                with open(path) as f:
+                with open(path, 'rb') as f:  # Open as binary for orjson
                     if path.endswith(".json"):
-                        return json.load(f)
+                        return orjson.loads(f.read())  # Use orjson
                     elif path.endswith(".yml") or path.endswith(".yaml"):
                         return Configuration(**yaml.load(f, Loader=yaml.SafeLoader))
                     else:
@@ -99,7 +98,7 @@ class Options:
                     )
             with open(path, "w+") as f:
                 if path.endswith(".json"):
-                    json.dump(data, f)
+                    f.write(orjson.dumps(data).decode('utf-8'))  # Use orjson
                 elif path.endswith(".yml") or path.endswith(".yaml"):
                     yaml.dump(data, f)
                 else:
