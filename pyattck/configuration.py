@@ -1,4 +1,4 @@
-import json
+import orjson
 import os
 import warnings
 
