@@ -63,6 +63,7 @@ jobs:
         run: |
           poetry run pip install --upgrade pip
           poetry run pip install --upgrade setuptools
+          poetry run pip install -r requirements.txt
           poetry install
       - name: Run tests
         run: poetry run coverage run -m pytest && poetry run coverage report

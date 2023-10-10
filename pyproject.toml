@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pyattck"
-version = "7.1.2"
+version = "7.2.0"
 description = "A Python package to interact with the Mitre ATT&CK Frameworks"
 authors = ["Swimlane <info@swimlane.com>"]
 license = "MIT"
