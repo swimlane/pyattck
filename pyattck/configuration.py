@@ -1,4 +1,4 @@
-import orjson  # Import orjson library
+import orjson
 import os
 import warnings
 
@@ -7,7 +7,6 @@ from attrs import asdict, define, field
 from pydantic import DirectoryPath, FilePath, HttpUrl
 from requests.api import request
 
-# Assuming the utils are correctly imported
 from .utils.exceptions import UnknownFileError
 from .utils.utils import get_absolute_path, is_path, is_url
 
